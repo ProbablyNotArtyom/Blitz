@@ -1,0 +1,12 @@
+(sym_lib_table
+  (lib (name 68k)(type Legacy)(uri ${KIPRJMOD}/../68k.lib)(options "")(descr ""))
+  (lib (name atx24)(type Legacy)(uri ${KIPRJMOD}/../atx24.lib)(options "")(descr ""))
+  (lib (name intel-8xxx)(type Legacy)(uri ${KIPRJMOD}/../intel-8xxx.lib)(options "")(descr ""))
+  (lib (name ncp302)(type Legacy)(uri ${KIPRJMOD}/../ncp302.lib)(options "")(descr ""))
+  (lib (name tps383x)(type Legacy)(uri ${KIPRJMOD}/../tps383x.lib)(options "")(descr ""))
+  (lib (name BBlitz)(type Legacy)(uri ${KIPRJMOD}/../BBlitz.lib)(options "")(descr ""))
+  (lib (name issi)(type Legacy)(uri ${KIPRJMOD}/../issi.lib)(options "")(descr ""))
+  (lib (name Azure)(type Legacy)(uri ${KIPRJMOD}/../Azure.lib)(options "")(descr ""))
+  (lib (name "C68-(copy-1)-rescue")(type Legacy)(uri "${KIPRJMOD}/C68 (copy 1)-rescue.lib")(options "")(descr ""))
+  (lib (name o_intel)(type Legacy)(uri ${KIPRJMOD}/../o_intel.lib)(options "")(descr ""))
+)

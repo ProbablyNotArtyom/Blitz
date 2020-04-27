@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="error" file="HDLParsers" num="3312" delta="old" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd</arg>&quot; Line <arg fmt="%d" index="2">97</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">shift_reg</arg>&apos;.
+</msg>
+
+<msg type="error" file="HDLParsers" num="1209" delta="old" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd</arg>&quot; Line <arg fmt="%d" index="2">97</arg>. <arg fmt="%s" index="3">shift_reg</arg>: Undefined symbol (last report in this block)
+</msg>
+
+<msg type="error" file="HDLParsers" num="808" delta="old" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd</arg>&quot; Line <arg fmt="%d" index="2">98</arg>. <arg fmt="%s" index="3">not</arg> can not have such operands in this context.
+</msg>
+
+<msg type="error" file="HDLParsers" num="3402" delta="old" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd</arg>&quot; Line <arg fmt="%d" index="2">104</arg>. Read symbol =, expecting &lt;= or := 
+</msg>
+
+<msg type="error" file="HDLParsers" num="808" delta="old" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd</arg>&quot; Line <arg fmt="%d" index="2">106</arg>. <arg fmt="%s" index="3">+</arg> can not have such operands in this context.
+</msg>
+
+<msg type="error" file="HDLParsers" num="3402" delta="old" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd</arg>&quot; Line <arg fmt="%d" index="2">106</arg>. Read symbol =, expecting &lt;= or := 
+</msg>
+
+</messages>
+

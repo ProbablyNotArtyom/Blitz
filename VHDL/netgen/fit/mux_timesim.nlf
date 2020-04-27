@@ -1,0 +1,29 @@
+Release 14.7 - netgen P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Command Line: netgen -intstyle ise -rpw 100 -ar Structure -tm mux -w -dir
+netgen/fit -ofmt vhdl -sim mux.nga mux_timesim.vhd  
+
+Reading design 'mux.nga' ...
+Flattening design ...
+Processing design ... 
+  Preping design's networks ...
+  Preping design's macros ...
+Writing VHDL netlist
+'/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/netgen/fit/mux_timesim.vhd
+' ...
+Writing VHDL SDF file
+'/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/netgen/fit/mux_timesim.sdf
+' ...
+INFO:NetListWriters:635 - The generated VHDL netlist contains Xilinx SIMPRIM
+   simulation primitives and has to be used with SIMPRIM library for correct
+   compilation and simulation. 
+INFO:NetListWriters - Xilinx recommends running separate simulations to check
+   for setup by specifying the MAX field in the SDF file and for hold by
+   specifying the MIN field in the SDF file. Please refer to Simulator
+   documentation for more details on specifying MIN and MAX field in the SDF.
+INFO:NetListWriters:665 - For more information on how to pass the SDF switches
+   to the simulator, see your Simulator tool documentation.
+Number of warnings: 0
+Number of info messages: 3
+Total memory usage is 319400 kilobytes

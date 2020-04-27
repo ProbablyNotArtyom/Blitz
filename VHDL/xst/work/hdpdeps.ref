@@ -1,0 +1,28 @@
+V3 16
+FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.vhd 2019/01/21.03:55:42 P.20131013
+FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd 2019/01/21.02:15:41 P.20131013
+FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.vhd 2019/04/19.09:49:21 P.20131013
+FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.vhf 2019/04/19.04:57:45 P.20131013
+FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf 2019/04/19.08:10:31 P.20131013
+FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/ext.vhd 2019/05/11.01:32:50 P.20131013
+EN work/flipflop_d 1557553636 \
+      FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/ext.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/flipflop_d/Behavioral 1557553637 \
+      FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/ext.vhd \
+      EN work/flipflop_d 1557553636
+FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd 2019/05/11.08:55:57 P.20131013
+EN work/mux 1557579362 \
+      FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181
+AR work/mux/rtl 1557579363 \
+      FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd \
+      EN work/mux 1557579362
+FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/schema.vhf 2019/04/19.08:10:31 P.20131013
+EN work/schema 1557579360 \
+      FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/schema.vhf \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181 LB UNISIM \
+      PH unisim/VCOMPONENTS 1381692182
+AR work/schema/BEHAVIORAL 1557579361 \
+      FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/schema.vhf \
+      EN work/schema 1557579360 CP INV

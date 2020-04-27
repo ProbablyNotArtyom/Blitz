@@ -1,0 +1,467 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Reading design: schema.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "schema.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "schema"
+Output Format                      : NGC
+Target Device                      : XC9500XL CPLDs
+
+---- Source Options
+Top Module Name                    : schema
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+
+---- Target Options
+Add IO Buffers                     : YES
+MACRO Preserve                     : YES
+XOR Preserve                       : YES
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : Yes
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Verilog 2001                       : YES
+
+---- Other Options
+Clock Enable                       : YES
+wysiwyg                            : NO
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" in Library work.
+Entity <schema> compiled.
+Entity <schema> (Architecture <behavioral>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <schema> in library <work> (architecture <behavioral>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <schema> in library <work> (Architecture <behavioral>).
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 209: Instantiating black box module <INV>.
+    Set user-defined property "Level =  XILINX" for instance <XLXI_10> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_10> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_10> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 223: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 223: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 223: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 223: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 223: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 223: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 223: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 223: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 223: Instantiating black box module <INV>.
+    Set user-defined property "Device =  INV" for instance <XLXI_67> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_67> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_67> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 237: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 237: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 237: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 237: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 237: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 237: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 237: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 237: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 237: Instantiating black box module <INV>.
+    Set user-defined property "Device =  INV" for instance <XLXI_74> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_74> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_74> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 251: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 251: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 251: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 251: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 251: Instantiating black box module <INV>.
+    Set user-defined property "Level =  XILINX" for instance <XLXI_75> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_75> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_75> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 265: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 265: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 265: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 265: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 265: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 265: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 265: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 265: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 265: Instantiating black box module <INV>.
+    Set user-defined property "Device =  INV" for instance <XLXI_76> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_76> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_76> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 279: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 279: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 279: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 279: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 279: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 279: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 279: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 279: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 279: Instantiating black box module <INV>.
+    Set user-defined property "Device =  INV" for instance <XLXI_77> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_77> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_77> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 293: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 293: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 293: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 293: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 293: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 293: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 293: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 293: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 293: Instantiating black box module <INV>.
+    Set user-defined property "Device =  INV" for instance <XLXI_79> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_79> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_79> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 307: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 307: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 307: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 307: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 307: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 307: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 307: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 307: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 307: Instantiating black box module <INV>.
+    Set user-defined property "Device =  INV" for instance <XLXI_80> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_80> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_80> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 321: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 321: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 321: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 321: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 321: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 321: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 321: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 321: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 321: Instantiating black box module <INV>.
+    Set user-defined property "Device =  INV" for instance <XLXI_82> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_82> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_82> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 335: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 335: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 335: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 335: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 335: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 335: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 335: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 335: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 335: Instantiating black box module <INV>.
+    Set user-defined property "Device =  INV" for instance <XLXI_83> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_83> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_83> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 349: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 349: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 349: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 349: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 349: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 349: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 349: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 349: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 349: Instantiating black box module <INV>.
+    Set user-defined property "Device =  INV" for instance <XLXI_84> in unit <schema>.
+    Set user-defined property "VeriModel =  INV" for instance <XLXI_84> in unit <schema>.
+    Set user-defined property "VhdlModel =  INV" for instance <XLXI_84> in unit <schema>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 363: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 363: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 363: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 363: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 363: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 363: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 363: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 363: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 363: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 377: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 377: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 377: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 377: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 377: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 377: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 377: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 377: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 377: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 391: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 391: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 391: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 391: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 391: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 391: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 391: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 391: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 391: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 405: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 405: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 405: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 405: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 405: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 405: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 405: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 405: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 405: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 419: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 419: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 419: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 419: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 419: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 419: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 419: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 419: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 419: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 433: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 433: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 433: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 433: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 433: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 433: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 433: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 433: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 433: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 447: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 447: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 447: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 447: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 447: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 447: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 447: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 447: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 447: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 461: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 461: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 461: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 461: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 461: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 461: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 461: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 461: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 461: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 475: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 475: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 475: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 475: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 475: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 475: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 475: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 475: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 475: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 489: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 489: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 489: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 489: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 489: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 489: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 489: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 489: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 489: Instantiating black box module <INV>.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 503: Unconnected output port 'D0' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 503: Unconnected output port 'D1' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 503: Unconnected output port 'D2' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 503: Unconnected output port 'D3' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 503: Unconnected output port 'D4' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 503: Unconnected output port 'D5' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 503: Unconnected output port 'D6' of component 'INV'.
+WARNING:Xst:753 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 503: Unconnected output port 'D7' of component 'INV'.
+WARNING:Xst:2211 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf" line 503: Instantiating black box module <INV>.
+Entity <schema> analyzed. Unit <schema> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <schema>.
+    Related source file is "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf".
+WARNING:Xst:1306 - Output <IO_CS> is never assigned.
+WARNING:Xst:647 - Input <FC0> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <FC1> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <FC2> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:1306 - Output <ROM> is never assigned.
+WARNING:Xst:647 - Input <AS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:1306 - Output <RW0> is never assigned.
+WARNING:Xst:1306 - Output <RW1> is never assigned.
+WARNING:Xst:647 - Input <RW_N> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:1306 - Output <IDE> is never assigned.
+WARNING:Xst:1306 - Output <FPU> is never assigned.
+WARNING:Xst:1306 - Output <FLOPPY> is never assigned.
+WARNING:Xst:1306 - Output <KBD_CS> is never assigned.
+WARNING:Xst:1306 - Output <nRW0> is never assigned.
+WARNING:Xst:1306 - Output <nRW1> is never assigned.
+WARNING:Xst:1306 - Output <isa_mem_active> is never assigned.
+WARNING:Xst:1306 - Output <DRAM_CS> is never assigned.
+WARNING:Xst:1306 - Output <ETHRNT> is never assigned.
+WARNING:Xst:647 - Input <a16> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:1306 - Output <VGA_CS> is never assigned.
+WARNING:Xst:1780 - Signal <XLXN_312> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <XLXN_309> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <XLXN_299> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_254> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <XLXN_250> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <XLXN_232> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:653 - Signal <XLXN_212> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:646 - Signal <XLXN_177> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_176> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_147> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_146> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_145> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_144> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_143> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_142> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_141> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:646 - Signal <XLXN_140> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:653 - Signal <XLXI_95_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_95_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_95_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_95_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_94_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_94_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_94_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_94_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_93_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_93_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_93_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_93_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_92_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_92_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_92_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_92_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_91_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_91_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_91_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_91_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_90_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_90_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_90_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_90_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_89_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_89_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_89_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_89_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_88_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_88_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_88_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_88_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_87_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_87_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_87_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_87_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_86_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_86_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_86_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_86_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_85_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_85_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_85_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_85_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_84_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_84_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_84_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_84_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_83_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_83_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_83_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_83_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_82_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_82_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_82_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_82_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_80_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_80_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_80_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_80_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_79_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_79_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_79_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_79_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_77_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_77_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_77_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_77_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_76_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_76_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_76_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_76_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_75_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_74_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_74_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_74_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_74_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_67_E_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_67_A2_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_67_A1_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <XLXI_67_A0_openSignal> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+Unit <schema> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+ERROR:Xst:2009 - Model 'INV' has different characteristics in destination library. The user component name 'INV' conflicts with the library primitive name 'INV'.
+ERROR:Xst:1831 - Missing ports are:O I 
+ERROR:Xst:1832 - Unknown ports are:D0 D1 D2 D3 D4 D5 D6 D7 E A0 A1 A2 
+--> 
+
+
+Total memory usage is 517976 kilobytes
+
+Number of errors   :    3 (   0 filtered)
+Number of warnings :  304 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

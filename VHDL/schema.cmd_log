@@ -1,0 +1,13 @@
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 schema.ngc schema.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+sch2vhdl -intstyle ise -family xc9500xl -tionly -w /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.sch schema.vhi 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.syr" 

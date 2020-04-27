@@ -1,0 +1,763 @@
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -i -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+hprep6 -s IEEE1149 -n mux -i mux 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Blitz/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -uc DRAM.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+vhdtdtfi -lib work mux.vhd -prj Blitz -o mux.spl -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+spl2sym -intstyle ise -family xc9500xl mux.spl /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.sym 
+vhdtdtfi -lib work mux.vhd -prj Blitz -o mux.spl -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+vhdtdtfi -lib work mux.vhd -prj Blitz -o mux.spl -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+vhdtdtfi -lib work mux.vhd -prj Blitz -o mux.spl -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+spl2sym -intstyle ise -family xc9500xl mux.spl /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.sym 
+vhdtdtfi -lib work mux.vhd -prj Blitz -o mux.spl -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+spl2sym -intstyle ise -family xc9500xl mux.spl /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.sym 
+vhdtdtfi -lib work mux.vhd -prj Blitz -o mux.spl -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+spl2sym -intstyle ise -family xc9500xl mux.spl /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.sym 
+vhdtdtfi -lib work mux.vhd -prj Blitz -o mux.spl -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+spl2sym -intstyle ise -family xc9500xl mux.spl /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.sym 
+vhdtdtfi -prj Blitz -o /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.vhi -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/vhdlinst.tft -deleteonerror -lib work mux.vhd 
+vhdtdtfi -lib work mux.vhd -prj Blitz -o mux.spl -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+spl2sym -intstyle ise -family xc9500xl -w mux.spl /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.sym 
+vhdtdtfi -prj Blitz -o /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.vhi -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/vhdlinst.tft -deleteonerror -lib work mux.vhd 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+vhdtdtfi -lib work mux.vhd -prj Blitz -o mux.spl -module mux -template /opt/Xilinx/14.7/ISE_DS/ISE//data/splfile.tft -deleteonerror 
+spl2sym -intstyle ise -family xc9500xl -w mux.spl /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.sym 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+-cwd "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual" timingan_cpld -intstyle ise "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.vm6" 
+-cwd "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual" timingan_cpld -intstyle ise "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.vm6" 
+netgen -intstyle ise -rpw 100 -ar Structure -tm mux -w -dir netgen/fit -ofmt vhdl -sim mux.nga mux_timesim.vhd 
+ibiswriter -intstyle ise -g VCCIO:LVTTL mux.pnx mux.ibs 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+pin2ucf mux.gyd -o /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.ucf -r mux.lck 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+netgen -intstyle ise -rpw 100 -ar Structure -tm mux -w -dir netgen/fit -ofmt vhdl -sim mux.nga mux_timesim.vhd 
+ibiswriter -intstyle ise -g VCCIO:LVTTL mux.pnx mux.ibs 
+-cwd "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual" timingan_cpld -intstyle ise "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.vm6" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+-cwd "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one" timingan_cpld -intstyle ise "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vm6" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+hprep6 -s IEEE1149 -n mux -i mux 
+xst -intstyle ise -ifn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.xst" -ofn "/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.syr" 
+ngdbuild -intstyle ise -dd _ngo -uc mux.ucf -p xc9572xl-VQ64-5 mux.ngc mux.ngd  
+cpldfit -intstyle ise -p xc9572xl-5-VQ64 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init high -inputs 54 -pterms 25 -unused float -power std -terminate keeper mux.ngd 
+XSLTProcess mux_build.xml 
+tsim -intstyle ise mux mux.nga 
+taengine -intstyle ise -f mux -w --format html1 -l mux_html/tim/timing_report.htm 
+hprep6 -s IEEE1149 -n mux -i mux 

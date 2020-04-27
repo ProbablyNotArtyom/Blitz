@@ -1,0 +1,11 @@
+(sym_lib_table
+  (lib (name BBlitz-rescue)(type Legacy)(uri ${KIPRJMOD}/BBlitz-rescue.lib)(options "")(descr ""))
+  (lib (name BBlitz)(type Legacy)(uri /home/artyom/Desktop/Projects/BBlitz/Hardware/BBlitz.lib)(options "")(descr ""))
+  (lib (name 68k)(type Legacy)(uri /home/artyom/Desktop/Projects/BBlitz/Hardware/68k.lib)(options "")(descr ""))
+  (lib (name mc6845)(type Legacy)(uri /home/artyom/Desktop/Projects/Blitz/Hardware/mc6845.lib)(options "")(descr ""))
+  (lib (name o_intel)(type Legacy)(uri /home/artyom/Desktop/Projects/Blitz/Hardware/o_intel.lib)(options "")(descr ""))
+  (lib (name ad724)(type Legacy)(uri /home/artyom/Desktop/Projects/Blitz/Hardware/Rev.A/ad724.lib)(options "")(descr ""))
+  (lib (name Zyre)(type Legacy)(uri /home/artyom/Desktop/Projects/Zyre/Hardware/Zyre.lib)(options "")(descr ""))
+  (lib (name M80)(type Legacy)(uri /home/artyom/Desktop/Projects/M-80/Hardware/Rev.C/M80.lib)(options "")(descr ""))
+  (lib (name 74hcxx)(type Legacy)(uri /home/artyom/Documents/KiCAD/LIB/74hcxx.lib)(options "")(descr ""))
+)

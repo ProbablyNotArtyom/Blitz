@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<symbol version="7" name="d3_8e">
+    <symboltype>BLOCK</symboltype>
+    <timestamp>2000-1-1T10:10:10</timestamp>
+    <attr value="D3_8E_MXILINX" name="VeriModel" />
+    <attr value="Copy Of Symbol With Level: MXILINX" name="Level" />
+    <attr value="D3_8E_MXILINX" name="VhdlModel" />
+    <attr value="2.0.0" name="Libver" />
+    <pin polarity="Input" x="0" y="-576" name="A0" />
+    <pin polarity="Input" x="0" y="-512" name="A1" />
+    <pin polarity="Input" x="0" y="-448" name="A2" />
+    <pin polarity="Input" x="0" y="-128" name="E" />
+    <pin polarity="Output" x="384" y="-576" name="D0" />
+    <pin polarity="Output" x="384" y="-512" name="D1" />
+    <pin polarity="Output" x="384" y="-448" name="D2" />
+    <pin polarity="Output" x="384" y="-384" name="D3" />
+    <pin polarity="Output" x="384" y="-320" name="D4" />
+    <pin polarity="Output" x="384" y="-256" name="D5" />
+    <pin polarity="Output" x="384" y="-192" name="D6" />
+    <pin polarity="Output" x="384" y="-128" name="D7" />
+    <graph>
+        <line x2="64" y1="-576" y2="-576" x1="0" />
+        <line x2="64" y1="-512" y2="-512" x1="0" />
+        <line x2="64" y1="-448" y2="-448" x1="0" />
+        <line x2="320" y1="-576" y2="-576" x1="384" />
+        <line x2="320" y1="-512" y2="-512" x1="384" />
+        <line x2="320" y1="-448" y2="-448" x1="384" />
+        <line x2="320" y1="-384" y2="-384" x1="384" />
+        <line x2="320" y1="-320" y2="-320" x1="384" />
+        <line x2="320" y1="-256" y2="-256" x1="384" />
+        <line x2="320" y1="-192" y2="-192" x1="384" />
+        <line x2="320" y1="-128" y2="-128" x1="384" />
+        <rect width="256" x="64" y="-640" height="576" />
+        <line x2="64" y1="-128" y2="-128" x1="0" />
+        <text style="fontsize:24;fontname:Arial" x="80" y="-576">A0</text>
+        <text style="fontsize:24;fontname:Arial" x="80" y="-512">A1</text>
+        <text style="fontsize:24;fontname:Arial" x="80" y="-448">A2</text>
+        <text style="alignment:RIGHT;fontsize:24;fontname:Arial" x="304" y="-576">D0</text>
+        <text style="alignment:RIGHT;fontsize:24;fontname:Arial" x="304" y="-512">D1</text>
+        <text style="alignment:RIGHT;fontsize:24;fontname:Arial" x="304" y="-448">D2</text>
+        <text style="alignment:RIGHT;fontsize:24;fontname:Arial" x="304" y="-384">D3</text>
+        <text style="alignment:RIGHT;fontsize:24;fontname:Arial" x="304" y="-320">D4</text>
+        <text style="alignment:RIGHT;fontsize:24;fontname:Arial" x="304" y="-256">D5</text>
+        <text style="alignment:RIGHT;fontsize:24;fontname:Arial" x="304" y="-192">D6</text>
+        <text style="alignment:RIGHT;fontsize:24;fontname:Arial" x="304" y="-128">D7</text>
+        <text style="fontsize:24;fontname:Arial" x="80" y="-128">E</text>
+        <text style="alignment:CENTER;fontsize:56;fontname:Arial" x="196" y="-688">D3_8E</text>
+    </graph>
+</symbol>

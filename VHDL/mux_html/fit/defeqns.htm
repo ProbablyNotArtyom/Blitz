@@ -1,0 +1,312 @@
+<html><head><link type='text/css' href='style.css' rel='stylesheet'></head><body class='pgBgnd'>
+<h3 align='center'>Equations</h3>
+<table width='90%' align='center' border='1' cellpadding='0' cellspacing='0'>
+<tr><td>
+</td></tr><tr><td>
+********** Mapped Logic **********
+</td></tr><tr><td>
+</td></tr><tr><td>
+$OpTx$$OpTx$FX_DC$46_INV$137 <= ((NOT cntr(3) AND NOT cntr(2) AND NOT cntr(0))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cntr(3) AND NOT cntr(2) AND NOT cntr(1)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+BYTE0 <= ((SIZ0 AND NOT a0 AND NOT SIZ1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (SIZ0 AND NOT a0 AND NOT a1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (SIZ0 AND NOT SIZ1 AND NOT a1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SIZ0 AND SIZ1 AND NOT a1));
+</td></tr><tr><td>
+</td></tr><tr><td>
+BYTE1 <= ((a0 AND a1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (SIZ0 AND NOT SIZ1 AND NOT a1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT SIZ0 AND NOT a0 AND SIZ1 AND NOT a1));
+</td></tr><tr><td>
+</td></tr><tr><td>
+BYTE2 <= ((a1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (SIZ0 AND NOT a0 AND NOT SIZ1));
+</td></tr><tr><td>
+</td></tr><tr><td>
+BYTE3 <= NOT ((NOT a0 AND NOT a1));
+</td></tr><tr><td>
+</td></tr><tr><td>
+CDIS <= '0';
+</td></tr><tr><td>
+</td></tr><tr><td>
+DRAM_CONFIG <= NOT (((a26 AND a27 AND R_BTN AND NOT dram_config_sel AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND a27 AND R_BTN AND NOT dram_config_sel AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND a27 AND R_BTN AND NOT dram_config_sel AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+DRAM_CS <= NOT (((a26 AND a27 AND R_BTN AND dram_config_sel AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND a27 AND R_BTN AND dram_config_sel AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND a27 AND R_BTN AND dram_config_sel AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+DSACK0 <= NOT (((NOT a26 AND NOT a20 AND NOT a19 AND NOT $OpTx$$OpTx$FX_DC$46_INV$137)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a19 AND cntr(3) AND cntr(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND cntr(3) AND cntr(2) AND a16)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a27 AND cntr(3) AND cntr(2) AND NOT dram_config_sel)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (FC2 AND FC1 AND FC0 AND NOT $OpTx$$OpTx$FX_DC$46_INV$137)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND cntr(3) AND cntr(2) AND cntr(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	I_IOCHRDY)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND cntr(3) AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	I_IOCHRDY)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND a27 AND R_BTN AND dram_config_sel AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT DRAM_DTACK AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND a27 AND R_BTN AND dram_config_sel AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT DRAM_DTACK AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND a27 AND R_BTN AND dram_config_sel AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT DRAM_DTACK AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT R_BTN AND NOT $OpTx$$OpTx$FX_DC$46_INV$137)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ECS AND NOT $OpTx$$OpTx$FX_DC$46_INV$137)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (AS AND NOT $OpTx$$OpTx$FX_DC$46_INV$137)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a27 AND NOT $OpTx$$OpTx$FX_DC$46_INV$137)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a21 AND NOT $OpTx$$OpTx$FX_DC$46_INV$137)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+DSACK1 <= ((NOT R_BTN)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ECS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a27 AND NOT a20)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a27 AND a19)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a27 AND NOT cntr(3))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a27 AND NOT cntr(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (EXP9_.EXP)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a27 AND a16)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT cntr(3) AND NOT dram_config_sel)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT cntr(2) AND NOT dram_config_sel)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND dram_config_sel AND DRAM_DTACK)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (FC2 AND FC1 AND FC0)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a27 AND a21));
+</td></tr><tr><td>
+</td></tr><tr><td>
+ETHRNT <= NOT (((NOT a26 AND NOT a27 AND a21 AND NOT a20 AND a19 AND R_BTN AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND a21 AND NOT a20 AND a19 AND R_BTN AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND a21 AND NOT a20 AND a19 AND R_BTN AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+</td></tr><tr><td>
+FLOPPY <= NOT (((NOT a26 AND NOT a27 AND NOT a21 AND NOT a20 AND a19 AND R_BTN AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND NOT a20 AND a19 AND R_BTN AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND NOT a20 AND a19 AND R_BTN AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+FPU <= NOT ((FC2 AND FC1 AND FC0 AND NOT a16));
+</td></tr><tr><td>
+</td></tr><tr><td>
+HALT <= R_BTN;
+</td></tr><tr><td>
+</td></tr><tr><td>
+IDE <= NOT (((NOT a26 AND NOT a27 AND NOT a21 AND a20 AND NOT a19 AND R_BTN AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND a20 AND NOT a19 AND R_BTN AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND a20 AND NOT a19 AND R_BTN AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+IO_CS <= NOT (((NOT a26 AND NOT a27 AND NOT a21 AND NOT a20 AND a19 AND R_BTN AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND a20 AND NOT a19 AND R_BTN AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND a20 AND NOT a19 AND R_BTN AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND a20 AND NOT a19 AND R_BTN AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND NOT a20 AND a19 AND R_BTN AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND NOT a20 AND a19 AND R_BTN AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+I_ALE <= ((a26 AND NOT a27 AND NOT cntr(3) AND NOT cntr(2) AND NOT cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT cntr(3) AND NOT cntr(2) AND NOT cntr(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT cntr(3) AND NOT cntr(2) AND NOT cntr(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT cntr(3) AND NOT cntr(2) AND NOT cntr(0) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC0 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT cntr(3) AND NOT cntr(2) AND NOT cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT cntr(3) AND NOT cntr(2) AND NOT cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC0 AND ECS AND NOT AS));
+</td></tr><tr><td>
+</td></tr><tr><td>
+I_DIR <= ((a26 AND NOT a27 AND RW_N AND R_BTN AND NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND RW_N AND R_BTN AND NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND RW_N AND R_BTN AND NOT FC0 AND ECS AND NOT AS));
+</td></tr><tr><td>
+</td></tr><tr><td>
+I_IOR <= NOT (((a26 AND NOT a27 AND NOT a21 AND RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC0 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC0 AND ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+I_IOW <= NOT (((a26 AND NOT a27 AND NOT a21 AND NOT RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND NOT RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND NOT RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND NOT RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC0 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND NOT RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND NOT a21 AND NOT RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC0 AND ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+I_MEMR <= NOT (((a26 AND NOT a27 AND a21 AND RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC0 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC0 AND ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+I_MEMW <= NOT (((a26 AND NOT a27 AND a21 AND NOT RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND NOT RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND NOT RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC2 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND NOT RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC1 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND NOT RW_N AND cntr(3) AND R_BTN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT FC0 AND ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND NOT a27 AND a21 AND NOT RW_N AND cntr(2) AND cntr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	R_BTN AND NOT FC0 AND ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+KBD_CS <= NOT (((NOT a26 AND NOT a27 AND NOT a21 AND a20 AND a19 AND R_BTN AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND a20 AND a19 AND R_BTN AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND a20 AND a19 AND R_BTN AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+READ_n <= NOT RW_N;
+</td></tr><tr><td>
+</td></tr><tr><td>
+RESET <= R_BTN;
+</td></tr><tr><td>
+</td></tr><tr><td>
+ROM <= NOT (((NOT a26 AND NOT a27 AND NOT a21 AND NOT a20 AND NOT a19 AND R_BTN AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND NOT a20 AND NOT a19 AND R_BTN AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND NOT a21 AND NOT a20 AND NOT a19 AND R_BTN AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+RW0 <= NOT (((NOT a26 AND a27 AND NOT a21 AND NOT RW_N AND R_BTN AND NOT FC2 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a27 AND NOT a21 AND NOT RW_N AND R_BTN AND NOT FC1 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a27 AND NOT a21 AND NOT RW_N AND R_BTN AND NOT FC0 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+RW1 <= NOT (((NOT a26 AND a27 AND a21 AND NOT RW_N AND R_BTN AND NOT FC2 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a27 AND a21 AND NOT RW_N AND R_BTN AND NOT FC1 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a27 AND a21 AND NOT RW_N AND R_BTN AND NOT FC0 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+STERM <= '1';
+</td></tr><tr><td>
+</td></tr><tr><td>
+VGA_CS <= NOT (((NOT a26 AND NOT a27 AND a21 AND NOT a20 AND NOT a19 AND R_BTN AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND a21 AND NOT a20 AND NOT a19 AND R_BTN AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND NOT a27 AND a21 AND NOT a20 AND NOT a19 AND R_BTN AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)));
+</td></tr><tr><td>
+FTCPE_cntr0: FTCPE port map (cntr(0),'1',NOT CLK,NOT cntr(3)/cntr(3)_RSTF__$INT,'0');
+</td></tr><tr><td>
+FTCPE_cntr1: FTCPE port map (cntr(1),cntr(0),NOT CLK,NOT cntr(3)/cntr(3)_RSTF__$INT,'0');
+</td></tr><tr><td>
+FTCPE_cntr2: FTCPE port map (cntr(2),cntr_T(2),NOT CLK,NOT cntr(3)/cntr(3)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cntr_T(2) <= (cntr(0) AND cntr(1));
+</td></tr><tr><td>
+FTCPE_cntr3: FTCPE port map (cntr(3),cntr_T(3),NOT CLK,NOT cntr(3)/cntr(3)_RSTF__$INT,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cntr_T(3) <= (cntr(2) AND cntr(0) AND cntr(1));
+</td></tr><tr><td>
+</td></tr><tr><td>
+cntr(3)/cntr(3)_RSTF__$INT <= (R_BTN AND ECS);
+</td></tr><tr><td>
+FTCPE_dram_config_sel: FTCPE port map (dram_config_sel,dram_config_sel_T,RW_N,NOT R_BTN,'0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dram_config_sel_T <= ((a26 AND a27 AND R_BTN AND NOT dram_config_sel AND NOT FC2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND a27 AND R_BTN AND NOT dram_config_sel AND NOT FC1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (a26 AND a27 AND R_BTN AND NOT dram_config_sel AND NOT FC0 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ECS AND NOT AS));
+</td></tr><tr><td>
+</td></tr><tr><td>
+nRW0 <= NOT (((NOT a26 AND a27 AND NOT a21 AND RW_N AND R_BTN AND NOT FC2 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a27 AND NOT a21 AND RW_N AND R_BTN AND NOT FC1 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a27 AND NOT a21 AND RW_N AND R_BTN AND NOT FC0 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)));
+</td></tr><tr><td>
+</td></tr><tr><td>
+nRW1 <= NOT (((NOT a26 AND a27 AND a21 AND RW_N AND R_BTN AND NOT FC2 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a27 AND a21 AND RW_N AND R_BTN AND NOT FC1 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT a26 AND a27 AND a21 AND RW_N AND R_BTN AND NOT FC0 AND ECS AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT AS)));
+</td></tr><tr><td>
+Register Legend:
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FDCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FTCPE (Q,D,C,CLR,PRE,CE); 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LDCP  (Q,D,G,CLR,PRE); 
+</td></tr><tr><td>
+</td></tr>
+</table>
+<form><span class="pgRef"><table width="90%" align="center"><tr>
+<td align="left"><input type="button" onclick="javascript:parent.leftnav.showTop()" onmouseover="window.status='goto top of page'; return true;" onmouseout="window.status=''" value="back to top"></td>
+<td align="right"><input type="button" onclick="window.print()" onmouseover="window.status='print page'; return true;" onmouseout="window.status=''" value="print page"></td>
+</tr></table></span></form>
+</body></html>

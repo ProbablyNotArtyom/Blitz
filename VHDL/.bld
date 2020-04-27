@@ -1,0 +1,13 @@
+Release 14.7 ngdbuild P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Command Line: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/ngdbuild -intstyle
+ise -dd _ngo -uc .ucf -p xc9572xl-VQ64-5 .ngc .ngd
+
+ERROR:NgdBuild:256 - No base name given in netlist specification ".ngc".
+ERROR:NgdBuild:28 - edif2ngd did not successfully complete.  Please check
+   preceding errors for root cause.
+Total REAL time to NGDBUILD completion:  0 sec
+Total CPU time to NGDBUILD completion:   0 sec
+
+Writing NGDBUILD log file ".bld"...

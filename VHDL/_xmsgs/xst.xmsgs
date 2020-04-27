@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="warning" file="Xst" num="819" delta="old" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd</arg>&quot; line <arg fmt="%d" index="2">114</arg>: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+<arg fmt="%s" index="3">&lt;RW_N&gt;</arg>
+</msg>
+
+<msg type="info" file="Xst" num="1561" delta="new" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd</arg>&quot; line <arg fmt="%d" index="2">237</arg>: Mux is complete : default of case is discarded
+</msg>
+
+<msg type="warning" file="Xst" num="819" delta="new" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd</arg>&quot; line <arg fmt="%d" index="2">120</arg>: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+<arg fmt="%s" index="3">&lt;a21&gt;, &lt;a20&gt;, &lt;a19&gt;, &lt;FC0&gt;, &lt;FC1&gt;, &lt;FC2&gt;, &lt;R_BTN&gt;, &lt;a27&gt;, &lt;a26&gt;, &lt;a16&gt;, &lt;RW_N&gt;, &lt;dram_config_sel&gt;</arg>
+</msg>
+
+<msg type="warning" file="Xst" num="819" delta="new" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd</arg>&quot; line <arg fmt="%d" index="2">369</arg>: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+<arg fmt="%s" index="3">&lt;isa_io_active&gt;, &lt;isa_mem_active&gt;, &lt;isa_ready&gt;, &lt;dram_cs_async&gt;, &lt;dram_config_sel&gt;, &lt;DRAM_DTACK&gt;, &lt;cntr&gt;, &lt;wait_long&gt;, &lt;bus_32bit&gt;, &lt;bus_16bit&gt;</arg>
+</msg>
+
+<msg type="warning" file="Xst" num="819" delta="new" >&quot;<arg fmt="%s" index="1">/home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd</arg>&quot; line <arg fmt="%d" index="2">402</arg>: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+<arg fmt="%s" index="3">&lt;isa_io_active&gt;, &lt;isa_mem_active&gt;, &lt;RW_N&gt;, &lt;I_IOCHRDY&gt;</arg>
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">DS</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+</msg>
+
+</messages>
+

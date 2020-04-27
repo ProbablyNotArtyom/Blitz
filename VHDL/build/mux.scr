@@ -1,0 +1,1 @@
+run -ifn mux.prj -ofn mux.ngc -ifmt mixed  -top ./ -ofmt NGC -p xc9572xl-5-VQ64

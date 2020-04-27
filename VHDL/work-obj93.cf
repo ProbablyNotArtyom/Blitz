@@ -1,0 +1,4 @@
+v 4
+file . "mux.vhd" "d8ecb2517eadcbf1f15f67848babcf42b354fdbd" "20190121055128.143":
+  entity mux at 1( 0) + 0 on 11;
+  architecture rtl of mux at 71( 1387) + 0 on 12;

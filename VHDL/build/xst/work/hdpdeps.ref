@@ -1,0 +1,6 @@
+V3 3
+FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd 2019/01/21.01:34:50 P.20131013
+EN work/mux 0 FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd \
+      PB ieee/std_logic_1164 1381692176
+AR work/mux/rtl 0 \
+      FL /home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd EN work/mux 0

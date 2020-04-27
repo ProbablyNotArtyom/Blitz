@@ -1,0 +1,6 @@
+(sym_lib_table
+  (lib (name 68k)(type Legacy)(uri /home/artyom/Desktop/Projects/C68/Hardware/68k.lib)(options "")(descr ""))
+  (lib (name BBlitz)(type Legacy)(uri /home/artyom/Desktop/Projects/C68/Hardware/BBlitz.lib)(options "")(descr ""))
+  (lib (name VSram)(type Legacy)(uri /home/artyom/Desktop/Projects/C68/Hardware/VSram.lib)(options "")(descr ""))
+  (lib (name o_intel)(type Legacy)(uri /home/artyom/Desktop/Projects/Blitz/Hardware/o_intel.lib)(options "")(descr ""))
+)

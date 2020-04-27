@@ -1,0 +1,10 @@
+AR d2_4e_mxilinx_schema behavioral /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf sub00/vhpl03 1555675502
+EN d3_8e_mxilinx_schema NULL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf sub00/vhpl04 1555673400
+EN schema NULL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/schema.vhf sub00/vhpl06 1557579360
+AR schema behavioral /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/schema.vhf sub00/vhpl07 1557579361
+AR d3_8e_mxilinx_schema behavioral /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf sub00/vhpl05 1555673401
+AR flipflop_d behavioral /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/ext.vhd sub00/vhpl09 1557553637
+EN mux NULL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd sub00/vhpl00 1557579362
+AR mux rtl /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/mux.vhd sub00/vhpl01 1557579363
+EN flipflop_d NULL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual_for_real_the_good_one/ext.vhd sub00/vhpl08 1557553636
+EN d2_4e_mxilinx_schema NULL /home/artyom/Desktop/Projects/BBlitz/VHDL/Mux_actual/schema.vhf sub00/vhpl02 1555675501

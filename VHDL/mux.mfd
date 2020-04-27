@@ -1,0 +1,641 @@
+MDF Database:  version 1.0
+MDF_INFO | mux | XC9572XL-5-VQ64
+MACROCELL | 3 | 7 | nRW1_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 10 | a26  | a27  | a21  | RW_N  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 10 | 17 | 1 | 16 | 84 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !nRW1 = !a26 & a27 & a21 & RW_N & R_BTN & !FC2 & ECS & 
+	!AS
+	# !a26 & a27 & a21 & RW_N & R_BTN & !FC1 & ECS & 
+	!AS
+	# !a26 & a27 & a21 & RW_N & R_BTN & !FC0 & ECS & 
+	!AS;
+
+MACROCELL | 2 | 13 | DRAM_CONFIG_OBUF
+ATTRIBUTES | 264962 | 0
+OUTPUTMC | 1 | 2 | 14
+INPUTS | 12 | a26  | a27  | R_BTN  | dram_config_sel  | FC0  | ECS  | AS  | FC1  | FC2  | cntr<3>  | cntr<2>  | cntr<1>
+INPUTMC | 4 | 2 | 17 | 2 | 5 | 2 | 6 | 2 | 12
+INPUTP | 8 | 17 | 1 | 43 | 90 | 25 | 3 | 92 | 89
+EXPORTS | 1 | 2 | 14
+EQ | 8 | 
+   !DRAM_CONFIG = a26 & a27 & R_BTN & !dram_config_sel & !FC2 & 
+	ECS & !AS
+	# a26 & a27 & R_BTN & !dram_config_sel & !FC1 & 
+	ECS & !AS
+	# a26 & a27 & R_BTN & !dram_config_sel & !FC0 & 
+	ECS & !AS;
+    DRAM_CONFIG_OBUF.EXP  =  a26 & !a27 & !cntr<3> & !cntr<2> & !cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS
+
+MACROCELL | 2 | 15 | DRAM_CS_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 9 | a26  | a27  | R_BTN  | dram_config_sel  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTMC | 1 | 2 | 17
+INPUTP | 8 | 17 | 1 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !DRAM_CS = a26 & a27 & R_BTN & dram_config_sel & !FC2 & 
+	ECS & !AS
+	# a26 & a27 & R_BTN & dram_config_sel & !FC1 & 
+	ECS & !AS
+	# a26 & a27 & R_BTN & dram_config_sel & !FC0 & 
+	ECS & !AS;
+
+MACROCELL | 2 | 9 | IO_CS_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 12 | a26  | a27  | a21  | a20  | a19  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2  | I_IOR_OBUF.EXP
+INPUTMC | 1 | 2 | 10
+INPUTP | 11 | 17 | 1 | 16 | 15 | 13 | 43 | 90 | 25 | 3 | 92 | 89
+IMPORTS | 1 | 2 | 10
+EQ | 13 | 
+   !IO_CS = !a26 & !a27 & !a21 & a20 & !a19 & R_BTN & !FC2 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & a20 & !a19 & R_BTN & !FC1 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & a20 & !a19 & R_BTN & !FC0 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & !a20 & a19 & R_BTN & !FC1 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & !a20 & a19 & R_BTN & !FC0 & 
+	ECS & !AS
+;Imported pterms FB3_11
+	# !a26 & !a27 & !a21 & !a20 & a19 & R_BTN & !FC2 & 
+	ECS & !AS;
+
+MACROCELL | 2 | 5 | cntr<3>
+ATTRIBUTES | 4358932 | 0
+OUTPUTMC | 12 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 14 | 1 | 0 | 1 | 3 | 2 | 3 | 2 | 16 | 1 | 2 | 1 | 5 | 1 | 6 | 2 | 13
+INPUTS | 4 | cntr<2>  | cntr<0>  | cntr<1>  | cntr<3>/cntr<3>_RSTF__$INT
+INPUTMC | 4 | 2 | 6 | 2 | 2 | 2 | 12 | 2 | 0
+EQ | 3 | 
+   cntr<3>.T = cntr<2> & cntr<0> & cntr<1>;
+   !cntr<3>.CLK = CLK;	// GCK
+   cntr<3>.AR = !cntr<3>/cntr<3>_RSTF__$INT;
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 2 | 6 | cntr<2>
+ATTRIBUTES | 4358932 | 0
+OUTPUTMC | 16 | 2 | 5 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 14 | 1 | 0 | 1 | 3 | 2 | 3 | 2 | 16 | 1 | 2 | 1 | 5 | 1 | 6 | 2 | 2 | 2 | 6 | 2 | 11 | 2 | 13
+INPUTS | 13 | cntr<0>  | cntr<1>  | cntr<3>/cntr<3>_RSTF__$INT  | a26  | a27  | a21  | RW_N  | cntr<2>  | R_BTN  | FC2  | ECS  | AS  | FC1
+INPUTMC | 4 | 2 | 2 | 2 | 12 | 2 | 0 | 2 | 6
+INPUTP | 9 | 17 | 1 | 16 | 84 | 43 | 89 | 25 | 3 | 92
+EXPORTS | 1 | 2 | 7
+EQ | 7 | 
+   cntr<2>.T = cntr<0> & cntr<1>;
+   !cntr<2>.CLK = CLK;	// GCK
+   cntr<2>.AR = !cntr<3>/cntr<3>_RSTF__$INT;
+    cntr<2>.EXP  =  a26 & !a27 & a21 & !RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS
+	# a26 & !a27 & a21 & !RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC1 & ECS & !AS
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 2 | 2 | cntr<0>
+ATTRIBUTES | 4358932 | 0
+OUTPUTMC | 8 | 2 | 5 | 2 | 6 | 2 | 12 | 2 | 14 | 2 | 16 | 1 | 2 | 1 | 6 | 2 | 3
+INPUTS | 11 | cntr<3>/cntr<3>_RSTF__$INT  | a26  | a27  | a21  | RW_N  | cntr<2>  | cntr<1>  | R_BTN  | FC2  | ECS  | AS
+INPUTMC | 3 | 2 | 0 | 2 | 6 | 2 | 12
+INPUTP | 8 | 17 | 1 | 16 | 84 | 43 | 89 | 25 | 3
+EXPORTS | 1 | 2 | 3
+EQ | 5 | 
+   cntr<0>.T = Vcc;
+   !cntr<0>.CLK = CLK;	// GCK
+   cntr<0>.AR = !cntr<3>/cntr<3>_RSTF__$INT;
+    cntr<0>.EXP  =  a26 & !a27 & !a21 & !RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 2 | 12 | cntr<1>
+ATTRIBUTES | 4358932 | 0
+OUTPUTMC | 13 | 2 | 5 | 2 | 6 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 14 | 2 | 16 | 1 | 2 | 2 | 3 | 1 | 6 | 2 | 2 | 2 | 11 | 2 | 13
+INPUTS | 2 | cntr<0>  | cntr<3>/cntr<3>_RSTF__$INT
+INPUTMC | 2 | 2 | 2 | 2 | 0
+EQ | 3 | 
+   cntr<1>.T = cntr<0>;
+   !cntr<1>.CLK = CLK;	// GCK
+   cntr<1>.AR = !cntr<3>/cntr<3>_RSTF__$INT;
+GLOBALS | 1 | 2 | CLK
+
+MACROCELL | 2 | 17 | dram_config_sel
+ATTRIBUTES | 4326196 | 0
+OUTPUTMC | 6 | 2 | 13 | 2 | 15 | 2 | 17 | 1 | 0 | 1 | 2 | 1 | 5
+INPUTS | 10 | a26  | a27  | R_BTN  | dram_config_sel  | FC0  | ECS  | AS  | FC1  | FC2  | RW_N
+INPUTMC | 1 | 2 | 17
+INPUTP | 9 | 17 | 1 | 43 | 90 | 25 | 3 | 92 | 89 | 84
+EQ | 8 | 
+   dram_config_sel.T = a26 & a27 & R_BTN & !dram_config_sel & !FC2 & 
+	ECS & !AS
+	# a26 & a27 & R_BTN & !dram_config_sel & !FC1 & 
+	ECS & !AS
+	# a26 & a27 & R_BTN & !dram_config_sel & !FC0 & 
+	ECS & !AS;
+   dram_config_sel.CLK = RW_N;
+   dram_config_sel.AR = !R_BTN;
+
+MACROCELL | 3 | 1 | ETHRNT_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 11 | a26  | a27  | a21  | a20  | a19  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 11 | 17 | 1 | 16 | 15 | 13 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !ETHRNT = !a26 & !a27 & a21 & !a20 & a19 & R_BTN & !FC2 & 
+	ECS & !AS
+	# !a26 & !a27 & a21 & !a20 & a19 & R_BTN & !FC1 & 
+	ECS & !AS
+	# !a26 & !a27 & a21 & !a20 & a19 & R_BTN & !FC0 & 
+	ECS & !AS;
+
+MACROCELL | 2 | 10 | I_IOR_OBUF
+ATTRIBUTES | 264962 | 0
+OUTPUTMC | 1 | 2 | 9
+INPUTS | 16 | a26  | a27  | a21  | RW_N  | cntr<3>  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2  | cntr<2>  | cntr<1>  | a20  | a19  | VGA_CS_OBUF.EXP
+INPUTMC | 4 | 2 | 5 | 2 | 6 | 2 | 12 | 2 | 11
+INPUTP | 12 | 17 | 1 | 16 | 84 | 43 | 90 | 25 | 3 | 92 | 89 | 15 | 13
+EXPORTS | 1 | 2 | 9
+IMPORTS | 1 | 2 | 11
+EQ | 15 | 
+   !I_IOR = a26 & !a27 & !a21 & RW_N & cntr<3> & R_BTN & 
+	!FC2 & ECS & !AS
+	# a26 & !a27 & !a21 & RW_N & cntr<3> & R_BTN & 
+	!FC1 & ECS & !AS
+	# a26 & !a27 & !a21 & RW_N & cntr<3> & R_BTN & 
+	!FC0 & ECS & !AS
+	# a26 & !a27 & !a21 & RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC0 & ECS & !AS
+;Imported pterms FB3_12
+	# a26 & !a27 & !a21 & RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS
+	# a26 & !a27 & !a21 & RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC1 & ECS & !AS;
+    I_IOR_OBUF.EXP  =  !a26 & !a27 & !a21 & !a20 & a19 & R_BTN & !FC2 & 
+	ECS & !AS
+
+MACROCELL | 2 | 8 | I_MEMR_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 14 | a26  | a27  | a21  | RW_N  | cntr<3>  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2  | cntr<2>  | cntr<1>  | I_MEMW_OBUF.EXP
+INPUTMC | 4 | 2 | 5 | 2 | 6 | 2 | 12 | 2 | 7
+INPUTP | 10 | 17 | 1 | 16 | 84 | 43 | 90 | 25 | 3 | 92 | 89
+IMPORTS | 1 | 2 | 7
+EQ | 13 | 
+   !I_MEMR = a26 & !a27 & a21 & RW_N & cntr<3> & R_BTN & 
+	!FC2 & ECS & !AS
+	# a26 & !a27 & a21 & RW_N & cntr<3> & R_BTN & 
+	!FC1 & ECS & !AS
+	# a26 & !a27 & a21 & RW_N & cntr<3> & R_BTN & 
+	!FC0 & ECS & !AS
+	# a26 & !a27 & a21 & RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC1 & ECS & !AS
+	# a26 & !a27 & a21 & RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC0 & ECS & !AS
+;Imported pterms FB3_8
+	# a26 & !a27 & a21 & RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS;
+
+MACROCELL | 2 | 7 | I_MEMW_OBUF
+ATTRIBUTES | 264962 | 0
+OUTPUTMC | 1 | 2 | 8
+INPUTS | 14 | a26  | a27  | a21  | RW_N  | cntr<3>  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2  | cntr<2>  | cntr<1>  | cntr<2>.EXP
+INPUTMC | 4 | 2 | 5 | 2 | 6 | 2 | 12 | 2 | 6
+INPUTP | 10 | 17 | 1 | 16 | 84 | 43 | 90 | 25 | 3 | 92 | 89
+EXPORTS | 1 | 2 | 8
+IMPORTS | 1 | 2 | 6
+EQ | 15 | 
+   !I_MEMW = a26 & !a27 & a21 & !RW_N & cntr<3> & R_BTN & 
+	!FC2 & ECS & !AS
+	# a26 & !a27 & a21 & !RW_N & cntr<3> & R_BTN & 
+	!FC1 & ECS & !AS
+	# a26 & !a27 & a21 & !RW_N & cntr<3> & R_BTN & 
+	!FC0 & ECS & !AS
+	# a26 & !a27 & a21 & !RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC0 & ECS & !AS
+;Imported pterms FB3_7
+	# a26 & !a27 & a21 & !RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS
+	# a26 & !a27 & a21 & !RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC1 & ECS & !AS;
+    I_MEMW_OBUF.EXP  =  a26 & !a27 & a21 & RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS
+
+MACROCELL | 2 | 1 | KBD_CS_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 11 | a26  | a27  | a21  | a20  | a19  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 11 | 17 | 1 | 16 | 15 | 13 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !KBD_CS = !a26 & !a27 & !a21 & a20 & a19 & R_BTN & !FC2 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & a20 & a19 & R_BTN & !FC1 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & a20 & a19 & R_BTN & !FC0 & 
+	ECS & !AS;
+
+MACROCELL | 3 | 10 | RW0_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 10 | a26  | a27  | a21  | RW_N  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 10 | 17 | 1 | 16 | 84 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !RW0 = !a26 & a27 & !a21 & !RW_N & R_BTN & !FC2 & ECS & 
+	!AS
+	# !a26 & a27 & !a21 & !RW_N & R_BTN & !FC1 & ECS & 
+	!AS
+	# !a26 & a27 & !a21 & !RW_N & R_BTN & !FC0 & ECS & 
+	!AS;
+
+MACROCELL | 3 | 2 | RW1_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 10 | a26  | a27  | a21  | RW_N  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 10 | 17 | 1 | 16 | 84 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !RW1 = !a26 & a27 & a21 & !RW_N & R_BTN & !FC2 & ECS & 
+	!AS
+	# !a26 & a27 & a21 & !RW_N & R_BTN & !FC1 & ECS & 
+	!AS
+	# !a26 & a27 & a21 & !RW_N & R_BTN & !FC0 & ECS & 
+	!AS;
+
+MACROCELL | 3 | 3 | nRW0_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 10 | a26  | a27  | a21  | RW_N  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 10 | 17 | 1 | 16 | 84 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !nRW0 = !a26 & a27 & !a21 & RW_N & R_BTN & !FC2 & ECS & 
+	!AS
+	# !a26 & a27 & !a21 & RW_N & R_BTN & !FC1 & ECS & 
+	!AS
+	# !a26 & a27 & !a21 & RW_N & R_BTN & !FC0 & ECS & 
+	!AS;
+
+MACROCELL | 2 | 14 | I_ALE_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 13 | a26  | a27  | cntr<3>  | cntr<2>  | cntr<0>  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2  | cntr<1>  | DRAM_CONFIG_OBUF.EXP
+INPUTMC | 5 | 2 | 5 | 2 | 6 | 2 | 2 | 2 | 12 | 2 | 13
+INPUTP | 8 | 17 | 1 | 43 | 90 | 25 | 3 | 92 | 89
+IMPORTS | 1 | 2 | 13
+EQ | 13 | 
+   I_ALE = a26 & !a27 & !cntr<3> & !cntr<2> & !cntr<0> & 
+	R_BTN & !FC2 & ECS & !AS
+	# a26 & !a27 & !cntr<3> & !cntr<2> & !cntr<0> & 
+	R_BTN & !FC1 & ECS & !AS
+	# a26 & !a27 & !cntr<3> & !cntr<2> & !cntr<0> & 
+	R_BTN & !FC0 & ECS & !AS
+	# a26 & !a27 & !cntr<3> & !cntr<2> & !cntr<1> & 
+	R_BTN & !FC1 & ECS & !AS
+	# a26 & !a27 & !cntr<3> & !cntr<2> & !cntr<1> & 
+	R_BTN & !FC0 & ECS & !AS
+;Imported pterms FB3_14
+	# a26 & !a27 & !cntr<3> & !cntr<2> & !cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS;
+
+MACROCELL | 3 | 11 | BYTE0_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 4 | SIZ0  | SIZ1  | a1  | a0
+INPUTP | 4 | 7 | 9 | 12 | 11
+EQ | 4 | 
+   BYTE0 = SIZ0 & !a0 & !SIZ1
+	# SIZ0 & !a0 & !a1
+	# SIZ0 & !SIZ1 & !a1
+	# !SIZ0 & SIZ1 & !a1;
+
+MACROCELL | 3 | 9 | BYTE1_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 4 | a0  | a1  | SIZ0  | SIZ1
+INPUTP | 4 | 11 | 12 | 7 | 9
+EQ | 3 | 
+   BYTE1 = a0 & a1
+	# SIZ0 & !SIZ1 & !a1
+	# !SIZ0 & !a0 & SIZ1 & !a1;
+
+MACROCELL | 3 | 13 | BYTE2_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 4 | a1  | SIZ0  | a0  | SIZ1
+INPUTP | 4 | 12 | 7 | 11 | 9
+EQ | 2 | 
+   BYTE2 = a1
+	# SIZ0 & !a0 & !SIZ1;
+
+MACROCELL | 3 | 5 | BYTE3_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 2 | a0  | a1
+INPUTP | 2 | 11 | 12
+EQ | 1 | 
+   !BYTE3 = !a0 & !a1;
+
+MACROCELL | 1 | 1 | DSACK0_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 9 | AS  | $OpTx$$OpTx$FX_DC$46_INV$137  | R_BTN  | ECS  | a26  | a27  | a21  | EXP6_.EXP  | EXP7_.EXP
+INPUTMC | 3 | 2 | 16 | 1 | 0 | 1 | 2
+INPUTP | 6 | 3 | 43 | 25 | 17 | 1 | 16
+IMPORTS | 2 | 1 | 0 | 1 | 2
+EQ | 22 | 
+   !DSACK0 = !R_BTN & !$OpTx$$OpTx$FX_DC$46_INV$137
+	# !ECS & !$OpTx$$OpTx$FX_DC$46_INV$137
+	# AS & !$OpTx$$OpTx$FX_DC$46_INV$137
+	# !a26 & a27 & !$OpTx$$OpTx$FX_DC$46_INV$137
+	# !a26 & a21 & !$OpTx$$OpTx$FX_DC$46_INV$137
+;Imported pterms FB2_1
+	# !a26 & !a20 & !a19 & !$OpTx$$OpTx$FX_DC$46_INV$137
+	# !a26 & a19 & cntr<3> & cntr<2>
+	# !a26 & cntr<3> & cntr<2> & a16
+	# a27 & cntr<3> & cntr<2> & !dram_config_sel
+	# FC2 & FC1 & FC0 & !$OpTx$$OpTx$FX_DC$46_INV$137
+;Imported pterms FB2_3
+	# a26 & !a27 & cntr<3> & cntr<2> & cntr<0> & 
+	I_IOCHRDY
+	# a26 & !a27 & cntr<3> & cntr<2> & cntr<1> & 
+	I_IOCHRDY
+	# a26 & a27 & R_BTN & dram_config_sel & !FC2 & 
+	ECS & !DRAM_DTACK & !AS
+	# a26 & a27 & R_BTN & dram_config_sel & !FC1 & 
+	ECS & !DRAM_DTACK & !AS
+	# a26 & a27 & R_BTN & dram_config_sel & !FC0 & 
+	ECS & !DRAM_DTACK & !AS;
+
+MACROCELL | 1 | 4 | DSACK1_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 8 | AS  | R_BTN  | ECS  | a26  | a27  | a21  | STERM_OBUF.EXP  | EXP8_.EXP
+INPUTMC | 2 | 1 | 3 | 1 | 5
+INPUTP | 6 | 3 | 43 | 25 | 17 | 1 | 16
+IMPORTS | 2 | 1 | 3 | 1 | 5
+EQ | 19 | 
+   DSACK1 = !R_BTN
+	# !ECS
+	# AS
+	# a26 & !a27
+	# !a27 & a21
+;Imported pterms FB2_4
+	# !a27 & !a20
+	# !a27 & a19
+	# !a27 & !cntr<3>
+	# !a27 & !cntr<2>
+;Imported pterms FB2_6
+	# !a27 & a16
+	# a26 & !cntr<3> & !dram_config_sel
+	# a26 & !cntr<2> & !dram_config_sel
+	# a26 & dram_config_sel & DRAM_DTACK
+	# FC2 & FC1 & FC0
+;Imported pterms FB2_7
+	# !a26 & !cntr<3> & !cntr<2> & !cntr<0>
+	# !a26 & !cntr<3> & !cntr<2> & !cntr<1>;
+
+MACROCELL | 0 | 16 | FLOPPY_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 11 | a26  | a27  | a21  | a20  | a19  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 11 | 17 | 1 | 16 | 15 | 13 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !FLOPPY = !a26 & !a27 & !a21 & !a20 & a19 & R_BTN & !FC2 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & !a20 & a19 & R_BTN & !FC1 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & !a20 & a19 & R_BTN & !FC0 & 
+	ECS & !AS;
+
+MACROCELL | 3 | 16 | FPU_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 4 | FC2  | FC1  | FC0  | a16
+INPUTP | 4 | 89 | 92 | 90 | 24
+EQ | 1 | 
+   !FPU = FC2 & FC1 & FC0 & !a16;
+
+MACROCELL | 1 | 16 | IDE_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 11 | a26  | a27  | a21  | a20  | a19  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 11 | 17 | 1 | 16 | 15 | 13 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !IDE = !a26 & !a27 & !a21 & a20 & !a19 & R_BTN & !FC2 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & a20 & !a19 & R_BTN & !FC1 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & a20 & !a19 & R_BTN & !FC0 & 
+	ECS & !AS;
+
+MACROCELL | 2 | 3 | I_IOW_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 14 | a26  | a27  | a21  | RW_N  | cntr<3>  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2  | cntr<2>  | cntr<1>  | cntr<0>.EXP
+INPUTMC | 4 | 2 | 5 | 2 | 6 | 2 | 12 | 2 | 2
+INPUTP | 10 | 17 | 1 | 16 | 84 | 43 | 90 | 25 | 3 | 92 | 89
+IMPORTS | 1 | 2 | 2
+EQ | 13 | 
+   !I_IOW = a26 & !a27 & !a21 & !RW_N & cntr<3> & R_BTN & 
+	!FC2 & ECS & !AS
+	# a26 & !a27 & !a21 & !RW_N & cntr<3> & R_BTN & 
+	!FC1 & ECS & !AS
+	# a26 & !a27 & !a21 & !RW_N & cntr<3> & R_BTN & 
+	!FC0 & ECS & !AS
+	# a26 & !a27 & !a21 & !RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC1 & ECS & !AS
+	# a26 & !a27 & !a21 & !RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC0 & ECS & !AS
+;Imported pterms FB3_3
+	# a26 & !a27 & !a21 & !RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS;
+
+MACROCELL | 3 | 4 | ROM_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 11 | a26  | a27  | a21  | a20  | a19  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 11 | 17 | 1 | 16 | 15 | 13 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 6 | 
+   !ROM = !a26 & !a27 & !a21 & !a20 & !a19 & R_BTN & !FC2 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & !a20 & !a19 & R_BTN & !FC1 & 
+	ECS & !AS
+	# !a26 & !a27 & !a21 & !a20 & !a19 & R_BTN & !FC0 & 
+	ECS & !AS;
+
+MACROCELL | 2 | 11 | VGA_CS_OBUF
+ATTRIBUTES | 264962 | 0
+OUTPUTMC | 1 | 2 | 10
+INPUTS | 14 | a26  | a27  | a21  | a20  | a19  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2  | RW_N  | cntr<2>  | cntr<1>
+INPUTMC | 2 | 2 | 6 | 2 | 12
+INPUTP | 12 | 17 | 1 | 16 | 15 | 13 | 43 | 90 | 25 | 3 | 92 | 89 | 84
+EXPORTS | 1 | 2 | 10
+EQ | 10 | 
+   !VGA_CS = !a26 & !a27 & a21 & !a20 & !a19 & R_BTN & !FC2 & 
+	ECS & !AS
+	# !a26 & !a27 & a21 & !a20 & !a19 & R_BTN & !FC1 & 
+	ECS & !AS
+	# !a26 & !a27 & a21 & !a20 & !a19 & R_BTN & !FC0 & 
+	ECS & !AS;
+    VGA_CS_OBUF.EXP  =  a26 & !a27 & !a21 & RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC2 & ECS & !AS
+	# a26 & !a27 & !a21 & RW_N & cntr<2> & cntr<1> & 
+	R_BTN & !FC1 & ECS & !AS
+
+MACROCELL | 2 | 4 | I_DIR_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 9 | a26  | a27  | RW_N  | R_BTN  | FC0  | ECS  | AS  | FC1  | FC2
+INPUTP | 9 | 17 | 1 | 84 | 43 | 90 | 25 | 3 | 92 | 89
+EQ | 3 | 
+   I_DIR = a26 & !a27 & RW_N & R_BTN & !FC2 & ECS & !AS
+	# a26 & !a27 & RW_N & R_BTN & !FC1 & ECS & !AS
+	# a26 & !a27 & RW_N & R_BTN & !FC0 & ECS & !AS;
+
+MACROCELL | 0 | 14 | HALT_OBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | R_BTN
+INPUTP | 1 | 43
+EQ | 1 | 
+   RESET = R_BTN;
+
+MACROCELL | 0 | 10 | HALT_OBUF$BUF1
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | R_BTN
+INPUTP | 1 | 43
+EQ | 1 | 
+   HALT = R_BTN;
+
+MACROCELL | 3 | 14 | READ_n_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | RW_N
+INPUTP | 1 | 84
+EQ | 1 | 
+   READ_n = !RW_N;
+
+MACROCELL | 0 | 11 | CDIS_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 0
+EQ | 1 | 
+   CDIS = Gnd;
+
+MACROCELL | 1 | 3 | STERM_OBUF
+ATTRIBUTES | 264962 | 0
+OUTPUTMC | 1 | 1 | 4
+INPUTS | 5 | a27  | a20  | a19  | cntr<3>  | cntr<2>
+INPUTMC | 2 | 2 | 5 | 2 | 6
+INPUTP | 3 | 1 | 15 | 13
+EXPORTS | 1 | 1 | 4
+EQ | 5 | 
+   STERM = Vcc;
+    STERM_OBUF.EXP  =  !a27 & !a20
+	# !a27 & a19
+	# !a27 & !cntr<3>
+	# !a27 & !cntr<2>
+
+MACROCELL | 2 | 0 | cntr<3>/cntr<3>_RSTF__$INT
+ATTRIBUTES | 133888 | 0
+OUTPUTMC | 4 | 2 | 5 | 2 | 6 | 2 | 2 | 2 | 12
+INPUTS | 2 | R_BTN  | ECS
+INPUTP | 2 | 43 | 25
+EQ | 1 | 
+   cntr<3>/cntr<3>_RSTF__$INT = R_BTN & ECS;
+
+MACROCELL | 2 | 16 | $OpTx$$OpTx$FX_DC$46_INV$137
+ATTRIBUTES | 133888 | 0
+OUTPUTMC | 2 | 1 | 1 | 1 | 0
+INPUTS | 4 | cntr<3>  | cntr<2>  | cntr<0>  | cntr<1>
+INPUTMC | 4 | 2 | 5 | 2 | 6 | 2 | 2 | 2 | 12
+EQ | 2 | 
+   $OpTx$$OpTx$FX_DC$46_INV$137 = !cntr<3> & !cntr<2> & !cntr<0>
+	# !cntr<3> & !cntr<2> & !cntr<1>;
+
+MACROCELL | 1 | 0 | EXP6_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 1 | 1
+INPUTS | 12 | a26  | a20  | a19  | $OpTx$$OpTx$FX_DC$46_INV$137  | cntr<3>  | cntr<2>  | a16  | a27  | dram_config_sel  | FC2  | FC1  | FC0
+INPUTMC | 4 | 2 | 16 | 2 | 5 | 2 | 6 | 2 | 17
+INPUTP | 8 | 17 | 15 | 13 | 24 | 1 | 89 | 92 | 90
+EXPORTS | 1 | 1 | 1
+EQ | 5 | 
+       EXP6_.EXP  =  !a26 & !a20 & !a19 & !$OpTx$$OpTx$FX_DC$46_INV$137
+	# !a26 & a19 & cntr<3> & cntr<2>
+	# !a26 & cntr<3> & cntr<2> & a16
+	# a27 & cntr<3> & cntr<2> & !dram_config_sel
+	# FC2 & FC1 & FC0 & !$OpTx$$OpTx$FX_DC$46_INV$137
+
+MACROCELL | 1 | 2 | EXP7_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 1 | 1
+INPUTS | 15 | a26  | a27  | cntr<3>  | cntr<2>  | cntr<0>  | I_IOCHRDY  | cntr<1>  | R_BTN  | dram_config_sel  | FC2  | ECS  | DRAM_DTACK  | AS  | FC1  | FC0
+INPUTMC | 5 | 2 | 5 | 2 | 6 | 2 | 2 | 2 | 12 | 2 | 17
+INPUTP | 10 | 17 | 1 | 52 | 43 | 89 | 25 | 47 | 3 | 92 | 90
+EXPORTS | 1 | 1 | 1
+EQ | 10 | 
+       EXP7_.EXP  =  a26 & !a27 & cntr<3> & cntr<2> & cntr<0> & 
+	I_IOCHRDY
+	# a26 & !a27 & cntr<3> & cntr<2> & cntr<1> & 
+	I_IOCHRDY
+	# a26 & a27 & R_BTN & dram_config_sel & !FC2 & 
+	ECS & !DRAM_DTACK & !AS
+	# a26 & a27 & R_BTN & dram_config_sel & !FC1 & 
+	ECS & !DRAM_DTACK & !AS
+	# a26 & a27 & R_BTN & dram_config_sel & !FC0 & 
+	ECS & !DRAM_DTACK & !AS
+
+MACROCELL | 1 | 5 | EXP8_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 1 | 4
+INPUTS | 11 | a27  | a16  | a26  | cntr<3>  | dram_config_sel  | cntr<2>  | DRAM_DTACK  | FC2  | FC1  | FC0  | EXP9_.EXP
+INPUTMC | 4 | 2 | 5 | 2 | 17 | 2 | 6 | 1 | 6
+INPUTP | 7 | 1 | 24 | 17 | 47 | 89 | 92 | 90
+EXPORTS | 1 | 1 | 4
+IMPORTS | 1 | 1 | 6
+EQ | 8 | 
+       EXP8_.EXP  =  !a27 & a16
+	# a26 & !cntr<3> & !dram_config_sel
+	# a26 & !cntr<2> & !dram_config_sel
+	# a26 & dram_config_sel & DRAM_DTACK
+	# FC2 & FC1 & FC0
+;Imported pterms FB2_7
+	# !a26 & !cntr<3> & !cntr<2> & !cntr<0>
+	# !a26 & !cntr<3> & !cntr<2> & !cntr<1>
+
+MACROCELL | 1 | 6 | EXP9_
+ATTRIBUTES | 2048 | 0
+OUTPUTMC | 1 | 1 | 5
+INPUTS | 5 | a26  | cntr<3>  | cntr<2>  | cntr<0>  | cntr<1>
+INPUTMC | 4 | 2 | 5 | 2 | 6 | 2 | 2 | 2 | 12
+INPUTP | 1 | 17
+EXPORTS | 1 | 1 | 5
+EQ | 2 | 
+       EXP9_.EXP  =  !a26 & !cntr<3> & !cntr<2> & !cntr<0>
+	# !a26 & !cntr<3> & !cntr<2> & !cntr<1>
+
+PIN | a26 | 64 | 0 | N/A | 17 | 28 | 3 | 7 | 2 | 13 | 2 | 15 | 2 | 9 | 2 | 17 | 3 | 1 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 1 | 3 | 10 | 3 | 2 | 3 | 3 | 2 | 14 | 1 | 1 | 1 | 4 | 0 | 16 | 1 | 16 | 2 | 3 | 3 | 4 | 2 | 11 | 2 | 4 | 1 | 0 | 1 | 2 | 1 | 5 | 1 | 6 | 2 | 2 | 2 | 6
+PIN | a27 | 64 | 0 | N/A | 1 | 28 | 3 | 7 | 2 | 13 | 2 | 15 | 2 | 9 | 2 | 17 | 3 | 1 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 1 | 3 | 10 | 3 | 2 | 3 | 3 | 2 | 14 | 1 | 1 | 1 | 4 | 0 | 16 | 1 | 16 | 2 | 3 | 3 | 4 | 2 | 11 | 2 | 4 | 1 | 0 | 1 | 2 | 1 | 3 | 1 | 5 | 2 | 2 | 2 | 6
+PIN | a21 | 64 | 0 | N/A | 16 | 19 | 3 | 7 | 2 | 9 | 3 | 1 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 1 | 3 | 10 | 3 | 2 | 3 | 3 | 1 | 1 | 1 | 4 | 0 | 16 | 1 | 16 | 2 | 3 | 3 | 4 | 2 | 11 | 2 | 2 | 2 | 6
+PIN | RW_N | 64 | 0 | N/A | 84 | 14 | 3 | 7 | 2 | 17 | 2 | 10 | 2 | 8 | 2 | 7 | 3 | 10 | 3 | 2 | 3 | 3 | 2 | 3 | 2 | 4 | 3 | 14 | 2 | 2 | 2 | 6 | 2 | 11
+PIN | R_BTN | 64 | 0 | N/A | 43 | 28 | 3 | 7 | 2 | 13 | 2 | 15 | 2 | 9 | 2 | 17 | 3 | 1 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 1 | 3 | 10 | 3 | 2 | 3 | 3 | 2 | 14 | 1 | 1 | 1 | 4 | 0 | 16 | 1 | 16 | 2 | 3 | 3 | 4 | 2 | 11 | 2 | 4 | 0 | 14 | 0 | 10 | 2 | 0 | 1 | 2 | 2 | 2 | 2 | 6
+PIN | ECS | 64 | 0 | N/A | 25 | 26 | 3 | 7 | 2 | 13 | 2 | 15 | 2 | 9 | 2 | 17 | 3 | 1 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 1 | 3 | 10 | 3 | 2 | 3 | 3 | 2 | 14 | 1 | 1 | 1 | 4 | 0 | 16 | 1 | 16 | 2 | 3 | 3 | 4 | 2 | 11 | 2 | 4 | 2 | 0 | 1 | 2 | 2 | 2 | 2 | 6
+PIN | FC0 | 64 | 0 | N/A | 90 | 24 | 3 | 7 | 2 | 13 | 2 | 15 | 2 | 9 | 2 | 17 | 3 | 1 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 1 | 3 | 10 | 3 | 2 | 3 | 3 | 2 | 14 | 1 | 0 | 1 | 2 | 0 | 16 | 3 | 16 | 1 | 16 | 2 | 3 | 3 | 4 | 2 | 11 | 2 | 4 | 1 | 5
+PIN | AS | 64 | 0 | N/A | 3 | 25 | 3 | 7 | 2 | 13 | 2 | 15 | 2 | 9 | 2 | 17 | 3 | 1 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 1 | 3 | 10 | 3 | 2 | 3 | 3 | 2 | 14 | 1 | 1 | 1 | 4 | 0 | 16 | 1 | 16 | 2 | 3 | 3 | 4 | 2 | 11 | 2 | 4 | 1 | 2 | 2 | 2 | 2 | 6
+PIN | FC1 | 64 | 0 | N/A | 92 | 25 | 3 | 7 | 2 | 13 | 2 | 15 | 2 | 9 | 2 | 17 | 3 | 1 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 1 | 3 | 10 | 3 | 2 | 3 | 3 | 2 | 14 | 1 | 0 | 1 | 2 | 0 | 16 | 3 | 16 | 1 | 16 | 2 | 3 | 3 | 4 | 2 | 11 | 2 | 4 | 1 | 5 | 2 | 6
+PIN | FC2 | 64 | 0 | N/A | 89 | 26 | 3 | 7 | 2 | 13 | 2 | 15 | 2 | 9 | 2 | 17 | 3 | 1 | 2 | 10 | 2 | 8 | 2 | 7 | 2 | 1 | 3 | 10 | 3 | 2 | 3 | 3 | 2 | 14 | 1 | 0 | 1 | 2 | 0 | 16 | 3 | 16 | 1 | 16 | 2 | 3 | 3 | 4 | 2 | 11 | 2 | 4 | 1 | 5 | 2 | 2 | 2 | 6
+PIN | a20 | 64 | 0 | N/A | 15 | 10 | 2 | 9 | 3 | 1 | 2 | 1 | 1 | 0 | 1 | 3 | 0 | 16 | 1 | 16 | 3 | 4 | 2 | 11 | 2 | 10
+PIN | a19 | 64 | 0 | N/A | 13 | 10 | 2 | 9 | 3 | 1 | 2 | 1 | 1 | 0 | 1 | 3 | 0 | 16 | 1 | 16 | 3 | 4 | 2 | 11 | 2 | 10
+PIN | CLK | 4096 | 0 | N/A | 20 | 4 | 2 | 5 | 2 | 6 | 2 | 2 | 2 | 12
+PIN | SIZ0 | 64 | 0 | N/A | 7 | 3 | 3 | 11 | 3 | 9 | 3 | 13
+PIN | a0 | 64 | 0 | N/A | 11 | 4 | 3 | 11 | 3 | 9 | 3 | 13 | 3 | 5
+PIN | SIZ1 | 64 | 0 | N/A | 9 | 3 | 3 | 11 | 3 | 9 | 3 | 13
+PIN | a1 | 64 | 0 | N/A | 12 | 4 | 3 | 11 | 3 | 9 | 3 | 13 | 3 | 5
+PIN | I_IOCHRDY | 64 | 0 | N/A | 52 | 1 | 1 | 2
+PIN | DRAM_DTACK | 64 | 0 | N/A | 47 | 2 | 1 | 2 | 1 | 5
+PIN | a16 | 64 | 0 | N/A | 24 | 3 | 1 | 0 | 3 | 16 | 1 | 5
+PIN | nRW1 | 536871040 | 0 | N/A | 65
+PIN | DRAM_CONFIG | 536871040 | 0 | N/A | 49
+PIN | DRAM_CS | 536871040 | 0 | N/A | 59
+PIN | IO_CS | 536871040 | 0 | N/A | 54
+PIN | ETHRNT | 536871040 | 0 | N/A | 62
+PIN | I_IOR | 536871040 | 0 | N/A | 46
+PIN | I_MEMR | 536871040 | 0 | N/A | 38
+PIN | I_MEMW | 536871040 | 0 | N/A | 33
+PIN | KBD_CS | 536871040 | 0 | N/A | 29
+PIN | RW0 | 536871040 | 0 | N/A | 68
+PIN | RW1 | 536871040 | 0 | N/A | 66
+PIN | nRW0 | 536871040 | 0 | N/A | 67
+PIN | I_ALE | 536871040 | 0 | N/A | 50
+PIN | BYTE0 | 536871040 | 0 | N/A | 75
+PIN | BYTE1 | 536871040 | 0 | N/A | 74
+PIN | BYTE2 | 536871040 | 0 | N/A | 72
+PIN | BYTE3 | 536871040 | 0 | N/A | 70
+PIN | DSACK0 | 536871040 | 0 | N/A | 87
+PIN | DSACK1 | 536871040 | 0 | N/A | 88
+PIN | FLOPPY | 536871040 | 0 | N/A | 27
+PIN | FPU | 536871040 | 0 | N/A | 83
+PIN | IDE | 536871040 | 0 | N/A | 10
+PIN | I_IOW | 536871040 | 0 | N/A | 44
+PIN | ROM | 536871040 | 0 | N/A | 63
+PIN | VGA_CS | 536871040 | 0 | N/A | 55
+PIN | I_DIR | 536871040 | 0 | N/A | 31
+PIN | RESET | 536871040 | 0 | N/A | 26
+PIN | HALT | 536871040 | 0 | N/A | 21
+PIN | READ_n | 536871040 | 0 | N/A | 82
+PIN | CDIS | 536871040 | 0 | N/A | 30
+PIN | STERM | 536871040 | 0 | N/A | 86

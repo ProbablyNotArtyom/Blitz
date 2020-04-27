@@ -1,0 +1,79 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>KiCad BOM Example 5</title>
+    </head>
+    <body>
+    <h1>/home/artyom/Desktop/Projects/BBlitz/Hardware/Rev.K/C68.sch</h1>
+    <p>Fri 19 Apr 2019 12:40:39 AM EDT</p>
+    <p>Eeschema 5.1.1-8be2ce7~80~ubuntu18.04.1</p>
+    <p><b>Component Count:</b>184</p>
+    <table>
+    <tr><th style='width:640px'>Ref</th><th>Qnty</th><th>Value</th><th>Part</th><th>Footprint</th><th>Description</th><th>Vendor</th></tr>
+    <tr><td>C1, C3, C4, C5, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C23, C26, C30, C31, C32, C33, C40, C51, C52, C53, C54, C55, C56, C57, C58</td><td>33</td><td>100nf</td><td>Device:C_Small</td><td>Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder</td><td>Unpolarized capacitor, small symbol</td><td></td></tr>
+    <tr><td>C2</td><td>1</td><td>10uf</td><td>Device:CP</td><td>Capacitor_Tantalum_SMD:CP_EIA-6032-20_AVX-F_Pad2.25x2.35mm_HandSolder</td><td>Polarized capacitor</td><td></td></tr>
+    <tr><td>C6, C38, C41, C42, C43, C44, C45, C46, C47</td><td>9</td><td>100nf</td><td>Device:C_Small</td><td>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</td><td>Unpolarized capacitor, small symbol</td><td></td></tr>
+    <tr><td>C21, C22, C24, C25, C27, C28, C29, C34</td><td>8</td><td>47uf</td><td>Device:CP_Small</td><td>Capacitor_THT:CP_Radial_D5.0mm_P2.00mm</td><td>Polarized capacitor, small symbol</td><td></td></tr>
+    <tr><td>C35</td><td>1</td><td>10nf</td><td>Device:C_Small</td><td>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</td><td>Unpolarized capacitor, small symbol</td><td></td></tr>
+    <tr><td>C36, C37</td><td>2</td><td>10pf</td><td>Device:C_Small</td><td>Capacitor_SMD:C_0603_1608Metric_Pad1.05x0.95mm_HandSolder</td><td>Unpolarized capacitor, small symbol</td><td></td></tr>
+    <tr><td>C39</td><td>1</td><td>10uf</td><td>Device:CP_Small</td><td>Capacitor_THT:CP_Radial_D5.0mm_P2.00mm</td><td>Polarized capacitor, small symbol</td><td></td></tr>
+    <tr><td>C48, C49, C50</td><td>3</td><td>1uf</td><td>Device:CP_Small</td><td>Capacitor_Tantalum_SMD:CP_EIA-3216-10_Kemet-I_Pad1.58x1.35mm_HandSolder</td><td>Polarized capacitor, small symbol</td><td></td></tr>
+    <tr><td>D1</td><td>1</td><td>LED</td><td>Device:LED</td><td>LED_THT:LED_D5.0mm</td><td>Light emitting diode</td><td></td></tr>
+    <tr><td>H1, H2, H3, H4, H5, H6</td><td>6</td><td>PTH_mount</td><td>Mechanical:MountingHole_Pad</td><td>BBlitz:atx_mounting_hole</td><td>Mounting Hole with connection</td><td></td></tr>
+    <tr><td>J1, J6, J7</td><td>3</td><td>ISAx8</td><td>BBlitz:ISAx8</td><td>BBlitz:ISA_x8_VERT</td><td></td><td></td></tr>
+    <tr><td>J2</td><td>1</td><td>ATX24</td><td>atx24:ATX24</td><td>Connector_Molex:Molex_Mini-Fit_Jr_5566-24A_2x12_P4.20mm_Vertical</td><td></td><td></td></tr>
+    <tr><td>J3</td><td>1</td><td>MSE</td><td>BBlitz:keyboard_ps2</td><td>Blitz:PS2</td><td></td><td></td></tr>
+    <tr><td>J4</td><td>1</td><td>PRG0</td><td>Connector:Conn_01x06_Male</td><td>Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical</td><td>Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)</td><td></td></tr>
+    <tr><td>J5</td><td>1</td><td>KBD</td><td>BBlitz:keyboard_ps2</td><td>Blitz:PS2</td><td></td><td></td></tr>
+    <tr><td>J8</td><td>1</td><td>FLOPPY</td><td>Connector_Generic:Conn_02x17_Odd_Even</td><td>Connector_IDC:IDC-Header_2x17_P2.54mm_Vertical</td><td>Generic connector, double row, 02x17, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)</td><td></td></tr>
+    <tr><td>J9</td><td>1</td><td>IDE</td><td>Connector_Generic:Conn_02x20_Odd_Even</td><td>Connector_IDC:IDC-Header_2x20_P2.54mm_Vertical</td><td>Generic connector, double row, 02x20, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)</td><td></td></tr>
+    <tr><td>J10</td><td>1</td><td>VGA</td><td>Connector:DB15_Male_HighDensity_MountingHoles</td><td>BBlitz:Dsub-VGA</td><td>15-pin male D-SUB connector, High density (3 columns), Triple Row, Generic, VGA-connector, Mounting Hole</td><td></td></tr>
+    <tr><td>J11</td><td>1</td><td>ICSP</td><td>Connector_Generic:Conn_01x05</td><td>Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical</td><td>Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)</td><td></td></tr>
+    <tr><td>J12</td><td>1</td><td>RJ45_LED</td><td>Connector:RJ45_LED</td><td>Connector_RJ:RJ45_Amphenol_RJHSE538X</td><td>RJ connector, 8P8C (8 positions 8 connected), two LEDs</td><td></td></tr>
+    <tr><td>JP1</td><td>1</td><td>Conn_02x03_Odd_Even</td><td>Connector_Generic:Conn_02x03_Odd_Even</td><td>Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical</td><td>Generic connector, double row, 02x03, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)</td><td></td></tr>
+    <tr><td>L1</td><td>1</td><td>L</td><td>Device:L_Small</td><td>Inductor_SMD:L_0603_1608Metric_Pad1.05x0.95mm_HandSolder</td><td>Inductor, small symbol</td><td></td></tr>
+    <tr><td>R1, R3, R4, R16</td><td>4</td><td>10k</td><td>Device:R_Small</td><td>Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R2, R5, R6, R7, R8, R9, R10, R11, R14, R18, R20, R41, R65</td><td>13</td><td>10k</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R12, R13, R40, R42, R43, R44, R45, R46, R47, R48, R49, R50, R51, R52, R53, R54, R55, R56, R57, R58, R59</td><td>21</td><td>22</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R15, R23, R24</td><td>3</td><td>75</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R17, R19, R21, R22, R69, R70</td><td>6</td><td>150</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R25</td><td>1</td><td>455</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R26</td><td>1</td><td>986</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R27, R30</td><td>2</td><td>544</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R28, R31</td><td>2</td><td>1k2</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R29, R32</td><td>2</td><td>2k4</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R33</td><td>1</td><td>12.3k</td><td>Device:R_Small</td><td>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R34, R35</td><td>2</td><td>330</td><td>Device:R_Small</td><td>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R36, R37, R38, R39</td><td>4</td><td>49k9</td><td>Device:R_Small</td><td>Resistor_SMD:R_0603_1608Metric_Pad1.05x0.95mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>R60, R61, R62, R63, R64</td><td>5</td><td>2k2</td><td>Device:R_Small</td><td>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder</td><td>Resistor, small symbol</td><td></td></tr>
+    <tr><td>SW1</td><td>1</td><td>RESET</td><td>Switch:SW_SPST</td><td>Button_Switch_THT:SW_PUSH_6mm</td><td>Single Pole Single Throw (SPST) switch</td><td></td></tr>
+    <tr><td>SW2</td><td>1</td><td>SW_SPDT</td><td>Switch:SW_SPDT</td><td>Button_Switch_THT:SW_Lever_1P2T_NKK_GW12LxH</td><td>Switch, single pole double throw</td><td></td></tr>
+    <tr><td>U1</td><td>1</td><td>74LS148</td><td>74xx:74LS148</td><td>Package_SO:SOIC-16W_5.3x10.2mm_P1.27mm</td><td>Priority Encoder 3 to 8 cascadable</td><td></td></tr>
+    <tr><td>U2</td><td>1</td><td>74LVC245APW</td><td>BBlitz:74LVC245APW</td><td>Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm</td><td></td><td></td></tr>
+    <tr><td>U3</td><td>1</td><td>M68030</td><td>BBlitz:M68030</td><td>BBlitz:PGA120</td><td></td><td></td></tr>
+    <tr><td>U5, U24</td><td>2</td><td>SIMM_72</td><td>BBlitz:SIMM_72</td><td>BBlitz:SIMM_72</td><td></td><td></td></tr>
+    <tr><td>U6, U7, U19, U20, U21, U23, U27</td><td>7</td><td>74LS245</td><td>74xx_IEEE:74LS245</td><td>Package_SO:SOIC-20W_7.5x12.8mm_P1.27mm</td><td></td><td></td></tr>
+    <tr><td>U8</td><td>1</td><td>M68882_PLCC</td><td>BBlitz:M68882_PLCC</td><td>Package_LCC:PLCC-68_THT-Socket</td><td></td><td></td></tr>
+    <tr><td>U9, U10, U11, U12, U13, U14, U15, U16</td><td>8</td><td>AS6C4008</td><td>BBlitz:AS6C4008</td><td>BBlitz:SOIC-32</td><td></td><td></td></tr>
+    <tr><td>U17</td><td>1</td><td>XC9572XL-VQ64</td><td>CPLD_Xilinx:XC9572XL-VQ64</td><td>Package_QFP:TQFP-64_10x10mm_P0.5mm</td><td>CPLD, 72 Macrocells, 1600 Usable Gates</td><td></td></tr>
+    <tr><td>U18</td><td>1</td><td>SST39SF040</td><td>Memory_Flash:SST39SF040</td><td>Blitz:PLCC-32_TH</td><td>Silicon Storage Technology (SSF) 512k x 8 Flash ROM</td><td></td></tr>
+    <tr><td>U22</td><td>1</td><td>PIC24FJ256DA210-IPT</td><td>BBlitz:PIC24FJ256DA210-IPT</td><td>Package_QFP:TQFP-100_12x12mm_P0.4mm</td><td></td><td></td></tr>
+    <tr><td>U25</td><td>1</td><td>DP8440</td><td>BBlitz:DP8440</td><td>Package_LCC:PLCC-84</td><td></td><td></td></tr>
+    <tr><td>U26</td><td>1</td><td>W5100</td><td>Interface_Ethernet:W5100</td><td>Package_QFP:LQFP-80_10x10mm_P0.4mm</td><td>10/100Mb Ethernet controller with TCP/IP stack, LQFP-80</td><td></td></tr>
+    <tr><td>U28</td><td>1</td><td>7404</td><td>74xx:74LS04</td><td>Package_SO:SOIC-14_3.9x8.7mm_P1.27mm</td><td>Hex Inverter</td><td></td></tr>
+    <tr><td>U30</td><td>1</td><td>74hc139</td><td>BBlitz:74hc139</td><td>Package_SO:SOIC-16_3.9x9.9mm_P1.27mm</td><td></td><td></td></tr>
+    <tr><td>U31</td><td>1</td><td>WD37C65</td><td>BBlitz:WD37C65</td><td>Package_LCC:PLCC-44</td><td></td><td></td></tr>
+    <tr><td>U32</td><td>1</td><td>8042</td><td>o_intel:8042</td><td>Package_DIP:DIP-40_W15.24mm_LongPads</td><td></td><td></td></tr>
+    <tr><td>U33</td><td>1</td><td>74LS06</td><td>74xx:74LS06</td><td>Package_SO:SOIC-14_3.9x8.7mm_P1.27mm</td><td>Inverter Open Collect</td><td></td></tr>
+    <tr><td>Y1</td><td>1</td><td>20MHz</td><td>BBlitz:Ocillator_SMD</td><td>Oscillator:Oscillator_SMD_EuroQuartz_XO91-4Pin_7.0x5.0mm_HandSoldering</td><td></td><td></td></tr>
+    <tr><td>Y2</td><td>1</td><td>14.316MHz</td><td>BBlitz:Ocillator_SMD</td><td>Oscillator:Oscillator_SMD_EuroQuartz_XO91-4Pin_7.0x5.0mm_HandSoldering</td><td></td><td></td></tr>
+    <tr><td>Y3</td><td>1</td><td>16MHz</td><td>BBlitz:Ocillator_SMD</td><td>Oscillator:Oscillator_SMD_EuroQuartz_XO91-4Pin_7.0x5.0mm_HandSoldering</td><td></td><td></td></tr>
+    <tr><td>Y6</td><td>1</td><td>25MHz</td><td>Device:Crystal</td><td>Crystal:Crystal_SMD_HC49-SD</td><td>Two pin crystal</td><td></td></tr>
+    <tr><td>Y7</td><td>1</td><td>8MHz</td><td>BBlitz:Oscillator</td><td>Oscillator:Oscillator_DIP-8</td><td></td><td></td></tr><!--TABLEROW-->
+    </table>
+    </body>
+</html>
+    

@@ -1,0 +1,93 @@
+Release 8.1i - Fit P.20131013
+Copyright(c) 1995-2003 Xilinx Inc. All rights reserved
+
+ 5-11-2019  8:56AM
+
+NOTE: This file is designed to be imported into a spreadsheet program
+such as Microsoft Excel for viewing, printing and sorting. The pipe '|'
+character is used as the data field separator.
+This file is also designed to support parsing.
+
+Input file:  mux.ngd
+output file: mux.pad
+Part type:   xc9572xl
+Speed grade: -5
+Package:     vq64
+
+Pinout by Pin Number:
+
+-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+Pin Number|Signal Name|Pin Usage|Pin Name|Direction|IO Standard|IO Bank Number|{blank}|Slew Rate|Termination|{blank}|Voltage|Constraint|
+P1|a27|I|I/O|INPUT|||||||||
+P2|AS|I|I/O/GTS2|INPUT|||||||||
+P3|VCC||VCCINT||||||||||
+P4|TIE||I/O||||||||||
+P5|SIZ0|I|I/O/GTS1|INPUT|||||||||
+P6|SIZ1|I|I/O|INPUT|||||||||
+P7|IDE|O|I/O|OUTPUT|||||||||
+P8|a0|I|I/O|INPUT|||||||||
+P9|a1|I|I/O|INPUT|||||||||
+P10|a19|I|I/O|INPUT|||||||||
+P11|a20|I|I/O|INPUT|||||||||
+P12|a21|I|I/O|INPUT|||||||||
+P13|a26|I|I/O|INPUT|||||||||
+P14|GND||GND||||||||||
+P15|CLK|GCK|I/O/GCK1||||||||||
+P16|HALT|O|I/O/GCK2|OUTPUT|||||||||
+P17|a16|I|I/O/GCK3|INPUT|||||||||
+P18|ECS|I|I/O|INPUT|||||||||
+P19|RESET|O|I/O|OUTPUT|||||||||
+P20|FLOPPY|O|I/O|OUTPUT|||||||||
+P21|GND||GND||||||||||
+P22|KBD_CS|O|I/O|OUTPUT|||||||||
+P23|CDIS|O|I/O|OUTPUT|||||||||
+P24|I_DIR|O|I/O|OUTPUT|||||||||
+P25|I_MEMW|O|I/O|OUTPUT|||||||||
+P26|VCC||VCCIO||||||||||
+P27|I_MEMR|O|I/O|OUTPUT|||||||||
+P28|TDI||TDI||||||||||
+P29|TMS||TMS||||||||||
+P30|TCK||TCK||||||||||
+P31|R_BTN|I|I/O|INPUT|||||||||
+P32|I_IOW|O|I/O|OUTPUT|||||||||
+P33|I_IOR|O|I/O|OUTPUT|||||||||
+P34|DRAM_DTACK|I|I/O|INPUT|||||||||
+P35|DRAM_CONFIG|O|I/O|OUTPUT|||||||||
+P36|I_ALE|O|I/O|OUTPUT|||||||||
+P37|VCC||VCCINT||||||||||
+P38|I_IOCHRDY|I|I/O|INPUT|||||||||
+P39|IO_CS|O|I/O|OUTPUT|||||||||
+P40|VGA_CS|O|I/O|OUTPUT|||||||||
+P41|GND||GND||||||||||
+P42|DRAM_CS|O|I/O|OUTPUT|||||||||
+P43|ETHRNT|O|I/O|OUTPUT|||||||||
+P44|ROM|O|I/O|OUTPUT|||||||||
+P45|nRW1|O|I/O|OUTPUT|||||||||
+P46|RW1|O|I/O|OUTPUT|||||||||
+P47|nRW0|O|I/O|OUTPUT|||||||||
+P48|RW0|O|I/O|OUTPUT|||||||||
+P49|BYTE3|O|I/O|OUTPUT|||||||||
+P50|BYTE2|O|I/O|OUTPUT|||||||||
+P51|BYTE1|O|I/O|OUTPUT|||||||||
+P52|BYTE0|O|I/O|OUTPUT|||||||||
+P53|TDO||TDO||||||||||
+P54|GND||GND||||||||||
+P55|VCC||VCCIO||||||||||
+P56|READ_n|O|I/O|OUTPUT|||||||||
+P57|FPU|O|I/O|OUTPUT|||||||||
+P58|RW_N|I|I/O|INPUT|||||||||
+P59|STERM|O|I/O|OUTPUT|||||||||
+P60|DSACK0|O|I/O|OUTPUT|||||||||
+P61|DSACK1|O|I/O|OUTPUT|||||||||
+P62|FC2|I|I/O|INPUT|||||||||
+P63|FC0|I|I/O|INPUT|||||||||
+P64|FC1|I|I/O/GSR|INPUT|||||||||
+
+To preserve the pinout above for future design iterations in
+Project Navigator simply execute the (Lock Pins) process
+located under the (Implement Design) process in a toolbox named
+(Optional Implementation Tools) or invoke PIN2UCF from the
+command line. The location constraints will be written into your
+specified UCF file
+
+

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE ibis [
+<!ELEMENT ibis (part, pin+)>
+<!ELEMENT part EMPTY>
+<!ELEMENT pin EMPTY>
+<!ATTLIST part
+  arch   CDATA #REQUIRED
+  device CDATA #REQUIRED
+  spg    CDATA #REQUIRED
+  pkg    CDATA #REQUIRED>
+<!ATTLIST pin
+  nm     CDATA #REQUIRED
+  no     CDATA #REQUIRED
+  iostd  (TTL|LVTTL|LVCMOS2|NA) "NA"
+  sr     (SLOW|FAST|slow|fast) "SLOW"
+  dir    (BIDIR|bidir|INPUT|input|OUTPUT|output) "BIDIR">
+]>
+<ibis><part arch="xc9500xl" device="XC9572XL" pkg="VQ64" spg="-5"/><pin dir="input" nm="a26" no="13"/><pin dir="input" nm="a27" no="1"/><pin dir="input" nm="a21" no="12"/><pin dir="input" nm="RW_N" no="58"/><pin dir="input" nm="R_BTN" no="31"/><pin dir="input" nm="ECS" no="18"/><pin dir="input" nm="FC0" no="63"/><pin dir="input" nm="AS" no="2"/><pin dir="input" nm="FC1" no="64"/><pin dir="input" nm="FC2" no="62"/><pin dir="input" nm="a20" no="11"/><pin dir="input" nm="a19" no="10"/><pin dir="input" nm="CLK" no="15"/><pin dir="input" nm="SIZ0" no="5"/><pin dir="input" nm="a0" no="8"/><pin dir="input" nm="SIZ1" no="6"/><pin dir="input" nm="a1" no="9"/><pin dir="input" nm="I_IOCHRDY" no="38"/><pin dir="input" nm="DRAM_DTACK" no="34"/><pin dir="input" nm="a16" no="17"/><pin dir="output" nm="nRW1" no="45" sr="fast"/><pin dir="output" nm="DRAM_CONFIG" no="35" sr="fast"/><pin dir="output" nm="DRAM_CS" no="42" sr="fast"/><pin dir="output" nm="IO_CS" no="39" sr="fast"/><pin dir="output" nm="ETHRNT" no="43" sr="fast"/><pin dir="output" nm="I_IOR" no="33" sr="fast"/><pin dir="output" nm="I_MEMR" no="27" sr="fast"/><pin dir="output" nm="I_MEMW" no="25" sr="fast"/><pin dir="output" nm="KBD_CS" no="22" sr="fast"/><pin dir="output" nm="RW0" no="48" sr="fast"/><pin dir="output" nm="RW1" no="46" sr="fast"/><pin dir="output" nm="nRW0" no="47" sr="fast"/><pin dir="output" nm="I_ALE" no="36" sr="fast"/><pin dir="output" nm="BYTE0" no="52" sr="fast"/><pin dir="output" nm="BYTE1" no="51" sr="fast"/><pin dir="output" nm="BYTE2" no="50" sr="fast"/><pin dir="output" nm="BYTE3" no="49" sr="fast"/><pin dir="output" nm="DSACK0" no="60" sr="fast"/><pin dir="output" nm="DSACK1" no="61" sr="fast"/><pin dir="output" nm="FLOPPY" no="20" sr="fast"/><pin dir="output" nm="FPU" no="57" sr="fast"/><pin dir="output" nm="IDE" no="7" sr="fast"/><pin dir="output" nm="I_IOW" no="32" sr="fast"/><pin dir="output" nm="ROM" no="44" sr="fast"/><pin dir="output" nm="VGA_CS" no="40" sr="fast"/><pin dir="output" nm="I_DIR" no="24" sr="fast"/><pin dir="output" nm="RESET" no="19" sr="fast"/><pin dir="output" nm="HALT" no="16" sr="fast"/><pin dir="output" nm="READ_n" no="56" sr="fast"/><pin dir="output" nm="CDIS" no="23" sr="fast"/><pin dir="output" nm="STERM" no="59" sr="fast"/></ibis>

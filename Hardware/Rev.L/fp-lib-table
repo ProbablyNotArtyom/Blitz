@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name Blitz)(type KiCad)(uri ${KIPRJMOD}/../Blitz.pretty)(options "")(descr ""))
+  (lib (name BBlitz)(type KiCad)(uri ${KIPRJMOD}/../BBlitz.pretty)(options "")(descr ""))
+)

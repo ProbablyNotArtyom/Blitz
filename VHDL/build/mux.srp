@@ -1,0 +1,61 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Reading design: mux.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "mux.prj"
+Input Format                       : mixed
+
+---- Target Parameters
+Output File Name                   : "mux.ngc"
+Output Format                      : NGC
+Target Device                      : xc9572xl-5-VQ64
+
+---- Source Options
+Top Module Name                    : ./
+
+=========================================================================
+
+WARNING:Xst:29 - Optimization Effort not specified
+The following parameters have been added:
+Optimization Goal                  : SPEED
+Optimization Effort                : 1
+
+=========================================================================
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd" in Library work.
+ERROR:HDLParsers:3312 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd" Line 97. Undefined symbol 'shift_reg'.
+ERROR:HDLParsers:1209 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd" Line 97. shift_reg: Undefined symbol (last report in this block)
+ERROR:HDLParsers:808 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd" Line 98. not can not have such operands in this context.
+ERROR:HDLParsers:3402 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd" Line 104. Read symbol =, expecting <= or := 
+ERROR:HDLParsers:808 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd" Line 106. + can not have such operands in this context.
+ERROR:HDLParsers:3402 - "/home/artyom/Desktop/Projects/BBlitz/VHDL/Muxbak/mux.vhd" Line 106. Read symbol =, expecting <= or := 
+--> 
+
+
+Total memory usage is 486624 kilobytes
+
+Number of errors   :    6 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+

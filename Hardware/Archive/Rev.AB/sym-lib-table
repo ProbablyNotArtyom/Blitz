@@ -1,0 +1,6 @@
+(sym_lib_table
+  (lib (name BBlitz-rescue)(type Legacy)(uri ${KIPRJMOD}/BBlitz-rescue.lib)(options "")(descr ""))
+  (lib (name BBlitz)(type Legacy)(uri ${KIPRJMOD}/BBlitz.lib)(options "")(descr ""))
+  (lib (name M80)(type Legacy)(uri /home/notartyom/Desktop/Projects/M-80/Hardware/Rev.C/M80.lib)(options "")(descr ""))
+  (lib (name Azure)(type Legacy)(uri "/home/notartyom/Desktop/Projects/Azure SBC/Azure.lib")(options "")(descr ""))
+)

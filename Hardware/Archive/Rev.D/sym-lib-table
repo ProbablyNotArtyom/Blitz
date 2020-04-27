@@ -1,0 +1,6 @@
+(sym_lib_table
+  (lib (name M80)(type Legacy)(uri /home/notartyom/Desktop/Projects/M-80/Hardware/Rev.C/M80.lib)(options "")(descr ""))
+  (lib (name Sinter-cache)(type Legacy)(uri /home/notartyom/Desktop/Projects/Testing/Sinter/Sinter-cache.lib)(options "")(descr ""))
+  (lib (name Sinter-rescue)(type Legacy)(uri /home/notartyom/Desktop/Projects/Testing/Sinter/Sinter-rescue.lib)(options "")(descr ""))
+  (lib (name BBlitz-rescue)(type Legacy)(uri ${KIPRJMOD}/BBlitz-rescue.lib)(options "")(descr ""))
+)
