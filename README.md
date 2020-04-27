@@ -71,6 +71,11 @@ Since I am continuing to develop Blitz, if you want to build one, try waiting un
 However, if you still decide to make one, I am happy to answer any questions you have.
 Shoot me an email (notartyomowo@gmail.com) and I'll do my best to respond.
 
+---------------------------
+ 
+Blitz is licensed under the GNU General Public License v2.
+Although I dont expect contributions I'd appreciate if you shared any improvements with me, by either doing a pull request, or notifying me through email. Thankey!
+
 
 ### Authors
 
