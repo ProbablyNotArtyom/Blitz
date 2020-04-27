@@ -1,7 +1,5 @@
 # Blitz : m68k/68030 Homebrew
 
-Blitz is a 68030 based homebrew computer I designed over the course of nearly 3 years, starting in late 2017.
-
 <p align="center">
     <img src="https://i.imgur.com/4tw3nfW.jpg"></img>
 </p>
