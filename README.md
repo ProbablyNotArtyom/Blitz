@@ -48,7 +48,6 @@ The second stage added on the ISA slots and the CPLD-based DRAM interface.
 The third stage changed the DRAM design, then added on-board IDE, Floppy, and PS/2 interfaces.
 This revision was compatible with the MicroATX form-factor so it could be installed in a PC case, and this ended up being the last revision.
 Each of these stages got produced, assembled, debugged, and tested over about 2 years.
-I then spent the next year
 
 ### Reflections
 
