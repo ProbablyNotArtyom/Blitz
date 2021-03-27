@@ -1,0 +1,40 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *      linux/arch/alpha/kernel/irq_i8259.c
+ *
+ * This is the 'legacy' 8259A Programmable Interrupt Controller,
+ * present in the majority of PC/AT boxes.
+ *
+ * Started hacking from linux-2.3.30pre6/arch/i386/kernel/i8259.c.
+ */
+
+#include <linux/init.h>
+#include <linux/cache.h>
+#include <linux/sched.h>
+#include <linux/irq.h>
+#include <linux/interrupt.h>
+
+#include <asm/io.h>
+
+#include "proto.h"
+#include "irq_impl.h"
+
+
+/* Note mask bit is true for DISABLED irqs.  */
+static unsigned int cached_irq_mask = 0xffff;
+static DEFINE_SPINLOCK(i8259_irq_lock);
+
+static inline void
+i8259_update_irq_hw(unsigned int irq, unsigned long mask)
+{
+	int port = 0x21;
+	if (irq & 8) mask >>= 8;
+	if (irq & 8) port = 0xA1;
+	outb(mask, port);
+}
+
+inline void
+i8259a_enable_irq(struct irq_data *d)
+{
+	spin_lock(&i8259_irq_lock);
+	i8259_update_irq_hw(d->irq, cached_irq_mask &= ~(1 << d->irq));

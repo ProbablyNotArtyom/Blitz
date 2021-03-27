@@ -1,0 +1,90 @@
+The pvrusb2 driver
+==================
+
+Author: Mike Isely <isely@pobox.com>
+
+Background
+----------
+
+This driver is intended for the "Hauppauge WinTV PVR USB 2.0", which
+is a USB 2.0 hosted TV Tuner.  This driver is a work in progress.
+Its history started with the reverse-engineering effort by Björn
+Danielsson <pvrusb2@dax.nu> whose web page can be found here:
+http://pvrusb2.dax.nu/
+
+From there Aurelien Alleaume <slts@free.fr> began an effort to
+create a video4linux compatible driver.  I began with Aurelien's
+last known snapshot and evolved the driver to the state it is in
+here.
+
+More information on this driver can be found at:
+http://www.isely.net/pvrusb2.html
+
+
+This driver has a strong separation of layers.  They are very
+roughly:
+
+1. Low level wire-protocol implementation with the device.
+
+2. I2C adaptor implementation and corresponding I2C client drivers
+   implemented elsewhere in V4L.
+
+3. High level hardware driver implementation which coordinates all
+   activities that ensure correct operation of the device.
+
+4. A "context" layer which manages instancing of driver, setup,
+   tear-down, arbitration, and interaction with high level
+   interfaces appropriately as devices are hotplugged in the
+   system.
+
+5. High level interfaces which glue the driver to various published
+   Linux APIs (V4L, sysfs, maybe DVB in the future).
+
+The most important shearing layer is between the top 2 layers.  A
+lot of work went into the driver to ensure that any kind of
+conceivable API can be laid on top of the core driver.  (Yes, the
+driver internally leverages V4L to do its work but that really has
+nothing to do with the API published by the driver to the outside
+world.)  The architecture allows for different APIs to
+simultaneously access the driver.  I have a strong sense of fairness
+about APIs and also feel that it is a good design principle to keep
+implementation and interface isolated from each other.  Thus while
+right now the V4L high level interface is the most complete, the
+sysfs high level interface will work equally well for similar
+functions, and there's no reason I see right now why it shouldn't be
+possible to produce a DVB high level interface that can sit right
+alongside V4L.
+
+Building
+--------
+
+To build these modules essentially amounts to just running "Make",
+but you need the kernel source tree nearby and you will likely also
+want to set a few controlling environment variables first in order
+to link things up with that source tree.  Please see the Makefile
+here for comments that explain how to do that.
+
+Source file list / functional overview
+--------------------------------------
+
+(Note: The term "module" used below generally refers to loosely
+defined functional units within the pvrusb2 driver and bears no
+relation to the Linux kernel's concept of a loadable module.)
+
+pvrusb2-audio.[ch] - This is glue logic that resides between this
+    driver and the msp3400.ko I2C client driver (which is found
+    elsewhere in V4L).
+
+pvrusb2-context.[ch] - This module implements the context for an
+    instance of the driver.  Everything else eventually ties back to
+    or is otherwise instanced within the data structures implemented
+    here.  Hotplugging is ultimately coordinated here.  All high level
+    interfaces tie into the driver through this module.  This module
+    helps arbitrate each interface's access to the actual driver core,
+    and is designed to allow concurrent access through multiple
+    instances of multiple interfaces (thus you can for example change
+    the tuner's frequency through sysfs while simultaneously streaming
+    video through V4L out to an instance of mplayer).
+
+pvrusb2-debug.h - This header defines a printk() wrapper and a mask
+    of debugging bit definitions for the various ki

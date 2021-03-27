@@ -1,0 +1,61 @@
+/*
+ * Copyright 2017-2018 Sean Wang <sean.wang@mediatek.com>
+ *
+ * SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+ */
+
+/dts-v1/;
+#include <dt-bindings/input/input.h>
+#include "mt7623.dtsi"
+#include "mt6323.dtsi"
+
+/ {
+	model = "Bananapi BPI-R2";
+	compatible = "bananapi,bpi-r2", "mediatek,mt7623";
+
+	aliases {
+		serial2 = &uart2;
+	};
+
+	chosen {
+		stdout-path = "serial2:115200n8";
+	};
+
+	cpus {
+		cpu@0 {
+			proc-supply = <&mt6323_vproc_reg>;
+		};
+
+		cpu@1 {
+			proc-supply = <&mt6323_vproc_reg>;
+		};
+
+		cpu@2 {
+			proc-supply = <&mt6323_vproc_reg>;
+		};
+
+		cpu@3 {
+			proc-supply = <&mt6323_vproc_reg>;
+		};
+	};
+
+	reg_1p8v: regulator-1p8v {
+		compatible = "regulator-fixed";
+		regulator-name = "fixed-1.8V";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	reg_3p3v: regulator-3p3v {
+		compatible = "regulator-fixed";
+		regulator-name = "fixed-3.3V";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	reg_5v: regulator-5v {
+		compatible 

@@ -1,0 +1,259 @@
+/*
+ * DTS file for CSR SiRFatlas6 SoC
+ *
+ * Copyright (c) 2012 Cambridge Silicon Radio Limited, a CSR plc group company.
+ *
+ * Licensed under GPLv2 or later.
+ */
+
+/include/ "skeleton.dtsi"
+/ {
+	compatible = "sirf,atlas6";
+	#address-cells = <1>;
+	#size-cells = <1>;
+	interrupt-parent = <&intc>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			reg = <0x0>;
+			d-cache-line-size = <32>;
+			i-cache-line-size = <32>;
+			d-cache-size = <32768>;
+			i-cache-size = <32768>;
+			/* from bootloader */
+			timebase-frequency = <0>;
+			bus-frequency = <0>;
+			clock-frequency = <0>;
+			clocks = <&clks 12>;
+			operating-points = <
+				/* kHz    uV */
+				200000  1025000
+				400000  1025000
+				600000  1050000
+				800000  1100000
+			>;
+			clock-latency = <150000>;
+		};
+	};
+
+	arm-pmu {
+		compatible = "arm,cortex-a9-pmu";
+		interrupts = <29>;
+	};
+
+	axi {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges = <0x40000000 0x40000000 0x80000000>;
+
+		intc: interrupt-controller@80020000 {
+			#interrupt-cells = <1>;
+			interrupt-controller;
+			compatible = "sirf,prima2-intc";
+			reg = <0x80020000 0x1000>;
+		};
+
+		sys-iobg {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0x88000000 0x88000000 0x40000>;
+
+			clks: clock-controller@88000000 {
+				compatible = "sirf,atlas6-clkc";
+				reg = <0x88000000 0x1000>;
+				interrupts = <3>;
+				#clock-cells = <1>;
+			};
+
+			rstc: reset-controller@88010000 {
+				compatible = "sirf,prima2-rstc";
+				reg = <0x88010000 0x1000>;
+				#reset-cells = <1>;
+			};
+
+			rsc-controller@88020000 {
+				compatible = "sirf,prima2-rsc";
+				reg = <0x88020000 0x1000>;
+			};
+
+			cphifbg@88030000 {
+				compatible = "sirf,prima2-cphifbg";
+				reg = <0x88030000 0x1000>;
+				clocks = <&clks 42>;
+			};
+		};
+
+		mem-iobg {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0x90000000 0x90000000 0x10000>;
+
+			memory-controller@90000000 {
+				compatible = "sirf,prima2-memc";
+				reg = <0x90000000 0x2000>;
+				interrupts = <27>;
+				clocks = <&clks 5>;
+			};
+
+			memc-monitor {
+				compatible = "sirf,prima2-memcmon";
+				reg = <0x90002000 0x200>;
+				interrupts = <4>;
+				clocks = <&clks 32>;
+			};
+		};
+
+		disp-iobg {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0x90010000 0x90010000 0x30000>;
+
+			lcd@90010000 {
+				compatible = "sirf,prima2-lcd";
+				reg = <0x90010000 0x20000>;
+				interrupts = <30>;
+				clocks = <&clks 34>;
+				display=<&display>;
+				/* later transfer to pwm */
+				bl-gpio = <&gpio 7 0>;
+				default-panel = <&panel0>;
+			};
+
+			vpp@90020000 {
+				compatible = "sirf,prima2-vpp";
+				reg = <0x90020000 0x10000>;
+				interrupts = <31>;
+				clocks = <&clks 35>;
+				resets = <&rstc 6>;
+			};
+		};
+
+		graphics-iobg {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0x98000000 0x98000000 0x8000000>;
+
+			graphics@98000000 {
+				compatible = "powervr,sgx510";
+				reg = <0x98000000 0x8000000>;
+				interrupts = <6>;
+				clocks = <&clks 32>;
+			};
+		};
+
+		graphics2d-iobg {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0xa0000000 0xa0000000 0x8000000>;
+
+			ble@a0000000 {
+				compatible = "sirf,atlas6-ble";
+				reg = <0xa0000000 0x2000>;
+				interrupts = <5>;
+				clocks = <&clks 33>;
+			};
+		};
+
+		dsp-iobg {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0xa8000000 0xa8000000 0x2000000>;
+
+			dspif@a8000000 {
+				compatible = "sirf,prima2-dspif";
+				reg = <0xa8000000 0x10000>;
+				interrupts = <9>;
+				resets = <&rstc 1>;
+			};
+
+			gps@a8010000 {
+				compatible = "sirf,prima2-gps";
+				reg = <0xa8010000 0x10000>;
+				interrupts = <7>;
+				clocks = <&clks 9>;
+				resets = <&rstc 2>;
+			};
+
+			dsp@a9000000 {
+				compatible = "sirf,prima2-dsp";
+				reg = <0xa9000000 0x1000000>;
+				interrupts = <8>;
+				clocks = <&clks 8>;
+				resets = <&rstc 0>;
+			};
+		};
+
+		peri-iobg {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0xb0000000 0xb0000000 0x180000>,
+			       <0x56000000 0x56000000 0x1b00000>;
+
+			timer@b0020000 {
+				compatible = "sirf,prima2-tick";
+				reg = <0xb0020000 0x1000>;
+				interrupts = <0>;
+				clocks = <&clks 11>;
+			};
+
+			nand@b0030000 {
+				compatible = "sirf,prima2-nand";
+				reg = <0xb0030000 0x10000>;
+				interrupts = <41>;
+				clocks = <&clks 26>;
+			};
+
+			audio@b0040000 {
+				compatible = "sirf,prima2-audio";
+				reg = <0xb0040000 0x10000>;
+				interrupts = <35>;
+				clocks = <&clks 27>;
+			};
+
+			uart0: uart@b0050000 {
+				cell-index = <0>;
+				compatible = "sirf,prima2-uart";
+				reg = <0xb0050000 0x1000>;
+				interrupts = <17>;
+				fifosize = <128>;
+				clocks = <&clks 13>;
+				dmas = <&dmac1 5>, <&dmac0 2>;
+				dma-names = "rx", "tx";
+			};
+
+			uart1: uart@b0060000 {
+				cell-index = <1>;
+				compatible = "sirf,prima2-uart";
+				reg = <0xb0060000 0x1000>;
+				interrupts = <18>;
+				fifosize = <32>;
+				clocks = <&clks 14>;
+				dma-names = "no-rx", "no-tx";
+			};
+
+			uart2: uart@b0070000 {
+				cell-index = <2>;
+				compatible = "sirf,prima2-uart";
+				reg = <0xb0070000 0x1000>;
+				interrupts = <19>;
+				fifosize = <128>;
+				clocks = <&clks 15>;
+				dmas = <&dmac0 6>, <&dmac0 7>;
+				dma-names = "rx", "tx";
+			};
+
+			usp0: usp@b0080000 {
+				cell-index = <0>;
+				compatible = "sirf,prima2-usp";
+		

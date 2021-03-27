@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree common file for LaCie 2Big and 5Big Network v2
+ *
+ * Copyright (C) 2014
+ *
+ * Andrew Lunn <andrew@lunn.ch>
+ *
+ * Based on netxbig_v2-setup.c,
+ * Copyright (C) 2010 Simon Guinot <sguinot@lacie.com>
+ *
+*/
+
+#include <dt-bindings/leds/leds-netxbig.h>
+#include "kirkwood.dtsi"
+#include "kirkwood-6281.dtsi"
+
+/ {
+	chosen {
+		bootargs = "console=ttyS0,115200n8";
+		stdout-path = &uart0;
+	};
+
+	ocp@f1000000 {
+		serial@12000 {
+			status = "okay";
+		};
+
+		spi@10600 {
+			status = "okay";
+
+	

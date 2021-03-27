@@ -1,0 +1,50 @@
+
+Date  : 2004-Nov-26
+Author: Gerald Schaefer (geraldsc@de.ibm.com)
+
+
+             Linux API for read access to z/VM Monitor Records
+             =================================================
+
+
+Description
+===========
+This item delivers a new Linux API in the form of a misc char device that is
+usable from user space and allows read access to the z/VM Monitor Records
+collected by the *MONITOR System Service of z/VM.
+
+
+User Requirements
+=================
+The z/VM guest on which you want to access this API needs to be configured in
+order to allow IUCV connections to the *MONITOR service, i.e. it needs the
+IUCV *MONITOR statement in its user entry. If the monitor DCSS to be used is
+restricted (likely), you also need the NAMESAVE <DCSS NAME> statement.
+This item will use the IUCV device driver to access the z/VM services, so you
+need a kernel with IUCV support. You also need z/VM version 4.4 or 5.1.
+
+There are two options for being able to load the monitor DCSS (examples assume
+that the monitor DCSS begins at 144 MB and ends at 152 MB). You can query the
+location of the monitor DCSS with the Class E privileged CP command Q NSS MAP
+(the values BEGPAG and ENDPAG are given in units of 4K pages).
+
+See also "CP Command and Utility Reference" (SC24-6081-00) for more information
+on the DEF STOR and Q NSS MAP commands, as well as "Saved Segments Planning
+and Administration" (SC24-6116-00) for more information on DCSSes.
+
+1st option:
+-----------
+You can use the CP command DEF STOR CONFIG to define a "memory hole" in your
+guest virtual storage around the address range of the DCSS.
+
+Example: DEF STOR CONFIG 0.140M 200M.200M
+
+This defines two blocks of storage, the first is 140MB in size an begins at
+address 0MB, the second is 200MB in size and begins at address 200MB,
+resulting in a total storage of 340MB. Note that the first block should
+always start at 0 and be at least 64MB in size.
+
+2nd option:
+-----------
+Your guest virtual storage has to end below the starting address of the DCSS
+and you have to specify the "mem=" kernel parameter in yo

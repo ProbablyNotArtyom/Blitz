@@ -1,0 +1,292 @@
+# Configuration variables
+
+# They can also be stored in a file /etc/lilo.defines, e.g.
+# -DIGNORECASE -DONE_SHOT
+
+# The variables configured in this Makefile are ignored if
+# /etc/lilo.defines exists
+
+#   AUTOAUTO	  Enable automatic generation of change rules for MS partitions;
+#		  issue warning if "CHANGE AUTOMATIC" is assumed
+# * BDATA	  Enable real mode gathering of system information for
+#		  '-T' (new)
+#   BEEP	  Beep after displaying "LILO".
+#   BOOT_FILE	  Append "BOOT_FILE=<path>" to the kernel command line.
+#   COHERENT	  Make boot loaders (chain.b & mbr.b) compatible with Coherent
+#		  by writing the boot device code to the memory copy of the PT
+# * DSECS=n	  Set the number of Descriptor Sectors (n=1..8).  Each sector
+#		  of the descriptor table holds about 9 descriptors.
+# * IGNORECASE    Image selection is case-insensitive. Passwords are still
+#		  case-sensitive.
+#   HP_TTRC	  Insert 150ms delay for HP TTRC card.  Affects 'second.S'
+# * LBA32	  Use 'lba32' addressing by default.  'geometric' may override
+#		  for backward compatibility.
+# * M386	  Use 386 instructions in assembly code to reduce size of
+#		  second-stage loader (recommended)
+#   NO1STDIAG	  Don't show diagnostic on read errors in the first stage
+#		  boot. (not recommended)
+#   NODRAIN	  Don't drain keyboard buffer after booting.
+#   NOINSTDEF     Don't install a new boot sector if INSTALL is not specified.
+#   NOSERIAL	  Don't assemble serial line support in the boot loader.
+#   OLD_DIRSTR    Use old locations of config and boot files: (/etc/lilo)
+# * ONE_SHOT      Disable the command-line and password timeout if any key is
+#		  hit at the boot prompt.
+# * PASS160	  Use 160-bit password hash (Secure Hash Standard, see
+#		  FIPS PUB 180-1) instead of 64-bit CRC-32 hash
+#   READONLY	  Don't write to disk while booting, e.g. don't overwrite the
+#		  default command line in the map file after reading it.
+# * REISERFS      Compile support for parts of LILO on ReiserFS (new).
+#                 Requires header files for kernel 2.4.0test8 or later.
+# * REWRITE_TABLE Enable rewriting the partition table at boot time.
+# * SOLO_CHAIN	  Assemble all chain-loader functions into 'chain.b', 
+#		  eliminating the need for 'os2_d.b' (new)
+#   USE_TMPDIR	  Create temporary devices in $TMPDIR if set
+# * VARSETUP	  Enables use of variable-size setup segments. (required!)
+# * VERSION	  Prints version string at LILO boot prompt.
+#   XL_SECS=n	  Support for extra large (non-standard) floppies.
+
+CONFIG=-DBDATA -DDSECS=3 -DIGNORECASE -DLBA32 -DM386 -DONE_SHOT -DPASS160 \
+   -DREISERFS -DREWRITE_TABLE -DSOLO_CHAIN -DVARSETUP -DVERSION
+
+LILOX=-DCODE_START_1=136 -DCODE_START_2=14
+
+# set the compiler optimization level
+
+OPT=-O2
+
+
+# End of configuration variables
+
+SBIN_DIR=/sbin
+CFG_DIR=/etc
+BOOT_DIR=/boot
+USRSBIN_DIR=/usr/sbin
+MAN_DIR=/usr/man
+
+PCONFIG=`( if [ -r $$ROOT/etc/lilo.defines ]; then \
+  cat $$ROOT/etc/lilo.defines; else echo $(CONFIG); fi ) | \
+  sed 's/-D/-DLCF_/g'` `[ -r /usr/include/asm/boot.h ] && echo -DHAS_BOOT_H`
+GO=-DGO=0x`sed '/go/s/^.*go *0 \(....\) A.*$$/\1/p;d' first.lis`
+
+SHELL=/bin/sh
+CC=cc
+CPP=$(CC) -E
+AS86=as86 -0 -a
+LD86=ld86 -0
+
+AFLAGS=`cat mylilo.h`
+CFLAGS=$(OPT) -Wall -g $(PCONFIG) $(AFLAGS)
+LDFLAGS=#-Xlinker -qmagic
+
+OBJS=lilo.o map.o geometry.o boot.o device.o common.o bsect.o cfg.o temp.o \
+  partition.o identify.o probe.o shs2.o
+
+# all *.lis files but 'first.lis"
+LIS=chain.lis disk.lis dparam.lis dump.lis os2_d.lis second.lis temp2.lis \
+  bootsect.lis third.lis mbr.lis bitmap.lis
+BFILES=first.b second.b third.b bitmap.b temp2.b dump.b disk.b bootsect.b
+
+.SUFFIXES:	.img .b .com
+
+
+all:	lilo dump.b os2_d.b chain.b dparam.com \
+	bootsect.b boot-text.b boot-menu.b boot-bmp.b \
+	activate disk.com mbr.b
+
+#
+# make the bootable diagnostic floppy
+#
+
+floppy:		disk.com bootsect.b
+		cat bootsect.b disk.com | dd of=/dev/fd0 bs=512
+
+#check-config:
+#		$(CPP) check-config.cpp $(PCONFIG) >/dev/null
+
+.c.o:
+		$(CC) -c $(CFLAGS) $*.c
+
+.s.o:
+		$(AS86) -w -l $*.lis -o $*.o $*.s
+
+.o.img:
+		$(LD86) -s -o $*.img $*.o
+
+.img.b:
+		dd if=$*.img of=$*.b bs=32 skip=1
+
+activate:	activate.c
+		$(CC) -Wall -s -O -o activate activate.c $(LDFLAGS)
+
+disk.com:	disk.b
+		cp disk.b disk.com
+
+disk.s:		disk.S read.S bdata.h biosdata.S lilo.h mylilo.h
+		$(CPP) -traditional $(PCONFIG) $(AFLAGS) -o disk.s  disk.S
+
+mbr.s:		mbr.S read.S lilo.h mylilo.h
+		$(CPP) -traditional $(PCONFIG) $(AFLAGS) -o mbr.s  mbr.S
+
+mbr.b:		mbr.img
+		dd if=$*.img of=$*.b bs=32 skip=49
+
+bootsect.s:	bootsect.S disk.b
+		$(CPP) -traditional $(PCONFIG) \
+			-DSIZEDISKB=`wc -c <disk.b | sed "s/ //g"` \
+			-o bootsect.s  bootsect.S
+
+mylilo.h:	temp2.b
+		echo -DMAX_SECONDARY_FILESIZE=`wc -c <temp2.b | sed "s/ //g"` >mylilo.h
+
+dparam.com:	dparam.img
+		dd if=dparam.img of=dparam.com bs=288 skip=1
+
+dparam.s:	dparam.S
+		cp -p dparam.S dparam.s
+
+lilo:		mylilo.h $(OBJS)
+		$(CC) -o lilo $(LDFLAGS) $(OBJS)
+
+boot-text.b:	first.b second.b
+		(dd if=first.b bs=512 conv=sync; dd if=second.b) >boot-text.b
+
+boot-menu.b:	first.b third.b
+		(dd if=first.b bs=512 conv=sync; dd if=third.b) >boot-menu.b
+
+boot-bmp.b:	first.b bitmap.b
+		(dd if=first.b bs=512 conv=sync; dd if=bitmap.b) >boot-bmp.b
+
+common.s:		common.h
+		$(CPP) -C -traditional -DLILO_ASM -o common.s common.h
+
+temp2.o: temp2.s common.s
+bitmap.o: bitmap.s common.s
+third.o: third.s common.s
+second.o: second.s common.s
+first.o: first.s common.s
+
+first.s:	first.S read.S lilo.h version.h lilo mylilo.h
+		$(CPP) $(PCONFIG) $(AFLAGS) `./lilo -X` first.S -o first.s
+
+second.s:	second.S read.S biosdata.S shs3.S bdata.h lilo.h version.h \
+			graph.S menu.S strlen.S bitmap.S display4.S lilo mylilo.h
+		$(CPP) $(PCONFIG) $(AFLAGS) `./lilo -X` second.S -o second.s
+
+third.s:	second.S read.S biosdata.S bdata.h lilo.h version.h lilo mylilo.h \
+			graph.S menu.S strlen.S crt.S
+		$(CPP) $(PCONFIG) $(AFLAGS) `./lilo -X` \
+		-DMENU second.S -o third.s
+
+bitmap.s:	second.S read.S biosdata.S bdata.h lilo.h version.h lilo mylilo.h \
+			strlen.S bitmap.S display4.S
+		$(CPP) $(PCONFIG) $(AFLAGS) `./lilo -X` \
+		-DBITMAP second.S -o bitmap.s
+
+temp2.s:	second.S read.S biosdata.S shs3.S bdata.h lilo.h version.h \
+			graph.S menu.S strlen.S bitmap.S display4.S
+		$(CPP) $(PCONFIG) $(LILOX) -DBITMAP second.S -o temp2.s
+
+chain.s:	chain.S lilo.h version.h lilo mylilo.h first.b
+		$(CPP) $(PCONFIG) $(AFLAGS) $(GO) chain.S -o chain.s
+
+os2_d.s:	chain.S lilo.h version.h lilo mylilo.h first.b
+		$(CPP) $(PCONFIG) $(AFLAGS) $(GO) chain.S -DDOS_D -o os2_d.s
+
+#dos_d.s:	chain.S lilo.h version.h lilo mylilo.h first.b
+#		$(CPP) $(PCONFIG) $(AFLAGS) $(GO) chain.S -DDOS_D -o dos_d.s
+
+dump.s:		dump.S lilo.h version.h first.b mylilo.h
+		$(CPP) $(PCONFIG) $(AFLAGS) $(GO) `./lilo -X` dump.S -DDOS_D -o dump.s
+
+#lrmi.o:		lrmi.c lrmi.h
+#		$(CC) -c -O $(CFLAGS) lrmi.c
+
+xxx.s:		chain.S lilo.h
+		$(CPP) chain.S -DXXX -o xxx.s
+
+install:  all
+	if [ ! -d $$ROOT$(SBIN_DIR) ]; then mkdir $$ROOT$(SBIN_DIR); fi
+	if [ ! -d $$ROOT$(CFG_DIR) ]; then mkdir $$ROOT$(CFG_DIR); fi
+	if [ ! -d $$ROOT$(BOOT_DIR) ]; then mkdir $$ROOT$(BOOT_DIR); fi
+	if [ ! -d $$ROOT$(USRSBIN_DIR) ]; then \
+	  mkdir -p $$ROOT$(USRSBIN_DIR); fi
+	if [ ! -d $$ROOT$(MAN_DIR) ]; then mkdir $$ROOT$(MAN_DIR); fi  
+	if [ ! -d $$ROOT$(MAN_DIR)/man5 ]; then \
+	  mkdir $$ROOT$(MAN_DIR)/man5; fi  
+	if [ ! -d $$ROOT$(MAN_DIR)/man8 ]; then \
+	  mkdir $$ROOT$(MAN_DIR)/man8; fi  
+	if [ ! -L $$ROOT$(BOOT_DIR)/boot.b -a -f $$ROOT$(BOOT_DIR)/boot.b ]; then \
+	  mv $$ROOT$(BOOT_DIR)/boot.b $$ROOT$(BOOT_DIR)/boot.old; fi
+	if [ -f $$ROOT$(BOOT_DIR)/boot-bmp.b ]; then \
+	  mv $$ROOT$(BOOT_DIR)/boot-bmp.b $$ROOT$(BOOT_DIR)/boot-bmp.old; fi
+	if [ -f $$ROOT$(BOOT_DIR)/boot-menu.b ]; then \
+	  mv $$ROOT$(BOOT_DIR)/boot-menu.b $$ROOT$(BOOT_DIR)/boot-menu.old; fi
+	if [ -f $$ROOT$(BOOT_DIR)/boot-text.b ]; then \
+	  mv $$ROOT$(BOOT_DIR)/boot-text.b $$ROOT$(BOOT_DIR)/boot-text.old; fi
+	if [ -f $$ROOT$(BOOT_DIR)/chain.b ]; then \
+	  mv $$ROOT$(BOOT_DIR)/chain.b $$ROOT$(BOOT_DIR)/chain.old; fi
+	if [ -f $$ROOT$(BOOT_DIR)/os2_d.b ]; then \
+	  mv $$ROOT$(BOOT_DIR)/os2_d.b $$ROOT$(BOOT_DIR)/os2_d.old; fi
+	if [ -f $$ROOT$(BOOT_DIR)/mbr.b ]; then \
+	  mv $$ROOT$(BOOT_DIR)/mbr.b $$ROOT$(BOOT_DIR)/mbr.old; fi
+	if [ -f os2_d.b ]; then \
+	  cp os2_d.b $$ROOT$(BOOT_DIR); fi
+	cp boot-text.b boot-menu.b boot-bmp.b chain.b mbr.b $$ROOT$(BOOT_DIR)
+	if [ ! -L $$ROOT$(BOOT_DIR)/boot.b ]; then \
+	  ln -s boot-menu.b $$ROOT$(BOOT_DIR)/boot.b; fi
+	cp mkrescue $$ROOT$(SBIN_DIR)
+	cp lilo $$ROOT$(SBIN_DIR)
+	strip $$ROOT$(SBIN_DIR)/lilo
+	cp keytab-lilo.pl $$ROOT$(USRSBIN_DIR)
+	cp manPages/lilo.8 $$ROOT$(MAN_DIR)/man8
+	cp manPages/mkrescue.8 $$ROOT$(MAN_DIR)/man8
+	cp manPages/lilo.conf.5 $$ROOT$(MAN_DIR)/man5
+	@if [ -e $$ROOT/etc/lilo/install ]; then echo; \
+	  echo -n "$$ROOT/etc/lilo/install is obsolete. LILO is now ";\
+	  echo "re-installed "; \
+	  echo "by just invoking $(SBIN_DIR)/lilo"; echo; fi
+	@echo "/sbin/lilo must now be run to complete the update."
+
+dep:
+		sed '/\#\#\# Dependencies/q' <Makefile >tmp_make
+		$(CPP) $(CFLAGS) -MM *.c >>tmp_make
+		mv tmp_make Makefile
+
+version:
+		[ -r VERSION ] && [ -d ../lilo -a ! -d ../lilo-`cat VERSION` ]\
+		  && mv ../lilo ../lilo-`cat VERSION`
+
+tidy:		
+		rm -f core $(LIS) *.shs *.crc
+		if [ -x lilo ]; then strip lilo; fi
+
+clean:		tidy
+		rm -f *.o *.s *.img $(BFILES) tmp_make mylilo.h first.lis
+
+spotless:	clean
+		rm -f *~ */*~ lilo activate *.b *.com
+		cd doc; make clean; cd ..
+
+### Dependencies
+activate.o: activate.c
+boot.o: boot.c config.h common.h lilo.h version.h geometry.h cfg.h \
+ map.h partition.h boot.h
+bsect.o: bsect.c config.h common.h lilo.h version.h cfg.h device.h \
+ geometry.h map.h temp.h partition.h boot.h bsect.h bitmap.h
+cfg.o: cfg.c common.h lilo.h version.h temp.h cfg.h
+common.o: common.c common.h lilo.h version.h
+device.o: device.c config.h common.h lilo.h version.h temp.h device.h
+geometry.o: geometry.c config.h lilo.h version.h common.h device.h \
+ geometry.h cfg.h md-int.h
+identify.o: identify.c cfg.h
+lilo.o: lilo.c config.h common.h lilo.h version.h temp.h device.h \
+ geometry.h map.h bsect.h cfg.h identify.h partition.h probe.h \
+ md-int.h
+#lrmi.o: lrmi.c lrmi.h
+map.o: map.c lilo.h version.h common.h geometry.h map.h
+partition.o: partition.c config.h lilo.h version.h common.h cfg.h \
+ device.h geometry.h partition.h boot.h
+probe.o: probe.c common.h lilo.h version.h partition.h probe.h
+shs2.o: shs2.c shs2.h
+temp.o: temp.c common.h lilo.h version.h temp.h
+test.o: test.c

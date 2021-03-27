@@ -1,0 +1,68 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:572: checking host system type
+configure:593: checking target system type
+configure:611: checking build system type
+configure:702: checking for gcc
+configure:779: checking whether the C compiler (gcc  ) works
+configure:793: gcc -o conftest    conftest.c  1>&5
+configure:813: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:818: checking whether we are using GNU C
+configure:827: gcc -E conftest.c
+configure:842: checking whether gcc accepts -g
+configure:875: checking gcc version
+configure:1015: checking how to run the C preprocessor
+configure:1036: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1079: checking for malloc.h
+configure:1089: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1079: checking for sys/select.h
+configure:1089: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1079: checking for sys/sockio.h
+configure:1089: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1085: sys/sockio.h: No such file or directory
+configure: failed program was:
+#line 1084 "configure"
+#include "confdefs.h"
+#include <sys/sockio.h>
+configure:1119: checking for strerror
+configure:1147: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1176: checking for setlinebuf
+configure:1204: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1233: checking for gethostbyname
+configure:1261: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1467: checking for socket
+configure:1495: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1603: checking for putmsg in -lstr
+configure:1622: gcc -o conftest -g -O2   conftest.c -lstr   1>&5
+/usr/bin/ld: cannot open -lstr: No such file or directory
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 1611 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char putmsg();
+
+int main() {
+putmsg()
+; return 0; }
+configure:1698: checking for int32_t using gcc
+configure:1716: gcc -c -g -O2  conftest.c 1>&5
+configure:1736: checking for u_int32_t using gcc
+configure:1754: gcc -c -g -O2  conftest.c 1>&5
+configure:1814: checking if sockaddr struct has sa_len member
+configure:1828: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:1824: structure has no member named `sa_len'
+configure: failed program was:
+#line 1819 "configure"
+#include "confdefs.h"
+
+#	include <sys/types.h>
+#	include <sys/socket.h>
+int main() {
+u_int i = sizeof(((struct sockaddr *)0)->sa_len)
+; return 0; }
+configure:1867: checking for a BSD compatible install

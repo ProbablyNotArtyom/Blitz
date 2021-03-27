@@ -1,0 +1,1390 @@
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/nettel.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/nettel.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsim.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5307.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206e.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5272.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/nettel.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfne.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/arnewsh.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206e.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/motorola.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/nettel.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cfv240.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5272.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5307.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/secureedgemp3.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5407.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfne.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cpu32.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/setup.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/amiga.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atari.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/mac.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68020.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68030.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68040.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68060.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/setup.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/68332dio.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/68332dio.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/socket.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/sockios.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/socket.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/delay.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/param.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68332.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/secureedgemp3.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68328.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68ez328.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/delay.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfpci.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/pci.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfpci.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/atomic.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/atomic.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5307dma.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsim.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/irq.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5307dma.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/statfs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/statfs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5206sim.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206e.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5206sim.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm_i.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io_hw_swap.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sed/sios.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io_hw_swap.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sed/sios/master.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sed/sios/remote.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/16mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/20mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/25mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/33mhz.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/pgtable.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/setup.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68040/or/m68060/only.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68020/or/m68030/only.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5407.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/pgtable.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/nap.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/gilbarconap.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsim.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5272.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/nap.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5204sim.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206e.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5204sim.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsmc.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/nettel.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsmc.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfdma.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206e.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5272.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5282.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5249.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5307.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5407.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfdma.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/traps.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cpu32.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68000.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68332.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/traps.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/dma.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsim.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfdma.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5307.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5407.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5272.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/dma.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/semp3.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/secureedgemp3.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsim.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/semp3.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/processor.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/processor.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/termios.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/termbits.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ioctls.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/termios.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/user.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/page.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ptrace.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/user.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfuart.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5272.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5204.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206e.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/nettel.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5249.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5307.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5407.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/disktel.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/secureedgemp3.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfuart.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ptrace.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ptrace.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/termbits.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/posix_types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/termbits.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfide.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsim.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/secureedgemp3.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/elia.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/disktel.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5249c3.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfide.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/11mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/16mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/20mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/24mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/25mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/33mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/40mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/45mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/48mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/50mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/54mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/60mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/64mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/66mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/70mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/clock/140mhz.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5249.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/elia.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/elia.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/elia.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/elf.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ptrace.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/elf.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/param.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/hw/feith.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/shglcore.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sm2010.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/param.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/anchor.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/motorola.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5407.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/anchor.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/compatmac.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/bitops.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/compatmac.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/semaphore.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/linkage.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/smp.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/semaphore.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/irq.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cpu32.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68332.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atari.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/irq.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcftimer.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5204.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206e.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5272.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5249.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5307.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5407.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcftimer.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/bitops.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/bitops.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/linkage.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68328.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/MC68328.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68ez328.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/MC68EZ328.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atari.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/amiga.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/mac.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/rmw/insns.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68332.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cpu32.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/flash/snapgear.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/hw/feith.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5272.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cobra5272.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68000.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/shglports.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/shglcore.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/shglports.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_sxc_i.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_sxc_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5307sim.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/oldmask.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5307.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5307sim.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ioctls.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ioctls.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360_quicc.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360_regs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360_pram.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_sxc_i.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360_quicc.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/signal.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/sigcontext.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/signal.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_scc_i.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/serial.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_sxc_i.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_scc_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/string.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/page.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/string.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/font.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/font.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mmu_context.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/shglcore.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mmu_context.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/page.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/shglcore.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/small.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cfv240.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68332.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cpu32.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/pilot.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68328.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68ez328.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ucsimm.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68ez328ads.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/alma/ans.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68en302.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/shglcore.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68000.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/68katy.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/page.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/shglcore.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/shglcore.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/MC68332.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/shglcore/2meg.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/shglcore.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68en302.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68302.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68en302.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360_regs.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sed/sios.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360_regs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_smc_i.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/serial.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_sxc_i.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_smc_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/checksum.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/checksum.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsim.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5204.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5204sim.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5206e.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5206sim.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5249.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5249sim.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5272.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5272sim.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5307.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5307sim.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5407.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5407sim.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsim.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smp_lock.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/smp.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/pgtable.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smp_lock.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/scc.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_ether.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/scc.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/stat.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/wireless.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/socket.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/wireless.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/config.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/autoconf.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/config.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mc146818rtc.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mc146818rtc.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/iso_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/iso_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/a.out.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/a.out.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/page.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/a.out.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/posix_types.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/reduced/memory.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/posix_types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/posix_types.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_frad.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/dlci/max.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_frad.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/umsdos_fs_i.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msdos_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/pipe_fs_i.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/umsdos_fs_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/locks.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/pagemap.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/locks.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/byteorder.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs_sb.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_mount.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs_sb.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/raid5.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/md.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/atomic.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/raid5.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_mount.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipx.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs_i.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_mount.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_mount.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_mount.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/comstats.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/comstats.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/socket.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/socket.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/uio.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/socket.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/param.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/binfmts.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/personality.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tasks.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/semaphore.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/page.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sem.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/head.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/signal.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/time.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/param.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/resource.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ptrace.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/timer.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/processor.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/smp.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfsiod.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/rpcsock.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfsiod.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blkmem.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blkmem.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fd.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fd.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/delay.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/delay.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/delay.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kd.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kd.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/posix_types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/apm_bios.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tasks.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/apm_bios.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/baycom.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_ether.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/baycom.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lirc.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lirc.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs_i.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blk.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blkdev.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/locks.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/md.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cdu31a.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/mcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/mcdx.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sbpcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/aztcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cdu535.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/gscd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cm206.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/optcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sjcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cdi/init.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/hd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/ide.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/xd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/loop.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/md.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/blkmem.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/initrd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sed/sios.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blk.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/trdevice.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_tr.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/trdevice.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/md.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/major.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blkdev.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/md.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/atalk.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/byteorder.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/atalk.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/time.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/atomic.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/types.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/skb/check.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/shaper.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/shaper/module.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/skb/large.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/linkage.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/sockios.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msdos_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fd.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/byteorder.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msdos_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/binfmts.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ptrace.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/binfmts.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/soundcard.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/soundcard.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ufs_fs_i.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ufs_fs.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ufs_fs_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_arp.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_arp.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/shm.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/shmparam.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/shm.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/amigaffs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/byteorder.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/amigaffs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty_ldisc.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/wait.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty_ldisc.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mroute.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mroute.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tcp.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/byteorder.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tcp.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/hdlcdrv.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/version.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/version.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_ether.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/hdlcdrv.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_mount.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel_stat.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/irq.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel_stat.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/termios.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tqueue.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty_driver.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty_ldisc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ds1743.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ds1743.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ds1743.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/flash.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/flash.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/pagemap.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/swapctl.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/reduced/memory.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/pagemap.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/auto_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/version.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/limits.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/auto_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/termios.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/termios.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/termios.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/umsdos_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/dirent.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/umsdos_fs.p
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/umsdos_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/user.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/user.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/user.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net_alias.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net_alias.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty_driver.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty_driver.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ptrace.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ptrace.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ptrace.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/errno.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smp.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/smp.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smp.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_plip.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_plip.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipc.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipc.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/proc_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/proc_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/wait.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/socket.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/swap.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/atomic.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/swap.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/notifier.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/notifier.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/key.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/time.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/key.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/affs_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/affs_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/bpqether.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_ether.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/bpqether.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msg.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipc.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msg.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipx.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipx.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mc68328digi.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/time.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mc68328digi.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/symtab_begin.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/linkage.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/symtab_begin.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/interrupt.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/bitops.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/interrupt.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msdos_fs_i.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/pipe_fs_i.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msdos_fs_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/elf.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/elf.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/elf.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_mount.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/param.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/param.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/param.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/genhd.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/smd/disklabel.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/bsd/disklabel.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/genhd.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/flat.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/byteorder.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/flat.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs_sb.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_mount.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs_sb.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/limits.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/reduced/memory.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/limits.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tpqic02.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/qic02/tape.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mtio.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/qic02/dynconf.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tpqic02.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipx.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/compatmac.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/version.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/compatmac.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/compatmac.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/personality.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/linkage.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ptrace.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/personality.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/vfs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/statfs.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/vfs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/adfs_fs_sb.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/adfs_fs.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/adfs_fs_sb.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nvram.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nvram.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fcntl.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/fcntl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fcntl.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/byteorder.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/linkage.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/limits.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/wait.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/vfs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kdev_t.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/reduced/memory.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sed/sios/master.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/semaphore.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/bitops.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/pipe_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/minix_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext2_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/hpfs_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msdos_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/umsdos_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/iso_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/xia_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysv_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/affs_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ufs_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/romfs_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/quota.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fcntl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/minix_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext2_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/hpfs_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msdos_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/iso_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/xia_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysv_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/affs_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ufs_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/romfs_fs_sb.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/initrd.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/minix_fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/minix_fs_sb.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/byteorder.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/socket.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sem.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipc.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sem.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext2_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext2_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/isdn.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cobalt/micro/server.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/major.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/signal.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/timer.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/wait.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty_flip.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/serial_reg.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fcntl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/interrupt.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/etherdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tcp.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/isdn/ppp.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/isdn/ppp/vj.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/slhc_vj.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ppp_defs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_ppp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_pppvar.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/isdn_ppp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/isdnif.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/isdn/audio.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/isdn.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/quota.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mount.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/quota.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fb.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fb.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/cdk.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/cdk.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tqueue.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/bitops.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tqueue.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ftape.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ftape.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ppp.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_ppp.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ppp.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/serial.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/termios.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tqueue.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/serial.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs_sb.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/rpcsock.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs_sb.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip_fwchains.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/icmp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tcp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/udp.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/masquerade/ipautofw.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/masquerade/ipportfw.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/version.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/masquerade.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip_fwchains.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/string.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/page.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/atomic.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lp_m68k.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/autoconf.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/bootinfo.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lp_m68k.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_ether.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ax25.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ax25/module.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/tr.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/net/ipip.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/net/ipip/module.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/interrupt.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/notifier.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/soundmodem.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_ether.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/soundmodem.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/adfs_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/adfs_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lp_intern.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lp_m68k.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lp_intern.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/hdreg.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/hd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/ide.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/ide/pcmcia.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/hdreg.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs_i.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/capi.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernelcapi.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/capi.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext2_fs_sb.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext2_fs.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext2_fs_sb.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/signal.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/signal.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/signal.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fddidevice.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_fddi.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fddidevice.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip_fw.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/icmp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tcp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/udp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/masquerade/ipautofw.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/masquerade/ipportfw.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/firewall.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/acct.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip_fw.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysv_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysv_fs_sb.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysv_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/resource.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/time.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/resource.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/resource.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/string.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/autoconf.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/arch/atmel.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/arch/gba.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/string.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/string.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kerneld.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/posix_types.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kerneld.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_eql.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/timer.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_eql.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs_i.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/pipe_fs_i.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs_i.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ufs_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/time.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ufs_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysctl.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lists.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysctl.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/module.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/version.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/module.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/etherdevice.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_ether.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/etherdevice.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blkdev.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/major.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/genhd.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tqueue.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blkdev.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tasks.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/smp.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tasks.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/random.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/random.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mman.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mman.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mman.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_mount.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs_sb.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs_i.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/swapctl.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/page.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/swapctl.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mtio.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mtio.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/raid1.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/md.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/raid1.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/elfcore.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/signal.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/time.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ptrace.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/user.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/elf.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/elfcore.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/unistd.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/unistd.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/unistd.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/route.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/route.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/isdnif.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/version.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/isdnif.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/cm206.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/cm206.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/scsi/scsicam.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kdev_t.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/scsi/scsicam.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/rose.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/rose.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/rosecall.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/rose.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ax25.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ax25.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysctl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ax25call.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ax25.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/tcp.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tcp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/checksum.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/tcp.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/icmp.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/icmp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/sock.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/protocol.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/icmp.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ipx.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/datalink.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipx.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ipxcall.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ipx.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/sock.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/timer.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tcp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/protocol.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ax25.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ax25/module.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ax25.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/netrom.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/netrom/module.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netrom.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/rose.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/rose/module.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/rose.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ipx.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ipx/module.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ipx.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atalk.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atalk/module.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/atalk.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/igmp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/atomic.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ipx/intern.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/nutcp.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/inet.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/multicast.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/sock.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netrom.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netrom.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/nrcall.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netrom.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ip_masq.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/masquerade/ipsec.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/masquerade/ipautofw.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ip_masq.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netlink.h:  \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/rtnetlink.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netlink.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ip.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/socket.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/route.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/snmp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/sock.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ip/multicast.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ip_forward.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ip.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/udp.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/udp.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/udp.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/route.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/route.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/kerneld.h)
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/route.h
+/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/checksum.h: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/byteorder.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ip.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/checksum.h
+	@touch /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/checksum.h
+.PRECIOUS:	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/nettel.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfne.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/setup.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/68332dio.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/socket.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/delay.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfpci.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/atomic.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5307dma.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/statfs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5206sim.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io_hw_swap.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/pgtable.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/nap.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5204sim.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsmc.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfdma.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/traps.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/dma.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/semp3.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/processor.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/termios.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/user.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfuart.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ptrace.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/termbits.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfide.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/coldfire.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/elia.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/elf.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/param.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/anchor.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/compatmac.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/semaphore.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/irq.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcftimer.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/bitops.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/shglports.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_sxc_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m5307sim.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/ioctls.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360_quicc.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/signal.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_scc_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/string.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/font.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mmu_context.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/page.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/shglcore.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68en302.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/m68360_regs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_smc_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/checksum.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/mcfsim.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smp_lock.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/scc.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/wireless.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/config.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mc146818rtc.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/iso_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/a.out.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/posix_types.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_frad.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/umsdos_fs_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/locks.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs_sb.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/raid5.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_mount.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_mount.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/comstats.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/socket.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfsiod.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blkmem.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fd.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/delay.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kd.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/apm_bios.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/baycom.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lirc.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blk.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/trdevice.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/md.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/atalk.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sockios.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msdos_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/binfmts.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/soundcard.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ufs_fs_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_arp.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/shm.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/amigaffs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty_ldisc.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mroute.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tcp.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/hdlcdrv.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel_stat.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ds1743.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/flash.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/pagemap.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/auto_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/termios.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/umsdos_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/user.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net_alias.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty_driver.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ptrace.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smp.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_plip.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipc.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/proc_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/swap.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/notifier.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/key.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/affs_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/bpqether.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msg.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipx.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mc68328digi.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/symtab_begin.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/interrupt.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msdos_fs_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/elf.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/param.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/genhd.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/flat.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs_sb.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/limits.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tpqic02.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/compatmac.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/personality.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/vfs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/adfs_fs_sb.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nvram.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fcntl.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sem.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext2_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/isdn.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/quota.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fb.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/cdk.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tqueue.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ftape.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ppp.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/serial.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs_sb.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip_fwchains.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lp_m68k.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/soundmodem.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/adfs_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lp_intern.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/hdreg.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/smb_fs_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/capi.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ext2_fs_sb.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/signal.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fddidevice.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip_fw.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysv_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/resource.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/string.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kerneld.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/if_eql.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs_i.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ufs_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysctl.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/module.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioctl.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/etherdevice.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blkdev.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tasks.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/random.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mman.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ncp_fs.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/swapctl.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mtio.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/raid1.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/elfcore.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/unistd.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/route.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/isdnif.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/cm206.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/scsi/scsicam.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/rose.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ax25.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/tcp.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/icmp.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ipx.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/sock.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netrom.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ip_masq.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netlink.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ip.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/udp.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/route.h \
+	/home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/checksum.h \
+

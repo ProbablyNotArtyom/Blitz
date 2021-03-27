@@ -1,0 +1,46 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_FMT:
+
+************************************************
+ioctl VIDIOC_G_FMT, VIDIOC_S_FMT, VIDIOC_TRY_FMT
+************************************************
+
+Name
+====
+
+VIDIOC_G_FMT - VIDIOC_S_FMT - VIDIOC_TRY_FMT - Get or set the data format, try a format
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_G_FMT, struct v4l2_format *argp )
+    :name: VIDIOC_G_FMT
+
+.. c:function:: int ioctl( int fd, VIDIOC_S_FMT, struct v4l2_format *argp )
+    :name: VIDIOC_S_FMT
+
+.. c:function:: int ioctl( int fd, VIDIOC_TRY_FMT, struct v4l2_format *argp )
+    :name: VIDIOC_TRY_FMT
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_format`.
+
+
+Description
+===========
+
+These ioctls are used to negotiate the format of data (typically image
+format) exchanged between driver and application.
+
+To query the current parameters applications set the ``type`` field of a
+struct :c:type:`v4l2_format` to the respective buffer (stream)
+type. For example video capture devices use
+``V4L2_BUF_TYPE_VIDEO_CAPTURE`` or

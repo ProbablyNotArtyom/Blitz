@@ -1,0 +1,36 @@
+/*
+ * Copyright (C) 2014-15 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <linux/linkage.h>
+
+#ifdef __LITTLE_ENDIAN__
+# define SHIFT_1(RX,RY,IMM)	asl	RX, RY, IMM	; <<
+# define SHIFT_2(RX,RY,IMM)	lsr	RX, RY, IMM	; >>
+# define MERGE_1(RX,RY,IMM)	asl	RX, RY, IMM
+# define MERGE_2(RX,RY,IMM)
+# define EXTRACT_1(RX,RY,IMM)	and	RX, RY, 0xFFFF
+# define EXTRACT_2(RX,RY,IMM)	lsr	RX, RY, IMM
+#else
+# define SHIFT_1(RX,RY,IMM)	lsr	RX, RY, IMM	; >>
+# define SHIFT_2(RX,RY,IMM)	asl	RX, RY, IMM	; <<
+# define MERGE_1(RX,RY,IMM)	asl	RX, RY, IMM	; <<
+# define MERGE_2(RX,RY,IMM)	asl	RX, RY, IMM	; <<
+# define EXTRACT_1(RX,RY,IMM)	lsr	RX, RY, IMM
+# define EXTRACT_2(RX,RY,IMM)	lsr	RX, RY, 0x08
+#endif
+
+#ifdef CONFIG_ARC_HAS_LL64
+# define PREFETCH_READ(RX)	prefetch    [RX, 56]
+# define PREFETCH_WRITE(RX)	prefetchw   [RX, 64]
+# define LOADX(DST,RX)		ldd.ab	DST, [RX, 8]
+# define STOREX(SRC,RX)		std.ab	SRC, [RX, 8]
+# define ZOLSHFT		5
+# define ZOLAND			0x1F
+#else
+# define PREFETCH_READ(RX)	prefetch    [RX, 28]
+# defi

@@ -1,0 +1,37 @@
+/*
+ * Device Tree Source for OMAP4 clock data
+ *
+ * Copyright (C) 2013 Texas Instruments, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+&cm1_clocks {
+	extalt_clkin_ck: extalt_clkin_ck {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <59000000>;
+	};
+
+	pad_clks_src_ck: pad_clks_src_ck {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <12000000>;
+	};
+
+	pad_clks_ck: pad_clks_ck@108 {
+		#clock-cells = <0>;
+		compatible = "ti,gate-clock";
+		clocks = <&pad_clks_src_ck>;
+		ti,bit-shift = <8>;
+		reg = <0x0108>;
+	};
+
+	pad_slimbus_core_clks_ck: pad_slimbus_core_clks_ck {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <12000000>;
+	};
+
+	secure_32k_clk

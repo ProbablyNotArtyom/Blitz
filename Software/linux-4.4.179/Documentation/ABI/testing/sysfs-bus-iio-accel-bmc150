@@ -1,0 +1,15 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_QUERYSTD:
+
+*********************************************
+ioctl VIDIOC_QUERYSTD, VIDIOC_SUBDEV_QUERYSTD
+*********************************************
+
+Name
+====
+
+VIDIOC_QUERYSTD - VIDIOC_SUBDEV_QUERYSTD - Sense the video standard received by the current input
+
+
+Synops

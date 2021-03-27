@@ -1,0 +1,37 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (c) 2018 Oleg Ivanov <balbes-150@yandex.ru>
+ * Copyright (c) 2018 Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+ */
+
+/dts-v1/;
+
+#include "meson8m2.dtsi"
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+/ {
+	model = "Tronsmart MXIII Plus";
+	compatible = "tronsmart,mxiii-plus", "amlogic,meson8m2";
+
+	aliases {
+		ethernet0 = &ethmac;
+		i2c0 = &i2c_AO;
+		serial0 = &uart_AO;
+		serial1 = &uart_A;
+		mmc0 = &sd_card_slot;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory {
+		reg = <0x40000000 0x80000000>;
+	};
+
+	adc-keys {
+		compatible = "adc-keys";
+		io-channels = <&saradc 0>;
+		io-channel-names 

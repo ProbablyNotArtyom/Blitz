@@ -1,0 +1,103 @@
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/ {
+	gpio_keys {
+		compatible = "gpio-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&gpio_key_pins &gpio_key_pins_wkup>;
+
+		sysboot2 {
+			label = "sysboot2";
+			gpios = <&gpio1 2 GPIO_ACTIVE_LOW>;	/* gpio2 */
+			linux,code = <BTN_0>;
+			wakeup-source;
+		};
+
+		sysboot5 {
+			label = "sysboot5";
+			gpios = <&gpio1 7 GPIO_ACTIVE_LOW>;	/* gpio7 */
+			linux,code = <BTN_1>;
+			wakeup-source;
+		};
+
+		gpio1 {
+			label = "gpio1";
+			gpios = <&gpio6 21 GPIO_ACTIVE_LOW>;	/* gpio181 */
+			linux,code = <BTN_2>;
+			wakeup-source;
+		};
+
+		gpio2 {
+			label = "gpio2";
+			gpios = <&gpio6 18 GPIO_ACTIVE_LOW>;	/* gpio178 */
+			linux,code = <BTN_3>;
+			wakeup-source;
+		};
+	};
+
+	sound {
+		compatible = "ti,omap-twl4030";
+		ti,model = "omap3logic";
+		ti,mcbsp = <&mcbsp2>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&led_pins>;
+
+		led1 {
+			label = "led1";
+			gpios = <&gpio6 20 GPIO_ACTIVE_HIGH>;	/* gpio180 */
+			linux,default-trigger = "cpu0";
+		};
+
+		led2 {
+			label = "led2";
+			gpios = <&gpio6 19 GPIO_ACTIVE_HIGH>;	/* gpio179 */
+			linux,default-trigger = "none";
+		};
+	};
+
+	pwm10: dmtimer-pwm {
+		compatible = "ti,omap-dmtimer-pwm";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pwm_pins>;
+		ti,timers = <&timer10>;
+		#pwm-cells = <3>;
+	};
+
+};
+
+&vaux1 {
+	regulator-min-microvolt = <3000000>;
+	regulator-max-microvolt = <3000000>;
+};
+
+&vaux4 {
+	regulator-min-microvolt = <1800000>;
+	regulator-max-microvolt = <1800000>;
+};
+
+&mcbsp2 {
+	status = "okay";
+};
+
+&charger {
+	ti,bb-uvolt = <3200000>;
+	ti,bb-uamp = <150>;
+};
+
+&gpmc {
+	ranges = <0 0 0x30000000 0x1000000	/* CS0: 16MB for NAND */
+		  1 0 0x2c000000 0x1000000>;	/* CS1: 16MB for LAN9221 */
+
+	ethernet@gpmc {
+		pinctrl-names = "default";
+		pinctrl-0 = <&lan9221_pins>;
+		interrupt-parent = <&gpio5>;
+		interrupts = <1 IRQ_TYPE_LEVEL_

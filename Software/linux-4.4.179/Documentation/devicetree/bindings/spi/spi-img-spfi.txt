@@ -1,0 +1,54 @@
+/*
+ * Copyright (C) 2014-18 H. Nikolaus Schaller <hns@goldelico.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include "omap3-gta04.dtsi"
+
+/ {
+	model = "Goldelico GTA04A5/Letux 2804";
+
+	sound {
+		ti,jack-det-gpio = <&twl_gpio 2 GPIO_ACTIVE_HIGH>;	/* GTA04A5 only */
+	};
+
+	wlan_en: wlan_en_regulator {
+		compatible = "regulator-fixed";
+		pinctrl-names = "default";
+		pinctrl-0 = <&wlan_pins>;
+		regulator-name = "wlan-en-regulator";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+
+		gpio = <&gpio5 10 GPIO_ACTIVE_HIGH>;	/* GPIO_138 */
+
+		startup-delay-us = <70000>;
+		enable-active-high;
+	};
+
+	pps {
+		compatible = "pps-gpio";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pps_pins>;
+
+		gpios = <&gpio4 18 GPIO_ACTIVE_HIGH>; /* GPIN_114 */
+	};
+
+};
+
+&gpio5 {
+	irda_en {
+		gpio-hog;
+		gpios = <(175-160) GPIO_ACTIVE_HIGH>;
+		output-high;	/* activate gpio_175 to disable IrDA receiver */
+	};
+};
+
+&omap3_pmx_core {
+	bt_pins: pinmux_bt_pins {
+		pinctrl-single,pins = <
+			OMAP3_CORE1_IOPAD(0x2166, PIN_OUTPUT | MUX_MODE4)	/* mmc2_dat5 = mmc3_dat1 = gpio137 */
+	

@@ -1,0 +1,114 @@
+====================================================================
+=    Adaptec Aic7xxx Fast -> Ultra160 Family Manager Set v7.0      =
+=                            README for                            =
+=                     The Linux Operating System                   =
+====================================================================
+
+The following information is available in this file:
+
+  1. Supported Hardware
+  2. Version History
+  3. Command Line Options
+  4. Contacting Adaptec
+
+1. Supported Hardware
+
+   The following Adaptec SCSI Chips and Host Adapters are supported by
+   the aic7xxx driver. 
+
+   Chip    MIPS  Host Bus  MaxSync  MaxWidth  SCBs  Notes
+   ---------------------------------------------------------------
+   aic7770  10    EISA/VL   10MHz    16Bit      4   1
+   aic7850  10    PCI/32    10MHz    8Bit       3
+   aic7855  10    PCI/32    10MHz    8Bit       3
+   aic7856  10    PCI/32    10MHz    8Bit       3
+   aic7859  10    PCI/32    20MHz    8Bit       3
+   aic7860  10    PCI/32    20MHz    8Bit       3
+   aic7870  10    PCI/32    10MHz    16Bit      16
+   aic7880  10    PCI/32    20MHz    16Bit      16
+   aic7890  20    PCI/32    40MHz    16Bit      16      3 4 5 6 7 8
+   aic7891  20    PCI/64    40MHz    16Bit      16      3 4 5 6 7 8
+   aic7892  20   PCI/64-66  80MHz    16Bit      16      3 4 5 6 7 8
+   aic7895  15    PCI/32    20MHz    16Bit      16    2 3 4 5
+   aic7895C 15    PCI/32    20MHz    16Bit      16    2 3 4 5     8
+   aic7896  20    PCI/32    40MHz    16Bit      16    2 3 4 5 6 7 8
+   aic7897  20    PCI/64    40MHz    16Bit      16    2 3 4 5 6 7 8
+   aic7899  20   PCI/64-66  80MHz    16Bit      16    2 3 4 5 6 7 8
+
+   1.   Multiplexed Twin Channel Device - One controller servicing two
+        busses.
+   2.   Multi-function Twin Channel Device - Two controllers on one chip.
+   3.   Command Channel Secondary DMA Engine - Allows scatter gather list
+        and SCB prefetch.
+   4.   64 Byte SCB Support - Allows disconnected, untagged request table
+        for all possible target/lun combinations.
+   5.   Block Move Instruction Support - Doubles the speed of certain
+        sequencer operations.
+   6.   `Bayonet' style Scatter Gather Engine - Improves S/G prefetch
+        performance.
+   7.   Queuing Registers - Allows queuing of new transactions without
+        pausing the sequencer.
+   8.   Multiple Target IDs - Allows the controller to respond to selection
+        as a target on multiple SCSI IDs.
+
+   Controller      Chip   Host-Bus    Int-Connectors  Ext-Connectors  Notes
+   --------------------------------------------------------------------------
+   AHA-274X[A]    aic7770   EISA         SE-50M         SE-HD50F
+   AHA-274X[A]W   aic7770   EISA         SE-HD68F       SE-HD68F
+                                         SE-50M
+   AHA-274X[A]T   aic7770   EISA       2 X SE-50M       SE-HD50F
+   AHA-2842       aic7770    VL          SE-50M         SE-HD50F
+   AHA-2940AU     aic7860   PCI/32       SE-50M         SE-HD50F
+   AVA-2902I      aic7860   PCI/32       SE-50M
+   AVA-2902E      aic7860   PCI/32       SE-50M
+   AVA-2906       aic7856   PCI/32       SE-50M         SE-DB25F
+   APC-7850       aic7850   PCI/32       SE-50M                       1
+   AVA-2940       aic7860   PCI/32       SE-50M
+   AHA-2920B      aic7860   PCI/32       SE-50M
+   AHA-2930B      aic7860   PCI/32       SE-50M
+   AHA-2920C      aic7856   PCI/32       SE-50M         SE-HD50F
+   AHA-2930C      aic7860   PCI/32       SE-50M
+   AHA-2930C      aic7860   PCI/32       SE-50M
+   AHA-2910C      aic7860   PCI/32       SE-50M
+   AHA-2915C      aic7860   PCI/32       SE-50M
+   AHA-2940AU/CN  aic7860   PCI/32       SE-50M         SE-HD50F
+   AHA-2944W      aic7870   PCI/32     HVD-HD68F        HVD-HD68F
+                                        HVD-50M
+   AHA-3940W      aic7870   PCI/32     2 X SE-HD68F     SE-HD68F        2
+   AHA-2940UW     aic7880   PCI/32       SE-HD68F
+                                         SE-50M         SE-HD68F
+   AHA-2940U      aic7880   PCI/32       SE-50M         SE-HD50F
+   AHA-2940D      aic7880   PCI/32
+   aHA-2940 A/T   aic7880   PCI/32
+   AHA-2940D A/T  aic7880   PCI/32
+   AHA-3940UW     aic7880   PCI/32     2 X SE-HD68F     SE-HD68F          3
+   AHA-3940UWD    aic7880   PCI/32     2 X SE-HD68F   2 X SE-VHD68F       3
+   AHA-3940U      aic7880   PCI/32     2 X SE-50M       SE-HD50F          3
+   AHA-2944UW     aic7880   PCI/32      HVD-HD68F       HVD-HD68F
+                                         HVD-50M
+   AHA-3944UWD    aic7880   PCI/32     2 X HVD-HD68F  2 X HVD-VHD68F      3
+   AHA-4944UW     aic7880   PCI/32
+   AHA-2930UW     aic7880   PCI/32
+   AHA-2940UW Pro aic7880   PCI/32      SE-HD68F        SE-HD68F            4
+                                         SE-50M
+   AHA-2940UW/CN  aic7880   PCI/32
+   AHA-2940UDual  aic7895   PCI/32
+   AHA-2940UWDual aic7895   PCI/32
+   AHA-3940UWD    aic7895   PCI/32
+   AHA-3940AUW    aic7895   PCI/32
+   AHA-3940AUWD   aic7895   PCI/32
+   AHA-3940AU     aic7895   PCI/32
+   AHA-3944AUWD   aic7895   PCI/32     2 X HVD-HD68F  2 X HVD-VHD68F
+   AHA-2940U2B    aic7890   PCI/32      LVD-HD68F       LVD-HD68F
+   AHA-2940U2 OEM aic7891   PCI/64
+   AHA-2940U2W    aic7890   PCI/32      LVD-HD68F       LVD-HD68F
+                                        SE-HD68F 
+                                         SE-50M
+   AHA-2950U2B    aic7891   PCI/64      LVD-HD68F       LVD-HD68F
+   AHA-2930U2     aic7890   PCI/32      LVD-HD68F       SE-HD50F
+                                         SE-50M 
+   AHA-3950U2B    aic7897   PCI/64
+   AHA-3950U2D    aic7897   PCI/64
+   AHA-29160      aic7892   PCI/64-66
+   AHA-29160 CPQ  aic7892   PCI/64-66
+   AHA-29160N     aic7892   PCI/32      LVD-HD68F     

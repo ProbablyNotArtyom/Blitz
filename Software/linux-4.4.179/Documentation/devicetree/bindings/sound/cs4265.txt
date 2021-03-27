@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+
+#include "kirkwood-lsxl.dtsi"
+
+/ {
+	model = "Buffalo Linkstation LS-CHLv2";
+	compatible = "buffalo,lschlv2", "buffalo,lsxl", "marvell,kirkwood-88f6281", "marvell,kirkwood";
+
+	memory {
+		device_type = "memory";
+		reg = <0x00000000 0x4000000>;
+	};
+
+	ocp@f1000000 {
+		serial@12000 {
+			status = "okay";
+		};
+	};
+};
+LogAuslogics.Debug.LogInterfaces.DiskDefraguTypesInterfaces.ReportHelperuVolumeuCleanerThreaduSsdDefrageruFreeSpaceTreeSystem.Generics.CollectionsuSimpleDefrager	uFileListuNtfsSystemSystem.Generics.DefaultsuNtfsStructures	uFileInfouFileuExcludedListuAdvancedDefrageruFullDefrager	uAnalyzeruBootTi

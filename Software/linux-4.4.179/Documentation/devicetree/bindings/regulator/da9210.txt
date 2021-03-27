@@ -1,0 +1,28 @@
+// SPDX-License-Identifier: GPL-2.0 OR X11
+/*
+ * Copyright 2015 Boundary Devices, Inc.
+ */
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+/ {
+	chosen {
+		stdout-path = &uart2;
+	};
+
+	memory@10000000 {
+		reg = <0x10000000 0xF0000000>;
+	};
+
+	regulators {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		reg_1p8v: regulator@0 {
+			compatible = "regulator-fixed";
+			reg = <0>;
+			regulator-name = "1P8V";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			r

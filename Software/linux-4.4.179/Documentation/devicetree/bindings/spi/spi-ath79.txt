@@ -1,0 +1,26 @@
+/*
+ * Copyright (C) 2011 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include "omap36xx.dtsi"
+#include "omap3-evm-common.dtsi"
+#include "omap3-evm-processor-common.dtsi"
+
+/ {
+	model = "TI OMAP37XX EVM (TMDSEVM3730)";
+	compatible = "ti,omap3-evm-37xx", "ti,omap3630", "ti,omap3";
+};
+
+&omap3_pmx_core2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&hsusb2_2_pins>;
+
+	ehci_phy_pins: pinmux_ehci_phy_pins {
+		pinctrl-single,pins = <
+
+		/* EHC

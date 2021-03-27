@@ -1,0 +1,16 @@
+The cafe_ccic driver
+====================
+
+Author: Jonathan Corbet <corbet@lwn.net>
+
+Introduction
+------------
+
+"cafe_ccic" is a driver for the Marvell 88ALP01 "cafe" CMOS camera
+controller.  This is the controller found in first-generation OLPC systems,
+and this driver was written with support from the OLPC project.
+
+Current status: the core driver works.  It can generate data in YUV422,
+RGB565, and RGB444 formats.  (Anybody looking at the code will see RGB32 as
+well, but that is a debugging aid which will be removed shortly).  VGA and
+Q

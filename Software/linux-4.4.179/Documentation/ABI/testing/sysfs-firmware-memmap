@@ -1,0 +1,67 @@
+     cdc_mbim - Driver for CDC MBIM Mobile Broadband modems
+    ========================================================
+
+The cdc_mbim driver supports USB devices conforming to the "Universal
+Serial Bus Communications Class Subclass Specification for Mobile
+Broadband Interface Model" [1], which is a further development of
+"Universal Serial Bus Communications Class Subclass Specifications for
+Network Control Model Devices" [2] optimized for Mobile Broadband
+devices, aka "3G/LTE modems".
+
+
+Command Line Parameters
+=======================
+
+The cdc_mbim driver has no parameters of its own.  But the probing
+behaviour for NCM 1.0 backwards compatible MBIM functions (an
+"NCM/MBIM function" as defined in section 3.2 of [1]) is affected
+by a cdc_ncm driver parameter:
+
+prefer_mbim
+-----------
+Type:          Boolean
+Valid Range:   N/Y (0-1)
+Default Value: Y (MBIM is preferred)
+
+This parameter sets the system policy for NCM/MBIM functions.  Such
+functions will be handled by either the cdc_ncm driver or the cdc_mbim
+driver depending on the prefer_mbim setting.  Setting prefer_mbim=N
+makes the cdc_mbim driver ignore these functions and lets the cdc_ncm
+driver handle them instead.
+
+The parameter is writable, and can be changed at any time. A manual
+unbind/bind is required to make the change effective for NCM/MBIM
+functions bound to the "wrong" driver
+
+
+Basic usage
+===========
+
+MBIM functions are inactive when unmanaged. The cdc_mbim driver only
+provides a userspace interface to the MBIM control channel, and will
+not participate in the management of the function. This implies that a
+userspace MBIM management application always is required to enable a
+MBIM function.
+
+Such userspace applications includes, but are not limited to:
+ - mbimcli (included with the libmbim [3] library), and
+ - ModemManager [4]
+
+Establishing a MBIM IP session reequires at least these actions by the
+management application:
+ - open the control channel
+ - configure network connection settings
+ - connect to network
+ - configure IP interface
+
+Management application development
+----------------------------------
+The driver <-> userspace interfaces are described below.  The MBIM
+control channel protocol is described in [1].
+
+
+MBIM control channel userspace ABI
+==================================
+
+/dev/cdc-wdmX character device
+------------

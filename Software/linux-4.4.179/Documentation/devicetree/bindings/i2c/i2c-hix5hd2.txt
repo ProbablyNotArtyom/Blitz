@@ -1,0 +1,26 @@
+/*
+ * ARC ARConnect (MultiCore IP) support (formerly known as MCIP)
+ *
+ * Copyright (C) 2013 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <linux/smp.h>
+#include <linux/irq.h>
+#include <linux/irqchip/chained_irq.h>
+#include <linux/spinlock.h>
+#include <soc/arc/mcip.h>
+#include <asm/irqflags-arcv2.h>
+#include <asm/setup.h>
+
+static DEFINE_RAW_SPINLOCK(mcip_lock);
+
+#ifdef CONFIG_SMP
+
+static char smp_cpuinfo_buf[128];
+
+/*
+ * Set mask to halt GFRC if any online core in SMP clust

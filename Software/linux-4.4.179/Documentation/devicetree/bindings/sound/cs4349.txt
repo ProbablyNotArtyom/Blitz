@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree file for LaCie 5Big Network v2
+ *
+ * Copyright (C) 2014
+ *
+ * Andrew Lunn <andrew@lunn.ch>
+ *
+ * Based on netxbig_v2-setup.c,
+ * Copyright (C) 2010 Simon Guinot <sguinot@lacie.com>
+ *
+*/
+
+/dts-v1/;
+
+#include "kirkwood.dtsi"
+#include "kirkwood-6281.dtsi"
+#include "kirkwoo

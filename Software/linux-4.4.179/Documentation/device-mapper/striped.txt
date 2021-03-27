@@ -1,0 +1,45 @@
+=========================================
+Uprobe-tracer: Uprobe-based Event Tracing
+=========================================
+
+:Author: Srikar Dronamraju
+
+
+Overview
+--------
+Uprobe based trace events are similar to kprobe based trace events.
+To enable this feature, build your kernel with CONFIG_UPROBE_EVENTS=y.
+
+Similar to the kprobe-event tracer, this doesn't need to be activated via
+current_tracer. Instead of that, add probe points via
+/sys/kernel/debug/tracing/uprobe_events, and enable it via
+/sys/kernel/debug/tracing/events/uprobes/<EVENT>/enable.
+
+However unlike kprobe-event tracer, the uprobe event interface expects the
+user to calculate the offset of the probepoint in the object.
+
+Synopsis of uprobe_tracer
+-------------------------
+::
+
+  p[:[GRP/]EVENT] PATH:OFFSET [FETCHARGS] : Set a uprobe
+  r[:[GRP/]EVENT] PATH:OFFSET [FETCHARGS] : Set a return uprobe (uretprobe)
+  -:[GRP/]EVENT                           : Clear uprobe or uretprobe event
+
+  GRP           : Group name. If omitted, "uprobes" is the default value.
+  EVENT         : Event name. If omitted, the event name is generated based
+                  on PATH+OFFSET.
+  PATH          : Path to an executable or a library.
+  OFFSET        : Offset where the probe is inserted.
+
+  FETCHARGS     : Arguments. Each probe can have up to 128 args.
+   %REG         : Fetch register REG
+   @ADDR	: Fetch memory at ADDR (ADDR should be in userspace)
+   @+OFFSET	: Fetch memory at OFFSET (OFFSET from same file as PATH)
+   $stackN	: Fetch Nth entry of stack (N >= 0)
+   $stack	: Fetch stack address.
+   $retval	: Fetch return value.(*)
+   $comm	: Fetch current task comm.
+   +|-offs(FETCHARG) : Fetch memory at FETCHARG +|- offs address.(**)
+   NAME=FETCHARG     : Set NAME as the argument name of FETCHARG.
+   FETCHARG:TYPE     : Set TYPE as the type of FET

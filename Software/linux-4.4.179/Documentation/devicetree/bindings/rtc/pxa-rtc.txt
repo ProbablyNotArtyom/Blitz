@@ -1,0 +1,13 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright 2017 Toradex AG
+ */
+
+/ {
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	/* fixed crystal dedicated to mcp2515 */
+	clk16m: clk16m {
+		compatible = "

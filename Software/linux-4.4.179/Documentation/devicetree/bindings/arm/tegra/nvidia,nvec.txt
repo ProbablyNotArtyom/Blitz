@@ -1,0 +1,16 @@
+MTRR (Memory Type Range Register) control
+
+Richard Gooch <rgooch@atnf.csiro.au> - 3 Jun 1999
+Luis R. Rodriguez <mcgrof@do-not-panic.com> - April 9, 2015
+
+===============================================================================
+Phasing out MTRR use
+
+MTRR use is replaced on modern x86 hardware with PAT. Direct MTRR use by
+drivers on Linux is now completely phased out, device drivers should use
+arch_phys_wc_add() in combination with ioremap_wc() to make MTRR effective on
+non-PAT systems while a no-op but equally effective on PAT enabled systems.
+
+Even if Linux does not use MTRRs directly, some x86 platform firmware may still
+set up MTRRs early before booting the OS. They do this as some platform
+firmware may still have implemente

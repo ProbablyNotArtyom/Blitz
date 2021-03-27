@@ -1,0 +1,25 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_PAL_H
+#define __ALPHA_PAL_H
+
+#include <uapi/asm/pal.h>
+
+#ifndef __ASSEMBLY__
+
+extern void halt(void) __attribute__((noreturn));
+#define __halt() __asm__ __volatile__ ("call_pal %0 #halt" : : "i" (PAL_halt))
+
+#define imb() \
+__asm__ __volatile__ ("call_pal %0 #imb" : : "i" (PAL_imb) : "memory")
+
+#define draina() \
+__asm__ __volatile__ ("call_pal %0 #draina" : : "i" (PAL_draina) : "memory")
+
+#define __CALL_PAL_R0(NAME, TYPE)				\
+extern inline TYPE NAME(void)					\
+{								\
+	register TYPE __r0 __asm__("$0");			\
+	__asm__ __volatile__(					\
+		"call_pal %1 # " #NAME				\
+		:"=r" (__r0)					\
+		:"i" (PAL_ ## NA

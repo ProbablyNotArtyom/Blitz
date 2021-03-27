@@ -1,0 +1,22 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_WILDFIRE__H__
+#define __ALPHA_WILDFIRE__H__
+
+#include <linux/types.h>
+#include <asm/compiler.h>
+
+#define WILDFIRE_MAX_QBB	8	/* more than 8 requires other mods */
+#define WILDFIRE_PCA_PER_QBB	4
+#define WILDFIRE_IRQ_PER_PCA	64
+
+#define WILDFIRE_NR_IRQS \
+  (WILDFIRE_MAX_QBB * WILDFIRE_PCA_PER_QBB * WILDFIRE_IRQ_PER_PCA)
+
+extern unsigned char wildfire_hard_qbb_map[WILDFIRE_MAX_QBB];
+extern unsigned char wildfire_soft_qbb_map[WILDFIRE_MAX_QBB];
+#define QBB_MAP_EMPTY	0xff
+
+extern unsigned long wildfire_hard_qbb_mask;
+extern unsigned long wildfire_soft_qbb_mask;
+extern unsigned long wildfire_gp_mask;
+e

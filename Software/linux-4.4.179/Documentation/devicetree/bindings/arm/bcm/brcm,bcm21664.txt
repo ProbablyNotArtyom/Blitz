@@ -1,0 +1,14 @@
+.. _cleancache:
+
+==========
+Cleancache
+==========
+
+Motivation
+==========
+
+Cleancache is a new optional feature provided by the VFS layer that
+potentially dramatically increases page cache effectiveness for
+many workloads in many environments at a negligible cost.
+
+Cleancache can be thought of as a page-gr

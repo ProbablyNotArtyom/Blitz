@@ -1,0 +1,116 @@
+The Linux USB Video Class (UVC) driver
+======================================
+
+This file documents some driver-specific aspects of the UVC driver, such as
+driver-specific ioctls and implementation notes.
+
+Questions and remarks can be sent to the Linux UVC development mailing list at
+linux-uvc-devel@lists.berlios.de.
+
+
+Extension Unit (XU) support
+---------------------------
+
+Introduction
+~~~~~~~~~~~~
+
+The UVC specification allows for vendor-specific extensions through extension
+units (XUs). The Linux UVC driver supports extension unit controls (XU controls)
+through two separate mechanisms:
+
+  - through mappings of XU controls to V4L2 controls
+  - through a driver-specific ioctl interface
+
+The first one allows generic V4L2 applications to use XU controls by mapping
+certain XU controls onto V4L2 controls, which then show up during ordinary
+control enumeration.
+
+The second mechanism requires uvcvideo-specific knowledge for the application to
+access XU controls but exposes the entire UVC XU concept to user space for
+maximum flexibility.
+
+Both mechanisms complement each other and are described in more detail below.
+
+
+Control mappings
+~~~~~~~~~~~~~~~~
+
+The UVC driver provides an API for user space applications to define so-called
+control mappings at runtime. These allow for individual XU controls or byte
+ranges thereof to be mapped to new V4L2 controls. Such controls appear and
+function exactly like normal V4L2 controls (i.e. the stock controls, such as
+brightness, contrast, etc.). However, reading or writing of such a V4L2 controls
+triggers a read or write of the associated XU control.
+
+The ioctl used to create these control mappings is called UVCIOC_CTRL_MAP.
+Previous driver versions (before 0.2.0) required another ioctl to be used
+beforehand (UVCIOC_CTRL_ADD) to pass XU control information to the UVC driver.
+This is no longer necessary as newer uvcvideo versions query the information
+directly from the device.
+
+For details on the UVCIOC_CTRL_MAP ioctl please refer to the section titled
+"IOCTL reference" below.
+
+
+3. Driver specific XU control interface
+
+For applications that need to access XU controls directly, e.g. for testing
+purposes, firmware upload, or accessing binary controls, a second mechanism to
+access XU controls is provided in the form of a driver-specific ioctl, namely
+UVCIOC_CTRL_QUERY.
+
+A call to this ioctl allows applications to send queries to the UVC driver that
+directly map to the low-level UVC control requests.
+
+In order to make such a request the UVC unit ID of the control's extension unit
+and the control selector need to be known. This information either needs to be
+hardcoded in the application or queried using other ways such as by parsing the
+UVC descriptor or, if available, using the media controller API to enumerate a
+device's entities.
+
+Unless the control size is already known it is necessary to first make a
+UVC_GET_LEN requests in order to be able to allocate a sufficiently large buffer
+and set the buffer size to the correct value. Similarly, to find out whether
+UVC_GET_CUR or UVC_SET_CUR are valid requests for a given control, a
+UVC_GET_INFO request should be made. The bits 0 (GET supported) and 1 (SET
+supported) of the resulting byte indicate which requests are valid.
+
+With the addition of the UVCIOC_CTRL_QUERY ioctl the UVCIOC_CTRL_GET and
+UVCIOC_CTRL_SET ioctls have become obsolete since their functionality is a
+subset of the former ioctl. For the time being they are still supported but
+application developers are encouraged to use UVCIOC_CTRL_QUERY instead.
+
+For details on the UVCIOC_CTRL_QUERY ioctl please refer to the section titled
+"IOCTL reference" below.
+
+
+Security
+~~~~~~~~
+
+The API doesn't currently provide a fine-grained access control facility. The
+UVCIOC_CTRL_ADD and UVCIOC_CTRL_MAP ioctls require super user permissions.
+
+Suggestions on how to improve this are welcome.
+
+
+Debugging
+~~~~~~~~~
+
+In order to debug problems related to XU controls or controls in general it is
+recommended to enable the UVC_TRACE_CONTROL bit in the module parameter 'trace'.
+This causes extra output to be written into the system log.
+
+
+IOCTL reference
+~~~~~~~~~~~~~~~
+
+UVCIOC_CTRL_MAP - Map a UVC control to a V4L2 control
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Argument: struct uvc_xu_control_mapping
+
+**Description**:
+
+	This ioctl creates a mapping between a UVC control or part of a UVC
+	control and a V4L2 control. Once mappings are defined, userspace
+	applications can access vendor-defined UVC control throug

@@ -1,0 +1,83 @@
+	Watchdog Timer Interfaces For The Linux Operating System
+
+		Alan Cox <alan@lxorguk.ukuu.org.uk>
+
+	     Custom Linux Driver And Program Development
+
+
+The following watchdog drivers are currently implemented:
+
+	ICS	WDT501-P
+	ICS	WDT501-P (no fan tachometer)
+	ICS	WDT500-P
+	Software Only
+
+All four interfaces provide /dev/watchdog, which when open must be written
+to within a minute or the machine will reboot. Each write delays the reboot
+time another minute. In the case of the software watchdog the ability to 
+reboot will depend on the state of the machines and interrupts. The hardware
+boards physically pull the machine down off their own onboard timers and
+will reboot from almost anything.
+
+A second temperature monitoring interface is available on the WDT501P cards
+and provides /dev/temperature. This is the machine internal temperature in
+degrees farenheit. Each read returns a single byte giving the temperature.
+
+The third interface logs kernel messages on additional alert events.
+
+Both software and hardware watchdog drivers are available in the standard
+kernel. If you are using the software watchdog, you probably also want
+to use "panic=60" as a boot argument as well.
+
+Features
+--------
+		WDT501P		WDT500P		Software
+Reboot Timer	   X               X                X
+External Reboot	   X	           X                o
+Temperature	   X		   o		    o
+Fan Speed          X		   o		    o
+Power Under	   X               o                o
+Power Over         X               o                o
+Overheat           X               o                o
+
+The external event interfaces on the WDT boards are not currently supported.
+Minor numbers are however allocated for it.
+
+
+Example Watchdog Driver
+-----------------------
+
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+int main(int argc, const char *argv[])
+{
+	int fd=open("/dev/watchdog",O_WRONLY);
+	if(fd==-1)
+	{
+		perror("watchdog");
+		exit(1);
+	}
+	while(1)
+	{
+		write(fd,"\0",1);
+		sleep(10);
+	}
+}
+
+
+Contact Information
+
+People keep asking about the WDT watchdog timer hardware: The phone contacts
+for Industrial Computer Source are:
+ 
+US: 619 677 0877 (sales)  0895 (fax)
+UK: 01243 533900
+France (1) 69.18.74.30
+
+Industrial Computer Source 
+9950 Barnes Canyon Road 
+San Diego, CA     
+
+and please mention Linux when enquiring.

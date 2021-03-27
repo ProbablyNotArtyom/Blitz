@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8; mode: python -*-
+# pylint: disable=C0330, R0903, R0912
+
+u"""
+    flat-table
+    ~~~~~~~~~~
+
+    Implementation of the ``flat-table`` reST-directive.
+
+    :copyright:  Copyright (C) 2016  Markus Heiser
+    :license:    GPL Version 2, June 1991 see linux/COPYING for details.
+
+    The ``flat-table`` (:py:class:`FlatTable`) is a double-stage list similar to
+    the ``list-table`` with some additional features:
+
+    * *column-span*: with the role ``cspan`` a cell can be extended through
+      additional columns
+
+    * *row-span*: with the role ``rspan`` a cell can be extended through
+      additional rows
+
+    * *auto span* rightmost cell of a table row over the missing cells on the
+      right side of that table-row.  With Option ``:fill-cells:`` this behavior
+      can changed from *auto span* to *auto fill*, which automaticly inserts
+      (empty) cells instead of spanning the last cell.
+
+    Options:
+
+    * header-rows:   [int] count of header rows
+    * stub-columns:  [int] count of stub columns
+    * widths:        [[int] [int] ... ] widths of columns
+    * fill-cells:    instead of autospann missing cells, insert missing cells
+
+    roles:
+
+    * cspan: [int] additionale columns (*morecols*)
+    * rspan: [int] additionale rows (*morerows*)
+"""
+
+# ==============================================================================
+# imports
+# ==============================================================================
+
+import sys
+
+from docutils import nodes
+from docutils.parsers.rst import directives, roles
+from docutils.parsers.rst.directives.tables import Table
+from docutils.utils import SystemMessagePropagation
+
+# ==============================================================================
+# common globals
+# ==============================================================================
+
+__version__  = '1.0'
+
+PY3 = sys.version_info[0] == 3
+PY2 = sys.version_info[0] == 2
+
+if PY3:
+    # pylint: disable=C0103, W0622
+    unicode     = str
+    basestring  = str
+
+# ==============================================================================
+def setup(app):
+# ==============================================================================
+
+    app.add_directive("flat-table", FlatTable)
+    roles.register_local_role('cspan', c_span)
+    roles.register_local_role('rspan', r_span)
+
+    return dict(
+        version = __version__,
+        parallel_read_safe = True,
+        parallel_write_safe = True
+    )
+
+# =============================

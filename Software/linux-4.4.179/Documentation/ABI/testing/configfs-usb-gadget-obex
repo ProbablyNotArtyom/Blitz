@@ -1,0 +1,18 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_CREATE_BUFS:
+
+************************
+ioctl VIDIOC_CREATE_BUFS
+************************
+
+Name
+====
+
+VIDIOC_CREATE_BUFS - Create buffers for Memory Mapped or User Pointer or DMA Buffer I/O
+
+
+Synopsis
+========
+
+.. c:function::

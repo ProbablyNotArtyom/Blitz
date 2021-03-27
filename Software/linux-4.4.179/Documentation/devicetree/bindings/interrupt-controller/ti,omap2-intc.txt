@@ -1,0 +1,33 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree file for Seagate NAS 4-Bay (Armada 370 SoC).
+ *
+ * Copyright (C) 2015 Seagate
+ *
+ * Author: Vincent Donnefort <vdonnefort@gmail.com>
+ */
+
+/*
+ * Here are some information allowing to identify the device:
+ *
+ * Product name                 : Seagate NAS 4-Bay
+ * Code name (board/PCB)        : Dart 4-Bay
+ * Model name (case sticker)    : SRPD40
+ * Material desc (product spec) : STCUxxxxxxx
+ */
+
+/dts-v1/;
+#include "armada-370-seagate-nas-xbay.dtsi"
+#include <dt-bindings/leds/leds-ns2.h>
+
+/ {
+	model = "Seagate NAS 4-Bay (Dart, SRPD40)";
+	compatible = "seagate,dart-4", "marvell,armada370", "marvell,armada-370-xp";
+
+	soc {
+		internal-regs {
+			ethernet@74000 {
+				status = "okay";
+				pinctrl-0 = <&ge1_rgmii_pins>;
+				pinctrl-names = "default";
+				ph

@@ -1,0 +1,16 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_HWRPB_H
+#define __ALPHA_HWRPB_H
+
+#define INIT_HWRPB ((struct hwrpb_struct *) 0x10000000)
+
+/*
+ * DEC processor types for Alpha systems.  Found in HWRPB.
+ * These values are architected.
+ */
+
+#define EV3_CPU                 1       /* EV3                  */
+#define EV4_CPU                 2       /* EV4 (21064)          */
+#define LCA4_CPU                4       /* LCA4 (21066/21068)   */
+#define EV5_CPU                 5       /* EV5 (21164)          */
+#define EV45_CPU                6       /

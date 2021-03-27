@@ -1,0 +1,79 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * vineetg: June 2010
+ *    -__clear_user( ) called multiple times during elf load was byte loop
+ *    converted to do as much word clear as possible.
+ *
+ * vineetg: Dec 2009
+ *    -Hand crafted constant propagation for "constant" copy sizes
+ *    -stock kernel shrunk by 33K at -O3
+ *
+ * vineetg: Sept 2009
+ *    -Added option to (UN)inline copy_(to|from)_user to reduce code sz
+ *    -kernel shrunk by 200K even at -O3 (gcc 4.2.1)
+ *    -Enabled when doing -Os
+ *
+ * Amit Bhor, Sameer Dhavale: Codito Technologies 2004
+ */
+
+#ifndef _ASM_ARC_UACCESS_H
+#define _ASM_ARC_UACCESS_H
+
+#include <linux/string.h>	/* for generic string functions */
+
+
+#define __kernel_ok		(uaccess_kernel())
+
+/*
+ * Algorithmically, for __user_ok() we want do:
+ * 	(start < TASK_SIZE) && (start+len < TASK_SIZE)
+ * where TASK_SIZE could either be retrieved from thread_info->addr_limit or
+ * emitted directly in code.
+ *
+ * This can however be rewritten as follows:
+ *	(len <= TASK_SIZE) && (start+len < TASK_SIZE)
+ *
+ * Because it essentially checks if buffer end is within limit and @len is
+ * non-ngeative, which implies that buffer start will be within limit too.
+ *
+ * The reason for rewriting being, for majority of cases, @len is generally
+ * compile time constant, causing first sub-expression to be compile time
+ * subsumed.
+ *
+ * The second part would generate weird large LIMMs e.g. (0x6000_0000 - 0x10),
+ * so we check for TASK_SIZE using get_fs() since the addr_limit load from mem
+ * would already have been done at this call site for __kernel_ok()
+ *
+ */
+#define __user_ok(addr, sz)	(((sz) <= TASK_SIZE) && \
+				 ((addr) <= (get_fs() - (sz))))
+#define __access_ok(addr, sz)	(unlikely(__kernel_ok) || \
+				 likely(__user_ok((addr), (sz))))
+
+/*********** Single byte/hword/word copies ******************/
+
+#define __get_user_fn(sz, u, k)					\
+({								\
+	long __ret = 0;	/* success by default */	\
+	switch (sz) {						\
+	case 1: __arc_get_user_one(*(k), u, "ldb", __ret); break;	\
+	case 2: __arc_get_user_one(*(k), u, "ldw", __ret); break;	\
+	case 4: __arc_get_user_one(*(k), u, "ld", __ret);  break;	\
+	case 8: __arc_get_user_one_64(*(k), u, __ret);     break;	\
+	}							\
+	__ret;							\
+})
+
+/*
+ * Returns 0 on success, -EFAULT if not.
+ * @ret already contains 0 - given that errors will be less likely
+ * (hence +r asm constraint below).
+ * In case of error, fixup code will make it -EFAULT
+ */
+#define __arc_get_user_one(dst, src, op, ret)	\
+	__asm__ __volatile__(         

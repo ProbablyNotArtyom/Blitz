@@ -1,0 +1,23 @@
+/*
+ * Architecture specific parts of the Floppy driver
+ *
+ * This file is subject to the terms and conditions of the GNU General Public
+ * License.  See the file "COPYING" in the main directory of this archive
+ * for more details.
+ *
+ * Copyright (C) 1995
+ */
+#ifndef __ASM_ALPHA_FLOPPY_H
+#define __ASM_ALPHA_FLOPPY_H
+
+
+#define fd_inb(port)			inb_p(port)
+#define fd_outb(value,port)		outb_p(value,port)
+
+#define fd_enable_dma()         enable_dma(FLOPPY_DMA)
+#define fd_disable_dma()        disable_dma(FLOPPY_DMA)
+#define fd_request_dma()        request_dma(FLOPPY_DMA,"floppy")
+#define fd_free_dma()           free_dma(FLOPPY_DMA)
+#define fd_clear_dma_ff()       clear_dma_ff(FLOPPY_DMA)
+#define fd_set_dma_mode(mode)   set_dma_mode(FLOPPY_DMA,mode)
+#define fd_set_dma_addr(addr)   set_dm

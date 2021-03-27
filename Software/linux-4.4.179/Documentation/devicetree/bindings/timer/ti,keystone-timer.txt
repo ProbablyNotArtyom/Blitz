@@ -1,0 +1,43 @@
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include <dt-bindings/input/input.h>
+#include "omap443x.dtsi"
+#include "motorola-cpcap-mapphone.dtsi"
+
+/ {
+	model = "Motorola Droid 4 XT894";
+	compatible = "motorola,droid4", "ti,omap4430", "ti,omap4";
+
+	chosen {
+		stdout-path = &uart3;
+	};
+
+	aliases {
+		display0 = &lcd0;
+		display1 = &hdmi0;
+	};
+
+	/*
+	 * We seem to have only 1021 MB accessible, 1021 - 1022 is locked,
+	 * then 1023 - 1024 seems to contain mbm.
+	 */
+	memory {
+		device_type = "memory";
+		reg = <0x80000000 0x3fd00000>;	/* 1021 MB */
+	};
+
+	/* Poweroff GPIO probably connected to CPCAP */
+	gpio-poweroff {
+		compatible = "gpio-poweroff";
+		pinctrl-0 = <&poweroff_gpio>;
+		pinctrl-names = "default";
+		gpios = <&gpio2 18 GPIO_ACTIVE_LOW>;	/* gpio50 */
+	};
+
+	hdmi0: connector {
+		compatible = "hdmi-conne

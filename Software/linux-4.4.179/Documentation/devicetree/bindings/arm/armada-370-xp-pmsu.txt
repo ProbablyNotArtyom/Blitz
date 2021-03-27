@@ -1,0 +1,11 @@
+Chinese translated version of Documentation/admin-guide/bug-hunting.rst
+
+If you have any comment or update to the content, please contact the
+original document maintainer directly.  However, if you have a problem
+communicating in English you can also ask the Chinese maintainer for
+help.  Contact the Chinese maintainer if this translation is outdated
+or if there is a problem with the translation.
+
+Chinese maintainer: Dave Young <hidave.darkstar@gmail.com>
+---------------------------------------------------------------------
+Documentation/admin-guide/bug-hunting.

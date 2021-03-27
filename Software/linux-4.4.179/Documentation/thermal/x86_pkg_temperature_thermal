@@ -1,0 +1,40 @@
+obj-$(CONFIG_MACH_ARTPEC6)		:= board-artpec6.o
+one='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-propsys-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration
+      scope="Upgrade"
+      settingsVersion="0"
+      >
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\KindMap [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\PropertySystem\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\PropertySystem\PropertySchema [*]</pattern>
+          </objectSet>
+        </exclude>
+        <!-- on 64-bit builds, pick up settings from 32-bit hive as well; these will be silently ignored on 32-bit builds -->
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKL

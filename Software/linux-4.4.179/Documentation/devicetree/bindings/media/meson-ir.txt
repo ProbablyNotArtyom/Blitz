@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for Synology DS414
+ *
+ * Copyright (C) 2014, Arnaud EBALARD <arno@natisbad.org>
+ *
+ * Note: this Device Tree assumes that the bootloader has remapped the
+ * internal registers to 0xf1000000 (instead of the old 0xd0000000).
+ * The 0xf1000000 is the default used by the recent, DT-capable, U-Boot
+ * bootlo

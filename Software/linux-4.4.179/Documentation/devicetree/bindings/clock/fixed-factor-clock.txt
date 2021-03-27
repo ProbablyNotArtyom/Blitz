@@ -1,0 +1,24 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_POLARIS__H__
+#define __ALPHA_POLARIS__H__
+
+#include <linux/types.h>
+#include <asm/compiler.h>
+
+/*
+ * POLARIS is the internal name for a core logic chipset which provides
+ * memory controller and PCI access for the 21164PC chip based systems.
+ *
+ * This file is based on:
+ *
+ * Polaris System Controller
+ * Device Functional Specification
+ * 22-Jan-98
+ * Rev. 4.2
+ *
+ */
+
+/* Polaris memory regions */
+#define POLARIS_SPARSE_MEM_BASE		(IDENT_ADDR + 0xf800000000UL)
+#define POLARIS_DENSE_MEM_BASE		(IDENT_ADDR + 0xf900000000UL)
+#define POLARIS_S

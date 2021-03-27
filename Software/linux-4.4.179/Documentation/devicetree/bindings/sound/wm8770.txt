@@ -1,0 +1,7 @@
+/*
+ * Device Tree Source for OMAP2 SoC
+ *
+ * Copyright (C) 2011 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This file is licensed under the terms of the GNU General Public License
+ * version 2

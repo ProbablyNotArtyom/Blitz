@@ -1,0 +1,37 @@
+Debugging hibernation and suspend
+	(C) 2007 Rafael J. Wysocki <rjw@sisk.pl>, GPL
+
+1. Testing hibernation (aka suspend to disk or STD)
+
+To check if hibernation works, you can try to hibernate in the "reboot" mode:
+
+# echo reboot > /sys/power/disk
+# echo disk > /sys/power/state
+
+and the system should create a hibernation image, reboot, resume and get back to
+the command prompt where you have started the transition.  If that happens,
+hibernation is most likely to work correctly.  Still, you need to repeat the
+test at least a couple of times in a row for confidence.  [This is necessary,
+because some problems only show up on a second attempt at suspending and
+resuming the system.]  Moreover, hibernating in the "reboot" and "shutdown"
+modes causes the PM core to skip some platform-related callbacks which on ACPI
+systems might be necessary to make hibernation work.  Thus, if your machine fails
+to hibernate or resume in the "reboot" mode, you should try the "platform" mode:
+
+# echo platform > /sys/power/disk
+# echo disk > /sys/power/state
+
+which is the default and recommended mode of hibernation.
+
+Unfortunately, the "platform" mode of hibernation does not work on some systems
+with broken BIOSes.  In such cases the "shutdown" mode of hibernation might
+work:
+
+# echo shutdown > /sys/power/disk
+# echo disk > /sys/power/state
+
+(it is similar to the "reboot" mode, but it requires you to press the power
+button to make the system resume).
+
+If neither "platform" nor "shutdown" hibernation mode works, you will need to
+identify what goes wrong.

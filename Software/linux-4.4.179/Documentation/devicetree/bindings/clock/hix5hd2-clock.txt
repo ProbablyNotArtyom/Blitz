@@ -1,0 +1,29 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ * include/asm-alpha/dma.h
+ *
+ * This is essentially the same as the i386 DMA stuff, as the AlphaPCs
+ * use ISA-compatible dma.  The only extension is support for high-page
+ * registers that allow to set the top 8 bits of a 32-bit DMA address.
+ * This register should be written last when setting up a DMA address
+ * as this will also enable DMA across 64 KB boundaries.
+ */
+
+/* $Id: dma.h,v 1.7 1992/12/14 00:29:34 root Exp root $
+ * linux/include/asm/dma.h: Defines for using and allocating dma channels.
+ * Written by Hennus Bergman, 1992.
+ * High DMA channel support & info by Hannu Savolainen
+ * and John Boyd, Nov. 1992.
+ */
+
+#ifndef _ASM_DMA_H
+#define _ASM_DMA_H
+
+#include <linux/spinlock.h>
+#include <asm/io.h>
+
+#define dma_outb	outb
+#define dma_inb		inb
+
+/*
+ * NOTES about DMA transfer

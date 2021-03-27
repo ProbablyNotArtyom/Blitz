@@ -1,0 +1,37 @@
+Wei Yang <weiyang@linux.vnet.ibm.com>
+Benjamin Herrenschmidt <benh@au1.ibm.com>
+Bjorn Helgaas <bhelgaas@google.com>
+26 Aug 2014
+
+This document describes the requirement from hardware for PCI MMIO resource
+sizing and assignment on PowerKVM and how generic PCI code handles this
+requirement. The first two sections describe the concepts of Partitionable
+Endpoints and the implementation on P8 (IODA2). The next two sections talks
+about considerations on enabling SRIOV on IODA2.
+
+1. Introduction to Partitionable Endpoints
+
+A Partitionable Endpoint (PE) is a way to group the various resources
+associated with a device or a set of devices to provide isolation between
+partitions (i.e., filtering of DMA, MSIs etc.) and to provide a mechanism
+to freeze a device that is causing errors in order to limit the possibility
+of propagation of bad data.
+
+There is thus, in HW, a table of PE states that contains a pair of "frozen"
+state bits (one for MMIO and one for DMA, they get set together but can be
+cleared independently) for each PE.
+
+When a PE is frozen, all stores in any direction are dropped and all loads
+return all 1's value. MSIs are also blocked. There's a bit more state that
+captures things like the details of the error that caused the freeze etc., but
+that's not critical.
+
+The interesting part is how the various PCIe transactions (MMIO, DMA, ...)
+are matched to their corresponding PEs.
+
+The following section provides a rough description of what we have on P8
+(IODA2).  Keep in mind that this is all per PHB (PCI host bridge).  Each PHB
+is a completely separate HW entity that replicates the entire logic, so has
+its own set of PEs, etc.
+
+2. Implementation of Partitionable 

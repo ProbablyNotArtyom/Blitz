@@ -1,0 +1,32 @@
+/*
+ * ox820.dtsi - Device tree file for Oxford Semiconductor OX820 SoC
+ *
+ * Copyright (C) 2016 Neil Armstrong <narmstrong@baylibre.com>
+ *
+ * Licensed under GPLv2 or later
+ */
+
+/include/ "skeleton.dtsi"
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/clock/oxsemi,ox820.h>
+#include <dt-bindings/reset/oxsemi,ox820.h>
+
+/ {
+	compatible = "oxsemi,ox820";
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		enable-method = "oxsemi,ox820-smp";
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,arm11mpcore";
+			clocks = <&armclk>;
+			reg = <0>;
+		};
+
+		cpu@1 {
+			device_type = "cpu";
+			compatible = "arm,arm11mpcore";
+			clocks = <&armclk

@@ -1,0 +1,71 @@
+/*
+ * Copyright (C) 2017 MOXA Inc. - https://www.moxa.com/
+ *
+ * Author: SZ Lin (林上智) <sz.lin@moxa.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+
+#include "am33xx.dtsi"
+
+/ {
+	model = "Moxa UC-8100-ME-T";
+	compatible = "moxa,uc-8100-me-t", "ti,am33xx";
+
+	cpus {
+		cpu@0 {
+			cpu0-supply = <&vdd1_reg>;
+		};
+	};
+
+	memory {
+		device_type = "memory";
+		reg = <0x80000000 0x20000000>; /* 512 MB */
+	};
+
+	vbat: vbat-regulator {
+		compatible = "regulator-fixed";
+	};
+
+	/* Power supply provides a fixed 3.3V @3A */
+	vmmcsd_fixed: vmmcsd-regulator {
+	      compatible = "regulator-fixed";
+	      regulator-name = "vmmcsd_fixed";
+	      regulator-min-microvolt = <3300000>;
+	      regulator-max-microvolt = <3300000>;
+	      regulator-boot-on;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led1 {
+			label = "uc8100me:CEL1";
+			gpios = <&gpio_xten 8 0>;
+			default-state = "off";
+		};
+
+		led2 {
+			label = "uc8100me:CEL2";
+			gpios = <&gpio_xten 9 0>;
+			default-state = "off";
+		};
+
+		led3 {
+			label = "uc8100me:CEL3";
+			gpios = <&gpio_xten 10 0>;
+			default-state = "off";
+		};
+
+		led4 {
+			label = "uc8100me:DIA1";
+			gpios = <&gpio_xten 11 0>;
+			default-state = "off";
+		};
+		led5 {
+			label = "uc8100me:DIA2";
+			gpios = <&gpio_xten 12 0>;
+			d

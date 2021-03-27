@@ -1,0 +1,49 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *      linux/arch/alpha/kernel/core_polaris.c
+ *
+ * POLARIS chip-specific code
+ */
+
+#define __EXTERN_INLINE inline
+#include <asm/io.h>
+#include <asm/core_polaris.h>
+#undef __EXTERN_INLINE
+
+#include <linux/types.h>
+#include <linux/pci.h>
+#include <linux/sched.h>
+#include <linux/init.h>
+
+#include <asm/ptrace.h>
+
+#include "proto.h"
+#include "pci_impl.h"
+
+/*
+ * BIOS32-style PCI interface:
+ */
+
+#define DEBUG_CONFIG 0
+
+#if DEBUG_CONFIG
+# define DBG_CFG(args)	printk args
+#else
+# define DBG_CFG(args)
+#endif
+
+
+/*
+ * Given a bus, device, and function number, compute resulting
+ * configuration space address.  This is fairly straightforward
+ * on POLARIS, since the chip itself generates Type 0 or Type 1
+ * cycles automatically depending on the bus number (Bus 0 is
+ * hardwired to Type 0, all others are Type 1.  Peer bridges
+ * are not supported).
+ *
+ * All types:
+ *
+ *  3 3 3 3|3 3 3 3|3 3 2 2|2 2 2 2|2 2 2 2|1 1 1 1|1 1 1 1|1 1 
+ *  9 8 7 6|5 4 3 2|1 0 9 8|7 6 5 4|3 2 1 0|9 8 7 6|5 4 3 2|1 0 9 8|7 6 5 4|3 2 1 0
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * |1|1|1|1|1|0|0|1|1|1|1|1|1|1|1|0|B|B|B|B|B|

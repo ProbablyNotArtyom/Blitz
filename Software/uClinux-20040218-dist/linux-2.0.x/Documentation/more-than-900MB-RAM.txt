@@ -1,0 +1,40 @@
+
+This document describes how to configure the Linux kernel to
+support more than 950MB physical RAM on x86 systems:
+
+you only have to change the 'Max physical memory in MB' kernel
+config option to get everything working. If you have less than
+900M RAM, dont touch the default setting, this option buys you
+nothing at all! The option is in 'General setup':
+
+          [ ] Kernel math emulation
+          (1800)  Max physical memory in MB
+          [*] Networking support
+          [ ] Limit memory to low 16MB
+
+the unit of CONFIG_MAX_MEMSIZE is 'megabytes', ie. a value of
+'1024' means '1024 MBytes'. Unless in 2.1 there is no restriction
+on the value of CONFIG_MAX_MEMSIZE!
+
+IMPORTANT: the value of CONFIG_MAX_MEMSIZE should be about 128M
+more than the amount of physical RAM (or 1024 if RAM is less than
+900M), because the kernel needs some space for it's own memory
+mappings. The kernel enforces this 128M window by clipping away
+from the end of phsyical memory if necessary. (in this case that
+chunk of physical memory is not used by Linux!) So configure this
+option carefully, and look at 'free' output and boot messages
+wether all RAM is correctly detected and configured.
+
+A system with 2G physical memory should use a value of ~2400, a
+system with 3.8G memory should use something like 3900. A bit of
+experimentation with the limit wont hurt, the kernel needs a ~128M
+window for vmalloc() plus PCI space uses up some memory too, thus
+physical addresses above FD000000 should rather be kept free.
+
+if the BIOS does not report correct memory size, use the mem= boot
+commandline option to override it.
+
+feel free to report any problems/suggestions to:
+
+         Ingo Molnar <mingo@redhat.com>
+

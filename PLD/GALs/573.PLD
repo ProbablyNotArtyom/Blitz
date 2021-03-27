@@ -1,0 +1,46 @@
+Name     573;
+PartNo   00;
+Date     7/27/2018;
+Revision 01;
+Designer Engineer;
+Company  notartyom;
+Assembly None;
+Location ;
+Device   g16v8a;
+
+/* *************** INPUT PINS ******************** */
+
+PIN 2 = D0;
+PIN 3 = D1;
+PIN 4 = D2;
+PIN 5 = D3;
+PIN 6 = D4;
+PIN 7 = D5;
+PIN 8 = D6;
+PIN 9 = D7;
+
+PIN 1 = lt_LE;
+PIN 11 = lt_OE;
+
+PIN 19 = Q0;
+PIN 18 = Q1;
+PIN 17 = Q2;
+PIN 16 = Q3;
+PIN 15 = Q4;
+PIN 14 = Q5;
+PIN 13 = Q6;
+PIN 12 = Q7;
+
+/*-------- LOGIC EQUATIONS --------*/
+
+Q0.d = D0;
+Q1.d = D1;
+Q2.d = D2;
+Q3.d = D3;
+Q4.d = D4;
+Q5.d = D5;
+Q6.d = D6;
+Q7.d = D7;
+
+Q.ar = 'b'0;
+Q.sp = 'b'0;

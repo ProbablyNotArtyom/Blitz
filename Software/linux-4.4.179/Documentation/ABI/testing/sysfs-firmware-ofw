@@ -1,0 +1,33 @@
+Checksum Offloads in the Linux Networking Stack
+
+
+Introduction
+============
+
+This document describes a set of techniques in the Linux networking stack
+ to take advantage of checksum offload capabilities of various NICs.
+
+The following technologies are described:
+ * TX Checksum Offload
+ * LCO: Local Checksum Offload
+ * RCO: Remote Checksum Offload
+
+Things that should be documented here but aren't yet:
+ * RX Checksum Offload
+ * CHECKSUM_UNNECESSARY conversion
+
+
+TX Checksum Offload
+===================
+
+The interface for offloading a transmit checksum to a device is explained
+ in detail in comments near the top of include/linux/skbuff.h.
+In brief, it allows to request the device fill in a single ones-complement
+ checksum defined by the sk_buff fields skb->csum_start and
+ skb->csum_offset.  The device should compute the 16-bit ones-complement
+ checksum (i.e. the 'IP-style' checksum) from csum_start to the end of the
+ packet, and fill in the result at (csum_start + csum_offset).
+Because csum_offset cannot be negative, this ensures that the previous
+ value of the checksum field is included in the checksum computation, thus
+ it can be used to supply any needed corrections to the checksum (such as
+ the sum of the pseudo

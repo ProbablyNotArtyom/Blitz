@@ -1,0 +1,34 @@
+SCTP SELinux Support
+=====================
+
+Security Hooks
+===============
+
+``Documentation/security/LSM-sctp.rst`` describes the following SCTP security
+hooks with the SELinux specifics expanded below::
+
+    security_sctp_assoc_request()
+    security_sctp_bind_connect()
+    security_sctp_sk_clone()
+    security_inet_conn_established()
+
+
+security_sctp_assoc_request()
+-----------------------------
+Passes the ``@ep`` and ``@chunk->skb`` of the association INIT packet to the
+security module. Returns 0 on success, error on failure.
+::
+
+    @ep - pointer to sctp endpoint structure.
+    @skb - pointer to skbuff of association packet.
+
+The security module performs the following operations:
+     IF this is the first association on ``@ep->base.sk``, then set the peer
+     sid to that in ``@skb``. This will ensure there is only one peer sid
+     assigned to ``@ep->base.sk`` that may support multiple associations.
+
+     ELSE validate the ``@ep->base.sk peer_sid`` against the ``@skb peer sid``
+     to determine whether the association should be allowed or denied.
+
+     Set the sctp ``@ep sid`` to socket's sid (from ``ep->base.sk``) with
+     MLS portion taken from ``@skb peer sid``. This will be

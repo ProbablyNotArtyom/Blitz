@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * TOPEET's Exynos4412 based itop board device tree source
+ *
+ * Copyright (c) 2016 SUMOMO Computer Association
+ *			https://www.sumomo.mobi
+ *			Randy Li <ayaka@soulik.info>
+ *
+ * Device tree source file for TOPEET iTop Exynos 4412 core board
+ * which is based on Samsung's Exynos4412 SoC.
+ */
+
+/dts-v1/;
+#include <dt-bindings/pwm/pwm.h>
+#include <dt-bindings/sound/samsung-i2s.h>
+#include "exynos4412-itop-scp-core.dtsi"
+
+/ {
+	model = "TOPEET iTop 4412 Elite board based on Exynos4412";
+	compatible = "topeet,itop4412-elite", "samsung,exynos4412", "samsung,exynos4";
+
+	chosen {
+		bootargs = "root=/dev/mmcblk0p2 rw rootfstype=ext4 rootdelay=1 rootwait";
+		stdout-path = "serial2:115200n8";
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led2 {
+			label = "red:system";
+			gpios = <&gpx1 0 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			linux,default-trigger = "heartbeat";
+		};
+
+		led3 {
+			label = "red:user";
+			gpios = <&gpk1 1 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+
+		home {
+			label = "GPIO Key Home";
+			linux,code = <KEY_HOME>;
+			gpios = <&gpx1 1 GPIO_ACTIVE_LOW>;
+		};
+
+		back {
+			label = "GPIO Key Back";
+			linux,code = <KEY_BACK>;
+	

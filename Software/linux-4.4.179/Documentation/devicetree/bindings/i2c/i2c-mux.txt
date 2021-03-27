@@ -1,0 +1,47 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ */
+
+#include <linux/ptrace.h>
+#include <linux/module.h>
+#include <linux/mm.h>
+#include <linux/fs.h>
+#include <linux/kdev_t.h>
+#include <linux/proc_fs.h>
+#include <linux/file.h>
+#include <linux/sched/mm.h>
+#include <linux/sched/debug.h>
+
+#include <asm/arcregs.h>
+#include <asm/irqflags.h>
+
+/*
+ * Common routine to print scratch regs (r0-r12) or callee regs (r13-r25)
+ *   -Prints 3 regs per line and a CR.
+ *   -To continue, callee regs right after scratch, special handling of CR
+ */
+static noinline void print_reg_file(long *reg_rev, int start_num)
+{
+	unsigned int i;
+	char buf[512];
+	int n = 0, len = sizeof(buf);
+
+	for (i = start_num; i < start_num + 13; i++) {
+		n += scnprintf(buf + n, len - n, "r%02u: 0x%08lx\t",
+			       i, (unsigned long)*reg_rev);
+
+		if (((i + 1) % 3) == 0)
+			n += scnprintf(buf + n, len - n, "\n");
+
+		/* because pt_regs has regs reversed: r12..r0, r25..r13 */
+		if (is_isa_arcv2() && start_num == 0)
+			reg_rev++;
+		else
+			reg_rev--;
+	}
+
+	if (start_num != 0)
+		n += scnprintf(buf + n, l

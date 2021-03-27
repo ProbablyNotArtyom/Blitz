@@ -1,0 +1,60 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_ERR_EV7_H
+#define __ALPHA_ERR_EV7_H 1
+
+/*
+ * Data for el packet class PAL (14), type LOGOUT_FRAME (1)
+ */
+struct ev7_pal_logout_subpacket {
+	u32 mchk_code;
+	u32 subpacket_count;
+	u64 whami;
+	u64 rbox_whami;
+	u64 rbox_int;
+	u64 exc_addr;
+	union el_timestamp timestamp;
+	u64 halt_code;
+	u64 reserved;
+};
+
+/*
+ * Data for el packet class PAL (14), type EV7_PROCESSOR (4)
+ */
+struct ev7_pal_processor_subpacket {
+	u64 i_stat;
+	u64 dc_stat;
+	u64 c_addr;
+	u64 c_syndrome_1;
+	u64 c_syndrome_0;
+	u64 c_stat;
+	u64 c_sts;
+	u64 mm_stat;
+	u64 exc_addr;
+	u64 ier_cm;
+	u64 isum;
+	u64 pal_base;
+	u64 i_ctl;
+	u64 process_context;
+	u64 cbox_ctl;
+	u64 cbox_stp_ctl;
+	u64 cbox_acc_ctl;
+	u64 cbox_lcl_set;
+	u64 cbox_gbl_set;
+	u64 bbox_ctl;
+	u64 bbox_err_sts;
+	u64 bbox_err_idx;
+	u64 cbox_ddp_err_sts;
+	u64 bbox_dat_rmp;
+	u64 reserved[2];
+};
+
+/*
+ * Data for el packet class PAL (14), type EV7_ZBOX (5)
+ */
+struct ev7_pal_zbox_subpacket {
+	u32 zbox0_dram_err_status_1;
+	u32 zbox0_dram_err_status_2;
+	u32 zbox0_dram_err_status_3;
+	u32 zbox0_dram_err_ctl;
+	u32 zbox0_dram_err_adr;
+	u32 zbox0_dift_timeout;

@@ -1,0 +1,222 @@
+	       Mylex DAC960 PCI RAID Controller Driver for Linux
+
+			Version 2.0.0 for Linux 2.0.36
+			Version 2.1.0 for Linux 2.1.130
+
+			      BETA TEST RELEASE 3
+
+			       23 November 1998
+
+			       Leonard N. Zubkoff
+			       Dandelion Digital
+			       lnz@dandelion.com
+
+	   Copyright 1998 by Leonard N. Zubkoff <lnz@dandelion.com>
+
+
+				 INTRODUCTION
+
+Mylex, Inc. designs and manufactures a variety of high performance PCI RAID
+controllers based on the Intel i960 processor.  Mylex Corporation is located at
+34551 Ardenwood Blvd., Fremont, California 94555, USA and can be reached at
+510/796-6100 or on the World Wide Web at http://www.mylex.com.  Mylex RAID
+Technical Support can be reached by electronic mail at support@mylex.com, by
+Voice at 510/608-2400, or by FAX at 510/745-7715.  Contact information for
+offices in Europe and Japan is available on the Web site.
+
+The latest information on Linux support for DAC960 PCI RAID Controllers, as
+well as the most recent release of this driver, will always be available from
+my Linux Home Page at URL "http://www.dandelion.com/Linux/".
+
+Bug reports should be sent via electronic mail to "lnz@dandelion.com".  Please
+include with the bug report the complete configuration messages reported by the
+driver at startup, along with any subsequent system messages relevant to the
+controller's operation, and a detailed description of your system's hardware
+configuration.
+
+Please consult the DAC960 documentation for detailed information regarding
+installation and configuration of the controllers.  This document primarily
+provides information specific to the Linux DAC960 support.
+
+
+				DRIVER FEATURES
+
+The DAC960 is supported solely as a high performance RAID controller, not as an
+interface to arbitrary SCSI devices.  The Linux DAC960 driver operates at the
+block device level, the same level as the SCSI and IDE drivers.  Unlike other
+RAID controllers currently supported on Linux, the DAC960 driver is not
+dependent on the SCSI subsystem, and hence avoids all the complexity and
+unnecessary code that would be associated with an implementation as a SCSI
+driver.  The DAC960 driver is designed for as high a performance as possible
+with no compromises or extra code for compatibility with lower performance
+devices.
+
+The DAC960 driver is architected to support up to 8 controllers per system.
+Each DAC960 controller can support up to 45 disk drives on 3 channels.  The
+drives installed on a controller are divided into one or more "Drive Groups",
+and then each Drive Group is subdivided further into 1 to 32 "Logical Drives".
+Each Logical Drive has a specific RAID Level and caching policy associated with
+it, and it appears to Linux as a single block device.  Logical Drives are
+further subdivided into up to 7 partitions through the normal Linux and PC disk
+partitioning schemes.  Logical Drives are also known as "System Drives", and
+Drive Groups are also called "Packs".  Both terms are in use in the Mylex
+documentation; I have chosen to standardize on the more generic "Logical Drive"
+and "Drive Group".
+
+DAC960 RAID disk devices are named in the style of the Device File System
+(DEVFS).  The device corresponding to Logical Drive D on Controller C is
+referred to as /dev/rd/cCdD, and the partitions are called /dev/rd/cCdDp1
+through /dev/rd/cCdDp7.  For example, partition 3 of Logical Drive 5 on
+Controller 2 is referred to as /dev/rd/c2d5p3.  Note that unlike with SCSI
+disks the device names will not change in the event of a disk drive failure.
+The DAC960 driver is assigned major numbers 48 - 55 with one major number per
+controller.  The 8 bits of minor number are divided into 5 bits for the Logical
+Drive and 3 bits for the partition.
+
+
+		     SUPPORTED DAC960 PCI RAID CONTROLLERS
+
+The following list comprises the supported DAC960 PCI RAID Controllers as of
+the date of this document.  It is recommended that anyone purchasing a Mylex
+PCI RAID Controller not in the following table contact the author beforehand to
+verify that it is or will be supported.
+
+AcceleRAID 250 (DAC960PTL-1)
+	    Uses onboard Symbios SCSI chips on certain motherboards
+	    Also includes one onboard Wide Ultra-2/LVD SCSI channel
+	    66MHz Intel i960RD RISC Processor
+	    4MB/8MB/16MB/32MB/64MB/128MB ECC EDO Memory
+
+AcceleRAID 200 (DAC960PTL-0)
+	    Uses onboard Symbios SCSI chips on certain motherboards
+	    Includes no onboard SCSI channels
+	    66MHz Intel i960RD RISC Processor
+	    4MB/8MB/16MB/32MB/64MB/128MB ECC EDO Memory
+
+DAC960PJ    1/2/3 Wide Ultra SCSI-3 Channels
+	    66MHz Intel i960RD RISC Processor
+	    4MB/8MB/16MB/32MB/64MB/128MB ECC EDO Memory
+
+DAC960PG    1/2/3 Wide Ultra SCSI-3 Channels
+	    33MHz Intel i960RP RISC Processor
+	    4MB/8MB ECC EDO Memory
+
+DAC960PU    1/2/3 Wide Ultra SCSI-3 Channels
+	    Intel i960CF RISC Processor
+	    2MB/4MB/8MB/16MB/32MB EDRAM or DRAM Memory (max 8MB EDRAM)
+
+DAC960PD    1/2/3 Wide Fast SCSI-2 Channels
+	    Intel i960CF RISC Processor
+	    2MB/4MB/8MB/16MB/32MB EDRAM or DRAM Memory (max 8MB EDRAM)
+
+DAC960PL    1/2/3 Wide Fast SCSI-2 Channels
+	    Intel i960 RISC Processor
+	    2MB/4MB/8MB/16MB/32MB DRAM Memory
+
+For the DAC960PJ and DAC960PG, firmware version 4.06-0-00 or above is required.
+This firmware version is available from http://www.dandelion.com/Linux/ and
+will eventually be available from http://www.mylex.com as well.  It has been
+released by Mylex and is provided with new controllers, but it has not yet
+appeared on their support web pages as of the date of this document.
+
+For the DAC960PU, DAC960PD, and DAC960PL, firmware version 3.51-0-04 or above
+required.  This firmware version is available from http://www.mylex.com.
+
+Note that earlier revisions of the DAC960PU, DAC960PD, and DAC960PL controllers
+were delivered with version 2.xx firmware.  Version 2.xx firmware is not
+supported by this driver and no support is envisioned.  Contact Mylex RAID
+Technical Support to inquire about upgrading controllers with version 2.xx
+firmware to version 3.51-0-04.  Upgrading to version 3.xx firmware requires
+installation of higher capacity Flash ROM chips, and not all DAC960PD and
+DAC960PL controllers can be upgraded.
+
+Please note that not all SCSI disk drives are suitable for use with DAC960
+controllers, and only particular firmware versions of any given model may
+actually function correctly.  Similarly, not all motherboards have a BIOS that
+properly initializes the AcceleRAID 250, AcceleRAID 200, DAC960PJ, and DAC960PG
+because the Intel i960RD/RP is a multi-function device.  If in doubt, contact
+Mylex RAID Technical Support (support@mylex.com) to verify compatibility.
+
+
+		CONTROLLER CONFIGURATION AND STATUS MONITORING
+
+The DAC960 Online Configuration Utilities are not yet available on Linux but
+will hopefully be supported in the future.  The AcceleRAID 250, AcceleRAID 200,
+DAC960PJ, and DAC960PG controllers can generally be configured using the DAC960
+Configuration Utility included in the controller's BIOS ROM and available via
+Alt-R during BIOS initialization.  Older DAC960 controllers required the DACCF
+utility that runs from a DOS boot disk.
+
+The status of each DAC960 controller is queried every 7 seconds by the Linux
+driver to verify that no problems have been detected, and any changes in status
+are reported through appropriate kernel messages.  The following log excerpt
+details the process of the controller automatically rebuilding onto a spare
+drive when a disk drive failed.  In this example, 4 drives in a SAF-TE
+enclosure were grouped into a Drive Group which was then divided into 3 Logical
+Drives configured as RAID-5, RAID-5, and RAID-6.  An additional identical drive
+was installed as a "Standby" or "Hot Spare" to provide for automatic
+rebuilding.  The first two messages are the result of the standby drive being
+removed, the third message is a result of it being reinstalled, and the
+remaining messages are the result of the first drive being removed to force an
+automatic rebuild.
+
+DAC960#0: Physical Drive 0:4 killed because it was removed 
+DAC960#0: Physical Drive 0:4 is now DEAD 
+DAC960#0: Physical Drive 0:4 is now STANDBY 
+DAC960#0: Logical Drive 0 (/dev/rd/c0d0) is now CRITICAL
+DAC960#0: Logical Drive 1 (/dev/rd/c0d1) is now CRITICAL
+DAC960#0: Logical Drive 2 (/dev/rd/c0d2) is now CRITICAL
+DAC960#0: Physical Drive 0:0 killed because of timeout on SCSI command 
+DAC960#0: Physical Drive 0:0 is now DEAD 
+DAC960#0: Physical Drive 0:0 killed because it was removed 
+DAC960#0: Physical Drive 0:4 is now WRITE-ONLY 
+DAC960#0: REBUILD IN PROGRESS: Logical Drive 0 (/dev/rd/c0d0) 9% completed
+DAC960#0: REBUILD IN PROGRESS: Logical Drive 0 (/dev/rd/c0d0) 45% completed
+DAC960#0: REBUILD IN PROGRESS: Logical Drive 0 (/dev/rd/c0d0) 90% completed
+DAC960#0: REBUILD IN PROGRESS: Logical Drive 1 (/dev/rd/c0d1) 28% completed
+DAC960#0: REBUILD IN PROGRESS: Logical Drive 1 (/dev/rd/c0d1) 66% completed
+DAC960#0: REBUILD IN PROGRESS: Logical Drive 2 (/dev/rd/c0d2) 62% completed
+DAC960#0: REBUILD IN PROGRESS: Logical Drive 2 (/dev/rd/c0d2) 82% completed
+DAC960#0: REBUILD COMPLETED SUCCESSFULLY
+DAC960#0: Logical Drive 0 (/dev/rd/c0d0) is now ONLINE
+DAC960#0: Logical Drive 1 (/dev/rd/c0d1) is now ONLINE
+DAC960#0: Logical Drive 2 (/dev/rd/c0d2) is now ONLINE 
+DAC960#0: Physical Drive 0:4 is now ONLINE 
+
+
+			      DRIVER INSTALLATION
+
+This distribution was prepared for Linux kernel version 2.0.36 or 2.1.130.
+
+To install the DAC960 RAID driver, you may use the following commands,
+replacing "/usr/src" with wherever you keep your Linux kernel source tree:
+
+  cd /usr/src
+  tar -xvzf DAC960-2.0.0-Beta3.tar.gz (or DAC960-2.1.0-Beta3.tar.gz)
+  mv README.DAC960 DAC960.[ch] linux/drivers/block
+  patch -p0 < DAC960.patch
+  cd linux
+  make config
+  make depend
+  make zImage (or bzImage)
+
+Then install "arch/i386/boot/zImage" or "arch/i386/boot/bzImage" as your
+standard kernel, run lilo if appropriate, and reboot.
+
+To create the necessary devices in /dev, the "make_rd" script included in
+"DAC960-Utilities.tar.gz" from http://www.dandelion.com/Linux/ may be used.
+Also included in this archive are patches to LILO 20 and FDISK v2.8 that add
+DAC960 support, along with statically linked executables of LILO and FDISK.
+This modified version of LILO will allow booting from a DAC960 controller
+and/or mounting the root file system from a DAC960.  Unfortunately, installing
+directly onto a DAC960 will be problematic until the various Linux distribution
+vendors update their installation utilities.
+
+
+		      DAC960 ANNOUNCEMENTS MAILING LIST
+
+The DAC960 Announcements Mailing List provides a forum for informing Linux
+users of new driver releases and other announcements regarding Linux support
+for DAC960 PCI RAID Controllers.  To join the mailing list, send a message to
+"dac960-announce-request@dandelion.com" with the line "subscribe" in the
+message body.

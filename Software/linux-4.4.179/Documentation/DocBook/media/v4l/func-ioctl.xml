@@ -1,0 +1,43 @@
+Charger Manager
+	(C) 2011 MyungJoo Ham <myungjoo.ham@samsung.com>, GPL
+
+Charger Manager provides in-kernel battery charger management that
+requires temperature monitoring during suspend-to-RAM state
+and where each battery may have multiple chargers attached and the userland
+wants to look at the aggregated information of the multiple chargers.
+
+Charger Manager is a platform_driver with power-supply-class entries.
+An instance of Charger Manager (a platform-device created with Charger-Manager)
+represents an independent battery with chargers. If there are multiple
+batteries with their own chargers acting independently in a system,
+the system may need multiple instances of Charger Manager.
+
+1. Introduction
+===============
+
+Charger Manager supports the following:
+
+* Support for multiple chargers (e.g., a device with USB, AC, and solar panels)
+	A system may have multiple chargers (or power sources) and some of
+	they may be activated at the same time. Each charger may have its
+	own power-supply-class and each power-supply-class can provide
+	different information about the battery status. This framework
+	aggregates charger-related information from multiple sources and
+	shows combined information as a single power-supply-class.
+
+* Support for in suspend-to-RAM polling (with suspend_again callback)
+	While the battery is being charged and the system is in suspend-to-RAM,
+	we may need to monitor the battery health by looking at the ambient or
+	battery temperature. We can accomplish this by waking up the system
+	periodically. However, such a method wakes up devices unnecessarily for
+	monitoring the battery health and tasks, and user processes that are
+	supposed to be kept suspended. That, in turn, incurs unnecessary power
+	consumption and slow down charging process. Or even, such peak power
+	consumption can stop chargers in the middle of charging
+	(external power input < device power consumption), which not
+	only affects the charging time, but the lifespan of the battery.
+
+	Charger Manager provides a function "cm_suspend_again" that can be
+	used as suspend_again callback of platform_suspend_ops. If the platform
+	requires tasks other than cm_suspend_again, it may implement its own
+	suspend_again callback that c

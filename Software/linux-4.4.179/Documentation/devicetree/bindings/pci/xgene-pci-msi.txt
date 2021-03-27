@@ -1,0 +1,104 @@
+// SPDX-License-Identifier: GPL-2.0+
+//
+// Copyright 2012 Sascha Hauer, Pengutronix
+
+#include "imx27-pinfunc.h"
+
+#include <dt-bindings/clock/imx27-clock.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	/*
+	 * The decompressor and also some bootloaders rely on a
+	 * pre-existing /chosen node to be available to insert the
+	 * command line and merge other ATAGS info.
+	 * Also for U-Boot there must be a pre-existing /memory node.
+	 */
+	chosen {};
+	memory { device_type = "memory"; };
+
+	aliases {
+		ethernet0 = &fec;
+		gpio0 = &gpio1;
+		gpio1 = &gpio2;
+		gpio2 = &gpio3;
+		gpio3 = &gpio4;
+		gpio4 = &gpio5;
+		gpio5 = &gpio6;
+		i2c0 = &i2c1;
+		i2c1 = &i2c2;
+		serial0 = &uart1;
+		serial1 = &uart2;
+		serial2 = &uart3;
+		serial3 = &uart4;
+		serial4 = &uart5;
+		serial5 = &uart6;
+		spi0 = &cspi1;
+		spi1 = &cspi2;
+		spi2 = &cspi3;
+	};
+
+	aitc: aitc-interrupt-controller@e0000000 {
+		compatible = "fsl,imx27-aitc", "fsl,avic";
+		interrupt-controller;
+		#interrupt-cells = <1>;
+		reg = <0x10040000 0x1000>;
+	};
+
+	clocks {
+		clk_osc26m: osc26m {
+			compatible = "fsl,imx-osc26m", "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <26000000>;
+		};
+	};
+
+	cpus {
+		#size-cells = <0>;
+		#address-cells = <1>;
+
+		cpu: cpu@0 {
+			device_type = "cpu";
+			reg = <0>;
+			compatible = "arm,arm926ej-s";
+			operating-points = <
+				/* kHz uV */
+				266000 1300000
+				399000 1450000
+			>;
+			clock-latency = <62500>;
+			clocks = <&clks IMX27_CLK_CPU_DIV>;
+			voltage-tolerance = <5>;
+		};
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		interrupt-parent = <&aitc>;
+		ranges;
+
+		aipi@10000000 { /* AIPI1 */
+			compatible = "fsl,aipi-bus", "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0x10000000 0x20000>;
+			ranges;
+
+			dma: dma@10001000 {
+				compatible = "fsl,imx27-dma";
+				reg = <0x10001000 0x1000>;
+				interrupts = <32>;
+				clocks = <&clks IMX27_CLK_DMA_IPG_GATE>,
+					 <&clks IMX27_CLK_DMA_AHB_GATE>;
+				clock-names = "ipg", "ahb";
+				#dma-cells = <1>;
+				#dma-channels = <16>;
+			};
+
+			wdog: wdog@100020

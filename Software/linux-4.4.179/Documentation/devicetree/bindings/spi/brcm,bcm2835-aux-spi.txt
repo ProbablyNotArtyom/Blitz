@@ -1,0 +1,51 @@
+/*
+ * Device Tree Source for OMAP243x SoC
+ *
+ * Copyright (C) 2012 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This file is licensed under the terms of the GNU General Public License
+ * version 2.  This program is licensed "as is" without any warranty of any
+ * kind, whether express or implied.
+ */
+
+#include "omap2.dtsi"
+
+/ {
+	compatible = "ti,omap2430", "ti,omap2";
+
+	ocp {
+		l4_wkup: l4_wkup@49000000 {
+			compatible = "ti,omap2-l4-wkup", "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0 0x49000000 0x31000>;
+
+			prcm: prcm@6000 {
+				compatible = "ti,omap2-prcm";
+				reg = <0x6000 0x1000>;
+
+				prcm_clocks: clocks {
+					#address-cells = <1>;
+					#size-cells = <0>;
+				};
+
+				prcm_clockdomains: clockdomains {
+				};
+			};
+
+			scm: scm@2000 {
+				compatible = "ti,omap2-scm", "simple-bus";
+				reg = <0x2000 0x1000>;
+				#address-cells = <1>;
+				#size-cells = <1>;
+				#pinctrl-cells = <1>;
+				ranges = <0 0x2000 0x1000>;
+
+				omap2430_pmx: pinmux@30 {
+					compatible = "ti,omap2430-padconf",
+						     "pinctrl-single";
+					reg = <0x30 0x0154>;
+					#address-cells = <1>;
+					#size-cells = <0>;
+					#pinctrl-cells = <1>;
+					pinctrl-single,register-width = <8>;

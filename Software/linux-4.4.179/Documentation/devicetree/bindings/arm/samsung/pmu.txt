@@ -1,0 +1,66 @@
+User Interface for Resource Allocation in Intel Resource Director Technology
+
+Copyright (C) 2016 Intel Corporation
+
+Fenghua Yu <fenghua.yu@intel.com>
+Tony Luck <tony.luck@intel.com>
+Vikas Shivappa <vikas.shivappa@intel.com>
+
+This feature is enabled by the CONFIG_INTEL_RDT Kconfig and the
+X86 /proc/cpuinfo flag bits:
+RDT (Resource Director Technology) Allocation - "rdt_a"
+CAT (Cache Allocation Technology) - "cat_l3", "cat_l2"
+CDP (Code and Data Prioritization ) - "cdp_l3", "cdp_l2"
+CQM (Cache QoS Monitoring) - "cqm_llc", "cqm_occup_llc"
+MBM (Memory Bandwidth Monitoring) - "cqm_mbm_total", "cqm_mbm_local"
+MBA (Memory Bandwidth Allocation) - "mba"
+
+To use the feature mount the file system:
+
+ # mount -t resctrl resctrl [-o cdp[,cdpl2][,mba_MBps]] /sys/fs/resctrl
+
+mount options are:
+
+"cdp": Enable code/data prioritization in L3 cache allocations.
+"cdpl2": Enable code/data prioritization in L2 cache allocations.
+"mba_MBps": Enable the MBA Software Controller(mba_sc) to specify MBA
+ bandwidth in MBps
+
+L2 and L3 CDP are controlled seperately.
+
+RDT features are orthogonal. A particular system may support only
+monitoring, only control, or both monitoring and control.  Cache
+pseudo-locking is a unique way of using cache control to "pin" or
+"lock" data in the cache. Details can be found in
+"Cache Pseudo-Locking".
+
+
+The mount succeeds if either of allocation or monitoring is present, but
+only those files and directories supported by the system will be created.
+For more details on the behavior of the interface during monitoring
+and allocation, see the "Resource alloc and monitor groups" section.
+
+Info directory
+--------------
+
+The 'info' directory contains information about the enabled
+resources. Each resource has its own subdirectory. The subdirectory
+names reflect the resource names.
+
+Each subdirectory contains the following files with respect to
+allocation:
+
+Cache resource(L3/L2)  subdirectory contains the following files
+related to allocation:
+
+"num_closids":  	The number of CLOSIDs which are valid for this
+			resource. The kernel uses the smallest number of
+			CLOSIDs of all enabled resources as limit.
+
+"cbm_mask":     	The bitmask which is valid for this resource.
+			This mask is equivalent to 100%.
+
+"min_cbm_bits": 	The minimum number of consecutive bits which
+			must be set when writing a mask.
+
+"shareable_bits":	Bitmask of shareable 

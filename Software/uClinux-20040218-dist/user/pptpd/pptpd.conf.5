@@ -1,0 +1,95 @@
+.TH PPTPD.CONF 5 "17 August 1999"
+.SH NAME
+.B pptpd.conf
+- PPTP VPN daemon configuration
+.SH DESCRIPTION
+Upon initial execution,
+.B pptpd
+reads its configuration from a configuration file which, by default, is
+.IR /etc/pptpd.conf .
+This allows the system administrator to set specific options which control
+the behaviour of the PoPToP PPTP VPN daemon.  These settings can be overridden
+by command line flags (except for the local and remote IP addresses, which
+cannot be set on the command line).
+.SH OPTIONS
+.TP
+.BI "speed " speed
+specifies a speed (in bytes per second) to pass to the PPP daemon as the
+interface speed for the tty/pty pair.  This may be ignored by some PPP
+daemons.  This is equivalent to the
+.B -s
+or
+.B --speed
+command line option.  The default is 115200 bytes per second, which some
+implementations interpret as meaning "no limit".
+.TP
+.BI "option " option-file
+specifies the name of an option file to be passed to the PPP daemon, in
+place of the standard PPP option file (normally
+.IR /etc/ppp/options ).
+This is equivalent to the
+.B -o
+or
+.B --option
+command line option.
+.TP
+.B debug
+turns on debugging mode, sending debugging information to the system log.
+This is equivalent to the
+.B -d
+or
+.B --debug
+command line option.
+.TP
+.BI "localip " ip-specification
+specifies one or many IP addresses to be used at the local end of the
+tunnelled PPP links between the server and the client.  If one address only
+is given, this address is used for all clients.  Otherwise, one address
+per client must be given, and if there are no free addresses then any new
+clients will be refused.
+.TP
+.BI "remoteip " ip-specification
+specifies the list of remote IP addresses to be used on the tunnelled
+PPP links between the server and the client.  There must be at least one
+IP address per client permitted to connect simultaneously, and preferably
+some spare addresses.  A warning will be printed to the system log when
+the IP address pool is exhausted.
+.TP
+.BI "listen " ip-address
+specifies the local interface IP address to listen to.  This is equivalent
+to the
+.B -l
+or
+.B --listen
+command line option.
+.TP
+.BI "pidfile " pid-file
+specifies the filename to store the process ID number in.  This is equivalent
+to the
+.B -p
+or
+.B --pidfile
+command line option.
+.SH NOTES
+An
+.I ip-specification
+above (for the
+.B localip
+and
+.B remoteip
+tags) may be a list of IP addresses (for example 192.168.0.2,192.168.0.3),
+a range (for example 192.168.0.1-254 or 192.168.0-255.2) or some combination
+(for example 192.168.0.2,192.168.0.5-8).  For some valid pairs might be
+(depending on use of the VPN):
+.P
+.BI "localip " 192.168.0.1
+.br
+.BI "remoteip " 192.168.0.2-255
+.P
+or
+.P
+.BI "localip " 192.168.0-255.1
+.br
+.BI "remoteip " 192.168.0-255.2
+.SH "SEE ALSO"
+.BR pptpd (8).

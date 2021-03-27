@@ -1,0 +1,7 @@
+stunnel         Universal SSL tunnel
+
+KNOWN BUGS
+
+- Shared library is not too portable.
+
+- No way to show the ssl library default certificate sources

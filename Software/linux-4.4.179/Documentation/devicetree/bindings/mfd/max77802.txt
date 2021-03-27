@@ -1,0 +1,46 @@
+/*
+ * at91sam9rlek.dts - Device Tree file for Atmel at91sam9rl reference board
+ *
+ *  Copyright (C) 2014 Microchip
+ *  Alexandre Belloni <alexandre.belloni@free-electrons.com>
+ *
+ * Licensed under GPLv2 only
+ */
+/dts-v1/;
+#include "at91sam9rl.dtsi"
+
+/ {
+	model = "Atmel at91sam9rlek";
+	compatible = "atmel,at91sam9rlek", "atmel,at91sam9rl", "atmel,at91sam9";
+
+	chosen {
+		bootargs = "rootfstype=ubifs root=ubi0:rootfs ubi.mtd=5 rw";
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory {
+		reg = <0x20000000 0x4000000>;
+	};
+
+	clocks {
+		slow_xtal {
+			clock-frequency = <32768>;
+		};
+
+		main_xtal {
+			clock-frequency = <12000000>;
+		};
+	};
+
+	ahb {
+		fb0: fb@500000 {
+			display = <&display0>;
+			status = "okay";
+
+			display0: display {
+				bits-per-pixel = <16>;
+				atmel,lcdcon-backlight;
+				atmel,dmacon = <0x1>;
+				atmel,lcdcon2 = <0x80008002>;
+				atmel,guard-time = <1>;
+				atmel,lcd-wiring-mode = "RGB";

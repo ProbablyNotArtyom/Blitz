@@ -1,0 +1,86 @@
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/ {
+	gpio_keys {
+		compatible = "gpio-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&gpio_key_pins>;
+
+		sysboot2 {
+			label = "gpio3";
+			gpios = <&gpio4 15 GPIO_ACTIVE_LOW>;	/* gpio_111 / uP_GPIO_3 */
+			linux,code = <BTN_0>;
+			wakeup-source;
+		};
+	};
+
+	sound {
+		compatible = "ti,omap-twl4030";
+		ti,model = "omap3logic";
+		ti,mcbsp = <&mcbsp2>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&led_pins &led_pins_wkup>;
+
+		led1 {
+			label = "led1";
+			gpios = <&gpio5 5 GPIO_ACTIVE_LOW>;	/* gpio133 */
+			linux,default-trigger = "cpu0";
+		};
+
+		led2 {
+			label = "led2";
+			gpios = <&gpio1 11 GPIO_ACTIVE_LOW>;	/* gpio11 */
+			linux,default-trigger = "none";
+		};
+	};
+};
+
+&vaux1 {
+	regulator-min-microvolt = <3000000>;
+	regulator-max-microvolt = <3000000>;
+};
+
+&vaux4 {
+	regulator-min-microvolt = <1800000>;
+	regulator-max-microvolt = <1800000>;
+};
+
+&mcbsp2 {
+	status = "okay";
+};
+
+&charger {
+	ti,bb-uvolt = <3200000>;
+	ti,bb-uamp = <150>;
+};
+
+&gpmc {
+	ranges = <0 0 0x30000000 0x1000000	/* CS0: 16MB for NAND */
+		  1 0 0x2c000000 0x1000000	/* CS1: 16MB for LAN9221 */
+		  2 0 0x10000000 0x2000000>;    /* CS2: 32MB for NOR */
+
+	ethernet@gpmc {
+		pinctrl-names = "default";
+		pinctrl-0 = <&lan9221_pins>;
+		interrupt-parent = <&gpio5>;
+		interrupts = <24 IRQ_TYPE_LEVEL_LOW>;		/* gpio_152 */
+		reg = <1 0 0xff>;
+	};
+};
+
+&vpll2 {
+	regulator-always-on;
+};
+
+&dss {
+	status = "ok";
+	vdds_dsi-supply = <&vpll2>;
+	vdda_video-sup

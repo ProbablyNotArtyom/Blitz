@@ -1,0 +1,33 @@
+/*
+ * arch/arm/include/asm/fncpy.h - helper macros for function body copying
+ *
+ * Copyright (C) 2011 Linaro Limited
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+
+/*
+ * These macros are intended for use when there is a need to copy a low-level
+ * function body into special memory.
+ *
+ * For example, when reconfiguring the SDRAM controller, the code doing the
+ * reconfiguration may need to run from SRAM.
+ *
+ * NOTE: that the copied function body must be entirely self-contained and
+ * position-independent in order for this to work properly.
+ *
+ * NOTE: in order for embedded literals and data to get referenced correctly,
+ * the alignment of functions must be preserved when copying.  To ensure this,
+ * the source and destination addresses for fncpy() must be aligned to a
+ * multiple of 8 bytes: you w

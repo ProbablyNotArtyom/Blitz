@@ -1,0 +1,18 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_DBG_G_REGISTER:
+
+**************************************************
+ioctl VIDIOC_DBG_G_REGISTER, VIDIOC_DBG_S_REGISTER
+**************************************************
+
+Name
+====
+
+VIDIOC_DBG_G_REGISTER - VIDIOC_DBG_S_REGISTER - Read or write hardware registers
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_DBG_G_REGISTER, struct v4l2_dbg_register *argp )

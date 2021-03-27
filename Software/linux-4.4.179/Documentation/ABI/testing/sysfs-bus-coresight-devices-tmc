@@ -1,0 +1,19 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_SELECTION:
+
+********************************************
+ioctl VIDIOC_G_SELECTION, VIDIOC_S_SELECTION
+********************************************
+
+Name
+====
+
+VIDIOC_G_SELECTION - VIDIOC_S_SELECTION - Get or set one of the selection rectangles
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_G_SELECTION, struct v4l2_selection *argp )
+   

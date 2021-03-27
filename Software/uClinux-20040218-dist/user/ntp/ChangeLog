@@ -1,0 +1,3978 @@
+ChangeSet@1.786, 2002-02-26 22:44:34-05:00, stenn@whimsy.udel.edu
+  ntp-4.1.1
+  TAG: NTP_4_1_1
+
+  configure.in
+    1.235 02/02/26 22:44:33 stenn@whimsy.udel.edu +1 -1
+    ntp-4.1.1
+
+  NEWS
+    1.38 02/02/26 22:44:32 stenn@whimsy.udel.edu +1 -0
+    Update the NEWS file.
+
+ChangeSet@1.785, 2002-02-22 21:10:08-05:00, stenn@whimsy.udel.edu
+  LEAP_DELSECOND support for CHU.
+  
+  From: Ralph Siemsen <ralphs@netwinder.org>
+
+  ntpd/refclock_chu.c
+    1.22 02/02/22 21:10:07 stenn@whimsy.udel.edu +3 -0
+    LEAP_DELSECOND support.
+    
+    From: Ralph Siemsen <ralphs@netwinder.org>
+
+ChangeSet@1.784, 2002-02-19 19:07:29-05:00, stenn@whimsy.udel.edu
+  Trigger improvements.
+
+  BitKeeper/triggers/delta-changelog
+    1.4 02/02/19 19:07:28 stenn@whimsy.udel.edu +3 -2
+    Don't use this to update ChangeLog, but use it only to send the
+    checkin log email.
+
+  BitKeeper/triggers/trigger.cfg
+    1.9 02/02/19 19:07:28 stenn@whimsy.udel.edu +2 -2
+    Enable the email-related log messages.
+
+ChangeSet@1.783, 2002-02-18 23:27:09-05:00, stenn@whimsy.udel.edu
+  ntp_adjtime() call cleanup.
+  From: John Hay
+
+  ntpd/ntp_crypto.c
+    1.45 02/02/18 23:27:08 stenn@whimsy.udel.edu +1 -3
+    ntp_adjtime() call cleanup.
+    From John Hay.
+
+ChangeSet@1.782, 2002-01-25 18:51:26-05:00, stenn@whimsy.udel.edu
+  mu can be 0, and the (old) debug info would divide sys_jitter by mu.
+  Lose the division.
+  From: Dave Mills.
+
+  ntpd/ntp_loopfilter.c
+    1.56 02/01/25 18:51:25 stenn@whimsy.udel.edu +2 -2
+    mu can be 0, and the (old) debug info would divide sys_jitter by mu.
+    Lose the division.
+    From: Dave Mills.
+
+ChangeSet@1.781, 2002-01-22 18:16:09-05:00, stenn@whimsy.udel.edu
+  Lint cleanup.
+  From Marc.Brett@westerngeco.com
+
+  ntpd/ntp_intres.c
+    1.20 02/01/22 18:16:08 stenn@whimsy.udel.edu +1 -1
+    Lint.
+
+  util/ntp-genkeys.c
+    1.60 02/01/22 18:16:08 stenn@whimsy.udel.edu +0 -1
+    Lint.
+
+ChangeSet@1.780, 2002-01-17 17:52:47-05:00, stenn@whimsy.udel.edu
+  Lose the source port check.  Too many folks are going thru Port and
+  Address Translators, and present wisdom says that one should not
+  trust source ports anyway.
+
+  ntpd/ntp_proto.c
+    1.96 02/01/17 17:52:46 stenn@whimsy.udel.edu +1 -5
+    Lose the source port check.  Too many folks are going thru Port and
+    Address Translators, and present wisdom says that one should not
+    trust source ports anyway.
+
+ChangeSet@1.779, 2002-01-17 16:02:37-05:00, stenn@whimsy.udel.edu
+  Lint cleanup from Marc.Brett@westerngeco.com .
+
+  ntpd/refclock_jjy.c
+    1.4 02/01/17 16:02:36 stenn@whimsy.udel.edu +1 -4
+    Lint.
+
+  ntpd/refclock_local.c
+    1.7 02/01/17 16:02:36 stenn@whimsy.udel.edu +2 -0
+    Lint.
+
+  ntpd/refclock_palisade.c
+    1.10 02/01/17 16:02:36 stenn@whimsy.udel.edu +2 -0
+    Lint.
+
+ChangeSet@1.778, 2002-01-13 11:52:50-05:00, stenn@whimsy.udel.edu
+  Disable the delta-changelog and related scripts.
+
+  BitKeeper/triggers/trigger.cfg
+    1.8 02/01/13 11:52:49 stenn@whimsy.udel.edu +2 -2
+    Disable the delta-changelog and related scripts.
+
+ChangeSet@1.777, 2002-01-12 23:36:13-05:00, stenn@whimsy.udel.edu
+  4.1.0b-rc3
+  TAG: ntp-stable
+  TAG: NTP_4_1_0B_RC3
+
+  configure.in
+    1.234 02/01/12 23:36:12 stenn@whimsy.udel.edu +1 -1
+    4.1.0b-rc3
+
+ChangeSet@1.776, 2002-01-10 20:43:25-05:00, stenn@whimsy.udel.edu
+  Update the NEWS file.
+
+  NEWS
+    1.37 02/01/10 20:43:25 stenn@whimsy.udel.edu +5 -0
+    Update the NEWS file.
+
+ChangeSet@1.775, 2002-01-06 18:35:45-05:00, stenn@whimsy.udel.edu
+  Disable the refclock_report(peer, CEVNT_BADREPLY) if the GOES
+  clock reports !(lon > 7000 && lon < 14000).
+  From: Paul Vixie.
+
+  ntpd/refclock_true.c
+    1.8 02/01/06 18:35:45 stenn@whimsy.udel.edu +1 -1
+    Disable the refclock_report(peer, CEVNT_BADREPLY) if the GOES
+    clock reports !(lon > 7000 && lon < 14000).
+    From: Paul Vixie.
+
+ChangeSet@1.774, 2002-01-04 04:03:26-05:00, stenn@whimsy.udel.edu
+  Lose some implementation debug output.
+  From: John Hay
+
+  ntpd/ntp_request.c
+    1.28 02/01/04 04:03:25 stenn@whimsy.udel.edu +0 -7
+    Lose some implementation debug output.
+
+ChangeSet@1.773, 2002-01-04 00:37:40-05:00, stenn@whimsy.udel.edu
+  From: John Hay <jhay@icomtek.csir.co.za> 
+  Subject: [ntp:hackers] (x)ntpdc compatibility patch
+  
+  And there was much rejoicing...
+
+  include/ntp_request.h
+    1.13 02/01/04 00:37:39 stenn@whimsy.udel.edu +23 -0
+    Added struct req_pkt_tail, REQ_LEN_HDR, and struct old_conf_peer.
+
+  ntpd/ntp_request.c
+    1.27 02/01/04 00:37:39 stenn@whimsy.udel.edu +48 -11
+    Deal with both short and long packets.  REQ_CONFIG can have two
+    sizes, too.  Count old_conf_peer packets.  Lose keystr - it's no
+    longer used.
+
+  ntpdc/ntpdc.c
+    1.10 02/01/04 00:37:39 stenn@whimsy.udel.edu +36 -5
+    Handle sending packets of both size.  We might need to send along
+    a req_pkt_tail.  If we send the request and get back INFO_ERR_FMT,
+    try again with a req_pkt_size of 48.
+
+  ntpdc/ntpdc_ops.c
+    1.13 02/01/04 00:37:39 stenn@whimsy.udel.edu +7 -0
+    If we get back INFO_ERR_FMT, try again with the old conf_peer size.
+
+ChangeSet@1.772, 2002-01-02 23:52:46-05:00, stenn@whimsy.udel.edu
+  The loopback is OK if we're listening to virtual IPs.
+  Show candidate interface addresses during debug.
+  From: Paul Vixie
+
+  ntpd/ntp_io.c
+    1.23 02/01/02 23:52:46 stenn@whimsy.udel.edu +14 -8
+    The loopback is OK if we're listening to virtual IPs.
+    Show candidate interface addresses during debug.
+
+ChangeSet@1.771, 2002-01-02 22:36:34-05:00, stenn@whimsy.udel.edu
+  F_SETOWN bsdi typo fix
+  From: Paul Vixie
+
+  configure.in
+    1.233 02/01/02 22:36:33 stenn@whimsy.udel.edu +1 -1
+    F_SETOWN bsdi typo fix
+    From: Paul Vixie
+
+ChangeSet@1.770, 2002-01-02 22:26:22-05:00, stenn@whimsy.udel.edu
+  Boring documentation cleanup.
+
+  README.cvs
+    1.11 02/01/02 22:26:22 stenn@whimsy.udel.edu +4 -0
+    Note that the CVS repo is dormant.
+
+  README.versions
+    1.2 02/01/02 22:26:22 stenn@whimsy.udel.edu +1 -1
+    Bit-o-cleanup...
+
+ChangeSet@1.769, 2001-12-31 00:53:29-05:00, stenn@whimsy.udel.edu
+  Later verisons of FreeBSD need the PARENB IGNPAR thing.
+  Backport ntp_loopfilter fixes.
+
+  configure.in
+    1.232 01/12/31 00:53:28 stenn@whimsy.udel.edu +5 -0
+    Later verisons of FreeBSD need the PARENB IGNPAR thing.
+
+  include/ntpd.h
+    1.29 01/12/31 00:53:28 stenn@whimsy.udel.edu +1 -1
+    Backport ntp_loopfilter fixes.
+
+  ntpd/ntp_loopfilter.c
+    1.55 01/12/31 00:53:28 stenn@whimsy.udel.edu +55 -26
+    Backport ntp_loopfilter fixes.
+
+ChangeSet@1.768, 2001-12-19 15:57:09-05:00, stenn@whimsy.udel.edu
+  Distribute README.versions .
+
+  Makefile.am
+    1.25 01/12/19 15:57:07 stenn@whimsy.udel.edu +1 -0
+    Distribute README.versions .
+
+ChangeSet@1.767, 2001-12-18 19:27:29-05:00, stenn@whimsy.udel.edu
+  4.1.0b-rc2
+  TAG: NTP_4_1_0B_RC2
+  TAG: ntp-stable
+
+  configure.in
+    1.231 01/12/18 19:27:28 stenn@whimsy.udel.edu +1 -1
+    4.1.0b-rc2
+
+ChangeSet@1.766, 2001-12-17 23:25:13-05:00, stenn@whimsy.udel.edu
+  Be more verbose/descriptive of problems in debug mode.
+  From: Todd MacDermid <tmacderm@uu.net>
+
+  ntpdate/ntpdate.c
+    1.27 01/12/17 23:25:12 stenn@whimsy.udel.edu +30 -9
+    Be more verbose/descriptive of problems in debug mode.
+    From: Todd MacDermid <tmacderm@uu.net>
+
+ChangeSet@1.765, 2001-12-17 00:26:09-05:00, stenn@whimsy.udel.edu
+  Make the ntp_set_tod() debug messages less confusing/chatty.
+
+  libntp/machines.c
+    1.13 01/12/17 00:26:09 stenn@whimsy.udel.edu +16 -16
+    Make the ntp_set_tod() debug messages less confusing/chatty.
+
+ChangeSet@1.764, 2001-12-14 02:43:08-05:00, stenn@whimsy.udel.edu
+  This patch fixes a bug in NTP which appears if NTP is built on a system 
+  where signaled I/O is used, i.e. HAVE_SIGNALED_IO is defined in 
+  config.h. The bug has been found in ntp-4.1.71 but seems to last in the 
+  NTP code since the xntp3 days. 
+   
+  The symptom:  
+  If a radio clock is connected via the serial port using the parse driver 
+  (driver 8) then there are lots of messages in the syslog saying: 
+  > 31 Oct 09:13:42 ntpd[6708]: input_handler: handler_count is 2! 
+  > 31 Oct 09:13:42 ntpd[6708]: input_handler: handler_count is 2! 
+   
+  This has been observed under AIX 4.3.2 and Solaris 8, and the patch 
+  works in both cases. This effect is very obvious if a radio clock is 
+  connected via a serial interface, and a SIGIO signal is raised whenever 
+  a character has been received. It's a common problem, however, but the 
+  probability that a signal is raised again while the handler for the 
+  previous signal is still executing is much less if there 
+  are only signals if network packets are received. 
+    
+  The fix: 
+  The patch below is used to take care that the SIGIO signal is not 
+  unintentionally unblocked inside the sigio_handler() if the handler 
+  executes a piece of code that is bracketed by BLOCKIO()/UNBLOCKIO() 
+  calls.
+  
+  From: Martin Burnicki <martin.burnicki@meinberg.de>
+
+  libntp/iosignal.c
+    1.9 01/12/14 02:43:08 stenn@whimsy.udel.edu +72 -39
+    This patch fixes a bug in NTP which appears if NTP is built on a system 
+    where signaled I/O is used, i.e. HAVE_SIGNALED_IO is defined in 
+    config.h. The bug has been found in ntp-4.1.71 but seems to last in the 
+    NTP code since the xntp3 days. 
+     
+    The symptom:  
+    If a radio clock is connected via the serial port using the parse driver 
+    (driver 8) then there are lots of messages in the syslog saying: 
+    > 31 Oct 09:13:42 ntpd[6708]: input_handler: handler_count is 2! 
+    > 31 Oct 09:13:42 ntpd[6708]: input_handler: handler_count is 2! 
+     
+    This has been observed under AIX 4.3.2 and Solaris 8, and the patch 
+    works in both cases. This effect is very obvious if a radio clock is 
+    connected via a serial interface, and a SIGIO signal is raised whenever 
+    a character has been received. It's a common problem, however, but the 
+    probability that a signal is raised again while the handler for the 
+    previous signal is still executing is much less if there 
+    are only signals if network packets are received. 
+      
+    The fix: 
+    The patch below is used to take care that the SIGIO signal is not 
+    unintentionally unblocked inside the sigio_handler() if the handler 
+    executes a piece of code that is bracketed by BLOCKIO()/UNBLOCKIO() 
+    calls.
+    
+    From: Martin Burnicki <martin.burnicki@meinberg.de>
+
+ChangeSet@1.763, 2001-12-12 21:46:20-05:00, stenn@whimsy.udel.edu
+  Alter the "ci" calculation to reduce the chance of  overflow.
+  From: Michael Andres <ma@suse.de>
+
+  ntpdate/ntpdate.c
+    1.26 01/12/12 21:46:19 stenn@whimsy.udel.edu +8 -2
+    Alter the "ci" calculation to reduce the chance of  overflow.
+    From: Michael Andres <ma@suse.de>
+
+ChangeSet@1.762, 2001-12-10 22:02:24-05:00, stenn@whimsy.udel.edu
+  Properly check the pps_device variable.
+  From: "David G. Andersen" <dga@lcs.mit.edu>
+
+  ntpd/refclock_oncore.c
+    1.38 01/12/10 22:02:23 stenn@whimsy.udel.edu +1 -1
+    Properly check the pps_device variable.
+    From: "David G. Andersen" <dga@lcs.mit.edu>
+
+ChangeSet@1.761, 2001-12-05 01:24:04-05:00, stenn@whimsy.udel.edu
+  C-DEX patch.
+  From: Masaki Fukushima <fukusima@goto.info.waseda.ac.jp>
+
+  ntpd/refclock_jjy.c
+    1.3 01/12/05 01:24:03 stenn@whimsy.udel.edu +3 -1
+    C-DEX patch.
+    From: Masaki Fukushima <fukusima@goto.info.waseda.ac.jp>
+
+ChangeSet@1.760, 2001-12-02 23:02:32-05:00, stenn@whimsy.udel.edu
+  Added README.versions, which describes the version numbering scheme
+  we are using.  Suggested by Ulrich Windl.
+
+  README.versions
+    1.1 01/12/02 23:02:32 stenn@whimsy.udel.edu +35 -0
+
+  README.versions
+    1.0 01/12/02 23:02:32 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/README.versions
+
+ChangeSet@1.759, 2001-12-02 04:12:13-05:00, stenn@whimsy.udel.edu
+  settimeofday() fix in configure, do a better job tracking and
+  reporting progress in ntp_set_tod().
+
+  configure.in
+    1.230 01/12/02 04:12:12 stenn@whimsy.udel.edu +1 -1
+    Use AC_CHECK_FUNCS instead of _FUNC to check for settimeofday()
+    because we need HAVE_SETTIMEOFDAY.
+
+  libntp/machines.c
+    1.12 01/12/02 04:12:12 stenn@whimsy.udel.edu +40 -21
+    Do a better job tracking (and reporting, if debug enabled) progress
+    in ntp_set_tod().
+
+ChangeSet@1.758, 2001-11-30 19:36:36-05:00, stenn@whimsy.udel.edu
+  If no REFCLOCK, no cal_enable.
+  From: Ralf Nyren <ralf.nyren@educ.umu.se>
+
+  ntpd/ntp_request.c
+    1.26 01/11/30 19:36:35 stenn@whimsy.udel.edu +2 -0
+    If no REFCLOCK, no cal_enable.
+    From: Ralf Nyren <ralf.nyren@educ.umu.se>
+
+ChangeSet@1.757, 2001-11-24 23:30:49-05:00, stenn@whimsy.udel.edu
+  Somewhere along the line, the driver40.htm file got lost - recover it.
+
+  html/driver40.htm
+    1.1 01/11/24 23:30:48 stenn@whimsy.udel.edu +141 -0
+
+  html/driver40.htm
+    1.0 01/11/24 23:30:48 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/html/driver40.htm
+
+ChangeSet@1.756, 2001-11-23 23:23:23-05:00, stenn@whimsy.udel.edu
+  4.1.0b-rc1
+  TAG: NTP_4_1_0B_RC1
+
+  NEWS
+    1.36 01/11/23 23:23:22 stenn@whimsy.udel.edu +7 -0
+    Update the NEWS file.
+
+  configure.in
+    1.229 01/11/23 23:23:22 stenn@whimsy.udel.edu +1 -1
+    4.1.0b-rc1
+
+ChangeSet@1.755, 2001-11-19 21:29:34-05:00, stenn@whimsy.udel.edu
+  enable/disable calibrate.
+  
+  Flags cleanup for ntpdc and friends.
+  
+  From Dave Mills.
+
+  include/ntp_request.h
+    1.12 01/11/19 21:29:33 stenn@whimsy.udel.edu +7 -5
+    Cleanup/fixes from Dave Mills.
+
+  ntpd/ntp_config.c
+    1.54 01/11/19 21:29:33 stenn@whimsy.udel.edu +4 -4
+    One can also enable/disable calibrate.
+    
+    Alphabetize the flag keywords.
+
+  ntpd/ntp_request.c
+    1.25 01/11/19 21:29:33 stenn@whimsy.udel.edu +25 -20
+    Alphabetize the keyword checks.
+    
+    setclr/handle the CAL and AUTH flag bits, too.
+
+  ntpdc/ntpdc_ops.c
+    1.12 01/11/19 21:29:33 stenn@whimsy.udel.edu +17 -13
+    Flag cleanup.
+
+ChangeSet@1.754, 2001-11-16 23:35:26-05:00, stenn@whimsy.udel.edu
+  ntp_resolver.c is currently unused.
+
+  ntpd/Makefile.am
+    1.22 01/11/16 23:35:25 stenn@whimsy.udel.edu +2 -1
+    ntp_resolver.c is currently unused.
+
+ChangeSet@1.753, 2001-11-10 13:46:34-05:00, stenn@whimsy.udel.edu
+  Handle the version stuff even when building completely outside
+  the srcdir.
+
+  Makefile.am
+    1.24 01/11/10 13:46:34 stenn@whimsy.udel.edu +7 -1
+    Handle the version stuff even when building completely outside
+    the srcdir.
+
+ChangeSet@1.752, 2001-11-09 23:29:51-05:00, stenn@whimsy.udel.edu
+  Improve the version file generation code.
+
+  Makefile.am
+    1.23 01/11/09 23:29:50 stenn@whimsy.udel.edu +3 -4
+    Improve the version file generation code.
+
+ChangeSet@1.751, 2001-11-08 16:46:12-05:00, stenn@whimsy.udel.edu
+  Make the cmp of the version file be silent.
+
+  Makefile.am
+    1.22 01/11/08 16:46:11 stenn@whimsy.udel.edu +1 -1
+    Make the cmp of the version file be silent.
+
+ChangeSet@1.750, 2001-11-08 16:37:05-05:00, stenn@whimsy.udel.edu
+  Fix the version file update code.
+  Reported by John Hay.
+  The "version" file should not be checked in.
+
+  Makefile.am
+    1.21 01/11/08 16:37:02 stenn@whimsy.udel.edu +3 -2
+    Fix the version file update code.
+    Reported by John Hay.
+
+  BitKeeper/deleted/.del-version~aeecada457249d0c
+    1.2 01/11/08 16:34:27 stenn@whimsy.udel.edu +1 -1
+    Delete: version
+
+ChangeSet@1.749, 2001-11-08 03:06:18-05:00, stenn@whimsy.udel.edu
+  Get the ChangeSet number in the compiled-in version strings.
+
+  version
+    1.1 01/11/08 03:06:16 stenn@whimsy.udel.edu +1 -0
+
+  BitKeeper/etc/ignore
+    1.12 01/11/08 03:06:17 stenn@whimsy.udel.edu +1 -0
+    Added version to the ignore list
+
+  version
+    1.0 01/11/08 03:06:16 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/version
+
+  Makefile.am
+    1.20 01/11/08 03:06:16 stenn@whimsy.udel.edu +9 -3
+    Maintain the version file, which holds the latest ChangeSet number.
+
+  ntpd/Makefile.am
+    1.21 01/11/08 03:06:16 stenn@whimsy.udel.edu +1 -1
+    Pass the contents of the version file in to the mkver script.
+
+  ntpdate/Makefile.am
+    1.7 01/11/08 03:06:16 stenn@whimsy.udel.edu +1 -1
+    Pass the contents of the version file in to the mkver script.
+
+  ntpdc/Makefile.am
+    1.5 01/11/08 03:06:16 stenn@whimsy.udel.edu +1 -1
+    Pass the contents of the version file in to the mkver script.
+
+  ntpq/Makefile.am
+    1.6 01/11/08 03:06:16 stenn@whimsy.udel.edu +1 -1
+    Pass the contents of the version file in to the mkver script.
+
+  ntptrace/Makefile.am
+    1.4 01/11/08 03:06:16 stenn@whimsy.udel.edu +1 -1
+    Pass the contents of the version file in to the mkver script.
+
+  scripts/mkver.in
+    1.9 01/11/08 03:06:16 stenn@whimsy.udel.edu +5 -0
+    If 
+
+ChangeSet@1.748, 2001-11-04 04:38:31-05:00, stenn@whimsy.udel.edu
+  Lose an obsolete file.
+
+  BitKeeper/deleted/.del-00-list~baf8bb517d043606
+    1.3 01/11/04 04:34:24 stenn@whimsy.udel.edu +0 -0
+    Delete: BitKeeper/triggers/00-list
+
+ChangeSet@1.747, 2001-11-04 04:21:46-05:00, stenn@whimsy.udel.edu
+  Attempt to handle the cases where triggers are being run from the
+  RESYNC dir.
+
+  BitKeeper/triggers/delta-changelog
+    1.3 01/11/04 04:21:45 stenn@whimsy.udel.edu +1 -1
+    Use bkp to make sure we get the .lgc file in the repo and not
+    (potentially) the (bogus) one in the RESYNC tree.
+
+  BitKeeper/triggers/lg-changeset
+    1.2 01/11/04 04:21:45 stenn@whimsy.udel.edu +1 -1
+    Make sure we're're accessing the .lgc file in the main repo and not in a RESYNC dir.
+
+  BitKeeper/triggers/triggert
+    1.4 01/11/04 04:21:45 stenn@whimsy.udel.edu +10 -4
+    General cleanup, and pass along $bkp (bk repo prefix) so we can
+    find the repo  directory instead of the RESYNC dir.
+
+ChangeSet@1.746, 2001-11-03 14:46:21-05:00, stenn@whimsy.udel.edu
+  Cleanup
+
+  BitKeeper/triggers/trigger.mk
+    1.7 01/11/03 14:46:20 stenn@whimsy.udel.edu +2 -7
+    Cleanup
+
+ChangeSet@1.745, 2001-11-02 16:56:25-05:00, stenn@whimsy.udel.edu
+  Cleanup.
+
+  BitKeeper/triggers/trigger.mk
+    1.6 01/11/02 16:56:25 stenn@whimsy.udel.edu +0 -1
+    Remove the trigger.touch file.  No longer needed.
+    We should look at some of the other touch files, too.
+
+ChangeSet@1.744, 2001-11-02 16:39:34-05:00, stenn@whimsy.udel.edu
+  Cleanup/reality check smoe trigger stuff.
+
+  BitKeeper/triggers/trigger.README
+    1.3 01/11/02 16:39:33 stenn@whimsy.udel.edu +8 -7
+    Cleanup/reality check the file.
+
+  BitKeeper/triggers/trigger.cfg
+    1.7 01/11/02 16:39:33 stenn@whimsy.udel.edu +3 -5
+    Update the header docs, merge some of the trigger scripts.
+
+ChangeSet@1.743, 2001-11-02 04:52:47-05:00, stenn@whimsy.udel.edu
+  Enable the delta changelog and last-good changeset triggers.
+
+  BitKeeper/triggers/trigger.cfg
+    1.6 01/11/02 04:52:47 stenn@whimsy.udel.edu +4 -4
+    Enable the delta changelog and last-good changeset triggers.
+
+ChangeSet@1.742, 2001-11-02 04:33:25-05:00, stenn@whimsy.udel.edu
+  Prepend the new logs to the ChangeLog.
+
+  BitKeeper/triggers/delta-changelog
+    1.2 01/11/02 04:33:25 stenn@whimsy.udel.edu +3 -1
+    Prepend the new logs to the ChangeLog.
+
+ChangeSet@1.741, 2001-11-02 04:15:19-05:00, stenn@whimsy.udel.edu
+  Now that we are using sed to install the trigger, call 'chmod +x'
+  when we're done.
+
+  BitKeeper/triggers/trigger.mk
+    1.5 01/11/02 04:15:18 stenn@whimsy.udel.edu +1 -1
+    Now that we are using sed to install the trigger, call 'chmod +x'
+    when we're done.
+
+  BitKeeper/triggers/triggerd
+    1.15 01/11/02 04:15:18 stenn@whimsy.udel.edu +1 -0
+    Now that we are using sed to install the trigger, call 'chmod +x'
+    when we're done.
+
+ChangeSet@1.740, 2001-11-02 04:05:19-05:00, stenn@whimsy.udel.edu
+  Better logging.
+
+  BitKeeper/triggers/triggert
+    1.3 01/11/02 04:05:18 stenn@whimsy.udel.edu +1 -1
+    Better logging.
+
+ChangeSet@1.739, 2001-11-02 03:58:14-05:00, stenn@whimsy.udel.edu
+  Mirror updates.
+
+  BitKeeper/triggers/trigger.cfg
+    1.5 01/11/02 03:58:13 stenn@whimsy.udel.edu +2 -2
+    Enable the mirror updates
+
+ChangeSet@1.738, 2001-11-02 03:49:01-05:00, stenn@whimsy.udel.edu
+  Typos.
+
+  BitKeeper/triggers/triggerd
+    1.14 01/11/02 03:49:00 stenn@whimsy.udel.edu +1 -1
+    Typos.  I"m getting pretty tired...
+
+ChangeSet@1.737, 2001-11-02 03:42:45-05:00, stenn@whimsy.udel.edu
+  Trigger manager improvements.
+
+  BitKeeper/triggers/triggerd
+    1.13 01/11/02 03:42:44 stenn@whimsy.udel.edu +3 -3
+    Install triggert to call the actual trigger, using a sed substitution.
+
+ChangeSet@1.736, 2001-11-02 03:33:15-05:00, stenn@whimsy.udel.edu
+  Typo.
+
+  BitKeeper/triggers/trigger.mk
+    1.4 01/11/02 03:33:15 stenn@whimsy.udel.edu +1 -1
+    Typo.
+
+ChangeSet@1.735, 2001-11-02 03:24:31-05:00, stenn@whimsy.udel.edu
+  trigger manager improvements.
+
+  BitKeeper/triggers/trigger.mk
+    1.3 01/11/02 03:24:30 stenn@whimsy.udel.edu +1 -1
+    Use sed instead of cp to copy triggert to the target; we will
+    most likely want to use this trick for the triggers in trigger.cfg,
+    too.
+
+  BitKeeper/triggers/triggert
+    1.2 01/11/02 03:24:30 stenn@whimsy.udel.edu +1 -1
+    Use a sed substitution for the target trigger name.
+
+ChangeSet@1.734, 2001-11-02 03:08:17-05:00, stenn@whimsy.udel.edu
+  More trigger manager fixes
+
+  BitKeeper/triggers/triggerd
+    1.12 01/11/02 03:08:17 stenn@whimsy.udel.edu +2 -2
+    Set the file count to 0 even earlier.
+
+ChangeSet@1.733, 2001-11-02 02:49:46-05:00, stenn@whimsy.udel.edu
+  More trigger manager work
+
+  BitKeeper/triggers/triggerd
+    1.11 01/11/02 02:49:46 stenn@whimsy.udel.edu +3 -2
+    Don't reset the count at each new tag; somebody might use a tag more
+    than once.
+
+ChangeSet@1.732, 2001-11-02 02:36:34-05:00, stenn@whimsy.udel.edu
+  Start enabling more triggers...
+
+  BitKeeper/triggers/trigger.cfg
+    1.4 01/11/02 02:36:34 stenn@whimsy.udel.edu +1 -1
+    Try enabling the paranoid check.
+
+  BitKeeper/etc/ignore
+    1.11 01/11/02 02:36:33 stenn@whimsy.udel.edu +1 -0
+    Ignore BitKeeper/triggers/p*--*, as those are the files installed
+    by the trigger manager package.
+
+ChangeSet@1.731, 2001-11-02 02:29:37-05:00, stenn@whimsy.udel.edu
+  More trigger manager cleanup.
+
+  BitKeeper/triggers/triggerd
+    1.10 01/11/02 02:29:36 stenn@whimsy.udel.edu +26 -21
+    Typos, cleanup.
+
+ChangeSet@1.730, 2001-11-02 00:27:34-05:00, stenn@whimsy.udel.edu
+  More trigger manager work.
+
+  BitKeeper/triggers/triggerd
+    1.9 01/11/02 00:27:33 stenn@whimsy.udel.edu +6 -3
+    Better logging.
+    Fix some typos.
+
+ChangeSet@1.729, 2001-11-02 00:12:41-05:00, stenn@whimsy.udel.edu
+  Another pass at the trigger manager.
+
+  BitKeeper/triggers/trigger.README
+    1.2 01/11/02 00:12:40 stenn@whimsy.udel.edu +2 -5
+    Implement multiple triggers per tag line.
+
+  BitKeeper/triggers/trigger.cfg
+    1.3 01/11/02 00:12:40 stenn@whimsy.udel.edu +1 -1
+    Enable the "notify" trigger.
+
+  BitKeeper/triggers/trigger.mk
+    1.2 01/11/02 00:12:40 stenn@whimsy.udel.edu +1 -2
+    Only install triggerd for post-commit and post-incoming.
+
+  BitKeeper/triggers/triggerd
+    1.8 01/11/02 00:12:40 stenn@whimsy.udel.edu +55 -19
+    Now that wedon't call the triggers from triggerd, there is no reason
+    to re-exec ourselves.
+    
+    When we process the triggers.cfg file, first remove the old triggers.
+    Validate the trigger classes.
+    Process each script for each tag, installing them so that they are
+    executed in the correct order.
+
+ChangeSet@1.728, 2001-10-24 10:00:02-04:00, stenn@whimsy.udel.edu
+  Disable our triggers until I can find the processing bug.
+
+  BitKeeper/triggers/trigger.cfg
+    1.2 01/10/24 10:00:02 stenn@whimsy.udel.edu +8 -8
+    Disable our triggers until I can find the processing bug.
+
+ChangeSet@1.727, 2001-10-24 04:42:37-04:00, stenn@whimsy.udel.edu
+  Recover the 2mirror script.
+
+  BitKeeper/triggers/2mirrors
+    1.1 01/10/24 04:14:04 stenn@whimsy.udel.edu +40 -0
+
+  BitKeeper/triggers/2mirrors
+    1.0 01/10/24 04:14:04 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/2mirrors
+
+  BitKeeper/triggers/triggerd
+    1.7 01/10/24 03:54:25 stenn@whimsy.udel.edu +1 -4
+    Quiet some debug stuff.
+
+  BitKeeper/triggers/triggerd
+    1.6 01/10/24 03:43:12 stenn@whimsy.udel.edu +3 -2
+    Run the right script.  Sigh.
+
+  BitKeeper/triggers/triggerd
+    1.5 01/10/24 03:33:59 stenn@whimsy.udel.edu +2 -0
+    triggerd hacking
+
+  BitKeeper/triggers/triggerd
+    1.4 01/10/24 03:07:10 stenn@whimsy.udel.edu +2 -1
+    Disable the re-exec; it seems to be hosing us.
+
+  BitKeeper/triggers/triggerd
+    1.3 01/10/24 02:46:31 stenn@whimsy.udel.edu +2 -1
+    Use the right ball.  Actually get the script if it isn't checked
+    out and actually run it.
+
+  BitKeeper/triggers/triggerd
+    1.2 01/10/24 01:59:12 stenn@whimsy.udel.edu +1 -0
+    Play ball - actually run the intended trigger script.
+
+ChangeSet@1.726, 2001-10-24 01:50:16-04:00, stenn@whimsy.udel.edu
+  Ignore some of the trigger system overhead files.
+
+  BitKeeper/etc/ignore
+    1.10 01/10/24 01:37:32 stenn@whimsy.udel.edu +3 -0
+    added BitKeeper/triggers/trigger.t1 BitKeeper/triggers/trigger.t2 BitKeeper/triggers/trigger.touch
+
+  BitKeeper/etc/ignore
+    1.9 01/10/24 01:37:05 stenn@whimsy.udel.edu +8 -0
+    added BitKeeper/triggers/post-commit BitKeeper/triggers/post-incoming BitKeeper/triggers/post-outgoing BitKeeper/triggers/pre-apply BitKeeper/triggers/pre-commit BitKeeper/triggers/pre-incoming BitKeeper/triggers/pre-outgoing BitKeeper/triggers/pre-resolve
+
+ChangeSet@1.725, 2001-10-24 01:32:31-04:00, stenn@whimsy.udel.edu
+  New ChagneLog processing.
+  New trigger scripts.
+
+  BitKeeper/triggers/triggert
+    1.1 01/10/24 01:32:30 stenn@whimsy.udel.edu +14 -0
+
+  BitKeeper/triggers/triggerd
+    1.1 01/10/24 01:32:30 stenn@whimsy.udel.edu +54 -0
+
+  BitKeeper/triggers/trigger.README
+    1.1 01/10/24 01:32:29 stenn@whimsy.udel.edu +53 -0
+
+  BitKeeper/triggers/triggert
+    1.0 01/10/24 01:32:30 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/triggert
+
+  BitKeeper/etc/ignore
+    1.8 01/10/24 01:32:30 stenn@whimsy.udel.edu +2 -0
+    Added ChangeLog BitKeeper/triggers/.lgc to the ignore list
+
+  BitKeeper/triggers/delta-changelog
+    1.1 01/10/24 01:32:29 stenn@whimsy.udel.edu +64 -0
+
+  BitKeeper/triggers/triggerd
+    1.0 01/10/24 01:32:30 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/triggerd
+
+  BitKeeper/triggers/lg-changeset
+    1.1 01/10/24 01:32:29 stenn@whimsy.udel.edu +15 -0
+
+  BitKeeper/triggers/paranoid
+    1.1 01/10/24 01:32:29 stenn@whimsy.udel.edu +80 -0
+
+  BitKeeper/triggers/trigger.cfg
+    1.1 01/10/24 01:32:29 stenn@whimsy.udel.edu +25 -0
+
+  BitKeeper/triggers/trigger.mk
+    1.1 01/10/24 01:32:29 stenn@whimsy.udel.edu +17 -0
+
+  BitKeeper/triggers/lg-changeset
+    1.0 01/10/24 01:32:29 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/lg-changeset
+
+  BitKeeper/triggers/trigger.README
+    1.0 01/10/24 01:32:29 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/trigger.README
+
+  BitKeeper/triggers/delta-changelog
+    1.0 01/10/24 01:32:29 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/delta-changelog
+
+  BitKeeper/triggers/trigger.cfg
+    1.0 01/10/24 01:32:29 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/trigger.cfg
+
+  BitKeeper/triggers/trigger.mk
+    1.0 01/10/24 01:32:29 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/trigger.mk
+
+  BitKeeper/triggers/paranoid
+    1.0 01/10/24 01:32:29 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/paranoid
+
+  Makefile.am
+    1.19 01/10/24 01:32:29 stenn@whimsy.udel.edu +1 -0
+    Distribute ChangeLog-4.1.0.
+
+  ChangeLog-4.1.0
+    1.589 01/10/24 01:32:29 stenn@whimsy.udel.edu +0 -0
+    Renamed the CVS ChangeLog to ChangeLog-4.1.0;
+    the new ChangeLog is auto-generated.
+
+  BitKeeper/deleted/.del-post-commit.changelog~baedea457d24369c
+    1.6 01/10/24 01:11:24 stenn@whimsy.udel.edu +0 -0
+    Delete: BitKeeper/triggers/post-commit.changelog
+
+  BitKeeper/deleted/.del-pre-apply.paranoid~baecee4c7d243e1c
+    1.3 01/10/24 00:42:20 stenn@whimsy.udel.edu +0 -0
+    Delete: BitKeeper/triggers/pre-apply.paranoid
+
+  BitKeeper/deleted/.del-post-incoming.2mirrors~baedfb107d26b494
+    1.5 01/10/24 00:42:11 stenn@whimsy.udel.edu +0 -0
+    Delete: BitKeeper/triggers/post-incoming.2mirrors
+
+ChangeSet@1.724, 2001-10-20 12:07:53-07:00, wink@iris1.saville.com
+  Add support for waiting on an IO event under Windows NT. This improves the responsiveness
+  of the system when running under NT.
+
+  BitKeeper/etc/logging_ok
+    1.3 01/10/20 12:07:50 wink@iris1.saville.com +1 -0
+    Logging to logging@openlogging.org accepted
+
+  ntpd/ntpd.c
+    1.36 01/10/20 12:07:43 wink@iris1.saville.com +27 -6
+    Add support for waiting on an IO event under Windows NT. This improves the responsiveness
+    of the system when running under NT.
+
+  ports/winnt/include/ntp_iocompletionport.h
+    1.5 01/10/20 12:07:43 wink@iris1.saville.com +2 -0
+    Add get_io_event
+
+  ports/winnt/ntpd/ntp_iocompletionport.c
+    1.6 01/10/20 12:07:43 wink@iris1.saville.com +33 -0
+    Add support for waiting on an IO event under to improve responsiveness.
+
+ChangeSet@1.723, 2001-10-15 23:36:58-04:00, stenn@whimsy.udel.edu
+  Lose mktime.c snprintf.c strdup.c strerror.c from
+  EXTRA_libntp_a_SOURCES as they are auto-added by AC_REPLACE_FUNCS
+
+  libntp/Makefile.am
+    1.13 01/10/15 23:36:58 stenn@whimsy.udel.edu +2 -2
+    Lose mktime.c snprintf.c strdup.c strerror.c from
+    EXTRA_libntp_a_SOURCES as they are auto-added by AC_REPLACE_FUNCS
+
+ChangeSet@1.722, 2001-10-11 00:15:50-04:00, stenn@whimsy.udel.edu
+  Make a little mirror trigger noise
+
+  BitKeeper/triggers/post-incoming.2mirrors
+    1.4 01/10/11 00:14:58 stenn@whimsy.udel.edu +2 -0
+    Make a little mirror trigger noise
+
+ChangeSet@1.721, 2001-10-10 21:14:30-04:00, stenn@whimsy.udel.edu
+  Use %u to display the keyid.
+  From: Simon Burge <simonb@wasabisystems.com>
+
+  ntpd/ntp_config.c
+    1.53 01/10/10 21:14:29 stenn@whimsy.udel.edu +2 -2
+    Use %u to display the keyid.
+    From: Simon Burge <simonb@wasabisystems.com>
+
+ChangeSet@1.720, 2001-10-09 02:04:10-04:00, stenn@whimsy.udel.edu
+  Check for clock_gettime().
+
+  configure.in
+    1.228 01/10/09 02:04:09 stenn@whimsy.udel.edu +1 -1
+    Check for clock_gettime().
+
+ChangeSet@1.719, 2001-10-08 21:51:07-04:00, stenn@whimsy.udel.edu
+  Use EOLN_NATIVE.
+
+  ElectricFence/tstheap.c
+    1.2 01/10/08 21:18:40 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/print.c
+    1.2 01/10/08 21:18:40 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/page.c
+    1.5 01/10/08 21:18:40 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/libefence.3
+    1.2 01/10/08 21:18:40 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/README
+    1.2 01/10/08 21:18:40 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/Makefile.am
+    1.7 01/10/08 21:18:40 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/tickadj.c
+    1.5 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/testrs6000.c
+    1.2 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/sht.c
+    1.2 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/timetrim.c
+    1.3 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/CHANGES
+    1.2 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/COPYING
+    1.2 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/Makefile-
+    1.2 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/efence.h
+    1.2 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/efence.c
+    1.2 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ElectricFence/eftest.c
+    1.2 01/10/08 21:18:39 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/precision.c
+    1.3 01/10/08 21:18:38 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/README
+    1.3 01/10/08 21:18:38 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/jitter.c
+    1.3 01/10/08 21:18:37 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/kern.c
+    1.3 01/10/08 21:18:37 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/longsize.c
+    1.2 01/10/08 21:18:37 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/ntp-genkeys.c
+    1.59 01/10/08 21:18:37 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/ntptime.c
+    1.14 01/10/08 21:18:37 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/Makefile.am
+    1.10 01/10/08 21:18:37 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/hist.c
+    1.5 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/ansi2knr.c
+    1.3 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/ansi2knr.1
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  util/byteorder.c
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/etc/setup
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/etc/rc
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/etc/install
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/etc/cron
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/etc/crontab
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/rc1/postinstall
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/rc1/preremove
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/rc1/preinstall
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/rc1/xntp
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/rc2/local.ntpd
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/rc1/prototype
+    1.2 01/10/08 21:18:36 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/sun4.sun4m.faui42
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/sun4.sun4c
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/sun4.sun4c.Lucifer
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/sun4.sun4.faui45
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/sun4.sun4.faui10
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/sun4.sun4.faui01
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/sun3.sun3
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/hp700.hp700
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/hp700.hp700.faui47
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/hp300.hp300
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/sun4.sun4m.faui45m
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/hp800.hp800
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/tickconf
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/ntp.conf
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/conf/sun4.sun4m
+    1.2 01/10/08 21:18:35 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/tdata.S
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/psummary.awk
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/peer.awk
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/loop_summary
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/loop.awk
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/loop.S
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/itf.awk
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/itf.S
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/summary.sh
+    1.3 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/tdata.awk
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/README
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/README.timecodes
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/README.stats
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/README
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/bin/monl
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/support/bin/mvstats
+    1.2 01/10/08 21:18:34 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/ensemble.awk
+    1.2 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/etf.awk
+    1.2 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/dupe.awk
+    1.2 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/clock.awk
+    1.2 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/ensemble.S
+    1.2 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/stats/etf.S
+    1.2 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/monitoring/README
+    1.3 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/monitoring/ntploopwatch
+    1.2 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/monitoring/ntptrap
+    1.2 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/monitoring/timelocal.pl
+    1.2 01/10/08 21:18:33 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/plot_summary.in
+    1.2 01/10/08 21:18:32 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/ntpver.in
+    1.2 01/10/08 21:18:32 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/ntpsweep.in
+    1.2 01/10/08 21:18:32 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/ntp-wait.in
+    1.5 01/10/08 21:18:32 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/summary.in
+    1.2 01/10/08 21:18:32 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/monitoring/ntploopstat
+    1.3 01/10/08 21:18:32 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/monitoring/ntp.pl
+    1.3 01/10/08 21:18:32 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/monitoring/lr.pl
+    1.3 01/10/08 21:18:32 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/monitoring/loopwatch.config.SAMPLE
+    1.2 01/10/08 21:18:32 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/ntp-groper
+    1.2 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/ntp-restart
+    1.3 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/ntp-status
+    1.2 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/ntp-close
+    1.2 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/mkver.in
+    1.8 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/hpadjtime.sh
+    1.2 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/freq_adj.in
+    1.2 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/fixautomakedepsmagic
+    1.2 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/checktime.in
+    1.2 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/Makefile.am
+    1.9 01/10/08 21:18:31 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/calc_tickadj.in
+    1.2 01/10/08 21:18:30 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  scripts/README
+    1.8 01/10/08 21:18:30 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/arpa/inet.h
+    1.3 01/10/08 21:18:30 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/netinet/in.h
+    1.3 01/10/08 21:18:30 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/netinet/in_system.h
+    1.2 01/10/08 21:18:30 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/netinet/ip.h
+    1.2 01/10/08 21:18:30 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/sys/socket.h
+    1.3 01/10/08 21:18:30 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/sys/time.h
+    1.3 01/10/08 21:18:30 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/sys/wait.h
+    1.3 01/10/08 21:18:30 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/sys/signal.h
+    1.3 01/10/08 21:18:29 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/sys/ioctl.h
+    1.4 01/10/08 21:18:29 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/sys/param.h
+    1.3 01/10/08 21:18:29 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/sys/resource.h
+    1.3 01/10/08 21:18:29 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/transmitbuff.h
+    1.3 01/10/08 21:18:29 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/unistd.h
+    1.2 01/10/08 21:18:29 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/win32_io.h
+    1.4 01/10/08 21:18:29 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/instsrv/instsrv.c
+    1.5 01/10/08 21:18:28 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/netdb.h
+    1.3 01/10/08 21:18:28 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/termios.h
+    1.2 01/10/08 21:18:28 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/syslog.h
+    1.3 01/10/08 21:18:28 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/clockstuff.h
+    1.4 01/10/08 21:18:28 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/config.h
+    1.10 01/10/08 21:18:28 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/hopf_PCI_io.h
+    1.2 01/10/08 21:18:28 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/ntp_timer.h
+    1.3 01/10/08 21:18:28 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/include/ntp_iocompletionport.h
+    1.4 01/10/08 21:18:28 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/libntp/SetSystemTime.c
+    1.3 01/10/08 21:18:27 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/libntp/log.h
+    1.3 01/10/08 21:18:27 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpd/ntp_iocompletionport.c
+    1.5 01/10/08 21:18:27 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/libntp/mexit.c
+    1.3 01/10/08 21:18:27 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/libntp/util_clockstuff.c
+    1.3 01/10/08 21:18:27 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpd/refclock_trimbledc.c
+    1.4 01/10/08 21:18:27 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/libntp/messages.mc
+    1.3 01/10/08 21:18:27 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/libntp/transmitbuff.c
+    1.4 01/10/08 21:18:27 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpd/refclock_trimbledc.h
+    1.3 01/10/08 21:18:27 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpd/win32_io.c
+    1.5 01/10/08 21:18:26 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpd/nt_clockstuff.c
+    1.10 01/10/08 21:18:26 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpd/hopf_PCI_io.c
+    1.2 01/10/08 21:18:26 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/scripts/mkver.bat
+    1.4 01/10/08 21:18:26 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  parseutil/testdcf.c
+    1.3 01/10/08 21:18:26 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  parseutil/README
+    1.2 01/10/08 21:18:26 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  parseutil/Makefile.am
+    1.4 01/10/08 21:18:26 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  parseutil/dcfd.c
+    1.8 01/10/08 21:18:25 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntptrace/ntptrace.h
+    1.2 01/10/08 21:18:25 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntptrace/ntptrace.c
+    1.15 01/10/08 21:18:25 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntptrace/README
+    1.3 01/10/08 21:18:25 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntptrace/Makefile.am
+    1.3 01/10/08 21:18:25 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpq/ntpq_ops.c
+    1.11 01/10/08 21:18:25 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpq/README
+    1.3 01/10/08 21:18:25 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpq/ntpq.h
+    1.2 01/10/08 21:18:24 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpq/ntpq.c
+    1.17 01/10/08 21:18:24 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpq/Makefile.am
+    1.5 01/10/08 21:18:24 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdc/ntpdc_ops.c
+    1.11 01/10/08 21:18:24 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdc/ntpdc.h
+    1.2 01/10/08 21:18:24 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdc/ntpdc.c
+    1.9 01/10/08 21:18:24 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdc/README
+    1.3 01/10/08 21:18:24 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdc/Makefile.am
+    1.4 01/10/08 21:18:24 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdate/ntptimeset.c
+    1.11 01/10/08 21:18:23 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdate/ntptime_config.c
+    1.5 01/10/08 21:18:23 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdate/ntpdate.h
+    1.5 01/10/08 21:18:23 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdate/ntpdate.c
+    1.25 01/10/08 21:18:23 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdate/Makefile.am
+    1.6 01/10/08 21:18:23 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpdate/README
+    1.3 01/10/08 21:18:22 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_wwvb.c
+    1.10 01/10/08 21:18:22 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_usno.c
+    1.6 01/10/08 21:18:22 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_ulink.c
+    1.11 01/10/08 21:18:22 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_jjy.c
+    1.2 01/10/08 21:18:22 stenn@whimsy.udel.edu +0 -0
+
+  ntpd/refclock_wwv.c
+    1.26 01/10/08 21:18:21 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_true.c
+    1.7 01/10/08 21:18:21 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_trak.c
+    1.7 01/10/08 21:18:21 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_shm.c
+    1.10 01/10/08 21:18:21 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_ptbacts.c
+    1.2 01/10/08 21:18:21 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_tpro.c
+    1.6 01/10/08 21:18:21 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_parse.c
+    1.18 01/10/08 21:18:21 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_palisade.h
+    1.6 01/10/08 21:18:21 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_palisade.c
+    1.9 01/10/08 21:18:20 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_oncore.c
+    1.37 01/10/08 21:18:20 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_nmea.c
+    1.16 01/10/08 21:18:20 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_mx4200.c
+    1.15 01/10/08 21:18:20 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_pst.c
+    1.6 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_msfees.c
+    1.8 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_local.c
+    1.6 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_leitch.c
+    1.5 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_jupiter.c
+    1.8 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_pcf.c
+    1.6 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_irig.c
+    1.9 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_hpgps.c
+    1.5 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_hopfser.c
+    1.3 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_hopfpci.c
+    1.3 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_heath.c
+    1.9 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_gpsvme.c
+    1.5 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_dumbclock.c
+    1.5 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_datum.c
+    1.7 01/10/08 21:18:19 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_fg.c
+    1.7 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_conf.c
+    1.15 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_chu.c
+    1.21 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_chronolog.c
+    1.5 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_bancomm.c
+    1.7 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_atom.c
+    1.35 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_as2201.c
+    1.7 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_arc.c
+    1.8 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_arbiter.c
+    1.5 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/refclock_acts.c
+    1.8 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_timer.c
+    1.17 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_util.c
+    1.15 01/10/08 21:18:18 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_peer.c
+    1.30 01/10/08 21:18:17 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_restrict.c
+    1.4 01/10/08 21:18:17 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_resolver.c
+    1.13 01/10/08 21:18:17 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_request.c
+    1.24 01/10/08 21:18:17 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_refclock.c
+    1.40 01/10/08 21:18:17 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_proto.c
+    1.95 01/10/08 21:18:17 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_monitor.c
+    1.5 01/10/08 21:18:17 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_loopfilter.c
+    1.54 01/10/08 21:18:17 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntpd.c
+    1.35 01/10/08 21:18:16 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_control.c
+    1.39 01/10/08 21:18:16 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_intres.c
+    1.19 01/10/08 21:18:16 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_filegen.c
+    1.6 01/10/08 21:18:16 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_crypto.c
+    1.44 01/10/08 21:18:16 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_config.c
+    1.52 01/10/08 21:18:16 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/map_vme.c
+    1.4 01/10/08 21:18:16 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/jupiter.h
+    1.2 01/10/08 21:18:16 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/Makefile.am
+    1.20 01/10/08 21:18:16 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/ntp_io.c
+    1.22 01/10/08 21:18:15 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/check_y2k.c
+    1.6 01/10/08 21:18:15 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntpd/cmd_args.c
+    1.8 01/10/08 21:18:15 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/trim_info.c
+    1.2 01/10/08 21:18:15 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/parsestreams.c
+    1.4 01/10/08 21:18:15 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/parsesolaris.c
+    1.4 01/10/08 21:18:15 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/parse_conf.c
+    1.7 01/10/08 21:18:15 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/parse.c
+    1.8 01/10/08 21:18:15 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/mkinfo_scmd.sed
+    1.2 01/10/08 21:18:15 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/mkinfo_rcmd.sed
+    1.2 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/info_trimble.c
+    1.2 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/data_mbg.c
+    1.3 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_wharton.c
+    1.4 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_varitext.c
+    1.5 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_trimtsip.c
+    1.6 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_trimtaip.c
+    1.6 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_schmid.c
+    1.6 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_rcc8000.c
+    1.6 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_rawdcf.c
+    1.8 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_meinberg.c
+    1.6 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_hopf6021.c
+    1.6 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_dcf7000.c
+    1.6 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/Makefile.am
+    1.7 01/10/08 21:18:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/clk_computime.c
+    1.6 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libparse/README
+    1.2 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/ymd2yd.c
+    1.3 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/utvtoa.c
+    1.3 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/uinttoa.c
+    1.2 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/uglydate.c
+    1.3 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/tvtots.c
+    1.2 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/tvtoa.c
+    1.3 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/tstotv.c
+    1.2 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/tsftomsu.c
+    1.2 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/systime.c
+    1.18 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/syssignal.c
+    1.8 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/strerror.c
+    1.2 01/10/08 21:18:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/strdup.c
+    1.4 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/octtoint.c
+    1.2 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/README
+    1.2 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/statestr.c
+    1.3 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/snprintf.c
+    1.5 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/refnumtoa.c
+    1.2 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/recvbuff.c
+    1.8 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/ranny.c
+    1.2 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/random.c
+    1.2 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/prettydate.c
+    1.3 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/msutotsf.c
+    1.2 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/numtohost.c
+    1.2 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/numtoa.c
+    1.2 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/netof.c
+    1.2 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/msyslog.c
+    1.11 01/10/08 21:18:12 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/Makefile.am
+    1.12 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/mstolfp.c
+    1.2 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/modetoa.c
+    1.2 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/mfptoa.c
+    1.2 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/mktime.c
+    1.3 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/mfptoms.c
+    1.2 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/mfp_mul.c
+    1.3 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/humandate.c
+    1.3 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/memmove.c
+    1.2 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/md5c.c
+    1.2 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/machines.c
+    1.11 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/log.h
+    1.2 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/log.c
+    1.2 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/ieee754io.c
+    1.4 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/iosignal.c
+    1.8 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/lib_strbuf.c
+    1.3 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/lib_strbuf.h
+    1.2 01/10/08 21:18:11 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/fptoa.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/fptoms.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/getopt.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/gpstolfp.c
+    1.5 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/calyearstart.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/clocktime.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/findconfig.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/icom.c
+    1.7 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/inttoa.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/emalloc.c
+    1.5 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/calleapwhen.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/clocktypes.c
+    1.9 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/dofptoa.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/decodenetnum.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/hextolfp.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/dolfptoa.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/hextoint.c
+    1.2 01/10/08 21:18:10 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/caltontp.c
+    1.2 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/caljulian.c
+    1.3 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/buftvtots.c
+    1.3 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/binio.c
+    1.2 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/authusekey.c
+    1.4 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/authreadkeys.c
+    1.4 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/authparity.c
+    1.4 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/authkeys.c
+    1.7 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/authencrypt.c
+    1.5 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/audio.c
+    1.7 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/atouint.c
+    1.2 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/atolfp.c
+    1.2 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/atoint.c
+    1.2 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/adjtimex.c
+    1.2 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/adjtime.c
+    1.3 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  libntp/a_md5encrypt.c
+    1.6 01/10/08 21:18:09 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/tty_clk_STREAMS.c
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/tty_clk.c
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/tty_chu_STREAMS.c
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/tty_chu.c
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/tpro.h
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/timex.h
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/ppsclock.h
+    1.3 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/pcl720.h
+    1.3 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/parsestreams.h
+    1.3 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/i8253.h
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/clkdefs.h
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/chudefs.h
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/bsd_audioirig.h
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/README
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/sys/Makefile.am
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/Makefile.am
+    1.2 01/10/08 21:18:08 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/clkinit.c
+    1.2 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/chuinit.c
+    1.2 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  kernel/README
+    1.2 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/README
+    1.2 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_request.h
+    1.11 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/trimble.h
+    1.2 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/recvbuff.h
+    1.2 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/parse_conf.h
+    1.2 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/parse.h
+    1.4 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_select.h
+    1.2 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_unixtime.h
+    1.3 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_types.h
+    1.4 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_stdlib.h
+    1.11 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_syslog.h
+    1.3 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_syscall.h
+    1.5 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_string.h
+    1.2 01/10/08 21:18:07 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_io.h
+    1.3 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_config.h
+    1.12 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_tty.h
+    1.2 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp.h
+    1.49 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_calendar.h
+    1.2 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_cmdargs.h
+    1.2 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_refclock.h
+    1.10 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_control.h
+    1.14 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_crypto.h
+    1.21 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_proto.h
+    1.4 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_malloc.h
+    1.2 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_machine.h
+    1.9 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_datum.h
+    1.2 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_if.h
+    1.3 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_fp.h
+    1.3 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntp_filegen.h
+    1.2 01/10/08 21:18:06 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntpd.h
+    1.28 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/Makefile.am
+    1.12 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/adjtime.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/l_stdlib.h
+    1.8 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/mbg_gps166.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ascii.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/iosignal.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/audio.h
+    1.3 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ntif.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/mx4200.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/md5.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/ieee754io.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/icom.h
+    1.4 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/hopf6039.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/gps.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/global.h
+    1.3 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  include/binio.h
+    1.2 01/10/08 21:18:05 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  clockstuff/clktest.c
+    1.2 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  conf/dewey.conf
+    1.2 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  conf/beauregard.conf
+    1.2 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  clockstuff/propdelay.c
+    1.3 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  conf/README
+    1.4 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  clockstuff/README
+    1.3 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  clockstuff/Makefile.am
+    1.3 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  clockstuff/chutest.c
+    1.2 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  conf/baldwin.conf
+    1.3 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  conf/grundoon.conf
+    1.3 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  conf/malarky.conf
+    1.2 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  conf/pogo.conf
+    1.3 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  conf/rackety.conf
+    1.2 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/mpeix
+    1.2 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+
+  html/hints/winnt.htm
+    1.8 01/10/08 21:18:04 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/solaris-dosynctodr.html
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/solaris.html
+    1.4 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/solaris.xtra.4023118
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/sco.htm
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/solaris.xtra.S99ntpd
+    1.3 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/solaris.xtra.patchfreq
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/sun4
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/svr4-dell
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/svr4_package
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/todo
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/vxworks.html
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/vxworks.htm
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/solaris.xtra.4095849
+    1.2 01/10/08 21:18:03 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/refclocks
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/sgi
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/bsdi
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/changes
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/decosf1
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/decosf2
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/freebsd
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/hpux
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/linux
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/notes-xntp-v3
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/parse
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/rs6000
+    1.2 01/10/08 21:18:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/tickadj.htm
+    1.6 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/quick.htm
+    1.5 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/a-ux
+    1.2 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/rdebug.htm
+    1.5 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/Oncore-SHMEM.htm
+    1.3 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/ntptime.htm
+    1.7 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/ntptrace.htm
+    1.5 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/parsedata.htm
+    1.3 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/parsenew.htm
+    1.2 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/patches.htm
+    1.5 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/porting.htm
+    1.4 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints/aix
+    1.2 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/qth.htm
+    1.3 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/release.htm
+    1.14 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/refclock.htm
+    1.15 01/10/08 21:18:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/ntpq.htm
+    1.7 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/prefer.htm
+    1.5 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/mx4200data.htm
+    1.5 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/ntpdc.htm
+    1.6 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/notes.htm
+    1.6 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/pps.htm
+    1.9 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/ntpdate.htm
+    1.6 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/ntpd.htm
+    1.14 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/measure.htm
+    1.4 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/miscopt.htm
+    1.12 01/10/08 21:18:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/leap.htm
+    1.2 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/ldisc.htm
+    1.3 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/kernpps.htm
+    1.4 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/hints.htm
+    1.4 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/kern.htm
+    1.6 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/gadget.htm
+    1.4 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/extern.htm
+    1.5 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/index.htm
+    1.11 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/htmlprimer.htm
+    1.2 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/howto.htm
+    1.5 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/monopt.htm
+    1.7 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/genkeys.htm
+    1.6 01/10/08 21:17:59 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver5.htm
+    1.3 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver4.htm
+    1.4 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver39.htm
+    1.2 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver38.htm
+    1.2 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver37.htm
+    1.3 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver36.htm
+    1.7 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver35.htm
+    1.5 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver34.htm
+    1.3 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver33.htm
+    1.4 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver8.htm
+    1.4 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver3.htm
+    1.3 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver9.htm
+    1.5 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver6.htm
+    1.5 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver7.htm
+    1.10 01/10/08 21:17:58 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver30.htm
+    1.7 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver29.htm
+    1.3 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver28.htm
+    1.3 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver32.htm
+    1.4 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver26.htm
+    1.2 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver23.htm
+    1.4 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver22.htm
+    1.7 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver20.htm
+    1.5 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver2.htm
+    1.3 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver27.htm
+    1.3 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver24.htm
+    1.2 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver19.htm
+    1.3 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver18.htm
+    1.3 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver16.htm
+    1.2 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver1.htm
+    1.4 01/10/08 21:17:57 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver12.htm
+    1.3 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver11.htm
+    1.3 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/driver10.htm
+    1.3 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/debug.htm
+    1.6 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/exec.htm
+    1.7 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/confopt.htm
+    1.15 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/config.htm
+    1.5 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/clockopt.htm
+    1.8 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/build.htm
+    1.7 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/copyright.htm
+    1.18 01/10/08 21:17:56 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/authopt.htm
+    1.12 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/audio.htm
+    1.6 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/assoc.htm
+    1.7 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/accopt.htm
+    1.8 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  html/biblio.htm
+    1.5 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  BitKeeper/triggers/00-list
+    1.2 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+
+  BitKeeper/triggers/post-commit.changelog
+    1.5 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+
+  adjtimed/Makefile.am
+    1.2 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  adjtimed/README
+    1.3 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  BitKeeper/triggers/pre-apply.paranoid
+    1.2 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+
+  adjtimed/adjtimed.c
+    1.4 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  librsaref/Makefile.am
+    1.15 01/10/08 21:17:55 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  BitKeeper/triggers/post-incoming.2mirrors
+    1.3 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  BitKeeper/etc/config
+    1.4 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  BitKeeper/etc/ignore
+    1.7 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  BitKeeper/etc/logging_ok
+    1.2 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  readme.y2kfixes
+    1.5 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  BitKeeper/triggers/notify
+    1.2 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  README.hackers
+    1.5 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  results.y2kfixes
+    1.5 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  NEWS
+    1.35 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  WHERE-TO-START
+    1.5 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  NOTES.y2kfixes
+    1.6 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  README.cvs
+    1.10 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  ntp_update
+    1.10 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  mkinstalldirs
+    1.7 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  README.des
+    1.10 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  TODO
+    1.6 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  README.rsa
+    1.7 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  README
+    1.18 01/10/08 21:17:54 stenn@whimsy.udel.edu +0 -0
+
+  missing
+    1.7 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  config.sub
+    1.10 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  install-sh
+    1.5 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  configure.in
+    1.227 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  depcomp
+    1.6 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  dot.emacs
+    1.7 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  excludes
+    1.5 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  config.guess
+    1.10 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  flock-build
+    1.23 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  acconfig.h
+    1.29 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  README.bk
+    1.13 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  INSTALL
+    1.7 01/10/08 21:17:53 stenn@whimsy.udel.edu +0 -0
+
+  acinclude.m4
+    1.7 01/10/08 21:17:52 stenn@whimsy.udel.edu +0 -0
+
+  Makefile.am
+    1.18 01/10/08 21:17:52 stenn@whimsy.udel.edu +0 -0
+
+  build
+    1.20 01/10/08 21:17:52 stenn@whimsy.udel.edu +0 -0
+
+  ChangeLog
+    1.588 01/10/08 21:17:52 stenn@whimsy.udel.edu +0 -0
+
+  TODO
+    1.5 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  README
+    1.17 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  WHERE-TO-START
+    1.4 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  missing
+    1.6 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  README.hackers
+    1.4 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  README.des
+    1.9 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  mkinstalldirs
+    1.6 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  README.cvs
+    1.9 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  ntp_update
+    1.9 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  install-sh
+    1.4 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  README.rsa
+    1.6 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  readme.y2kfixes
+    1.4 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  NOTES.y2kfixes
+    1.5 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  results.y2kfixes
+    1.4 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  NEWS
+    1.34 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  acconfig.h
+    1.28 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  INSTALL
+    1.6 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  configure.in
+    1.226 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  depcomp
+    1.5 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  dot.emacs
+    1.6 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  excludes
+    1.4 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  flock-build
+    1.22 01/10/08 02:09:51 stenn@whimsy.udel.edu +0 -0
+
+  Makefile.am
+    1.17 01/10/08 02:09:50 stenn@whimsy.udel.edu +0 -0
+
+  build
+    1.19 01/10/08 02:09:50 stenn@whimsy.udel.edu +0 -0
+
+  acinclude.m4
+    1.6 01/10/08 02:09:50 stenn@whimsy.udel.edu +0 -0
+
+  README.bk
+    1.12 01/10/08 02:09:50 stenn@whimsy.udel.edu +0 -0
+
+  config.guess
+    1.9 01/10/08 02:09:50 stenn@whimsy.udel.edu +0 -0
+
+  config.sub
+    1.9 01/10/08 02:09:50 stenn@whimsy.udel.edu +0 -0
+
+  ChangeLog
+    1.587 01/10/08 02:09:50 stenn@whimsy.udel.edu +0 -0
+
+ChangeSet@1.718, 2001-10-08 02:05:47-04:00, stenn@whimsy.udel.edu
+  EOLN_NATIVE.
+
+  results.y2kfixes
+    1.3 01/10/08 01:57:14 stenn@whimsy.udel.edu +0 -0
+
+  NOTES.y2kfixes
+    1.4 01/10/08 01:57:14 stenn@whimsy.udel.edu +0 -0
+
+  readme.y2kfixes
+    1.3 01/10/08 01:57:14 stenn@whimsy.udel.edu +0 -0
+
+  README.rsa
+    1.5 01/10/08 01:57:14 stenn@whimsy.udel.edu +0 -0
+
+  README
+    1.16 01/10/08 01:57:14 stenn@whimsy.udel.edu +0 -0
+
+  WHERE-TO-START
+    1.3 01/10/08 01:57:14 stenn@whimsy.udel.edu +0 -0
+
+  README.hackers
+    1.3 01/10/08 01:57:14 stenn@whimsy.udel.edu +0 -0
+
+  TODO
+    1.4 01/10/08 01:57:14 stenn@whimsy.udel.edu +0 -0
+
+  README.des
+    1.8 01/10/08 01:57:14 stenn@whimsy.udel.edu +0 -0
+
+  mkinstalldirs
+    1.5 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  NEWS
+    1.33 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  missing
+    1.5 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  ChangeLog
+    1.586 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  INSTALL
+    1.5 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  ntp_update
+    1.8 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  README.cvs
+    1.8 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  dot.emacs
+    1.5 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  flock-build
+    1.21 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  depcomp
+    1.4 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  install-sh
+    1.3 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  configure.in
+    1.225 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  README.bk
+    1.11 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  config.sub
+    1.8 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  excludes
+    1.3 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  config.guess
+    1.8 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  build
+    1.18 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  acconfig.h
+    1.27 01/10/08 01:57:13 stenn@whimsy.udel.edu +0 -0
+
+  Makefile.am
+    1.16 01/10/08 01:57:12 stenn@whimsy.udel.edu +0 -0
+
+  acinclude.m4
+    1.5 01/10/08 01:57:12 stenn@whimsy.udel.edu +0 -0
+
+  results.y2kfixes
+    1.2 01/10/08 01:57:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  WHERE-TO-START
+    1.2 01/10/08 01:57:02 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  README.des
+    1.7 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  flock-build
+    1.20 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  INSTALL
+    1.4 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  readme.y2kfixes
+    1.2 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  TODO
+    1.3 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  configure.in
+    1.224 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  README
+    1.15 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  mkinstalldirs
+    1.4 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  README.rsa
+    1.4 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  README.hackers
+    1.2 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  NEWS
+    1.32 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ntp_update
+    1.7 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  README.cvs
+    1.7 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  missing
+    1.4 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  NOTES.y2kfixes
+    1.3 01/10/08 01:57:01 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  dot.emacs
+    1.4 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  depcomp
+    1.3 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  install-sh
+    1.2 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  README.bk
+    1.10 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+
+  build
+    1.17 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  excludes
+    1.2 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  config.guess
+    1.7 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  Makefile.am
+    1.15 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  config.sub
+    1.7 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  acconfig.h
+    1.26 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  acinclude.m4
+    1.4 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ChangeLog
+    1.585 01/10/08 01:57:00 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+ChangeSet@1.717, 2001-10-08 01:55:18-04:00, stenn@whimsy.udel.edu
+  Re-import the JJY  patch.
+
+  html/qth.htm
+    1.2 01/10/08 01:55:17 stenn@whimsy.udel.edu +12 -0
+    JJY entries.
+
+ChangeSet@1.716, 2001-10-06 15:30:18-04:00, stenn@whimsy.udel.edu
+  More trigger debugging.
+
+  BitKeeper/triggers/post-commit.changelog
+    1.4 01/10/06 15:30:18 stenn@whimsy.udel.edu +3 -0
+    More debug stuff.
+
+ChangeSet@1.715, 2001-10-06 14:48:38-04:00, stenn@whimsy.udel.edu
+  Debug the post-commit.changelog trigger.
+
+  BitKeeper/triggers/post-commit.changelog
+    1.3 01/10/06 14:48:37 stenn@whimsy.udel.edu +4 -0
+    More debug stuff.
+
+ChangeSet@1.714, 2001-10-06 13:50:26-04:00, stenn@whimsy.udel.edu
+  Trigger cleanup and debug.
+
+  BitKeeper/triggers/post-commit.changelog
+    1.2 01/10/06 13:50:25 stenn@whimsy.udel.edu +1 -0
+    Add a delay to the changelog (cvs-all email) trigger so maybe I'll
+    be able to see it happen...
+
+  BitKeeper/deleted/.del-changelog~bafcae117d0e1606
+    1.2 01/10/06 12:58:27 stenn@whimsy.udel.edu +0 -0
+    Delete: BitKeeper/triggers/changelog
+
+  BitKeeper/deleted/.del-2mirrors~baf8ef547d0494ae
+    1.3 01/10/06 12:57:43 stenn@whimsy.udel.edu +0 -0
+    Delete: BitKeeper/triggers/2mirrors
+
+ChangeSet@1.713, 2001-10-06 04:28:47-04:00, stenn@whimsy.udel.edu
+  Grab the updates from the master 2mirrors script.
+
+  BitKeeper/triggers/post-incoming.2mirrors
+    1.2 01/10/06 04:28:47 stenn@whimsy.udel.edu +2 -2
+    Grab the updates from the master 2mirrors script.
+
+ChangeSet@1.712, 2001-10-06 04:16:36-04:00, stenn@whimsy.udel.edu
+  2mirrors trigger  is now quiet when we don't run it.
+
+  BitKeeper/triggers/2mirrors
+    1.2 01/10/06 04:16:36 stenn@whimsy.udel.edu +2 -2
+    Don't show the "starting 2mirrors trigger" message unless we're 
+    on a host that actually runs it.
+
+ChangeSet@1.711, 2001-10-06 03:34:37-04:00, stenn@whimsy.udel.edu
+  Recover ntp-stable - update the ignore file and replace the triggers.
+
+  BitKeeper/triggers/post-commit.changelog
+    1.1 01/10/06 03:34:36 stenn@whimsy.udel.edu +61 -0
+
+  BitKeeper/triggers/notify
+    1.1 01/10/06 03:34:36 stenn@whimsy.udel.edu +81 -0
+
+  BitKeeper/triggers/changelog
+    1.1 01/10/06 03:34:36 stenn@whimsy.udel.edu +61 -0
+
+  BitKeeper/triggers/pre-apply.paranoid
+    1.1 01/10/06 03:34:36 stenn@whimsy.udel.edu +80 -0
+
+  BitKeeper/triggers/post-incoming.2mirrors
+    1.1 01/10/06 03:34:36 stenn@whimsy.udel.edu +40 -0
+
+  BitKeeper/triggers/00-list
+    1.1 01/10/06 03:34:35 stenn@whimsy.udel.edu +8 -0
+
+  BitKeeper/triggers/2mirrors
+    1.1 01/10/06 03:34:35 stenn@whimsy.udel.edu +40 -0
+
+  BitKeeper/triggers/changelog
+    1.0 01/10/06 03:34:36 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/changelog
+
+  BitKeeper/triggers/post-commit.changelog
+    1.0 01/10/06 03:34:36 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/post-commit.changelog
+
+  BitKeeper/triggers/post-incoming.2mirrors
+    1.0 01/10/06 03:34:36 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/post-incoming.2mirrors
+
+  BitKeeper/triggers/pre-apply.paranoid
+    1.0 01/10/06 03:34:36 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/pre-apply.paranoid
+
+  BitKeeper/triggers/notify
+    1.0 01/10/06 03:34:36 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/notify
+
+  BitKeeper/triggers/00-list
+    1.0 01/10/06 03:34:35 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/00-list
+
+  BitKeeper/etc/ignore
+    1.6 01/10/06 03:34:35 stenn@whimsy.udel.edu +25 -5
+    Recover the changes to the ignore file.
+
+  BitKeeper/triggers/2mirrors
+    1.0 01/10/06 03:34:35 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/triggers/2mirrors
+
+ChangeSet@1.710, 2001-10-06 03:09:54-04:00, stenn@whimsy.udel.edu
+  Merge maccarony://home/bk/ntp-stable-hosed
+  into whimsy.udel.edu:/backroom/ntp-stable
+
+  configure.in
+    1.223 01/10/06 03:09:53 stenn@whimsy.udel.edu +0 -0
+    Auto merged
+
+  acconfig.h
+    1.25 01/10/06 03:09:52 stenn@whimsy.udel.edu +0 -0
+    Auto merged
+
+  README.bk
+    1.9 01/10/06 03:09:52 stenn@whimsy.udel.edu +0 -8
+    Auto merged
+
+ChangeSet@1.702.1.1, 2001-10-06 02:03:04-04:00, stenn@whimsy.udel.edu
+  README.bk improvements.
+  JJY driver patch.
+
+  ntpd/refclock_jjy.c
+    1.1 01/10/06 02:02:57 stenn@whimsy.udel.edu +713 -0
+
+  libntp/clocktypes.c
+    1.8 01/10/06 02:02:57 stenn@whimsy.udel.edu +2 -0
+    Re-import the JJY driver patch.
+
+  ntpd/Makefile.am
+    1.19 01/10/06 02:02:57 stenn@whimsy.udel.edu +1 -1
+    Re-import the JJY driver patch.
+
+  ntpd/ntp_control.c
+    1.38 01/10/06 02:02:57 stenn@whimsy.udel.edu +1 -0
+    Re-import the JJY driver patch.
+
+  ntpd/refclock_conf.c
+    1.14 01/10/06 02:02:57 stenn@whimsy.udel.edu +8 -1
+    Re-import the JJY driver patch.
+
+  ntpd/refclock_jjy.c
+    1.0 01/10/06 02:02:57 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable-hms/ntpd/refclock_jjy.c
+
+  acconfig.h
+    1.23.1.1 01/10/06 02:02:56 stenn@whimsy.udel.edu +3 -0
+    Re-import the JJY driver patch.
+
+  configure.in
+    1.221.1.1 01/10/06 02:02:56 stenn@whimsy.udel.edu +9 -1
+    Re-import the JJY driver patch.
+
+  html/refclock.htm
+    1.14 01/10/06 02:02:56 stenn@whimsy.udel.edu +8 -4
+    Re-import the JJY driver patch.
+
+  include/ntp.h
+    1.48 01/10/06 02:02:56 stenn@whimsy.udel.edu +2 -1
+    Re-import the JJY driver patch.
+
+  README.bk
+    1.5.1.1 01/10/06 02:02:56 stenn@whimsy.udel.edu +22 -7
+    Resync with latest copy, add new info about getting bitkeeper
+    and using HTTP as the transport protocol.
+
+ChangeSet@1.709, 2001-09-20 04:54:45-04:00, stenn@whimsy.udel.edu
+  Clean up a small portability nit from the MPE port.
+
+  util/ntp-genkeys.c
+    1.58 01/09/20 04:54:45 stenn@whimsy.udel.edu +4 -0
+    There are a number of platforms that don't use GETTIMEOFDAY;
+    deal with it here, where we need it.
+
+ChangeSet@1.708, 2001-09-20 02:15:15-04:00, stenn@whimsy.udel.edu
+  HP MPE/iX patch
+  From: "BIXBY,MARK (HP-Cupertino,ex1)" <mark_bixby@hp.com>
+
+  html/hints/mpeix
+    1.1 01/09/20 02:15:14 stenn@whimsy.udel.edu +50 -0
+
+  util/ntp-genkeys.c
+    1.57 01/09/20 02:15:14 stenn@whimsy.udel.edu +8 -5
+    #include cleanup.
+    Use the GETTIMEOFDAY macro instead of making the call directly.
+    Ditto for SRANDOM() and RANDOM().
+
+  html/hints/mpeix
+    1.0 01/09/20 02:15:14 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/html/hints/mpeix
+
+  ntptrace/ntptrace.c
+    1.14 01/09/20 02:15:14 stenn@whimsy.udel.edu +8 -2
+    #include guarding
+
+  ntpdate/ntptimeset.c
+    1.10 01/09/20 02:15:14 stenn@whimsy.udel.edu +6 -1
+    #include cleanup and guarding
+
+  ntpdate/ntpdate.c
+    1.24 01/09/20 02:15:14 stenn@whimsy.udel.edu +6 -1
+    #include guarding
+
+  ntpd/ntp_io.c
+    1.21 01/09/20 02:15:13 stenn@whimsy.udel.edu +8 -4
+    #include guarding
+    Clean up the default local loopback test
+
+  ntpd/ntp_proto.c
+    1.94 01/09/20 02:15:13 stenn@whimsy.udel.edu +2 -1
+    MPE does not use a struct timezone tzp.
+
+  ntpd/ntp_resolver.c
+    1.12 01/09/20 02:15:13 stenn@whimsy.udel.edu +1 -0
+    #include cleanup
+
+  ntpd/ntp_timer.c
+    1.16 01/09/20 02:15:13 stenn@whimsy.udel.edu +3 -1
+    #include guarding
+
+  ntpd/ntpd.c
+    1.34 01/09/20 02:15:13 stenn@whimsy.udel.edu +10 -3
+    #include guarding
+    MPE doesn't have the concept of "root".
+
+  libntp/strdup.c
+    1.3 01/09/20 02:15:12 stenn@whimsy.udel.edu +3 -1
+    MPE header cleanup
+
+  ntpd/ntp_config.c
+    1.51 01/09/20 02:15:12 stenn@whimsy.udel.edu +2 -0
+    header #include cleanup/guarding
+
+  acconfig.h
+    1.24 01/09/20 02:15:12 stenn@whimsy.udel.edu +3 -0
+    Added DECL_INET_NTOA_0
+
+  libntp/machines.c
+    1.10 01/09/20 02:15:12 stenn@whimsy.udel.edu +285 -1
+    MPE portability stuff - wrappers for bind(), fcntl(), setitimer(),
+    gettimeofday(), and settimeofday().
+
+  libntp/adjtime.c
+    1.2 01/09/20 02:15:12 stenn@whimsy.udel.edu +97 -0
+    adjtime() implementation for MPE/iX
+
+  include/ntp_machine.h
+    1.8 01/09/20 02:15:12 stenn@whimsy.udel.edu +42 -0
+    MPE portability stuff
+
+  configure.in
+    1.222 01/09/20 02:15:12 stenn@whimsy.udel.edu +56 -6
+    Various portability and MPE/iX porting patches.
+
+  ntpd/ntp_intres.c
+    1.18 01/09/20 02:15:12 stenn@whimsy.udel.edu +1 -0
+    #include cleanup
+
+ChangeSet@1.707, 2001-09-19 20:27:23-04:00, stenn@whimsy.udel.edu
+  README.bk improvements
+
+  README.bk
+    1.8 01/09/19 20:27:22 stenn@whimsy.udel.edu +2 -1
+    Mention that warnings from autorefonc are expected.
+
+ChangeSet@1.706, 2001-09-19 01:40:46-04:00, stenn@whimsy.udel.edu
+  Makefile.am cruft cleanup.
+
+  Makefile.am
+    1.14 01/09/19 01:40:46 stenn@whimsy.udel.edu +16 -13
+    More cruft cleanup.
+
+ChangeSet@1.705, 2001-09-19 01:26:24-04:00, stenn@whimsy.udel.edu
+  Fix a typo.
+
+  README.bk
+    1.7 01/09/19 01:26:24 stenn@whimsy.udel.edu +1 -1
+    Typo.
+
+ChangeSet@1.704, 2001-09-19 00:21:06-04:00, stenn@whimsy.udel.edu
+  README.bk improvements
+
+  README.bk
+    1.6 01/09/19 00:21:06 stenn@whimsy.udel.edu +5 -4
+    Clean it up even more.
+
+ChangeSet@1.703, 2001-09-18 03:20:33-04:00, stenn@whimsy.udel.edu
+  Makefile.am cleanup
+
+  Makefile.am
+    1.13 01/09/18 03:20:33 stenn@whimsy.udel.edu +3 -3
+    Add README.bk to the distribution list.
+    Do the .warning message as a BUILT_SOURCES entry, not as a dependency to Makefile.
+
+ChangeSet@1.702, 2001-09-16 00:25:29-04:00, stenn@whimsy.udel.edu
+  autoreconf updates
+
+  README.bk
+    1.5 01/09/16 00:25:28 stenn@whimsy.udel.edu +1 -1
+    autoreconf updates
+
+ChangeSet@1.701, 2001-09-16 00:14:53-04:00, stenn@whimsy.udel.edu
+  Make the *.ds[pw] files be EOLN_NATIVE.
+
+  ports/winnt/instsrv/Instsrv.dsp
+    1.4 01/09/16 00:07:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/libntp/libntp.dsp
+    1.6 01/09/16 00:07:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpd/ntpd.dsp
+    1.11 01/09/16 00:07:14 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntp.dsw
+    1.5 01/09/16 00:07:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpdate/ntpdate.dsp
+    1.6 01/09/16 00:07:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpdc/ntpdc.dsp
+    1.6 01/09/16 00:07:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntpq/ntpq.dsp
+    1.6 01/09/16 00:07:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+  ports/winnt/ntptrace/ntptrace.dsp
+    1.6 01/09/16 00:07:13 stenn@whimsy.udel.edu +0 -0
+    Turn on EOLN_NATIVE flag
+
+ChangeSet@1.700, 2001-09-15 03:16:54-04:00, stenn@whimsy.udel.edu
+  ntp-dev-ipv6 update to README.bk
+
+  README.bk
+    1.4 01/09/15 03:16:54 stenn@whimsy.udel.edu +9 -0
+    Talk about the new ntp-dev-ipv6 repo.
+
+ChangeSet@1.699, 2001-09-13 01:42:48-04:00, stenn@whimsy.udel.edu
+  Ignore some auto* related files.
+
+  BitKeeper/etc/ignore
+    1.5 01/09/13 01:38:23 stenn@whimsy.udel.edu +2 -0
+    added config.h.in stamp-h.in
+
+ChangeSet@1.698, 2001-09-11 21:41:11-04:00, stenn@whimsy.udel.edu
+  Remove more auto* generated/related files.
+
+  BitKeeper/deleted/.del-config.h.in~3aed0663
+    1.63 01/09/11 21:33:41 stenn@whimsy.udel.edu +0 -0
+    Delete: config.h.in
+
+  BitKeeper/deleted/.del-stamp-h.in~3aed0663
+    1.4 01/09/11 21:33:41 stenn@whimsy.udel.edu +0 -0
+    Delete: stamp-h.in
+
+ChangeSet@1.697, 2001-09-08 20:23:01-04:00, stenn@whimsy.udel.edu
+  Document the mirrors at www.ntp.org.
+
+  README.bk
+    1.3 01/09/08 20:23:01 stenn@whimsy.udel.edu +14 -1
+    Document the mirrors at www.ntp.org.
+
+ChangeSet@1.696, 2001-09-08 19:39:22-04:00, stenn@whimsy.udel.edu
+  Doc updates.
+
+  README.bk
+    1.2 01/09/08 19:39:21 stenn@whimsy.udel.edu +12 -2
+    Say what versions of the auto* tools we need.
+    Say where to find bk and the ntp repos.
+
+ChangeSet@1.695, 2001-09-06 04:09:32-04:00, stenn@whimsy.udel.edu
+  From: David Campbell <dcampbell@uk.ibm.com>
+  Subject: [ntp:bugs] Compiling ntp on Dynix PTX (CFLAGS patch)
+
+  configure.in
+    1.221 01/09/06 04:09:31 stenn@whimsy.udel.edu +2 -2
+    From: David Campbell <dcampbell@uk.ibm.com>
+    Subject: [ntp:bugs] Compiling ntp on Dynix PTX (CFLAGS patch)
+
+ChangeSet@1.694, 2001-09-06 03:36:29-04:00, stenn@whimsy.udel.edu
+  Ignore ~ backup files.
+
+  BitKeeper/etc/ignore
+    1.4 01/09/06 03:36:28 stenn@whimsy.udel.edu +1 -0
+    Ignore ~ backup files.
+
+ChangeSet@1.693, 2001-09-06 03:26:08-04:00, stenn@whimsy.udel.edu
+  From: Hubert Feyrer <hubert@feyrer.de> 
+  Subject: [ntp:bugs] "-u" missing from ntpdate usage statement
+
+  ntpdate/ntpdate.c
+    1.23 01/09/06 03:26:07 stenn@whimsy.udel.edu +1 -1
+    From: Hubert Feyrer <hubert@feyrer.de> 
+    Subject: [ntp:bugs] "-u" missing from ntpdate usage statement 
+
+ChangeSet@1.692, 2001-09-06 02:28:37-04:00, stenn@whimsy.udel.edu
+  Try the new EDIT checkout mode - it's supposed to fix the timestamp problem.
+
+  BitKeeper/etc/config
+    1.3 01/09/06 02:28:36 stenn@whimsy.udel.edu +1 -1
+    Use checkout:EDIT instead of checkout:edit.
+
+ChangeSet@1.691, 2001-08-27 03:49:01-04:00, stenn@whimsy.udel.edu
+  Finish up cleanup from losing generated files.
+  Bump verison number.
+
+  BitKeeper/etc/ignore
+    1.3 01/08/27 03:49:01 stenn@whimsy.udel.edu +22 -0
+    Added COPYRIGHT ElectricFence/Makefile.in Makefile.in aclocal.m4 adjtimed/Makefile.in am.log clockstuff/Makefile.in configure include/Makefile.in kernel/Makefile.in kernel/sys/Makefile.in libntp/Makefile.in libparse/Makefile.in librsaref/Makefile.in ntpd/Makefile.in ntpdate/Makefile.in ntpdc/Makefile.in ntpq/Makefile.in ntptrace/Makefile.in parseutil/Makefile.in scripts/Makefile.in util/Makefile.in to the ignore list
+
+  README.bk
+    1.1 01/08/27 03:49:00 stenn@whimsy.udel.edu +15 -0
+
+  config.h.in
+    1.62 01/08/27 03:49:00 stenn@whimsy.udel.edu +3 -0
+    HAVE_STDINT_H check.
+
+  README.bk
+    1.0 01/08/27 03:49:00 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/README.bk
+
+  clockstuff/Makefile.am
+    1.2 01/08/27 03:49:00 stenn@whimsy.udel.edu +2 -2
+    Portability improvements found by automake 1.5
+
+  configure.in
+    1.220 01/08/27 03:49:00 stenn@whimsy.udel.edu +1 -1
+    Call this  version '0a1.
+
+ChangeSet@1.690, 2001-08-27 03:30:52-04:00, stenn@whimsy.udel.edu
+  .del-aclocal.m4~3aed0663:
+    Delete: aclocal.m4
+  .del-Makefile.in~52231e38:
+    Delete: ElectricFence/Makefile.in
+  .del-Makefile.in~bd702e17:
+    Delete: scripts/Makefile.in
+  .del-Makefile.in~3aed0663~12:
+    Delete: parseutil/Makefile.in
+  .del-Makefile.in~3aed0663~13:
+    Delete: util/Makefile.in
+  .del-Makefile.in~3aed0663~14:
+    Delete: Makefile.in
+  .del-Makefile.in~3aed0663~10:
+    Delete: ntpq/Makefile.in
+  .del-Makefile.in~3aed0663~11:
+    Delete: ntptrace/Makefile.in
+  .del-Makefile.in~3aed0663~6:
+    Delete: libparse/Makefile.in
+  .del-Makefile.in~3aed0663~7:
+    Delete: ntpd/Makefile.in
+  .del-Makefile.in~3aed0663~8:
+    Delete: ntpdate/Makefile.in
+  .del-Makefile.in~3aed0663~9:
+    Delete: ntpdc/Makefile.in
+  .del-Makefile.in~3aed0663:
+    Delete: adjtimed/Makefile.in
+  .del-Makefile.in~3aed0663~1:
+    Delete: clockstuff/Makefile.in
+  .del-Makefile.in~3aed0663~4:
+    Delete: kernel/Makefile.in
+  .del-Makefile.in~3aed0663~5:
+    Delete: libntp/Makefile.in
+  .del-Makefile.in~3aed0663~2:
+    Delete: include/Makefile.in
+  .del-Makefile.in~3aed0663~3:
+    Delete: kernel/sys/Makefile.in
+  .del-Makefile.in~e832209e:
+    Delete: librsaref/Makefile.in
+  .del-COPYRIGHT~3aed0663:
+    Delete: COPYRIGHT
+  .del-configure~3aed0663:
+    Delete: configure
+
+  BitKeeper/deleted/.del-aclocal.m4~3aed0663
+    1.88 01/08/27 02:37:31 stenn@whimsy.udel.edu +217 -160
+    Delete: aclocal.m4
+
+  BitKeeper/deleted/.del-Makefile.in~52231e38
+    1.18 01/08/27 02:35:20 stenn@whimsy.udel.edu +89 -97
+    Delete: ElectricFence/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~bd702e17
+    1.27 01/08/27 02:35:20 stenn@whimsy.udel.edu +30 -39
+    Delete: scripts/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~12
+    1.23 01/08/27 02:35:20 stenn@whimsy.udel.edu +76 -88
+    Delete: parseutil/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~13
+    1.27 01/08/27 02:35:20 stenn@whimsy.udel.edu +150 -169
+    Delete: util/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~14
+    1.43 01/08/27 02:35:20 stenn@whimsy.udel.edu +62 -63
+    Delete: Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~11
+    1.22 01/08/27 02:35:19 stenn@whimsy.udel.edu +76 -87
+    Delete: ntptrace/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~10
+    1.27 01/08/27 02:35:19 stenn@whimsy.udel.edu +78 -89
+    Delete: ntpq/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~6
+    1.27 01/08/27 02:35:19 stenn@whimsy.udel.edu +148 -152
+    Delete: libparse/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~7
+    1.30 01/08/27 02:35:19 stenn@whimsy.udel.edu +273 -260
+    Delete: ntpd/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~8
+    1.31 01/08/27 02:35:19 stenn@whimsy.udel.edu +86 -97
+    Delete: ntpdate/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~9
+    1.27 01/08/27 02:35:19 stenn@whimsy.udel.edu +78 -89
+    Delete: ntpdc/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~1
+    1.22 01/08/27 02:35:18 stenn@whimsy.udel.edu +78 -89
+    Delete: clockstuff/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663
+    1.22 01/08/27 02:35:18 stenn@whimsy.udel.edu +76 -87
+    Delete: adjtimed/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~4
+    1.22 01/08/27 02:35:18 stenn@whimsy.udel.edu +43 -47
+    Delete: kernel/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~5
+    1.31 01/08/27 02:35:18 stenn@whimsy.udel.edu +282 -286
+    Delete: libntp/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~2
+    1.34 01/08/27 02:35:18 stenn@whimsy.udel.edu +35 -42
+    Delete: include/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~3aed0663~3
+    1.21 01/08/27 02:35:18 stenn@whimsy.udel.edu +34 -41
+    Delete: kernel/sys/Makefile.in
+
+  BitKeeper/deleted/.del-Makefile.in~e832209e
+    1.33 01/08/27 02:35:18 stenn@whimsy.udel.edu +89 -95
+    Delete: librsaref/Makefile.in
+
+  BitKeeper/deleted/.del-COPYRIGHT~3aed0663
+    1.22 01/08/27 02:35:16 stenn@whimsy.udel.edu +0 -0
+    Delete: COPYRIGHT
+
+  BitKeeper/deleted/.del-configure~3aed0663
+    1.225 01/08/27 02:35:16 stenn@whimsy.udel.edu +1959 -2108
+    Delete: configure
+
+ChangeSet@1.689, 2001-08-26 04:41:45-04:00, stenn@whimsy.udel.edu
+  Readline support,
+  From: Ollivier Robert <roberto@eurocontrol.fr>
+
+  ntpq/ntpq.c
+    1.16 01/08/26 03:06:34 stenn@whimsy.udel.edu +30 -14
+    Readline support.
+
+ChangeSet@1.688, 2001-08-23 03:56:20-04:00, stenn@whimsy.udel.edu
+  Ignore A.* directories.
+
+  BitKeeper/etc/ignore
+    1.2 01/08/23 02:35:50 stenn@whimsy.udel.edu +1 -0
+    added A.*
+
+ChangeSet@1.687, 2001-08-23 03:46:22-04:00, stenn@whimsy.udel.edu
+  Don't include SCCS subdirs in a distribution.
+
+  COPYRIGHT
+    1.21 01/08/23 03:46:21 stenn@whimsy.udel.edu +1 -1
+    Regenerated file.
+
+  Makefile.in
+    1.42 01/08/23 03:46:21 stenn@whimsy.udel.edu +1 -0
+    Regenerated file.
+
+  aclocal.m4
+    1.87 01/08/23 03:46:21 stenn@whimsy.udel.edu +1 -1
+    Regenerated file.
+
+  Makefile.am
+    1.12 01/08/23 03:46:21 stenn@whimsy.udel.edu +1 -0
+    Clean out SCCS subdirs when making a distribution.
+
+ChangeSet@1.686, 2001-08-16 02:47:35-04:00, stenn@whimsy.udel.edu
+  Add a marker to the NEWS file.
+
+  NEWS
+    1.31 01/08/16 02:47:34 stenn@whimsy.udel.edu +1 -0
+    Add a "marker" to the file so we can easily segregate stable from
+    development changes in the NEWS file.
+
+ChangeSet@1.685, 2001-08-16 02:28:43-04:00, stenn@whimsy.udel.edu
+  Final ntp-4.1.0 changes to the NEWS file.
+
+  NEWS
+    1.30 01/08/16 02:28:43 stenn@whimsy.udel.edu +2 -0
+    Add the final missing bits to the NEWS file for the 4.1.0 release. 
+
+ChangeSet@1.684, 2001-08-16 01:05:37-04:00, stenn@whimsy.udel.edu
+  Enable auto-checkout.
+
+  BitKeeper/etc/logging_ok
+    1.1 01/08/16 01:05:33 stenn@whimsy.udel.edu +1 -0
+
+  BitKeeper/etc/logging_ok
+    1.0 01/08/16 01:05:33 stenn@whimsy.udel.edu +0 -0
+    BitKeeper file /backroom/ntp-stable/BitKeeper/etc/logging_ok
+
+  BitKeeper/etc/config
+    1.2 01/08/16 01:05:21 stenn@whimsy.udel.edu +2 -0
+    Dave and I want auto-checkout.
+
+ChangeSet@1.683, 2001-08-01 23:01:12-00:00, stenn@whimsy.udel.edu
+  aclocal.m4, ChangeLog, configure, configure.in:
+    * configure.in: 4.1.0
+  TAG: NTP_4_1_0
+
+  configure.in
+    1.219 01/08/01 23:01:12 stenn@whimsy.udel.edu +1 -1
+    * configure.in: 4.1.0
+
+  configure
+    1.224 01/08/01 23:01:10 stenn@whimsy.udel.edu +1 -1
+    * configure.in: 4.1.0
+
+  ChangeLog
+    1.584 01/08/01 23:01:10 stenn@whimsy.udel.edu +4 -0
+    * configure.in: 4.1.0
+
+  aclocal.m4
+    1.86 01/08/01 23:01:10 stenn@whimsy.udel.edu +0 -0
+    * configure.in: 4.1.0
+

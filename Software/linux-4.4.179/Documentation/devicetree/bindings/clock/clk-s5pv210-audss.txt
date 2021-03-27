@@ -1,0 +1,64 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef _ALPHA_ATOMIC_H
+#define _ALPHA_ATOMIC_H
+
+#include <linux/types.h>
+#include <asm/barrier.h>
+#include <asm/cmpxchg.h>
+
+/*
+ * Atomic operations that C can't guarantee us.  Useful for
+ * resource counting etc...
+ *
+ * But use these as seldom as possible since they are much slower
+ * than regular operations.
+ */
+
+/*
+ * To ensure dependency ordering is preserved for the _relaxed and
+ * _release atomics, an smp_read_barrier_depends() is unconditionally
+ * inserted into the _relaxed variants, which are used to build the
+ * barriered versions. Avoid redundant back-to-back fences in the
+ * _acquire and _fence versions.
+ */
+#define __atomic_acquire_fence()
+#define __atomic_post_full_fence()
+
+#define ATOMIC_INIT(i)		{ (i) }
+#define ATOMIC64_INIT(i)	{ (i) }
+
+#define atomic_read(v)		READ_ONCE((v)->counter)
+#define atomic64_read(v)	READ_ONCE((v)->counter)
+
+#define atomic_set(v,i)		WRITE_ONCE((v)->counter, (i))
+#define atomic64_set(v,i)	WRITE_ONCE((v)->counter, (i))
+
+/*
+ * To get proper branch prediction for the main line, we must branch
+ * forward to code at the end of this object's .text section, then
+ * branch back to restart the operation.
+ */
+
+#define ATOMIC_OP(op, asm_op)						\
+static __inline__ void atomic_##op(int i, atomic_t * v)			\
+{									\
+	unsigned long temp;						\
+	__asm__ __volatile__(						\
+	"1:	ldl_l %0,%1\n"						\
+	"	" #asm_op " %0,%2,%0\n"					\
+	"	stl_c %0,%1\n"						\
+	"	beq %0,2f\n"						\
+	".subsection 2\n"						\
+	"2:	br 1b\n"						\
+	".previous"							\
+	:"=&r" (temp), "=m" (v->counter)				\
+	:"Ir" (i), "m" (v->counter));					\
+}									\
+
+#define ATOMIC_OP_RETURN(op, asm_op)					\
+static inline int atomic_##op##_return_relaxed(int i, atomic_t *v)	\
+{									\
+	long temp, result;						\
+	__asm__ __volatile__(						\
+	"1:	ldl_l %0,%1\n"						\
+	"	" #asm_op " %0,%3,%2\

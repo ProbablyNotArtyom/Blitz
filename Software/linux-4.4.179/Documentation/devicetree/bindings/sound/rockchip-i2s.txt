@@ -1,0 +1,64 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (c) 2018 Martin Blumenstingl <martin.blumenstingl@googlemail.com>.
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+#include "meson8b.dtsi"
+
+/ {
+	model = "Endless Computers Endless Mini";
+	compatible = "endless,ec100", "amlogic,meson8b";
+
+	aliases {
+		serial0 = &uart_AO;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory {
+		reg = <0x40000000 0x40000000>;
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys-polled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		poll-interval = <100>;
+
+		pal-switch {
+			label = "pal";
+			linux,input-type = <EV_SW>;
+			linux,code = <KEY_SWITCHVIDEOMODE>;
+			gpios = <&gpio GPIOH_7 GPIO_ACTIVE_LOW>;
+		};
+
+		ntsc-switch {
+			label = "ntsc";
+			linux,input-type = <EV_SW>;
+			linux,code = <KEY_SWITCHVIDEOMODE>;
+			gpios = <&gpio GPIOH_8 GPIO_ACTIVE_HIGH>;
+		};
+
+		power-button {
+			label = "power";
+			linux,code = <KEY_POWER>;
+			gpios = <&gpio GPIOH_9 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	gpio-poweroff {
+		compatible = "gpio-poweroff";
+		/*
+		 * shutdown is managed by the EC (embedded micro-controller)
+		 * which is configured through GPIOAO_2 (poweroff GPIO) and
+		 * GPIOAO_7 (power LED, which has to go LOW as well).
+		 */
+		gpios = <&gpio_ao GPIOAO_2 GPIO_ACTIVE_LOW>;
+		timeo

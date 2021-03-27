@@ -1,0 +1,41 @@
+/*
+ * Common CPCAP configuration used on Motorola phones
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&mcspi1 {
+	cpcap: pmic@0 {
+		compatible = "motorola,cpcap", "st,6556002";
+		reg = <0>;	/* cs0 */
+		interrupt-parent = <&gpio1>;
+		interrupts = <7 IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+		spi-max-frequency = <3000000>;
+		spi-cs-high;
+
+		cpcap_adc: adc {
+			compatible = "motorola,mapphone-cpcap-adc";
+			interrupts-extended = <&cpcap 8 0>;
+			interrupt-names = "adcdone";
+			#io-channel-cells = <1>;
+		};
+
+		cpcap_battery: battery {
+			compatible = "motorola,cpcap-battery";
+			interrupts-extended = <
+				&cpcap 6 0 &cpcap 5 0 &cpcap 3 0
+				&cpcap 20 0 &cpcap 54 0
+			>;
+			interrupt-names =
+				"eol", "lowbph", "lowbpl",
+				"chrgcurr1", "battdetb";
+			io-channels = <&cpcap_adc 0 &cpcap_adc 1
+				       &cpcap_adc 5 &cpcap_adc 6>;
+			io-channel-names = "battdetb", "battp",
+					   "chg_i

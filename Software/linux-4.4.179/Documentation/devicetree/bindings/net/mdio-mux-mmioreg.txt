@@ -1,0 +1,82 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Samsung's Exynos4 SoC series common device tree source
+ *
+ * Copyright (c) 2010-2011 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ * Copyright (c) 2010-2011 Linaro Ltd.
+ *		www.linaro.org
+ *
+ * Samsung's Exynos4 SoC series device nodes are listed in this file.  Particular
+ * SoCs from Exynos4 series can include this file and provide values for SoCs
+ * specfic bindings.
+ *
+ * Note: This file does not include device nodes for all the controllers in
+ * Exynos4 SoCs. As device tree coverage for Exynos4 increases, additional
+ * nodes can be added to this file.
+ */
+
+#include <dt-bindings/clock/exynos4.h>
+#include <dt-bindings/clock/exynos-audss-clk.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	interrupt-parent = <&gic>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	aliases {
+		spi0 = &spi_0;
+		spi1 = &spi_1;
+		spi2 = &spi_2;
+		i2c0 = &i2c_0;
+		i2c1 = &i2c_1;
+		i2c2 = &i2c_2;
+		i2c3 = &i2c_3;
+		i2c4 = &i2c_4;
+		i2c5 = &i2c_5;
+		i2c6 = &i2c_6;
+		i2c7 = &i2c_7;
+		i2c8 = &i2c_8;
+		csis0 = &csis_0;
+		csis1 = &csis_1;
+		fimc0 = &fimc_0;
+		fimc1 = &fimc_1;
+		fimc2 = &fimc_2;
+		fimc3 = &fimc_3;
+		serial0 = &serial_0;
+		serial1 = &serial_1;
+		serial2 = &serial_2;
+		serial3 = &serial_3;
+	};
+
+	soc: soc {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		clock_audss: clock-controller@3810000 {
+			compatible = "samsung,exynos4210-audss-clock";
+			reg = <0x03810000 0x0C>;
+			#clock-cells = <1>;
+			clocks = <&clock CLK_FIN_PLL>, <&clock CLK_FOUT_EPLL>,
+				 <&clock CLK_SCLK_AUDIO0>,
+				 <&clock CLK_SCLK_AUDIO0>;
+			clock-names = "pll_ref", "pll_in", "sclk_audio",
+				      "sclk_pcm_in";
+		};
+
+		i2s0: i2s@3830000 {
+			compatible = "samsung,s5pv210-i2s";
+			reg = <0x03830000 0x100>;
+			clocks = <&clock_audss EXYNOS_I2S_BUS>,
+				 <&clock_audss EXYNOS_DOUT_AUD_BUS>,
+				 <&clock_audss EXYNOS_SCLK_I2S>;
+			clock-names = "iis", "i2s_opclk0", "i2s_opclk1";
+			#clock-cells = <1>;
+			clock-output-names = "i2s_cdclk0";
+			dmas = <&pdma0 12>, <&pdma0 11>, <&pdma0 10>;
+			dma-names = "tx", "rx", "tx-sec";
+			samsung,idma-addr 

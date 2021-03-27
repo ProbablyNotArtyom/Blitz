@@ -1,0 +1,94 @@
+Introduction
+============
+
+    The IBM Power architecture provides support for CAPI (Coherent
+    Accelerator Power Interface), which is available to certain PCIe slots
+    on Power 8 systems. CAPI can be thought of as a special tunneling
+    protocol through PCIe that allow PCIe adapters to look like special
+    purpose co-processors which can read or write an application's
+    memory and generate page faults. As a result, the host interface to
+    an adapter running in CAPI mode does not require the data buffers to
+    be mapped to the device's memory (IOMMU bypass) nor does it require
+    memory to be pinned.
+
+    On Linux, Coherent Accelerator (CXL) kernel services present CAPI
+    devices as a PCI device by implementing a virtual PCI host bridge.
+    This abstraction simplifies the infrastructure and programming
+    model, allowing for drivers to look similar to other native PCI
+    device drivers.
+
+    CXL provides a mechanism by which user space applications can
+    directly talk to a device (network or storage) bypassing the typical
+    kernel/device driver stack. The CXL Flash Adapter Driver enables a
+    user space application direct access to Flash storage.
+
+    The CXL Flash Adapter Driver is a kernel module that sits in the
+    SCSI stack as a low level device driver (below the SCSI disk and
+    protocol drivers) for the IBM CXL Flash Adapter. This driver is
+    responsible for the initialization of the adapter, setting up the
+    special path for user space access, and performing error recovery. It
+    communicates directly the Flash Accelerator Functional Unit (AFU)
+    as described in Documentation/powerpc/cxl.txt.
+
+    The cxlflash driver supports two, mutually exclusive, modes of
+    operation at the device (LUN) level:
+
+        - Any flash device (LUN) can be configured to be accessed as a
+          regular disk device (i.e.: /dev/sdc). This is the default mode.
+
+        - Any flash device (LUN) can be configured to be accessed from
+          user space with a special block library. This mode further
+          specifies the means of accessing the device and provides for
+          either raw access to the entire LUN (referred to as direct
+          or physical LUN access) or access to a kernel/AFU-mediated
+          partition of the LUN (referred to as virtual LUN access). The
+          segmentation of a disk device into virtual LUNs is assisted
+          by special translation services provided by the Flash AFU.
+
+Overview
+========
+
+    The Coherent Accelerator Interface Architecture (CAIA) introduces a
+    concept of a master context. A master typically has special privileges
+    granted to it by the kernel or hypervisor allowing it to perform AFU
+    wide management and control. The master may or may not be involved
+    directly in each user I/O, but at the minimum is involved in the
+    initial setup before the user application is allowed to send requests
+    directly to the AFU.
+
+    The CXL Flash Adapter Driver establishes a master context with the
+    AFU. It uses memory mapped I/O (MMIO) for this control and setup. The
+    Adapter Problem Space Memory Map looks like this:
+
+                     +-------------------------------+
+                     |    512 * 64 KB User MMIO      |
+                     |        (per context)          |
+                     |       User Accessible         |
+                     +-------------------------------+
+                     |    512 * 128 B per context    |
+                     |    Provisioning and Control   |
+                     |   Trusted Process accessible  |
+                     +-------------------------------+
+                     |         64 KB Global          |
+                     |   Trusted Process accessible  |
+                     +-------------------------------+
+
+    This driver configures itself into the SCSI software stack as an
+    adapter driver. The driver is the only entity that is considered a
+    Trusted Process to program the Provisioning and Control and Global
+    areas in the MMIO Space shown above.  The master context driver
+    discovers all LUNs attached to the CXL Flash adapter and instantiates
+    scsi block devices (/dev/sdb, /dev/sdc etc.) for each unique LUN
+    seen from each path.
+
+    Once these scsi block devices are instantiated, an application
+    written to a specification provided by the block library may get
+    access to the Flash from user space (without requiring a system call).
+
+    This master context driver also provides a series of ioctls for this
+    block library to enable this user space access.  The driver supports
+    two modes for accessing the block device.
+
+    The first mode is called a virtual mode. In this mode a single scsi
+    block device (/dev/sdb) may be carved up into any number of distinct
+    virtual LUNs. The v

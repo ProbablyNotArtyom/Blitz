@@ -1,0 +1,18 @@
+Virtual TPM interface for Xen
+
+Authors: Matthew Fioravante (JHUAPL), Daniel De Graaf (NSA)
+
+This document describes the virtual Trusted Platform Module (vTPM) subsystem for
+Xen. The reader is assumed to have familiarity with building and installing Xen,
+Linux, and a basic understanding of the TPM and vTPM concepts.
+
+INTRODUCTION
+
+The goal of this work is to provide a TPM functionality to a virtual guest
+operating system (in Xen terms, a DomU).  This allows programs to interact with
+a TPM in a virtual system the same way they interact with a TPM on the physical
+system.  Each guest gets its own unique, emulated, software TPM.  However, each
+of the vTPM's secrets (Keys, NVRAM, etc) are managed by a vTPM Manager domain,
+which seals the secrets to the Physical TPM.  If the process of creating each of
+these domains (manager, vTPM, and guest) is trusted, the vTPM subsystem extends
+the chain of trust rooted in the hardware TP

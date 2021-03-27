@@ -1,0 +1,49 @@
+/**
+ * @file arch/alpha/oprofile/op_model_ev5.c
+ *
+ * @remark Copyright 2002 OProfile authors
+ * @remark Read the file COPYING
+ *
+ * @author Richard Henderson <rth@twiddle.net>
+ */
+
+#include <linux/oprofile.h>
+#include <linux/smp.h>
+#include <asm/ptrace.h>
+
+#include "op_impl.h"
+
+
+/* Compute all of the registers in preparation for enabling profiling.
+
+   The 21164 (EV5) and 21164PC (PCA65) vary in the bit placement and
+   meaning of the "CBOX" events.  Given that we don't care about meaning
+   at this point, arrange for the difference in bit placement to be
+   handled by common code.  */
+
+static void
+common_reg_setup(struct op_register_config *reg,
+		 struct op_counter_config *ctr,
+		 struct op_system_config *sys,
+		 int cbox1_ofs, int cbox2_ofs)
+{
+	int i, ctl, reset, need_reset;
+
+	/* Select desired events.  The event numbers are selected such
+	   that they map directly into the event selection fields:
+
+		PCSEL0:	0, 1
+		PCSEL1:	24-39
+		 CBOX1: 40-47
+		PCSEL2: 48-63
+		 CBOX2: 64-71
+
+	   There are two special cases, in that CYCLES can be measured
+	   on PCSEL[02], and SCACHE_WRITE can be measured on CBOX[12].
+	   These event numbers are canonicalizes to their first appearance.  */
+
+	ctl = 0;
+	for (i = 0; i < 3; ++i) {
+		unsigned long event = ctr[i].event;
+		if (!ctr[i].enabled)
+			c

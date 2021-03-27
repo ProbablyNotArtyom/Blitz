@@ -1,0 +1,122 @@
+netlink.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/module.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/major.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/lp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioport.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fcntl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/delay.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/skbuff.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netlink.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h
+netsyms.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/module.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/in.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/trdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fddidevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioport.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/sock.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/inet.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ip.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/etherdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/protocol.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/arp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ip.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/udp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/tcp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/icmp.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/route.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net_alias.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/inet.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/netlink.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netlink.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/net/alias.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net_alias.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ultra.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/wd80x3.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/el2.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ne2000.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/e2100.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/hplan/plus.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/hplan.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ac3200.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ultra32.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ne2k/pci.h) \
+   ../drivers/net/8390.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ipx/module.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/dlci/module.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/symtab_begin.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/tr.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/fddi.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net_alias.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/symtab_end.h
+protocols.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/unix.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/af_unix.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/inet.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/inet.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ipx.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ipx/module.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ipxcall.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/p8022call.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/p8022trcall.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ax25.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/ax25call.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/netrom.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/nrcall.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/rose.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/rosecall.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atalk.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atalk/module.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/p8022call.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/p8022trcall.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/atalkcall.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/psnapcall.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/tr.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/trdevice.h
+socket.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/signal.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/major.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/socket.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fcntl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/file.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/net.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/interrupt.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/netdevice.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/proc_fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/firewall.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/kerneld.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kerneld.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/net/netlink.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/modules.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/net.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/netlink.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/rtnetlink.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/firewall.h)
+sysctl_net.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sysctl.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/inet.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ipx.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atalk.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/net.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/bridge.h)

@@ -1,0 +1,22 @@
+/*
+ * Keyboard dts fragment for devices that use cros-ec-keyboard
+ *
+ * Copyright (c) 2014 Google, Inc
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+*/
+
+#include <dt-bindings/input/input.h>
+
+&cros_ec {
+	keyboard-controller {
+		compatible = "google,cros-ec-keyb";
+		keypad,num-rows = <8>;
+		keypad,num-columns = <13>;
+		google,needs-ghost-filter;
+
+		linux,keymap = <
+			MATRIX_KEY(0x00, 0x01, KEY_LEFTMETA)
+			MATRIX_KEY(0x00, 0x02, KEY_F1

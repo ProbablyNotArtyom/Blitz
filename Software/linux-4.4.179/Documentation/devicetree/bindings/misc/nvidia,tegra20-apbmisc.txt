@@ -1,0 +1,42 @@
+#include <dt-bindings/power/raspberrypi-power.h>
+
+/ {
+	memory {
+		device_type = "memory";
+		reg = <0 0x10000000>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		act {
+			label = "ACT";
+			default-state = "keep";
+			linux,default-trigger = "heartbeat";
+		};
+	};
+
+	soc {
+		firmware: firmware {
+			compatible = "raspberrypi,bcm2835-firmware", "simple-bus";
+			#address-cells = <0>;
+			#size-cells = <0>;
+			mboxes = <&mailbox>;
+		};
+
+		power: power {
+			compatible = "raspberrypi,bcm2835-power";
+			firmware = <&firmware>;
+			#power-domain-cells = <1>;
+		};
+
+		mailbox@7e00b840 {
+			compatible = "brcm,bcm2835-vchiq";
+			reg = <0x7e00b840 0xf>;
+			interrupts = <0 2>;
+		};
+	};
+};
+
+&gpio {
+	pinctrl-name

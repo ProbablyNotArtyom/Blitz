@@ -1,0 +1,42 @@
+/*
+ * at91sam9263ek.dts - Device Tree file for Atmel at91sam9263 reference board
+ *
+ *  Copyright (C) 2012 Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>
+ *
+ * Licensed under GPLv2 only
+ */
+/dts-v1/;
+#include "at91sam9263.dtsi"
+
+/ {
+	model = "Atmel at91sam9263ek";
+	compatible = "atmel,at91sam9263ek", "atmel,at91sam9263", "atmel,at91sam9";
+
+	chosen {
+		bootargs = "mem=64M root=/dev/mtdblock5 rw rootfstype=ubifs";
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory {
+		reg = <0x20000000 0x4000000>;
+	};
+
+	clocks {
+		slow_xtal {
+			clock-frequency = <32768>;
+		};
+
+		main_xtal {
+			clock-frequency = <16367660>;
+		};
+	};
+
+	ahb {
+		apb {
+			dbgu: serial@ffffee00 {
+				status = "okay";
+			};
+
+			tcb0: timer@fff7c000 {
+				timer@0 {
+					compatible

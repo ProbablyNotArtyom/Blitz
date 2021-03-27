@@ -1,0 +1,53 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * This dts file supports Dalmore A04.
+ * Other board revisions are not supported
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/input/input.h>
+#include "tegra114.dtsi"
+
+/ {
+	model = "NVIDIA Tegra114 Dalmore evaluation board";
+	compatible = "nvidia,dalmore", "nvidia,tegra114";
+
+	aliases {
+		rtc0 = "/i2c@7000d000/tps65913@58";
+		rtc1 = "/rtc@7000e000";
+		serial0 = &uartd;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory@80000000 {
+		reg = <0x80000000 0x40000000>;
+	};
+
+	host1x@50000000 {
+		hdmi@54280000 {
+			status = "okay";
+
+			hdmi-supply = <&vdd_5v0_hdmi>;
+			vdd-supply = <&vdd_hdmi_reg>;
+			pll-supply = <&palmas_smps3_reg>;
+
+			nvidia,ddc-i2c-bus = <&hdmi_ddc>;
+			nvidia,hpd-gpio =
+				<&gpio TEGRA_GPIO(N, 7) GPIO_ACTIVE_HIGH>;
+		};
+
+		dsi@54300000 {
+			status = "okay";
+
+			avdd-dsi-csi-supply = <&avdd_1v2_reg>;
+
+			panel@0 {
+				compatible = "panasonic,vvx10f004b00",
+					     "simple-panel";
+				reg = <0>;
+
+				power-supply =

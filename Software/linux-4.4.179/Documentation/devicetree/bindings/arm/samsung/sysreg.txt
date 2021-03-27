@@ -1,0 +1,17 @@
+	The Linux Microcode Loader
+
+Authors: Fenghua Yu <fenghua.yu@intel.com>
+	 Borislav Petkov <bp@suse.de>
+
+The kernel has a x86 microcode loading facility which is supposed to
+provide microcode loading methods in the OS. Potential use cases are
+updating the microcode on platforms beyond the OEM End-Of-Life support,
+and updating the microcode on long-running systems without rebooting.
+
+The loader supports three loading methods:
+
+1. Early load microcode
+=======================
+
+The kernel can update microcode very early during boot. Loading
+microcode early can fix CPU i

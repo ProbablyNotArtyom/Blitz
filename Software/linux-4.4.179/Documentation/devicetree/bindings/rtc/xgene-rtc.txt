@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: GPL-2.0 OR X11
+/*
+ * Copyright 2016 Boundary Devices, Inc.
+ */
+
+/dts-v1/;
+
+#include "imx7d.dtsi"
+
+/ {
+	model = "Boundary Devices i.MX7 Nitrogen7 Board";
+	compatible = "boundary,imx7d-nitrogen7", "fsl,imx7d";
+
+	memory@80000000 {
+		reg = <0x80000000 0x40000000>;
+	};
+
+	backlight-j9 {
+		compatible = "gpio-backlight";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_backlight_j9>;
+		gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+		default-on;
+	};
+
+	backlight_lcd: backlight-j20 {
+		compatible = "pwm-backlight";
+		pwms = <&pwm1 0 5000000 0>;
+		brightness-levels = <0 4 8 16 32 64 128 255>;
+		default-brightness-level = <6

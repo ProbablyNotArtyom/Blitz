@@ -1,0 +1,83 @@
+/*
+ * This file is licensed under the terms of the GNU General Public License
+ * version 2.  This program is licensed "as is" without any warranty of any
+ * kind, whether express or implied.
+ */
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/dm814x.h>
+
+/ {
+	compatible = "ti,dm814";
+	interrupt-parent = <&intc>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+	chosen { };
+
+	aliases {
+		i2c0 = &i2c1;
+		i2c1 = &i2c2;
+		serial0 = &uart1;
+		serial1 = &uart2;
+		serial2 = &uart3;
+		ethernet0 = &cpsw_emac0;
+		ethernet1 = &cpsw_emac1;
+		usb0 = &usb0;
+		usb1 = &usb1;
+		phy0 = &usb0_phy;
+		phy1 = &usb1_phy;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		cpu@0 {
+			compatible = "arm,cortex-a8";
+			device_type = "cpu";
+			reg = <0>;
+		};
+	};
+
+	pmu {
+		compatible = "arm,cortex-a8-pmu";
+		interrupts = <3>;
+	};
+
+	/*
+	 * The soc node represents the soc top level view. It is used for IPs
+	 * that are not memory mapped in the MPU view or for the MPU itself.
+	 */
+	soc {
+		compatible = "ti,omap-infra";
+		mpu {
+			compatible = "ti,omap3-mpu";
+			ti,hwmods = "mpu";
+		};
+	};
+
+	ocp {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+		ti,hwmods = "l3_main";
+
+		usb: usb@47400000 {
+			compatible = "ti,am33xx-usb";
+			reg = <0x47400000 0x1000>;
+			ranges;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ti,hwmods = "usb_otg_hs";
+
+			usb0_phy: usb-phy@47401300 {
+				compatible = "ti,am335x-usb-phy";
+				reg = <0x47401300 0x100>;
+				reg-names = "phy";
+				ti,ctrl_mod = <&usb_ctrl_mod>;
+				#phy-cells = <0>;
+			};
+
+			usb0: usb@47401000 {
+				compatible = "ti,musb-am33xx";
+				reg = <0x474014

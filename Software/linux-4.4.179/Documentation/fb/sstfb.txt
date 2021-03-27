@@ -1,0 +1,318 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree Source for the Gose board
+ *
+ * Copyright (C) 2014-2015 Renesas Electronics Corporation
+ */
+
+/*
+ * SSI-AK4643
+ *
+ * SW1: 1: AK4643
+ *      2: CN22
+ *      3: ADV7511
+ *
+ * This command is required when Playback/Capture
+ *
+ *	amixer set "LINEOUT Mixer DACL" on
+ *	amixer set "DVC Out" 100%
+ *	amixer set "DVC In" 100%
+ *
+ * You can use Mute
+ *
+ *	amixer set "DVC Out Mute" on
+ *	amixer set "DVC In Mute" on
+ *
+ * You can use Volume Ramp
+ *
+ *	amixer set "DVC Out Ramp Up Rate"   "0.125 dB/64 steps"
+ *	amixer set "DVC Out Ramp Down Rate" "0.125 dB/512 steps"
+ *	amixer set "DVC Out Ramp" on
+ *	aplay xxx.wav &
+ *	amixer set "DVC Out"  80%  // Volume Down
+ *	amixer set "DVC Out" 100%  // Volume Up
+ */
+
+/dts-v1/;
+#include "r8a7793.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+/ {
+	model = "Gose";
+	compatible = "renesas,gose", "renesas,r8a7793";
+
+	aliases {
+		serial0 = &scif0;
+		serial1 = &scif1;
+		i2c9 = &gpioi2c2;
+		i2c10 = &gpioi2c4;
+		i2c11 = &i2chdmi;
+		i2c12 = &i2cexio4;
+	};
+
+	chosen {
+		bootargs = "ignore_loglevel rw root=/dev/nfs ip=dhcp";
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0 0x40000000 0 0x40000000>;
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+
+		key-1 {
+		        gpios = <&gpio5 0 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_1>;
+		        label = "SW2-1";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-2 {
+		        gpios = <&gpio5 1 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_2>;
+		        label = "SW2-2";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-3 {
+		        gpios = <&gpio5 2 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_3>;
+		        label = "SW2-3";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-4 {
+		        gpios = <&gpio5 3 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_4>;
+		        label = "SW2-4";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-a {
+		        gpios = <&gpio7 0 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_A>;
+		        label = "SW30";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-b {
+		        gpios = <&gpio7 1 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_B>;
+		        label = "SW31";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-c {
+		        gpios = <&gpio7 2 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_C>;
+		        label = "SW32";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-d {
+		        gpios = <&gpio7 3 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_D>;
+		        label = "SW33";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-e {
+		        gpios = <&gpio7 4 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_E>;
+		        label = "SW34";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-f {
+		        gpios = <&gpio7 5 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_F>;
+		        label = "SW35";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+		key-g {
+		        gpios = <&gpio7 6 GPIO_ACTIVE_LOW>;
+		        linux,code = <KEY_G>;
+		        label = "SW36";
+		        wakeup-source;
+		        debounce-interval = <20>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led6 {
+			gpios = <&gpio2 19 GPIO_ACTIVE_HIGH>;
+			label = "LED6";
+		};
+		led7 {
+			gpios = <&gpio2 20 GPIO_ACTIVE_HIGH>;
+			label = "LED7";
+		};
+		led8 {
+			gpios = <&gpio2 21 GPIO_ACTIVE_HIGH>;
+			label = "LED8";
+		};
+	};
+
+	vcc_sdhi0: regulator-vcc-sdhi0 {
+		compatible = "regulator-fixed";
+
+		regulator-name = "SDHI0 Vcc";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpio = <&gpio7 17 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	vccq_sdhi0: regulator-vccq-sdhi0 {
+		compatible = "regulator-gpio";
+
+		regulator-name = "SDHI0 VccQ";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpios = <&gpio2 12 GPIO_ACTIVE_HIGH>;
+		gpios-states = <1>;
+		states = <3300000 1
+			  1800000 0>;
+	};
+
+	vcc_sdhi1: regulator-vcc-sdhi1 {
+		compatible = "regulator-fixed";
+
+		regulator-name = "SDHI1 Vcc";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpio = <&gpio7 18 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	vccq_sdhi1: regulator-vccq-sdhi1 {
+		compatible = "regulator-gpio";
+
+		regulator-name = "SDHI1 VccQ";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpios = <&gpio2 13 GPIO_ACTIVE_HIGH>;
+		gpios-states = <1>;
+		states = <3300000 1
+			  1800000 0>;
+	};
+
+	vcc_sdhi2: regulator-vcc-sdhi2 {
+		compatible = "regulator-fixed";
+
+		regulator-name = "SDHI2 Vcc";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpio = <&gpio7 19 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	vccq_sdhi2: regulator-vccq-sdhi2 {
+		compatible = "regulator-gpio";
+
+		regulator-name = "SDHI2 VccQ";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpios = <&gpio2 26 GPIO_ACTIVE_HIGH>;
+		gpios-states = <1>;
+		states = <3300000 1
+			  1800000 0>;
+	};
+
+	audio_clock: audio_clock {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <11289600>;
+	};
+
+	rsnd_ak4643: sound {
+		compatible = "simple-audio-card";
+
+		simple-audio-card,format = "left_j";
+		simple-audio-card,bitclock-master = <&sndcodec>;
+		simple-audio-card,frame-master = <&sndcodec>;
+
+		sndcpu: simple-audio-card,cpu {
+			sound-dai = <&rcar_sound>;
+		};
+
+		sndcodec: simple-audio-card,codec {
+			sound-dai = <&ak4643>;
+			clocks = <&audio_clock>;
+		};
+	};
+
+	hdmi-in {
+		compatible = "hdmi-connector";
+		type = "a";
+
+		port {
+			hdmi_con_in: endpoint {
+				remote-endpoint = <&adv7612_in>;
+			};
+		};
+	};
+
+	hdmi-out {
+		compatible = "hdmi-connector";
+		type = "a";
+
+		port {
+			hdmi_con_out: endpoint {
+				remote-endpoint = <&adv7511_out>;
+			};
+		};
+	};
+
+	composite-in {
+		compatible = "composite-video-connector";
+
+		port {
+			composite_con_in: endpoint {
+				remote-endpoint = <&adv7180_in>;
+			};
+		};
+	};
+
+	x2_clk: x2-clock {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <74250000>;
+	};
+
+	x13_clk: x13-clock {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <148500000>;
+	};
+
+	gpioi2c2: i2c-9 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "i2c-gpio";
+		status = "disabled";
+		scl-gpios = <&gpio2 6 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		sda-gpios = <&gpio2 7 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		i2c-gpio,delay-us = <5>;
+	};
+
+	gpioi2c4: i2c-10 {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "i2c-gpio";
+		status = "disabled";
+		scl-gpios = <&gpio7 13 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		sda-gpios = <&gpio7 14 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		i2c-gpio,delay-us = <

@@ -1,0 +1,57 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef _ALPHA_THREAD_INFO_H
+#define _ALPHA_THREAD_INFO_H
+
+#ifdef __KERNEL__
+
+#ifndef __ASSEMBLY__
+#include <asm/processor.h>
+#include <asm/types.h>
+#include <asm/hwrpb.h>
+#include <asm/sysinfo.h>
+#endif
+
+#ifndef __ASSEMBLY__
+struct thread_info {
+	struct pcb_struct	pcb;		/* palcode state */
+
+	struct task_struct	*task;		/* main task structure */
+	unsigned int		flags;		/* low level flags */
+	unsigned int		ieee_state;	/* see fpu.h */
+
+	mm_segment_t		addr_limit;	/* thread address space */
+	unsigned		cpu;		/* current CPU */
+	int			preempt_count; /* 0 => preemptable, <0 => BUG */
+	unsigned int		status;		/* thread-synchronous flags */
+
+	int bpt_nsaved;
+	unsigned long bpt_addr[2];		/* breakpoint handling  */
+	unsigned int bpt_insn[2];
+};
+
+/*
+ * Macros/functions for gaining access to the thread information structure.
+ */
+#define INIT_THREAD_INFO(tsk)			\
+{						\
+	.task		= &tsk,			\
+	.addr_limit	= KERNEL_DS,		\
+	.preempt_count	= INIT_PREEMPT_COUNT,	\
+}
+
+/* How to get the thread information struct from C.  */
+register struct thread_info *__current_thread_info __asm__("$8");
+#define current_thread_info()  __current_thread_info
+
+#endif /* __ASSEMBLY__ */
+
+/* Thread information allocation.  */
+#define THREAD_SIZE_ORDER 1
+#define THREAD_SIZE (2*PAGE_SIZE)
+
+/*
+ * Thread information flags:
+ * - these are process state flags and used from assembly
+ * - pending work-to-be-done flags come first and must be assigned to be
+ *   within bits 0 to 7 to fit in and immediate operand.
+ 

@@ -1,0 +1,45 @@
+// SPDX-License-Identifier: GPL-2.0
+#include "tegra20.dtsi"
+
+/*
+ * Toradex Colibri T20 Module Device Tree
+ * Compatible for Revisions Colibri T20 256MB V1.1B, V1.2A;
+ * Colibri T20 256MB IT V1.2A; Colibri T20 512MB V1.1C, V1.2A;
+ * Colibri T20 512MB IT V1.2A
+ */
+/ {
+	memory@0 {
+		/*
+		 * Set memory to 256 MB to be safe as this could be used on
+		 * 256 or 512 MB module. It is expected from bootloader
+		 * to fix this up for 512 MB version.
+		 */
+		reg = <0x00000000 0x10000000>;
+	};
+
+	host1x@50000000 {
+		hdmi@54280000 {
+			nvidia,ddc-i2c-bus = <&hdmi_ddc>;
+			nvidia,hpd-gpio =
+				<&gpio TEGRA_GPIO(N, 7) GPIO_ACTIVE_HIGH>;
+			pll-supply = <&reg_1v8_avdd_hdmi_pll>;
+			vdd-supply = <&reg_3v3_avdd_hdmi>;
+		};
+	};
+
+	pinmux@70000014 {
+		pinctrl-names = "default";
+		pinctrl-0 = <&state_default>;
+
+		state_default: pinmux {
+			/* Analogue Audio AC97 to WM9712 (On-module) */
+			audio-refclk {
+				nvidia,pins = "cdev1";
+				nvidia,function = "plla_out";
+				nvidia,pull = <TEGRA_PIN_PULL_NONE>;
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+			dap3 {
+				nvidia,pins = "dap3";
+				nvidia,function = "dap3";
+				nvidia,pull = <TEGRA_PIN_PULL_NONE

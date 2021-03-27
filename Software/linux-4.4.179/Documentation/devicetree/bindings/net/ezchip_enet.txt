@@ -1,0 +1,13 @@
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&pllss {
+	/*
+	 * See TRM "2.6.10 Connected outputso DPLLS" and
+	 * "2.6.11 Connected Outputs of DPLLJ". Only clkout is
+	 * connected except for hdmi and usb.
+	 */
+	adpll_mpu_ck: adpll@40 {

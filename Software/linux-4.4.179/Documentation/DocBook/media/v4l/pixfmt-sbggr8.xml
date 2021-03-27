@@ -1,0 +1,59 @@
+===========================================================================
+				   HVCS
+	IBM "Hypervisor Virtual Console Server" Installation Guide
+			  for Linux Kernel 2.6.4+
+		    Copyright (C) 2004 IBM Corporation
+
+===========================================================================
+NOTE:Eight space tabs are the optimum editor setting for reading this file.
+===========================================================================
+
+	       Author(s) :  Ryan S. Arnold <rsa@us.ibm.com>
+		       Date Created: March, 02, 2004
+		       Last Changed: August, 24, 2004
+
+---------------------------------------------------------------------------
+Table of contents:
+
+	1.  Driver Introduction:
+	2.  System Requirements
+	3.  Build Options:
+		3.1  Built-in:
+		3.2  Module:
+	4.  Installation:
+	5.  Connection:
+	6.  Disconnection:
+	7.  Configuration:
+	8.  Questions & Answers:
+	9.  Reporting Bugs:
+
+---------------------------------------------------------------------------
+1. Driver Introduction:
+
+This is the device driver for the IBM Hypervisor Virtual Console Server,
+"hvcs".  The IBM hvcs provides a tty driver interface to allow Linux user
+space applications access to the system consoles of logically partitioned
+operating systems (Linux and AIX) running on the same partitioned Power5
+ppc64 system.  Physical hardware consoles per partition are not practical
+on this hardware so system consoles are accessed by this driver using
+firmware interfaces to virtual terminal devices.
+
+---------------------------------------------------------------------------
+2. System Requirements:
+
+This device driver was written using 2.6.4 Linux kernel APIs and will only
+build and run on kernels of this version or later.
+
+This driver was written to operate solely on IBM Power5 ppc64 hardware
+though some care was taken to abstract the architecture dependent firmware
+calls from the driver code.
+
+Sysfs must be mounted on the system so that the user can determine which
+major and minor numbers are associated with each vty-server.  Directions
+for sysfs mounting are outside the scope of this document.
+
+---------------------------------------------------------------------------
+3. Build Options:
+
+The hvcs driver registers itself as a tty driver.  The tty layer
+dynamically allocates a b

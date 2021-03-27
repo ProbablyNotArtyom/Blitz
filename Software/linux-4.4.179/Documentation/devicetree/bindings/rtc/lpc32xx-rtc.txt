@@ -1,0 +1,10 @@
+/*
+ * Copyright 2015 Technexion Ltd.
+ *
+ * Author: Wig Cheng  <wig.cheng@technexion.com>
+ *	   Richard Hu <richard.hu@technexion.com>
+ *	   Tapani Utriainen <tapani@technexion.com>
+ *
+ * This file is dual-licensed: you can use it either under the terms
+ * of the GPL or the X11 license, at your option. Note that this dual
+ * licensing only 

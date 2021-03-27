@@ -1,0 +1,9 @@
+VFIO virtual device
+===================
+
+Device types supported:
+  KVM_DEV_TYPE_VFIO
+
+Only one VFIO instance may be created per VM.  The created device
+tracks VFIO groups in use by the VM and features of those groups
+important to the correc

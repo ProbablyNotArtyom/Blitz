@@ -1,0 +1,42 @@
+msg.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msg.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kerneld.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/interrupt.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/kerneld.h)
+sem.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/string.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sem.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h
+shm.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ipc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/shm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/malloc.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/swap.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/swapctl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/pgtable.h
+util.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/errno.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/segment.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sem.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/msg.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/shm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/stat.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sysvipc.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/kerneld.h)

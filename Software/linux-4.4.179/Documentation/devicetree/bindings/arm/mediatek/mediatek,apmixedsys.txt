@@ -1,0 +1,17 @@
+.. _swap_numa:
+
+===========================================
+Automatically bind swap device to numa node
+===========================================
+
+If the system has more than one swap device and swap device has the node
+information, we can make use of this information to decide which swap
+device to use in get_swap_pages() to get better performance.
+
+
+How to use this feature
+=======================
+
+Swap device has priority and that decides the order of it to be used. To make
+use of automatically binding, there is no need to manipulate priority settings
+for swap devices. e.g. on a 2 node machine,

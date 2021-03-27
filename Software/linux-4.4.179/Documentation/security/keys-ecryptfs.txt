@@ -1,0 +1,138 @@
+/*
+ *  linux/arch/arm/kernel/smp.c
+ *
+ *  Copyright (C) 2002 ARM Limited, All Rights Reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+#include <linux/module.h>
+#include <linux/delay.h>
+#include <linux/init.h>
+#include <linux/spinlock.h>
+#include <linux/sched/mm.h>
+#include <linux/sched/hotplug.h>
+#include <linux/sched/task_stack.h>
+#include <linux/interrupt.h>
+#include <linux/cache.h>
+#include <linux/profile.h>
+#include <linux/errno.h>
+#include <linux/mm.h>
+#include <linux/err.h>
+#include <linux/cpu.h>
+#include <linux/seq_file.h>
+#include <linux/irq.h>
+#include <linux/nmi.h>
+#include <linux/percpu.h>
+#include <linux/clockchips.h>
+#include <linux/completion.h>
+#include <linux/cpufreq.h>
+#include <linux/irq_work.h>
+
+#include <linux/atomic.h>
+#include <asm/bugs.h>
+#include <asm/smp.h>
+#include <asm/cacheflush.h>
+#include <asm/cpu.h>
+#include <asm/cputype.h>
+#include <asm/exception.h>
+#include <asm/idmap.h>
+#include <asm/topology.h>
+#include <asm/mmu_context.h>
+#include <asm/pgtable.h>
+#include <asm/pgalloc.h>
+#include <asm/procinfo.h>
+#include <asm/processor.h>
+#include <asm/sections.h>
+#include <asm/tlbflush.h>
+#include <asm/ptrace.h>
+#include <asm/smp_plat.h>
+#include <asm/virt.h>
+#include <asm/mach/arch.h>
+#include <asm/mpu.h>
+
+#define CREATE_TRACE_POINTS
+#include <trace/events/ipi.h>
+
+/*
+ * as from 2.5, kernels no longer have an init_tasks structure
+ * so we need some other way of telling a new secondary core
+ * where to place its SVC stack
+ */
+struct secondary_data secondary_data;
+
+/*
+ * control for which core is the next to come out of the secondary
+ * boot "holding pen"
+ */
+volatile int pen_release = -1;
+
+enum ipi_msg_type {
+	IPI_WAKEUP,
+	IPI_TIMER,
+	IPI_RESCHEDULE,
+	IPI_CALL_FUNC,
+	IPI_CPU_STOP,
+	IPI_IRQ_WORK,
+	IPI_COMPLETION,
+	IPI_CPU_BACKTRACE,
+	/*
+	 * SGI8-15 can be reserved by secure firmware, and thus may
+	 * not be usable by the kernel. Please keep the above limited
+	 * to at most 8 entries.
+	 */
+};
+
+static DECLARE_COMPLETION(cpu_running);
+
+static struct smp_operations smp_ops __ro_after_init;
+
+void __init smp_set_ops(const struct smp_operations *ops)
+{
+	if (ops)
+		smp_ops = *ops;
+};
+
+static unsigned long get_arch_pgd(pgd_t *pgd)
+{
+#ifdef CONFIG_ARM_LPAE
+	return __phys_to_pfn(virt_to_phys(pgd));
+#else
+	return virt_to_phys(pgd);
+#endif
+}
+
+#if defined(CONFIG_BIG_LITTLE) && defined(CONFIG_HARDEN_BRANCH_PREDICTOR)
+static int secondary_biglittle_prepare(unsigned int cpu)
+{
+	if (!cpu_vtable[cpu])
+		cpu_vtable[cpu] = kzalloc(sizeof(*cpu_vtable[cpu]), GFP_KERNEL);
+
+	return cpu_vtable[cpu] ? 0 : -ENOMEM;
+}
+
+static void secondary_biglittle_init(void)
+{
+	init_proc_vtable(lookup_processor(read_cpuid_id())->proc);
+}
+#else
+static int secondary_biglittle_prepare(unsigned int cpu)
+{
+	return 0;
+}
+
+static void secondary_biglittle_init(void)
+{
+}
+#endif
+
+int __cpu_up(unsigned int cpu, struct task_struct *idle)
+{
+	int ret;
+
+	if (!smp_ops.smp_boot_secondary)
+		return -ENOSYS;
+
+	ret = secondary_biglittle_prepare(cpu);
+	if (ret)

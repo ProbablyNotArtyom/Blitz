@@ -1,0 +1,12 @@
+Chinese translated version of Documentation/arm64/booting.txt
+
+If you have any comment or update to the content, please contact the
+original document maintainer directly.  However, if you have a problem
+communicating in English you can also ask the Chinese maintainer for
+help.  Contact the Chinese maintainer if this translation is outdated
+or if there is a problem with the translation.
+
+M:	Will Deacon <will.deacon@arm.com>
+zh_CN:	Fu Wei <wefu@redhat.com>
+C:	55f058e7574c3615dea4615573a19bdb258696c6
+-------------------------------------

@@ -1,0 +1,100 @@
+/*
+ * Copyright 2008 Cavium Networks
+ *
+ * This file is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, Version 2, as
+ * published by the Free Software Foundation.
+ */
+
+#ifndef __MACH_BOARD_CNS3XXXH
+#define __MACH_BOARD_CNS3XXXH
+
+/*
+ * Memory map
+ */
+#define CNS3XXX_FLASH_BASE			0x10000000	/* Flash/SRAM Memory Bank 0 */
+#define CNS3XXX_FLASH_SIZE			SZ_256M
+
+#define CNS3XXX_DDR2SDRAM_BASE			0x20000000	/* DDR2 SDRAM Memory */
+
+#define CNS3XXX_SPI_FLASH_BASE			0x60000000	/* SPI Serial Flash Memory */
+
+#define CNS3XXX_SWITCH_BASE			0x70000000	/* Switch and HNAT Control */
+
+#define CNS3XXX_PPE_BASE			0x70001000	/* HANT	*/
+
+#define CNS3XXX_EMBEDDED_SRAM_BASE		0x70002000	/* HANT Embedded SRAM */
+
+#define CNS3XXX_SSP_BASE			0x71000000	/* Synchronous Serial Port - SPI/PCM/I2C */
+
+#define CNS3XXX_DMC_BASE			0x72000000	/* DMC Control (DDR2 SDRAM) */
+
+#define CNS3XXX_SMC_BASE			0x73000000	/* SMC Control */
+
+#define SMC_MEMC_STATUS_OFFSET			0x000
+#define SMC_MEMIF_CFG_OFFSET			0x004
+#define SMC_MEMC_CFG_SET_OFFSET			0x008
+#define SMC_MEMC_CFG_CLR_OFFSET			0x00C
+#define SMC_DIRECT_CMD_OFFSET			0x010
+#define SMC_SET_CYCLES_OFFSET			0x014
+#define SMC_SET_OPMODE_OFFSET			0x018
+#define SMC_REFRESH_PERIOD_0_OFFSET		0x020
+#define SMC_REFRESH_PERIOD_1_OFFSET		0x024
+#define SMC_SRAM_CYCLES0_0_OFFSET		0x100
+#define SMC_NAND_CYCLES0_0_OFFSET		0x100
+#define SMC_OPMODE0_0_OFFSET			0x104
+#define SMC_SRAM_CYCLES0_1_OFFSET		0x120
+#define SMC_NAND_CYCLES0_1_OFFSET		0x120
+#define SMC_OPMODE0_1_OFFSET			0x124
+#define SMC_USER_STATUS_OFFSET			0x200
+#define SMC_USER_CONFIG_OFFSET			0x204
+#define SMC_ECC_STATUS_OFFSET			0x300
+#define SMC_ECC_MEMCFG_OFFSET			0x304
+#define SMC_ECC_MEMCOMMAND1_OFFSET		0x308
+#define SMC_ECC_MEMCOMMAND2_OFFSET		0x30C
+#define SMC_ECC_ADDR0_OFFSET			0x310
+#define SMC_ECC_ADDR1_OFFSET			0x314
+#define SMC_ECC_VALUE0_OFFSET			0x318
+#define SMC_ECC_VALUE1_OFFSET			0x31C
+#define SMC_ECC_VALUE2_OFFSET			0x320
+#define SMC_ECC_VALUE3_OFFSET			0x324
+#define SMC_PERIPH_ID_0_OFFSET			0xFE0
+#define SMC_PERIPH_ID_1_OFFSET			0xFE4
+#define SMC_PERIPH_ID_2_OFFSET			0xFE8
+#define SMC_PERIPH_ID_3_OFFSET			0xFEC
+#define SMC_PCELL_ID_0_OFFSET			0xFF0
+#define SMC_PCELL_ID_1_OFFSET			0xFF4
+#define SMC_PCELL_ID_2_OFFSET			0xFF8
+#define SMC_PCELL_ID_3_OFFSET			0xFFC
+
+#define CNS3XXX_GPIOA_BASE			0x74000000	/* GPIO port A */
+
+#define CNS3XXX_GPIOB_BASE			0x74800000	/* GPIO port B */
+
+#define CNS3XXX_RTC_BASE			0x75000000	/* Real Time Clock */
+
+#define RTC_SEC_OFFSET				0x00
+#define RTC_MIN_OFFSET				0x04
+#define RTC_HOUR_OFFSET				0x08
+#define RTC_DAY_OFFSET				0x0C
+#define RTC_SEC_ALM_OFFSET			0x10
+#define RTC_MIN_ALM_OFFSET			0x14
+#define RTC_HOUR_ALM_OFFSET			0x18
+#define RTC_REC_OFFSET				0x1C
+#define RTC_CTRL_OFFSET				0x20
+#define RTC_INTR_STS_OFFSET			0x34
+
+#define CNS3XXX_MISC_BASE			0x76000000	/* Misc Control */
+#define CNS3XXX_MISC_BASE_VIRT			0xFB000000	/* Misc Control */
+
+#define CNS3XXX_PM_BASE				0x77000000	/* Power Management Control */
+#define CNS3XXX_PM_BASE_VIRT			0xFB001000
+
+#define PM_CLK_GATE_OFFSET			0x00
+#define PM_SOFT_RST_OFFSET			0x04
+#define PM_HS_CFG_OFFSET			0x08
+#define PM_CACTIVE_STA_OFFSET			0x0C
+#define PM_PWR_STA_OFFSET			0x10
+#define PM_SYS_CLK_CTRL_OFFSET			0x14
+#define PM_PLL_LCD_I2S_CTRL_OFFSET		0x18
+#define PM_PLL_HM_PD_OFFSET			

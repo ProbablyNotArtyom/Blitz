@@ -1,0 +1,75 @@
+NOTE:
+This is a version of Documentation/process/stable-api-nonsense.rst into Japanese.
+This document is maintained by IKEDA, Munehiro <m-ikeda@ds.jp.nec.com>
+and the JF Project team <http://www.linux.or.jp/JF/>.
+If you find any difference between this document and the original file
+or a problem with the translation,
+please contact the maintainer of this file or JF project.
+
+Please also note that the purpose of this file is to be easier to read
+for non English (read: Japanese) speakers and is not intended as a
+fork. So if you have any comments or updates of this file, please try
+to update the original English file first.
+
+Last Updated: 2007/07/18
+==================================
+これは、
+linux-2.6.22-rc4/Documentation/process/stable-api-nonsense.rst の和訳
+です。
+翻訳団体： JF プロジェクト < http://www.linux.or.jp/JF/ >
+翻訳日 ： 2007/06/11
+原著作者: Greg Kroah-Hartman < greg at kroah dot com >
+翻訳者 ： 池田 宗広 < m-ikeda at ds dot jp dot nec dot com >
+校正者 ： Masanori Kobayashi さん < zap03216 at nifty dot ne dot jp >
+          Seiji Kaneko さん < skaneko at a2 dot mbn dot or dot jp >
+==================================
+
+
+
+Linux カーネルのドライバインターフェース
+（あなたの質問すべてに対する回答とその他諸々）
+
+Greg Kroah-Hartman <greg at kroah dot com>
+
+
+この文書は、なぜ Linux ではバイナリカーネルインターフェースが定義
+されていないのか、またはなぜ不変のカーネルインターフェースを持たな
+いのか、ということを説明するために書かれた。ここでの話題は「カーネ
+ル内部の」インターフェースについてであり、ユーザー空間とのインター
+フェースではないことを理解してほしい。カーネルとユーザー空間とのイ
+ンターフェースとはアプリケーションプログラムが使用するものであり、
+つまりシステムコールのインターフェースがこれに当たる。これは今まで
+長きに渡り、かつ今後も「まさしく」不変である。私は確か 0.9 か何か
+より前のカーネルを使ってビルドした古いプログラムを持っているが、そ
+れは最新の 2.6 カーネルでもきちんと動作する。ユーザー空間とのイン
+ターフェースは、ユーザーとアプリケーションプログラマが不変性を信頼
+してよいものの一つである。
+
+
+要旨
+----
+
+あなたは不変のカーネルインターフェースが必要だと考えているかもしれ
+ないが、実際のところはそうではない。あなたは必要としているものが分
+かっていない。あなたが必要としているものは安定して動作するドライバ
+であり、それはドライバがメインのカーネルツリーに含まれる場合のみ得
+ることができる。ドライバがメインのカーネルツリーに含まれていると、
+他にも多くの良いことがある。それは、Linux をより強固で、安定な、成
+熟したオペレーティングシステムにすることができるということだ。これ
+こそ、そもそもあなたが Linux を使う理由のはずだ。
+
+
+はじめに
+--------
+
+カーネル内部のインターフェース変更を心配しなければならないドライバ
+を書きたいなどというのは、変わり者だけだ。この世界のほとんどの人は、
+そのようなドライバがどんなインターフェースを使っているかなど知らな
+いし、そんなドライバのことなど全く気にもかけていない。
+
+
+まず初めに、クローズソースとか、ソースコードの隠蔽とか、バイナリの
+みが配布される使い物にならない代物[訳注(1)]とか、実体はバイナリ
+コードでそれを読み込むためのラッパー部分のみソースコードが公開され
+ているとか、その他用語は何であれ GPL の下にソースコードがリリース
+されていないカーネルドライバに�

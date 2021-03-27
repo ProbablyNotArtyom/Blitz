@@ -1,0 +1,98 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * RajeshwarR: Dec 11, 2007
+ *   -- Added support for Inter Processor Interrupts
+ *
+ * Vineetg: Nov 1st, 2007
+ *    -- Initial Write (Borrowed heavily from ARM)
+ */
+
+#include <linux/spinlock.h>
+#include <linux/sched/mm.h>
+#include <linux/interrupt.h>
+#include <linux/profile.h>
+#include <linux/mm.h>
+#include <linux/cpu.h>
+#include <linux/irq.h>
+#include <linux/atomic.h>
+#include <linux/cpumask.h>
+#include <linux/reboot.h>
+#include <linux/irqdomain.h>
+#include <linux/export.h>
+#include <linux/of_fdt.h>
+
+#include <asm/processor.h>
+#include <asm/setup.h>
+#include <asm/mach_desc.h>
+
+#ifndef CONFIG_ARC_HAS_LLSC
+arch_spinlock_t smp_atomic_ops_lock = __ARCH_SPIN_LOCK_UNLOCKED;
+arch_spinlock_t smp_bitops_lock = __ARCH_SPIN_LOCK_UNLOCKED;
+
+EXPORT_SYMBOL_GPL(smp_atomic_ops_lock);
+EXPORT_SYMBOL_GPL(smp_bitops_lock);
+#endif
+
+struct plat_smp_ops  __weak plat_smp_ops;
+
+/* XXX: per cpu ? Only needed once in early seconday boot */
+struct task_struct *secondary_idle_tsk;
+
+/* Called from start_kernel */
+void __init smp_prepare_boot_cpu(void)
+{
+}
+
+static int __init arc_get_cpu_map(const char *name, struct cpumask *cpumask)
+{
+	unsigned long dt_root = of_get_flat_dt_root();
+	const char *buf;
+
+	buf = of_get_flat_dt_prop(dt_root, name, NULL);
+	if (!buf)
+		return -EINVAL;
+
+	if (cpulist_parse(buf, cpumask))
+		return -EINVAL;
+
+	return 0;
+}
+
+/*
+ * Read from DeviceTree and setup cpu possible mask. If there is no
+ * "possible-cpus" property in DeviceTree pretend all [0..NR_CPUS-1] exist.
+ */
+static void __init arc_init_cpu_possible(void)
+{
+	struct cpumask cpumask;
+
+	if (arc_get_cpu_map("possible-cpus", &cpumask)) {
+		pr_warn("Failed to get possible-cpus from dtb, pretending all %u cpus exist\n",
+			NR_CPUS);
+
+		cpumask_setall(&cpumask);
+	}
+
+	if (!cpumask_test_cpu(0, &cpumask))
+		panic("Master cpu (cpu[0]) is missed in cpu possible mask!");
+
+	init_cpu_possible(&cpumask);
+}
+
+/*
+ * Called from setup_arch() before calling setup_processor()
+ *
+ * - Initialise the CPU possible map early - this describes the CPUs
+ *   which may be present or become present in the system.
+ * - Call early smp init hook. This can initialize a specific multi-core
+ *   IP which is say common to several platforms (hence not part of
+ *   platform specific int_early() hook)
+ */
+void __init smp_init_cpus(void)
+{
+	arc_init_cp

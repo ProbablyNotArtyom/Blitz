@@ -1,0 +1,5 @@
+/*
+ * Copyright (C) 2015 Jablotron s.r.o. -- http://www.jablotron.com/
+ * Author: Rostislav Lisovy <lisovy@jablotron.cz>
+ *
+ * This program is free software; you can redis

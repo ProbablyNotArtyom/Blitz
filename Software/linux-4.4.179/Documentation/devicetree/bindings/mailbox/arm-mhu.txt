@@ -1,0 +1,65 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree Include file for Marvell 98dx3236 family SoC
+ *
+ * Copyright (C) 2016 Allied Telesis Labs
+ *
+ * Contains definitions specific to the 98dx3236 SoC that are not
+ * common to all Armada XP SoCs.
+ */
+
+#include "armada-370-xp.dtsi"
+
+/ {
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	model = "Marvell 98DX3236 SoC";
+	compatible = "marvell,armadaxp-98dx3236", "marvell,armada-370-xp";
+
+	aliases {
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+		gpio2 = &gpio2;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		enable-method = "marvell,98dx3236-smp";
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "marvell,sheeva-v7";
+			reg = <0>;
+			clocks = <&cpuclk 0>;
+			clock-latency = <1000000>;
+		};
+	};
+
+	soc {
+		compatible = "marvell,armadaxp-mbus", "simple-bus";
+
+		ranges = <MBUS_ID(0xf0, 0x01) 0 0 0xf1000000 0x100000
+			  MBUS_ID(0x01, 0x1d) 0 0 0xfff00000 0x100000
+			  MBUS_ID(0x01, 0x2f) 0 0 0xf0000000 0x1000000
+			  MBUS_ID(0x03, 0x00) 0 0 0xa8000000 0x4000000
+			  MBUS_ID(0x08, 0x00) 0 0 0xac000000 0x100000>;
+
+		bootrom {
+			compatible = "marvell,bootrom";
+			reg = <MBUS_ID(0x01, 0x1d) 0 0x100000>;
+		};
+
+		/*
+		 * 98DX3236 has 1 x1 PCIe unit Gen2.0
+		 */
+		pciec: pcie@82000000 {
+			compatible = "marvell,armada-xp-pcie";
+			status = "disabled";
+			device_type = "pci";
+
+			#address-cells = <3>;
+			#size-cells = <2>;
+
+			msi-parent = <

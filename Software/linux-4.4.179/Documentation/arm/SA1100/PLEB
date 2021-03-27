@@ -1,0 +1,7 @@
+
+This driver supports the Qlogic FASXXX family of chips.  This driver
+only works with the ISA, VLB, and PCMCIA versions of the Qlogic
+FastSCSI!  cards as well as any other card based on the FASXX chip
+(including the Control Concepts SCSI/IDE/SIO/PIO/FDC cards).
+
+This driver does NOT support the PCI ve

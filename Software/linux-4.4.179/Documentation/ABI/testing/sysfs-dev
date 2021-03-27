@@ -1,0 +1,25 @@
+Kernel driver max6875
+=====================
+
+Supported chips:
+  * Maxim MAX6874, MAX6875
+    Prefix: 'max6875'
+    Addresses scanned: None (see below)
+    Datasheet:
+        http://pdfserv.maxim-ic.com/en/ds/MAX6874-MAX6875.pdf
+
+Author: Ben Gardner <bgardner@wabtec.com>
+
+
+Description
+-----------
+
+The Maxim MAX6875 is an EEPROM-programmable power-supply sequencer/supervisor.
+It provides timed outputs that can be used as a watchdog, if properly wired.
+It also provides 512 bytes of user EEPROM.
+
+At reset, the MAX6875 reads the configuration EEPROM into its configuration
+registers.  The chip then begins to operate according to the values in the
+registers.
+
+The Maxim MAX6874 is a similar, 

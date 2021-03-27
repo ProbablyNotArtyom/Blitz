@@ -1,0 +1,165 @@
+/*
+ * Copyright Altera Corporation (C) 2014. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms and conditions of the GNU General Public License,
+ * version 2, as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/reset/altr,rst-mgr-a10.h>
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		enable-method = "altr,socfpga-a10-smp";
+
+		cpu@0 {
+			compatible = "arm,cortex-a9";
+			device_type = "cpu";
+			reg = <0>;
+			next-level-cache = <&L2>;
+		};
+		cpu@1 {
+			compatible = "arm,cortex-a9";
+			device_type = "cpu";
+			reg = <1>;
+			next-level-cache = <&L2>;
+		};
+	};
+
+	intc: intc@ffffd000 {
+		compatible = "arm,cortex-a9-gic";
+		#interrupt-cells = <3>;
+		interrupt-controller;
+		reg = <0xffffd000 0x1000>,
+		      <0xffffc100 0x100>;
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		device_type = "soc";
+		interrupt-parent = <&intc>;
+		ranges;
+
+		amba {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+
+			pdma: pdma@ffda1000 {
+				compatible = "arm,pl330", "arm,primecell";
+				reg = <0xffda1000 0x1000>;
+				interrupts = <0 83 IRQ_TYPE_LEVEL_HIGH>,
+					     <0 84 IRQ_TYPE_LEVEL_HIGH>,
+					     <0 85 IRQ_TYPE_LEVEL_HIGH>,
+					     <0 86 IRQ_TYPE_LEVEL_HIGH>,
+					     <0 87 IRQ_TYPE_LEVEL_HIGH>,
+					     <0 88 IRQ_TYPE_LEVEL_HIGH>,
+					     <0 89 IRQ_TYPE_LEVEL_HIGH>,
+					     <0 90 IRQ_TYPE_LEVEL_HIGH>,
+					     <0 91 IRQ_TYPE_LEVEL_HIGH>;
+				#dma-cells = <1>;
+				#dma-channels = <8>;
+				#dma-requests = <32>;
+				clocks = <&l4_main_clk>;
+				clock-names = "apb_pclk";
+			};
+		};
+
+		base_fpga_region {
+			#address-cells = <0x1>;
+			#size-cells = <0x1>;
+
+			compatible = "fpga-region";
+			fpga-mgr = <&fpga_mgr>;
+		};
+
+		clkmgr@ffd04000 {
+				compatible = "altr,clk-mgr";
+				reg = <0xffd04000 0x1000>;
+
+				clocks {
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					cb_intosc_hs_div2_clk: cb_intosc_hs_div2_clk {
+						#clock-cells = <0>;
+						compatible = "fixed-clock";
+					};
+
+					cb_intosc_ls_clk: cb_intosc_ls_clk {
+						#clock-cells = <0>;
+						compatible = "fixed-clock";
+					};
+
+					f2s_free_clk: f2s_free_clk {
+						#clock-cells = <0>;
+						compatible = "fixed-clock";
+					};
+
+					osc1: osc1 {
+						#clock-cells = <0>;
+						compatible = "fixed-clock";
+					};
+
+					main_pll: main_pll@40 {
+						#address-cells = <1>;
+						#size-cells = <0>;
+						#clock-cells = <0>;
+						compatible = "altr,socfpga-a10-pll-clock";
+						clocks = <&osc1>, <&cb_intosc_ls_clk>,
+							 <&f2s_free_clk>;
+						reg = <0x40>;
+
+						main_mpu_base_clk: main_mpu_base_clk {
+							#clock-cells = <0>;
+							compatible = "altr,socfpga-a10-perip-clk";
+							clocks = <&main_pll>;
+							div-reg = <0x140 0 11>;
+						};
+
+						main_noc_base_clk: main_noc_base_clk {
+							#clock-cells = <0>;
+							compatible = "altr,socfpga-a10-perip-clk";
+							clocks = <&main_pll>;
+							div-reg = <0x144 0 11>;
+						};
+
+						main_emaca_clk: main_emaca_clk@68 {
+							#clock-cells = <0>;
+							compatible = "altr,socfpga-a10-perip-clk";
+							clocks = <&main_pll>;
+							reg = <0x68>;
+						};
+
+						main_emacb_clk: main_emacb_clk@6c {
+							#clock-cells = <0>;
+							compatible = "altr,socfpga-a10-perip-clk";
+							clocks = <&main_pll>;
+							reg = <0x6C>;
+						};
+
+						main_emac_ptp_clk: main_emac_ptp_clk@70 {
+							#clock-cells = <0>;
+							compatible = "altr,socfpga-a10-perip-clk";
+							clocks = <&main_pll>;
+							reg = <0x70>;
+						};
+
+		

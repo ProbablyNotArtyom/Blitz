@@ -1,0 +1,75 @@
+// SPDX-License-Identifier: GPL-2.0
+//
+// Copyright (c) 2011-2014 Samsung Electronics Co., Ltd.
+//		http://www.samsung.com
+//
+// EXYNOS - Power Management support
+//
+// Based on arch/arm/mach-s3c2410/pm.c
+// Copyright (c) 2006 Simtec Electronics
+//	Ben Dooks <ben@simtec.co.uk>
+
+#include <linux/init.h>
+#include <linux/suspend.h>
+#include <linux/cpu_pm.h>
+#include <linux/io.h>
+#include <linux/of.h>
+#include <linux/soc/samsung/exynos-regs-pmu.h>
+#include <linux/soc/samsung/exynos-pmu.h>
+
+#include <asm/firmware.h>
+#include <asm/smp_scu.h>
+#include <asm/suspend.h>
+#include <asm/cacheflush.h>
+
+#include "common.h"
+
+static inline void __iomem *exynos_boot_vector_addr(void)
+{
+	if (samsung_rev() == EXYNOS4210_REV_1_1)
+		return pmu_base_addr + S5P_INFORM7;
+	else if (samsung_rev() == EXYNOS4210_REV_1_0)
+		return sysram_base_addr + 0x24;
+	return pmu_base_addr + S5P_INFORM0;
+}
+
+static inline void __iomem *exynos_boot_vector_flag(void)
+{
+	if (samsung_rev() == EXYNOS4210_REV_1_1)
+		return pmu_base_addr + S5P_INFORM6;
+	else if (samsung_rev() == EXYNOS4210_REV_1_0)
+		return sysram_base_addr + 0x20;
+	return pmu_base_addr + S5P_INFORM1;
+}
+
+#define S5P_CHECK_AFTR  0xFCBA0D10
+
+/* For Cortex-A9 Diagnostic and Power control register */
+static unsigned int save_arm_register[2];
+
+void exynos_cpu_save_register(void)
+{
+	unsigned long tmp;
+
+	/* Save Power control register */
+	asm ("mrc p15, 0, %0, c15, c0, 0"
+	     : "=r" (tmp) : : "cc");
+
+	save_arm_register[0] = tmp;
+
+	/* Save Diagnostic register */
+	asm ("mrc p15, 0, %0, c15, c0, 1"
+	     : "=r" (tmp) : : "cc");
+
+	save_arm_register[1] = tmp;
+}
+
+void exynos_cpu_restore_register(void)
+{
+	unsigned long tmp;
+
+	/* Restore Power control register */
+	tmp = save_arm_register[0];
+
+	asm volatile ("mcr p15, 0, %0, c15, c0, 0"
+		      : : "

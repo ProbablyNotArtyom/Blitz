@@ -1,0 +1,140 @@
+ARM Virtual Generic Interrupt Controller v3 and later (VGICv3)
+==============================================================
+
+
+Device types supported:
+  KVM_DEV_TYPE_ARM_VGIC_V3     ARM Generic Interrupt Controller v3.0
+
+Only one VGIC instance may be instantiated through this API.  The created VGIC
+will act as the VM interrupt controller, requiring emulated user-space devices
+to inject interrupts to the VGIC instead of directly to CPUs.  It is not
+possible to create both a GICv3 and GICv2 on the same VM.
+
+Creating a guest GICv3 device requires a host GICv3 as well.
+
+
+Groups:
+  KVM_DEV_ARM_VGIC_GRP_ADDR
+  Attributes:
+    KVM_VGIC_V3_ADDR_TYPE_DIST (rw, 64-bit)
+      Base address in the guest physical address space of the GICv3 distributor
+      register mappings. Only valid for KVM_DEV_TYPE_ARM_VGIC_V3.
+      This address needs to be 64K aligned and the region covers 64 KByte.
+
+    KVM_VGIC_V3_ADDR_TYPE_REDIST (rw, 64-bit)
+      Base address in the guest physical address space of the GICv3
+      redistributor register mappings. There are two 64K pages for each
+      VCPU and all of the redistributor pages are contiguous.
+      Only valid for KVM_DEV_TYPE_ARM_VGIC_V3.
+      This address needs to be 64K aligned.
+
+    KVM_VGIC_V3_ADDR_TYPE_REDIST_REGION (rw, 64-bit)
+      The attribute data pointed to by kvm_device_attr.addr is a __u64 value:
+      bits:     | 63   ....  52  |  51   ....   16 | 15 - 12  |11 - 0
+      values:   |     count      |       base      |  flags   | index
+      - index encodes the unique redistributor region index
+      - flags: reserved for future use, currently 0
+      - base field encodes bits [51:16] of the guest physical base address
+        of the first redistributor in the region.
+      - count encodes the number of redistributors in the region. Must be
+        greater than 0.
+      There are two 64K pages for each redistributor in the region and
+      redistributors are laid out contiguously within the region. Regions
+      are filled with redistributors in the index order. The sum of all
+      region count fields must be greater than or equal to the number of
+      VCPUs. Redistributor regions must be registered in the incremental
+      index order, starting from index 0.
+      The characteristics of a specific redistributor region can be read
+      by presetting the index field in the attr data.
+      Only valid for KVM_DEV_TYPE_ARM_VGIC_V3.
+
+  It is invalid to mix calls with KVM_VGIC_V3_ADDR_TYPE_REDIST and
+  KVM_VGIC_V3_ADDR_TYPE_REDIST_REGION attributes.
+
+  Errors:
+    -E2BIG:  Address outside of addressable IPA range
+    -EINVAL: Incorrectly aligned address, bad redistributor region
+             count/index, mixed redistributor region attribute usage
+    -EEXIST: Address already configured
+    -ENOENT: Attempt to read the characteristics of a non existing
+             redistributor region
+    -ENXIO:  The group or attribute is unknown/unsupported for this device
+             or hardware support is missing.
+    -EFAULT: Invalid user pointer for attr->addr.
+
+
+  KVM_DEV_ARM_VGIC_GRP_DIST_REGS
+  KVM_DEV_ARM_VGIC_GRP_REDIST_REGS
+  Attributes:
+    The attr field of kvm_device_attr encodes two values:
+    bits:     | 63   ....  32  |  31   ....    0 |
+    values:   |      mpidr     |      offset     |
+
+    All distributor regs are (rw, 32-bit) and kvm_device_attr.addr points to a
+    __u32 value.  64-bit registers must be accessed by separately accessing the
+    lower and higher word.
+
+    Writes to read-only registers are ignored by the kernel.
+
+    KVM_DEV_ARM_VGIC_GRP_DIST_REGS accesses the main distributor registers.
+    KVM_DEV_ARM_VGIC_GRP_REDIST_REGS accesses the redistributor of the CPU
+    specified by the mpidr.
+
+    The offset is relative to the "[Re]Distributor base address" as defined
+    in the GICv3/4 specs.  Getting or setting such a register has the same
+    effect as reading or writing the register on real hardware, except for the
+    following registers: GICD_STATUSR, GICR_STATUSR, GICD_ISPENDR,
+    GICR_ISPENDR0, GICD_ICPENDR, and GICR_ICPENDR0.  These registers behave
+    differently when accessed via this interface compared to their
+    architecturally defined behavior to allow software a full view of the
+    VGIC's internal state.
+
+    The mpidr field is used to specify which
+    redistributor is accessed.  The mpidr is ignored for the distributor.
+
+    The mpidr encoding is based on the affinity information in the
+    architecture defined MPIDR, and the field is encoded as follows:
+      | 63 .... 56 | 55 .... 48 | 47 .... 40 | 39 .... 32 |
+      |    Aff3    |    Aff2    |    Aff1    |    Aff0    |
+
+    Note that distributor fields are not banked, but return the same value
+    regardless of the mpidr used to access the register.
+
+    GICD_IIDR.Revision is updated when the KVM implementation is changed in a
+    way directly observable by the guest or userspace.  Userspace should read
+    GICD_IIDR from KVM and write back the read value to confirm its expected
+    behavior is aligned with the KVM implementation.  Userspace should set
+    GICD_IIDR before setting any other registers to ensure the expected
+    behavior.
+
+
+    The GICD_STATUSR and GICR_STATUSR registers are architecturally defined such
+    that a write of a clear bit has no effect, whereas a write with a set bit
+    clears that value.  To allow userspace to freely set the values of these two
+    registers, setting the attributes with the register offsets for these two
+    registers simply sets the non-reserved bits to the value written.
+
+
+    Accesses (reads and writes) to the GICD_ISPENDR register region and
+    GICR_ISPENDR0 registers get/set the value of the latched pending state for
+    the interrupts.
+
+    This is identical to the value returned by a guest read from ISPENDR for an
+    edge triggered interrupt, but may differ for level triggered interrupts.
+    For edge triggered interrupts, once an interrupt becomes pending (whether
+    because of an edge detected on the input line or because of a guest write
+    to ISPENDR) this state is "latched", and only cleared when either the
+    interrupt is activated or when the guest writes to ICPENDR. A level
+    triggered interrupt may be pending either because the level input is held
+    high by a device, or because of a guest write to the ISPENDR register. Only
+    ISPENDR writes are latched; if the device lowers the line level then the
+    interrupt is no longer pending unless the guest also wrote to ISPENDR, and
+    conversely writes to ICPENDR or activations of the interrupt do not clear
+    the pending status if the line level is still being held high.  (These
+    rules are documented in the GICv3 specification descriptions of the ICPENDR
+    and ISPENDR registers.) For a level triggered interrupt the value accessed
+    here is that of the latch which is set by ISPENDR and cleared by ICPENDR or
+    interrupt activation, whereas the value returned by a guest read from
+    ISPENDR is the logical OR of the latch value and the input line level.
+
+    Raw access to the latch state is provided to userspace 

@@ -1,0 +1,22 @@
+======================
+No New Privileges Flag
+======================
+
+The execve system call can grant a newly-started program privileges that
+its parent did not have.  The most obvious examples are setuid/setgid
+programs and file capabilities.  To prevent the parent program from
+gaining these privileges as well, the kernel and user code must be
+careful to prevent the parent from doing anything that could subvert the
+child.  For example:
+
+ - The dynamic loader handles ``LD_*`` environment variables differently if
+   a program is setuid.
+
+ - chroot is disallowed to unprivileged processes, since it would allow
+   ``/etc/passwd`` to be replaced from the point of view of a process that
+   inherited chroot.
+
+ - The exec code has special handling for ptrace.
+
+These are all ad-hoc fixes.  The ``no_new_privs`` bit (since Linux 3.5) is a
+new, generic mechanism to make it safe for

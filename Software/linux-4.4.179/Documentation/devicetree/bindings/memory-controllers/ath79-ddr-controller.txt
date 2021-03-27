@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR X11)
+/*
+ * at91-sama5d2_ptc_ek.dts - Device Tree file for SAMA5D2 PTC EK board
+ *
+ *  Copyright (C) 2017 Microchip/Atmel,
+ *		  2017 Wenyou Yang <wenyou.yang@microchip.com>
+ *		  2017 Ludovic Desroches <ludovic.desroches@microchip.com>
+ */
+/dts-v1/;
+#include "sama5d2.dtsi"
+#include "sama5d2-pinfunc.h"
+#include <dt-bindings/mfd/atmel-flexcom.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/at91.h>
+
+/ {
+	model = "Atmel SAMA5D2 PTC EK";
+	compatible = "atmel,sama5d2-ptc_ek", "atmel,sama5d2", "atmel,sama5";
+
+	aliases {
+		serial0 = &uart0;
+		i2c0	= &i2c0;
+		i2c1	= &i2c1;
+		i2c2	= &i2c2;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	clocks {
+		slow_xtal {
+			clock-frequency = <32768>;
+		};
+
+		main_xtal {
+			clock-frequency = <24000000>;
+		};
+	};
+
+	ahb {
+		usb0: gadget@300000 {
+			atmel,vbus-gpio = <&pioA PIN_PA27 GPIO_ACTIVE_HIGH>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_usba_vbus>;
+			status = "okay";
+		};
+
+		usb1: ohci@400000 {
+			num-ports = <3>;
+			atmel,vbus-gpio = <0
+					   &pioA PIN_PB12 GPIO_

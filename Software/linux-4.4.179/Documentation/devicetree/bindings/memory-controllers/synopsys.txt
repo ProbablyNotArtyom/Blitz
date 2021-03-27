@@ -1,0 +1,20 @@
+/*
+ * at91-tse850-3.dts - Device Tree file for the Axentia TSE-850 3.0 board
+ *
+ * Copyright (C) 2017 Axentia Technologies AB
+ *
+ * Author: Peter Rosin <peda@axentia.se>
+ *
+ * Licensed under GPLv2 or later.
+ */
+/dts-v1/;
+#include <dt-bindings/pwm/pwm.h>
+#include "at91-linea.dtsi"
+
+/ {
+	model = "Axentia TSE-850 3.0";
+	compatible = "axentia,tse850v3", "axentia,linea",
+		     "atmel,sama5d31", "atmel,sama5d3", "atmel,sama5";
+
+	sck: oscillator {
+		compatible = 

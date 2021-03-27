@@ -1,0 +1,27 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_T2__H__
+#define __ALPHA_T2__H__
+
+/* Fit everything into one 128MB HAE window. */
+#define T2_ONE_HAE_WINDOW 1
+
+#include <linux/types.h>
+#include <linux/spinlock.h>
+#include <asm/compiler.h>
+
+/*
+ * T2 is the internal name for the core logic chipset which provides
+ * memory controller and PCI access for the SABLE-based systems.
+ *
+ * This file is based on:
+ *
+ * SABLE I/O Specification
+ * Revision/Update Information: 1.3
+ *
+ * jestabro@amt.tay1.dec.com Initial Version.
+ *
+ */
+
+#define T2_MEM_R1_MASK 0x07ffffff  /* Mem sparse region 1 mask is 27 bits */
+
+/* GAMMA-SABLE is a SABLE with EV5-base

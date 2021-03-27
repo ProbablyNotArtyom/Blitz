@@ -1,0 +1,26 @@
+/*
+ *  linux/arch/arm/boot/nspire-classic.dts
+ *
+ *  Copyright (C) 2013 Daniel Tang <tangrs@tangrs.id.au>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2, as
+ * published by the Free Software Foundation.
+ *
+ */
+
+/include/ "nspire.dtsi"
+
+&lcd {
+	lcd-type = "classic";
+};
+
+&fast_timer {
+	/* compatible = "lsi,zevio-timer"; */
+	reg = <0x90010000 0x1000>, <0x900A0010 0x8>;
+};
+
+&uart {
+	compatible = "ns16550";
+	reg-shift = <2>;
+	reg-io-wi

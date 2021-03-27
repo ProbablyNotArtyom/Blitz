@@ -1,0 +1,12 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_ENUM_DV_TIMINGS:
+
+***********************************************************
+ioctl VIDIOC_ENUM_DV_TIMINGS, VIDIOC_SUBDEV_ENUM_DV_TIMINGS
+***********************************************************
+
+Name
+====
+
+VIDIOC_ENUM_DV_TIMINGS - VIDIOC_SUBDEV_ENUM_DV_TIMINGS - Enumerate supported Digit

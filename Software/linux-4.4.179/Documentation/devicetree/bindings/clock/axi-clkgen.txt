@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-2.0
+
+
+generic-y += compat.h
+generic-y += exec.h
+generic-y += export.h
+generic-y += fb.h
+generic-y += irq_work.h
+generic-y += mcs_spinlock.h
+generic-y += mm-arch-hooks.h
+generic-y += preempt.h
+generic-y += sections.h
+generic-y += trace_clock.h
+generic-y += current.h
+generic-y += kprobes.h
+ure-in-pictureDiffusion en cours sur l'appareil "$1"En cours de diffusion sur votre téléviseurPassage à la duplication d'écranMauvaise qualité de lectureErreur lors de la lecture de la vidéoAppuyez deux fois à gauche/droite pour reculer/avancer de 10 sPiste $1Impossible de charger le plug-in.Impossible de lire les contenus m

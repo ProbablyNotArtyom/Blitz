@@ -1,0 +1,48 @@
+Name     BZ2;
+PartNo   00;
+Date     7/27/2018;
+Revision 01;
+Designer Engineer;
+Company  notartyom;
+Assembly None;
+Location ;
+Device   g16v8a;
+
+/* *************** INPUT PINS *********************/
+
+PIN 1 = CLK;
+
+PIN 2 = RW_N; 
+PIN 3 = A25;
+PIN 4 = FC0;
+PIN 5 = FC1;
+PIN 6 = FC2;
+PIN 7 = DELAY;
+PIN 8 = WAIT6;
+PIN 9 = WAIT4;
+PIN 11 = DTE;
+
+/* *************** OUTPUT PINS *********************/
+
+PIN 12 = DSACK0;
+PIN 13 = DSACK1;
+PIN 14 = STERM;
+PIN 15 = _RW;
+PIN 16 = RW;
+PIN 17 = DUMMY;
+PIN 18 = FPU;
+PIN 19 = RCLK;
+
+/*-------- LOGIC EQUATIONS --------*/
+
+RCLK = !CLK;
+
+!RW = RW_N;
+!_RW = !RW_N;
+
+!DSACK0 = DTE & !(FC0 & FC1 & FC2) 
+	# !(FC0 & FC1 & FC2) & !DTE & !DELAY;
+DSACK1 = 'b'1;
+STERM = 'b'1; 
+
+FPU = 'b'1; 

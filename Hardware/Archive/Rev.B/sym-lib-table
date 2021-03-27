@@ -1,4 +1,0 @@
-(sym_lib_table
-  (lib (name Blitz-rescue)(type Legacy)(uri ${KIPRJMOD}/Blitz-rescue.lib)(options "")(descr ""))
-  (lib (name Blitz)(type Legacy)(uri ${KIPRJMOD}/../Blitz.lib)(options "")(descr ""))
-)

@@ -1,0 +1,4 @@
+#ttyS0:linux:/bin/sh
+#pppd listen on /dev/ttyS0
+#s1:linux:/bin/pppd /dev/ttyS0 57600 noauth noipdefault defaultroute
+ttyS0:linux:/bin/sh

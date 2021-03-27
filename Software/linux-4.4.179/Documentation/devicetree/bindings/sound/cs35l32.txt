@@ -1,0 +1,107 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * kirkwood-viper.dts - Device Tree file for Linksys viper (E4200v2 / EA4500)
+ *
+ * (c) 2013 Jonas Gorski <jogo@openwrt.org>
+ * (c) 2013 Deutsche Telekom Innovation Laboratories
+ * (c) 2014 Luka Perkov <luka@openwrt.org>
+ * (c) 2014 Randy C. Will <randall.will@gmail.com>
+ *
+ */
+
+/dts-v1/;
+
+#include "kirkwood.dtsi"
+#include "kirkwood-6282.dtsi"
+
+/ {
+	model = "Linksys Viper (E4200v2 / EA4500)";
+	compatible = "linksys,viper", "marvell,kirkwood-88f6282", "marvell,kirkwood";
+
+	memory {
+		device_type = "memory";
+		reg = <0x00000000 0x8000000>;
+	};
+
+	aliases {
+		serial0 = &uart0;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		pinctrl-0 = < &pmx_btn_wps &pmx_btn_reset >;
+		pinctrl-names = "default";
+
+		wps {
+			label = "WPS Button";
+			linux,code = <KEY_WPS_BUTTON>;
+			gpios = <&gpio1 15 GPIO_ACTIVE_LOW>;
+		};
+
+		reset {
+			label = "Reset Button";
+			linux,code = <KEY_RESTART>;
+			gpios = <&gpio1 16 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+		pinctrl-0 = < &pmx_led_white_health &pmx_led_white_pulse >;
+		pinctrl-names = "default";
+
+		white-health {
+			label = "viper:white:health";
+			gpios = <&gpio0 7 GPIO_ACTIVE_HIGH>;
+		};
+
+		white-pulse {
+			label = "viper:white:pulse";
+			gpios = <&gpio0 14 GPIO_ACTIVE_HIGH>;
+		};
+	};
+
+	dsa {
+		status = "disabled";
+
+		compatible = "marvell,dsa";
+		#address-cells = <2>;
+		#size-cells = <0>;
+
+		dsa,ethernet = <&eth0port>;
+		dsa,mii-bus = <&mdio>;
+
+		switch@16,0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <16 0>;	/* MDIO address 16, switch 0 in tree */
+
+			port@0 {
+				reg = <0>;
+				label = "ethernet1";
+			};
+
+			port@1 {
+				reg = <1>;
+				label = "ethernet2";
+			};
+
+			port@2 {
+				reg = <2>;
+				label = "ethernet3";
+			};
+
+			port@3 {
+				reg = <3>;
+				label = "ethernet4";
+			};
+
+			port@4 {
+				reg = <4>;
+				label = "internet";

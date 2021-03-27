@@ -1,0 +1,18 @@
+The x86 kvm shadow mmu
+======================
+
+The mmu (in arch/x86/kvm, files mmu.[ch] and paging_tmpl.h) is responsible
+for presenting a standard x86 mmu to the guest, while translating guest
+physical addresses to host physical addresses.
+
+The mmu code attempts to satisfy the following requirements:
+
+- correctness: the guest should not be able to determine that it is running
+               on an emulated mmu except for timing (we attempt to comply
+               with the specification, not emulate the characteristics of
+               a particular implementation such as tlb size)
+- security:    the guest must not be able to touch host memory not assigned
+               to it
+- performance: minimize the performance penalty imposed by the mmu
+- scaling:     need to scale to large memory and large vcpu guests
+- hardware:    support the

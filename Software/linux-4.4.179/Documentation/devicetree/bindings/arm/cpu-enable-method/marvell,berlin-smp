@@ -1,0 +1,30 @@
+.. _overcommit_accounting:
+
+=====================
+Overcommit Accounting
+=====================
+
+The Linux kernel supports the following overcommit handling modes
+
+0
+	Heuristic overcommit handling. Obvious overcommits of address
+	space are refused. Used for a typical system. It ensures a
+	seriously wild allocation fails while allowing overcommit to
+	reduce swap usage.  root is allowed to allocate slightly more
+	memory in this mode. This is the default.
+
+1
+	Always overcommit. Appropriate for some scientific
+	applications. Classic example is code using sparse arrays and
+	just relying on the virtual memory consisting almost entirely
+	of zero pages.
+
+2
+	Don't overcommit. The total address space commit for the
+	system is not permitted to exceed swap + a configurable amount
+	(default is 50%) of physical RAM.  Depending on the amount you
+	use, in most situations this means a process will not be
+	killed while accessing pages but will receive errors on memory
+	allocation as appropriate.
+
+	Useful for applications that want 

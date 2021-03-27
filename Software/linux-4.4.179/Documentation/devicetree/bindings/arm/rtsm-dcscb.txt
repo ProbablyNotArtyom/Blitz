@@ -1,0 +1,16 @@
+======================================
+Secure Encrypted Virtualization (SEV)
+======================================
+
+Overview
+========
+
+Secure Encrypted Virtualization (SEV) is a feature found on AMD processors.
+
+SEV is an extension to the AMD-V architecture which supports running
+virtual machines (VMs) under the control of a hypervisor. When enabled,
+the memory contents of a VM will be transparently encrypted with a key
+unique to that VM.
+
+The hypervisor can determine the SEV support through the CPUID
+instruction. The CPUI

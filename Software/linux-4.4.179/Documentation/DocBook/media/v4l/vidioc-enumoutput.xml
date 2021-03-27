@@ -1,0 +1,142 @@
+Introduction:
+============
+The Adjunct Processor (AP) facility is an IBM Z cryptographic facility comprised
+of three AP instructions and from 1 up to 256 PCIe cryptographic adapter cards.
+The AP devices provide cryptographic functions to all CPUs assigned to a
+linux system running in an IBM Z system LPAR.
+
+The AP adapter cards are exposed via the AP bus. The motivation for vfio-ap
+is to make AP cards available to KVM guests using the VFIO mediated device
+framework. This implementation relies considerably on the s390 virtualization
+facilities which do most of the hard work of providing direct access to AP
+devices.
+
+AP Architectural Overview:
+=========================
+To facilitate the comprehension of the design, let's start with some
+definitions:
+
+* AP adapter
+
+  An AP adapter is an IBM Z adapter card that can perform cryptographic
+  functions. There can be from 0 to 256 adapters assigned to an LPAR. Adapters
+  assigned to the LPAR in which a linux host is running will be available to
+  the linux host. Each adapter is identified by a number from 0 to 255; however,
+  the maximum adapter number is determined by machine model and/or adapter type.
+  When installed, an AP adapter is accessed by AP instructions executed by any
+  CPU.
+
+  The AP adapter cards are assigned to a given LPAR via the system's Activation
+  Profile which can be edited via the HMC. When the linux host system is IPL'd
+  in the LPAR, the AP bus detects the AP adapter cards assigned to the LPAR and
+  creates a sysfs device for each assigned adapter. For example, if AP adapters
+  4 and 10 (0x0a) are assigned to the LPAR, the AP bus will create the following
+  sysfs device entries:
+
+    /sys/devices/ap/card04
+    /sys/devices/ap/card0a
+
+  Symbolic links to these devices will also be created in the AP bus devices
+  sub-directory:
+
+    /sys/bus/ap/devices/[card04]
+    /sys/bus/ap/devices/[card04]
+
+* AP domain
+
+  An adapter is partitioned into domains. An adapter can hold up to 256 domains
+  depending upon the adapter type and hardware configuration. A domain is
+  identified by a number from 0 to 255; however, the maximum domain number is
+  determined by machine model and/or adapter type.. A domain can be thought of
+  as a set of hardware registers and memory used for processing AP commands. A
+  domain can be configured with a secure private key used for clear key
+  encryption. A domain is classified in one of two ways depending upon how it
+  may be accessed:
+
+    * Usage domains are domains that are targeted by an AP instruction to
+      process an AP command.
+
+    * Control domains are domains that are changed by an AP command sent to a
+      usage domain; for example, to set the secure private key for the control
+      domain.
+
+  The AP usage and control domains are assigned to a given LPAR via the system's
+  Activation Profile which can be edited via the HMC. When a linux host system
+  is IPL'd in the LPAR, the AP bus module detects the AP usage and control
+  domains assigned to the LPAR. The domain number of each usage domain and
+  adapter number of each AP adapter are combined to create AP queue devices
+  (see AP Queue section below). The domain number of each control domain will be
+  represented in a bitmask and stored in a sysfs file
+  /sys/bus/ap/ap_control_domain_mask. The bits in the mask, from most to least
+  significant bit, correspond to domains 0-255.
+
+* AP Queue
+
+  An AP queue is the means by which an AP command is sent to a usage domain
+  inside a specific adapter. An AP queue is identified by a tuple
+  comprised of an AP adapter ID (APID) and an AP queue index (APQI). The
+  APQI corresponds to a given usage domain number within the adapter. This tuple
+  forms an AP Queue Number (APQN) uniquely identifying an AP queue. AP
+  instructions include a field containing the APQN to identify the AP queue to
+  which the AP command is to be sent for processing.
+
+  The AP bus will create a sysfs device for each APQN that can be derived from
+  the cross product of the AP adapter and usage domain numbers detected when the
+  AP bus module is loaded. For example, if adapters 4 and 10 (0x0a) and usage
+  domains 6 and 71 (0x47) are assigned to the LPAR, the AP bus will create the
+  following sysfs entries:
+
+    /sys/devices/ap/card04/04.0006
+    /sys/devices/ap/card04/04.0047
+    /sys/devices/ap/card0a/0a.0006
+    /sys/devices/ap/card0a/0a.0047
+
+  The following symbolic links to these devices will be created in the AP bus
+  devices subdirectory:
+
+    /sys/bus/ap/devices/[04.0006]
+    /sys/bus/ap/devices/[04.0047]
+    /sys/bus/ap/devices/[0a.0006]
+    /sys/bus/ap/devices/[0a.0047]
+
+* AP Instructions:
+
+  There are three AP instructions:
+
+  * NQAP: to enqueue an AP command-request message to a queue
+  * DQAP: to dequeue an AP command-reply message from a queue
+  * PQAP: to administer the queues
+
+  AP instructions identify the domain that is targeted to process the AP
+  command; this must be one of the usage domains. An AP command may modify a
+  domain that is not one of the usage domains, but the modified domain
+  must be one of the control domains.
+
+AP and SIE:
+==========
+Let's now take a look at how AP instructions executed on a guest are interpreted
+by the hardware.
+
+A satellite control block called the Crypto Control Block (CRYCB) is attached to
+our main hardware virtualization control block. The CRYCB contains three fields
+to identify the adapters, usage domains and control domains assigned to the KVM
+guest:
+
+* The AP Mask (APM) field is a bit mask that identifies the AP adapters assigned
+  to the KVM guest. Each bit in the mask, from left to right (i.e. from most
+  significant to least significant bit in big endian order), corresponds to
+  an APID from 0-255. If a bit is set, the corresponding adapter is valid for
+  use by the KVM guest.
+
+* The AP Queue Mask (AQM) field is a bit mask identifying the AP usage domains
+  assigned to the KVM guest. Each bit in the mask, from left to right (i.e. from
+  most significant to least significant bit in big endian order), corresponds to
+  an AP queue index (APQI) from 0-255. If a bit is set, the corresponding queue
+  is valid for use by the KVM guest.
+
+* The AP Domain Mask field is a bit mask that identifies the AP control domains
+  assigned to the KVM guest. The ADM bit mask controls which domains can be
+  changed by an AP command-request message sent to a usage domain from the
+  guest. Each bit in the mask, from left to right (i.e. from most significant to
+  least significant bit in big endian order), corresponds to a domain from
+  0-255. If

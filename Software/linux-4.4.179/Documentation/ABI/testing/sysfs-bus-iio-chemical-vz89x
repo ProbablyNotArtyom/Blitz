@@ -1,0 +1,18 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_S_HW_FREQ_SEEK:
+
+***************************
+ioctl VIDIOC_S_HW_FREQ_SEEK
+***************************
+
+Name
+====
+
+VIDIOC_S_HW_FREQ_SEEK - Perform a hardware frequency seek
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_S

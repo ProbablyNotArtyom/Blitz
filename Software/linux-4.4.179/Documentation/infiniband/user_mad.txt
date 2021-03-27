@@ -1,0 +1,202 @@
+/*
+ * Copyright (C) 2015, 2016 Zodiac Inflight Innovations
+ *
+ * Based on an original 'vf610-twr.dts' which is Copyright 2015,
+ * Freescale Semiconductor, Inc.
+ *
+ * This file is dual-licensed: you can use it either under the terms
+ * of the GPL or the X11 license, at your option. Note that this dual
+ * licensing only applies to this file, and not this project as a
+ * whole.
+ *
+ *  a) This file is free software; you can redistribute it and/or
+ *     modify it under the terms of the GNU General Public License
+ *     version 2 as published by the Free Software Foundation.
+ *
+ *     This file is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ * Or, alternatively,
+ *
+ *  b) Permission is hereby granted, free of charge, to any person
+ *     obtaining a copy of this software and associated documentation
+ *     files (the "Software"), to deal in the Software without
+ *     restriction, including without limitation the rights to use,
+ *     copy, modify, merge, publish, distribute, sublicense, and/or
+ *     sell copies of the Software, and to permit persons to whom the
+ *     Software is furnished to do so, subject to the following
+ *     conditions:
+ *
+ *     The above copyright notice and this permission notice shall be
+ *     included in all copies or substantial portions of the Software.
+ *
+ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ *     OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+/dts-v1/;
+#include "vf610-zii-dev.dtsi"
+
+/ {
+	model = "ZII VF610 Development Board, Rev B";
+	compatible = "zii,vf610dev-b", "zii,vf610dev", "fsl,vf610";
+
+	mdio-mux {
+		compatible = "mdio-mux-gpio";
+		pinctrl-0 = <&pinctrl_mdio_mux>;
+		pinctrl-names = "default";
+		gpios = <&gpio0 8  GPIO_ACTIVE_HIGH
+			 &gpio0 9  GPIO_ACTIVE_HIGH
+			 &gpio0 24 GPIO_ACTIVE_HIGH
+			 &gpio0 25 GPIO_ACTIVE_HIGH>;
+		mdio-parent-bus = <&mdio1>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		mdio_mux_1: mdio@1 {
+			reg = <1>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			switch0: switch@0 {
+				compatible = "marvell,mv88e6085";
+				pinctrl-0 = <&pinctrl_gpio_switch0>;
+				pinctrl-names = "default";
+				reg = <0>;
+				dsa,member = <0 0>;
+				interrupt-parent = <&gpio0>;
+				interrupts = <27 IRQ_TYPE_LEVEL_LOW>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				eeprom-length = <512>;
+
+				ports {
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					port@0 {
+						reg = <0>;
+						label = "lan0";
+						phy-handle = <&switch0phy0>;
+					};
+
+					port@1 {
+						reg = <1>;
+						label = "lan1";
+						phy-handle = <&switch0phy1>;
+					};
+
+					port@2 {
+						reg = <2>;
+						label = "lan2";
+						phy-handle = <&switch0phy2>;
+					};
+
+					switch0port5: port@5 {
+						reg = <5>;
+						label = "dsa";
+						phy-mode = "rgmii-txid";
+						link = <&switch1port6
+							&switch2port9>;
+						fixed-link {
+							speed = <1000>;
+							full-duplex;
+						};
+					};
+
+					port@6 {
+						reg = <6>;
+						label = "cpu";
+						ethernet = <&fec1>;
+
+						fixed-link {
+							speed = <100>;
+							full-duplex;
+						};
+					};
+				};
+				mdio {
+					#address-cells = <1>;
+					#size-cells = <0>;
+					switch0phy0: switch0phy0@0 {
+						reg = <0>;
+						interrupt-parent = <&switch0>;
+						interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+					};
+					switch0phy1: switch1phy0@1 {
+						reg = <1>;
+						interrupt-parent = <&switch0>;
+						interrupts = <1 IRQ_TYPE_LEVEL_HIGH>;
+					};
+					switch0phy2: switch1phy0@2 {
+						reg = <2>;
+						interrupt-parent = <&switch0>;
+						interrupts = <2 IRQ_TYPE_LEVEL_HIGH>;
+					};
+				};
+			};
+		};
+
+		mdio_mux_2: mdio@2 {
+			reg = <2>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			switch1: switch@0 {
+				compatible = "marvell,mv88e6085";
+				pinctrl-0 = <&pinctrl_gpio_switch1>;
+				pinctrl-names = "default";
+				reg = <0>;
+				dsa,member = <0 1>;
+				interrupt-parent = <&gpio0>;
+				interrupts = <26 IRQ_TYPE_LEVEL_LOW>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				eeprom-length = <512>;
+
+				ports {
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					port@0 {
+						reg = <0>;
+						label = "lan3";
+						phy-handle = <&switch1phy0>;
+					};
+
+					port@1 {
+						reg = <1>;
+						label = "lan4";
+						phy-handle = <&switch1phy1>;
+					};
+
+					port@2 {
+						reg = <2>;
+						label = "lan5";
+						phy-handle = <&switch1phy2>;
+					};
+
+					switch1port5: port@5 {
+						reg = <5>;
+						label = "dsa";
+						link = <&switch2port9>;
+						phy-mode = "rgmii-txid";
+
+						fixed-link {
+							speed = <1000>;
+							full-duplex;
+						};
+					};
+
+					switch1port6: port@6 {
+						reg = <6>;
+						label = "dsa";
+						p

@@ -1,0 +1,82 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright 2018
+ * Lukasz Majewski, DENX Software Engineering, lukma@denx.de
+ */
+
+/dts-v1/;
+#include "imx53-kp.dtsi"
+
+/ {
+	model = "K+P imx53 DDC";
+	compatible = "kiebackpeter,imx53-ddc", "fsl,imx53";
+
+	backlight_lcd: backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pwm2 0 50000>;
+		power-supply = <&reg_backlight>;
+		brightness-levels = <0 24 28 32 36
+				     40 44 48 52 56
+				     60 64 68 72 76
+				     80 84 88 92 96 100>;
+		default-brightness-level = <20>;
+	};
+
+	lcd_display: display {
+		compatible = "fsl,imx-parallel-display";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		interface-pix-fmt = "rgb24";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_disp>;
+
+		port@0 {
+			reg = <0>;
+
+			display1_in: endpoint {
+				remote-endpoint = <&ipu_di1_disp1>;
+			};
+		};
+
+		port@1 {
+			reg = <1>;
+
+			lcd_display_out: endpoint {
+				remote-endpoint = <&lcd_panel_in>;
+			};
+		};
+	};
+
+	lcd_panel: lcd-panel {
+		compatible = "koe,tx14d24vm1bpa";
+		backlight = <&backlight_lcd>;
+		power-supply = <&reg_3v3>;
+
+		port {
+			lcd_panel_in: endpoint {
+				remote-endpoint = <&lcd_display_out>;
+			};
+		};
+	};
+
+	reg_backlight: regulator-backlight {
+		compatible = "regulator-fixed";
+		regulator-name = "backlight-supply";
+		regulator-min-microvolt = <15000000>;
+		regulator-max-microvolt = <15000000>;
+		regulator-always-on;
+	};
+};
+
+&fec {
+	status = "okay";
+};
+
+&i2c3 {
+	adc@48 {
+		compatible = "ti,ads1015";
+		reg = <0x48>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		channel@

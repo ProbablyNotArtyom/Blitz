@@ -1,0 +1,41 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_SUBDEV_ENUM_FRAME_INTERVAL:
+
+***************************************
+ioctl VIDIOC_SUBDEV_ENUM_FRAME_INTERVAL
+***************************************
+
+Name
+====
+
+VIDIOC_SUBDEV_ENUM_FRAME_INTERVAL - Enumerate frame intervals
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_SUBDEV_ENUM_FRAME_INTERVAL, struct v4l2_subdev_frame_interval_enum * argp )
+    :name: VIDIOC_SUBDEV_ENUM_FRAME_INTERVAL
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_subdev_frame_interval_enum`.
+
+
+Description
+===========
+
+This ioctl lets applications enumerate available frame intervals on a
+given sub-device pad. Frame intervals only makes sense for sub-devices
+that can control the frame period on their own. This includes, for
+instance, image sensors and TV tuners.
+
+For the common use case of image sensors, the frame intervals available
+on the sub-device output pad depend

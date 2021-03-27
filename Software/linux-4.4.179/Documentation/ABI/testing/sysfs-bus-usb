@@ -1,0 +1,184 @@
+The gspca cards list
+====================
+
+The modules for the gspca webcam drivers are:
+
+- gspca_main: main driver
+- gspca\_\ *driver*: subdriver module with *driver* as follows
+
+=========	=========	===================================================================
+*driver*	vend:prod	Device
+=========	=========	===================================================================
+spca501         0000:0000	MystFromOri Unknown Camera
+spca508         0130:0130	Clone Digital Webcam 11043
+se401           03e8:0004	Endpoints/AoxSE401
+zc3xx           03f0:1b07	HP Premium Starter Cam
+m5602           0402:5602	ALi Video Camera Controller
+spca501         040a:0002	Kodak DVC-325
+spca500         040a:0300	Kodak EZ200
+zc3xx           041e:041e	Creative WebCam Live!
+ov519           041e:4003	Video Blaster WebCam Go Plus
+stv0680         041e:4007	Go Mini
+spca500         041e:400a	Creative PC-CAM 300
+sunplus         041e:400b	Creative PC-CAM 600
+sunplus         041e:4012	PC-Cam350
+sunplus         041e:4013	Creative Pccam750
+zc3xx           041e:4017	Creative Webcam Mobile PD1090
+spca508         041e:4018	Creative Webcam Vista (PD1100)
+spca561         041e:401a	Creative Webcam Vista (PD1100)
+zc3xx           041e:401c	Creative NX
+spca505         041e:401d	Creative Webcam NX ULTRA
+zc3xx           041e:401e	Creative Nx Pro
+zc3xx           041e:401f	Creative Webcam Notebook PD1171
+zc3xx           041e:4022	Webcam NX Pro
+pac207          041e:4028	Creative Webcam Vista Plus
+zc3xx           041e:4029	Creative WebCam Vista Pro
+zc3xx           041e:4034	Creative Instant P0620
+zc3xx           041e:4035	Creative Instant P0620D
+zc3xx           041e:4036	Creative Live !
+sq930x          041e:4038	Creative Joy-IT
+zc3xx           041e:403a	Creative Nx Pro 2
+spca561         041e:403b	Creative Webcam Vista (VF0010)
+sq930x          041e:403c	Creative Live! Ultra
+sq930x          041e:403d	Creative Live! Ultra for Notebooks
+sq930x          041e:4041	Creative Live! Motion
+zc3xx           041e:4051	Creative Live!Cam Notebook Pro (VF0250)
+ov519           041e:4052	Creative Live! VISTA IM
+zc3xx           041e:4053	Creative Live!Cam Video IM
+vc032x          041e:405b	Creative Live! Cam Notebook Ultra (VC0130)
+ov519           041e:405f	Creative Live! VISTA VF0330
+ov519           041e:4060	Creative Live! VISTA VF0350
+ov519           041e:4061	Creative Live! VISTA VF0400
+ov519           041e:4064	Creative Live! VISTA VF0420
+ov519           041e:4067	Creative Live! Cam Video IM (VF0350)
+ov519           041e:4068	Creative Live! VISTA VF0470
+sn9c2028        0458:7003	GeniusVideocam Live v2
+spca561         0458:7004	Genius VideoCAM Express V2
+sn9c2028        0458:7005	Genius Smart 300, version 2
+sunplus         0458:7006	Genius Dsc 1.3 Smart
+zc3xx           0458:7007	Genius VideoCam V2
+zc3xx           0458:700c	Genius VideoCam V3
+zc3xx           0458:700f	Genius VideoCam Web V2
+sonixj          0458:7025	Genius Eye 311Q
+sn9c20x         0458:7029	Genius Look 320s
+sonixj          0458:702e	Genius Slim 310 NB
+sn9c20x         0458:7045	Genius Look 1320 V2
+sn9c20x         0458:704a	Genius Slim 1320
+sn9c20x         0458:704c	Genius i-Look 1321
+sn9c20x         045e:00f4	LifeCam VX-6000 (SN9C20x + OV9650)
+sonixj          045e:00f5	MicroSoft VX3000
+sonixj          045e:00f7	MicroSoft VX1000
+ov519           045e:028c	Micro$oft xbox cam
+kinect          045e:02ae	Xbox NUI Camera
+kinect          045e:02bf	Kinect for Windows NUI Camera
+spca561         0461:0815	Micro Innovations IC200 Webcam
+sunplus         0461:0821	Fujifilm MV-1
+zc3xx           0461:0a00	MicroInnovation WebCam320
+stv06xx         046D:08F0	QuickCamMessenger
+stv06xx         046D:08F5	QuickCamCommunicate
+stv06xx         046D:08F6	QuickCamMessenger (new)
+stv06xx         046d:0840	QuickCamExpress
+stv06xx         046d:0850	LEGOcam / QuickCam Web
+stv06xx         046d:0870	DexxaWebCam USB
+spca500         046d:0890	Logitech QuickCam traveler
+vc032x          046d:0892	Logitech Orbicam
+vc032x          046d:0896	Logitech Orbicam
+vc032x          046d:0897	Logitech QuickCam for Dell notebooks
+zc3xx           046d:089d	Logitech QuickCam E2500
+zc3xx           046d:08a0	Logitech QC IM
+zc3xx           046d:08a1	Logitech QC IM 0x08A1 +sound
+zc3xx           046d:08a2	Labtec Webcam Pro
+zc3xx           046d:08a3	Logitech QC Chat
+zc3xx           046d:08a6	Logitech QCim
+zc3xx           046d:08a7	Logitech QuickCam Image
+zc3xx           046d:08a9	Logitech Notebook Deluxe
+zc3xx           046d:08aa	Labtec Webcam Notebook
+zc3xx           046d:08ac	Logitech QuickCam Cool
+zc3xx           046d:08ad	Logitech QCCommunicate STX
+zc3xx           046d:08ae	Logitech QuickCam for Notebooks
+zc3xx           046d:08af	Logitech QuickCam Cool
+zc3xx           046d:08b9	Logitech QuickCam Express
+zc3xx           046d:08d7	Logitech QCam STX
+zc3xx           046d:08d8	Logitech Notebook Deluxe
+zc3xx           046d:08d9	Logitech QuickCam IM/Connect
+zc3xx           046d:08da	Logitech QuickCam Messenger
+zc3xx           046d:08dd	Logitech QuickCam for Notebooks
+spca500         046d:0900	Logitech Inc. ClickSmart 310
+spca500         046d:0901	Logitech Inc. ClickSmart 510
+sunplus         046d:0905	Logitech ClickSmart 820
+tv8532          046d:0920	Logitech QuickCam Express
+tv8532          046d:0921	Labtec Webcam
+spca561         046d:0928	Logitech QC Express Etch2
+spca561         046d:0929	Labtec Webcam Elch2
+spca561         046d:092a	Logitech QC for Notebook
+spca561         046d:092b	Labtec Webcam Plus
+spca561         046d:092c	Logitech QC chat Elch2
+spca561         046d:092d	Logitech QC Elch2
+spca561         046d:092e	Logitech QC Elch2
+spca561         046d:092f	Logitech QuickCam Express Plus
+sunplus         046d:0960	Logitech ClickSmart 420
+nw80x           046d:d001	Logitech QuickCam Pro (dark focus ring)
+se401           0471:030b	PhilipsPCVC665K
+sunplus         0471:0322	Philips DMVC1300K
+zc3xx           0471:0325	Philips SPC 200 NC
+zc3xx           0471:0326	Philips SPC 300 NC
+sonixj          0471:0327	Philips SPC 600 NC
+sonixj          0471:0328	Philips SPC 700 NC
+zc3xx           0471:032d	Philips SPC 210 NC
+zc3xx           0471:032e	Philips SPC 315 NC
+sonixj          0471:0330	Philips SPC 710 NC
+se401           047d:5001	Kensington67014
+se401           047d:5002	Kensington6701(5/7)
+se401           047d:5003	Kensington67016
+spca501         0497:c001	Smile International
+sunplus         04a5:3003	Benq DC 1300
+sunplus         04a5:3008	Benq DC 1500
+sunplus         04a5:300a	Benq DC 3410
+spca500         04a5:300c	Benq DC 1016
+benq            04a5:3035	Benq DC E300
+vicam           04c1:009d	HomeConnect Webcam [vicam]
+konica          04c8:0720	IntelYC 76
+finepix         04cb:0104	Fujifilm FinePix 4800
+finepix         04cb:0109	Fujifilm FinePix A202
+finepix         04cb:010b	Fujifilm FinePix A203
+finepix         04cb:010f	Fujifilm FinePix A204
+finepix         04cb:0111	Fujifilm FinePix A205
+finepix         04cb:0113	Fujifilm FinePix A210
+finepix         04cb:0115	Fujifilm FinePix A303
+finepix         04cb:0117	Fujifilm FinePix A310
+finepix         04cb:0119	Fujifilm FinePix F401
+finepix         04cb:011b	Fujifilm FinePix F402
+finepix         04cb:011d	Fujifilm FinePix F410
+finepix         04cb:0121	Fujifilm FinePix F601
+finepix         04cb:0123	Fujifilm FinePix F700
+finepix         04cb:0125	Fujifilm FinePix M603
+finepix         04cb:0127	Fujifilm FinePix S300
+finepix         04cb:0129	Fujifilm FinePix S304
+finepix         04cb:012b	Fujifilm FinePix S500
+finepix         04cb:012d	Fujifilm FinePix S602
+finepix         04cb:012f	Fujifilm FinePix S700
+finepix         04cb:0131	Fujifilm FinePix unknown model
+finepix         04cb:013b	Fujifilm FinePix unknown model
+finepix         04cb:013d	Fujifilm FinePix unknown model
+finepix         04cb:013f	Fujifilm FinePix F420
+sunplus         04f1:1001	JVC GC A50
+spca561         04fc:0561	Flexcam 100
+spca1528        04fc:1528	Sunplus MD80 clone
+sunplus         04fc:500c	Sunplus CA500C
+sunplus         04fc:504a	Aiptek Mini PenCam 1.3
+sunplus         04fc:504b	Maxell MaxPocket LE 1.3
+sunplus         04fc:5330	Digitrex 2110
+sunplus         04fc:5360	Sunplus Generic
+spca500         04fc:7333	PalmPixDC85
+sunplus         04fc:ffff	Pure DigitalDakota
+nw80x           0502:d001	DVC V6
+spca501         0506:00df	3Com HomeConnect Lite
+sunplus         052b:1507	Megapixel 5 Pretec DC-1007
+sunplus         052b:1513	Megapix V4
+sunplus         052b:1803	MegaImage VI
+nw80x           052b:d001	EZCam Pro p35u
+tv8532          0545:808b	Veo Stingray
+tv8532          0545:8333	Veo Stingray
+sunplus         0546:3155	Polaroid PDC3070
+sunplus         0546:3191	Polaroid Ion 80
+sunplus         0546:3273	Polaroid P

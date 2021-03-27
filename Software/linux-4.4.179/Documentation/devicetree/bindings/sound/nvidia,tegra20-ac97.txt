@@ -1,0 +1,59 @@
+/*
+ * Common base for NXP LPC18xx and LPC43xx devices.
+ *
+ * Copyright 2015 Joachim Eastwood <manabian@gmail.com>
+ *
+ * This code is released using a dual license strategy: BSD/GPL
+ * You can choose the licence that better fits your requirements.
+ *
+ * Released under the terms of 3-clause BSD License
+ * Released under the terms of GNU General Public License Version 2.0
+ *
+ */
+
+#include "armv7-m.dtsi"
+
+#include "dt-bindings/clock/lpc18xx-cgu.h"
+#include "dt-bindings/clock/lpc18xx-ccu.h"
+
+#define LPC_PIN(port, pin)	(0x##port * 32 + pin)
+#define LPC_GPIO(port, pin)	(port * 32 + pin)
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			compatible = "arm,cortex-m3";
+			device_type = "cpu";
+			reg = <0x0>;
+			clocks = <&ccu1 CLK_CPU_CORE>;
+		};
+	};
+
+	clocks {
+		xtal: xtal {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <12000000>;
+		};
+
+		xtal32: xtal32 {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <32768>;
+		};
+
+		enet_rx_clk: enet_rx_clk {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <0>;
+			clock-output-names = "enet_rx_clk";
+		};
+
+		enet_tx_clk: enet_tx_clk {
+			compati

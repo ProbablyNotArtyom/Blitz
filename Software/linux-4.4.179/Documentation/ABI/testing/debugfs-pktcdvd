@@ -1,0 +1,29 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_ENUMINPUT:
+
+**********************
+ioctl VIDIOC_ENUMINPUT
+**********************
+
+Name
+====
+
+VIDIOC_ENUMINPUT - Enumerate video inputs
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_ENUMINPUT, struct v4l2_input *argp )
+    :name: VIDIOC_ENUMINPUT
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_in

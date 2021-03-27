@@ -1,0 +1,125 @@
+init/main.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/system.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/io.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/types.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fcntl.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/sched.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/kernel.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/tty.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/head.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/unistd.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/string.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/timer.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/fs.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ctype.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/delay.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/utsname.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/ioport.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/hdreg.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/mm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/major.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/blk.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/root/nfs.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/nfs_fs.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/mtrr.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/apm.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/apm_bios.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m68360.h) \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/quicc_cpm.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/asm/bugs.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cdu31a.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/mcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/mcdx.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sbpcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/aztcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cdu535.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/gscd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cm206.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/optcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sjcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/isp16/cdi.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/ram.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/initrd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/isdn/drv/icn.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/isdn/drv/hisax.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/isdn/drv/pcbit.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atarimouse.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/dmasound.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/atari/scsi.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/cyclades.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/digi.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/riscom8.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/specialix.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/baycom.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/lcddma.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/dac0800.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/pwm.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ad1845.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/m5249audio.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ds1302.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/exp.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/daci2s.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/t6963/dma.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/t6963/pio.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/paride/pd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/paride/pf.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/paride/pt.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/paride/pg.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/paride/pcd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/cpq/da.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/cpq/da/eisa.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sysvipc.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/kerneld.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sed/sios.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/profile/shift.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/console.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/bugi386.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/inet.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/printer.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/advansys.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/hd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/chr/dev/st.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/busmouse.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ms/busmouse.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/seagate.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/t128.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/pas16.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/generic/ncr5380.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/aha152x.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/aha1542.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/gdth.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/aic7xxx.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/buslogic.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/ncr53c8xx.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/eata.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/u14/34f.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/am53c974.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/ncr53c406a.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/sym53c416.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/future/domain.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/in2000.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/7000fasst.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/ppa.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/dc390t.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/scsi/dc390t/nogensupp.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/xd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/fd.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/sound.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/a3000/scsi.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/a2091/scsi.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/gvp11/scsi.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/ledman.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/ide.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/smp.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/blk/dev/dac960.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/modules.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/profile.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/pci.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/uclinux.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/coldfire.h) \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/umsdos/fs.h)
+init/version.o: \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/utsname.h \
+   /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/linux/version.h \
+   $(wildcard /home/artyom/Desktop/Projects/BBlitz/Software/C/uClinux-20040218-dist/linux-2.0.x/include/config/bogus.h)

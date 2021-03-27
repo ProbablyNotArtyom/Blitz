@@ -1,0 +1,85 @@
+.. include:: <isonum.txt>
+
+The Samsung S5P/EXYNOS4 FIMC driver
+===================================
+
+Copyright |copy| 2012 - 2013 Samsung Electronics Co., Ltd.
+
+The FIMC (Fully Interactive Mobile Camera) device available in Samsung
+SoC Application Processors is an integrated camera host interface, color
+space converter, image resizer and rotator.  It's also capable of capturing
+data from LCD controller (FIMD) through the SoC internal writeback data
+path.  There are multiple FIMC instances in the SoCs (up to 4), having
+slightly different capabilities, like pixel alignment constraints, rotator
+availability, LCD writeback support, etc. The driver is located at
+drivers/media/platform/exynos4-is directory.
+
+Supported SoCs
+--------------
+
+S5PC100 (mem-to-mem only), S5PV210, EXYNOS4210
+
+Supported features
+------------------
+
+- camera parallel interface capture (ITU-R.BT601/565);
+- camera serial interface capture (MIPI-CSI2);
+- memory-to-memory processing (color space conversion, scaling, mirror
+  and rotation);
+- dynamic pipeline re-configuration at runtime (re-attachment of any FIMC
+  instance to any parallel video input or any MIPI-CSI front-end);
+- runtime PM and system wide suspend/resume
+
+Not currently supported
+-----------------------
+
+- LCD writeback input
+- per frame clock gating (mem-to-mem)
+
+Files partitioning
+------------------
+
+- media device driver
+  drivers/media/platform/exynos4-is/media-dev.[ch]
+
+- camera capture video device driver
+  drivers/media/platform/exynos4-is/fimc-capture.c
+
+- MIPI-CSI2 receiver subdev
+  drivers/media/platform/exynos4-is/mipi-csis.[ch]
+
+- video post-processor (mem-to-mem)
+  drivers/media/platform/exynos4-is/fimc-core.c
+
+- common files
+  drivers/media/platform/exynos4-is/fimc-core.h
+  drivers/media/platform/exynos4-is/fimc-reg.h
+  drivers/media/platform/exynos4-is/regs-fimc.h
+
+User space interfaces
+---------------------
+
+Media device interface
+~~~~~~~~~~~~~~~~~~~~~~
+
+The driver supports Media Controller API as defined at :ref:`media_controller`.
+The media device driver name is "SAMSUNG S5P FIMC".
+
+The purpose of this interface is to allow changing assignment of FIMC instances
+to the SoC peripheral camera input at runtime and optionally to control internal
+connections of the MIPI-CSIS device(s) to the FIMC entities.
+
+The media device interface allows to configure the SoC for capturing image
+data from the sensor through more than one FIMC instance (e.g. for simultaneous
+viewfinder and still capture setup).
+Reconfiguration is done by enabling/disabling media links created by the driver
+during initialization. The internal device topology can be easily discovered
+through media entity and links enumeration.
+
+Memory-to-memory video node
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+V4L2 memory-to-memory interface at /dev/video? device node.  This is standalone
+video device, it has no media pads. However please note the mem-to-mem and
+capture video node operation on same FIMC instance is not allowed.  The driver
+d

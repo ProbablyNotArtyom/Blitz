@@ -1,0 +1,44 @@
+# -*- coding: utf-8; mode: python -*-
+# pylint: disable=C0103, R0903, R0912, R0915
+u"""
+    scalable figure and image handling
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Sphinx extension which implements scalable image handling.
+
+    :copyright:  Copyright (C) 2016  Markus Heiser
+    :license:    GPL Version 2, June 1991 see Linux/COPYING for details.
+
+    The build for image formats depend on image's source format and output's
+    destination format. This extension implement methods to simplify image
+    handling from the author's POV. Directives like ``kernel-figure`` implement
+    methods *to* always get the best output-format even if some tools are not
+    installed. For more details take a look at ``convert_image(...)`` which is
+    the core of all conversions.
+
+    * ``.. kernel-image``: for image handling / a ``.. image::`` replacement
+
+    * ``.. kernel-figure``: for figure handling / a ``.. figure::`` replacement
+
+    * ``.. kernel-render``: for render markup / a concept to embed *render*
+      markups (or languages). Supported markups (see ``RENDER_MARKUP_EXT``)
+
+      - ``DOT``: render embedded Graphviz's **DOC**
+      - ``SVG``: render embedded Scalable Vector Graphics (**SVG**)
+      - ... *developable*
+
+    Used tools:
+
+    * ``dot(1)``: Graphviz (http://www.graphviz.org). If Graphviz is not
+      available, the DOT language is inserted as literal-block.
+
+    * SVG to PDF: To generate PDF, you need at least one of this tools:
+
+      - ``convert(1)``: ImageMagick (https://www.imagemagick.org)
+
+    List of customizations:
+
+    * generate PDF from SVG / used by PDF (LaTeX) builder
+
+    * generate SVG (html-builder) and PDF (latex-builder) from DOT files.
+      DOT: see http

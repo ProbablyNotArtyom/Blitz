@@ -1,0 +1,73 @@
+/*
+ *  linux/arch/arm/kernel/setup.c
+ *
+ *  Copyright (C) 1995-2001 Russell King
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+#include <linux/efi.h>
+#include <linux/export.h>
+#include <linux/kernel.h>
+#include <linux/stddef.h>
+#include <linux/ioport.h>
+#include <linux/delay.h>
+#include <linux/utsname.h>
+#include <linux/initrd.h>
+#include <linux/console.h>
+#include <linux/seq_file.h>
+#include <linux/screen_info.h>
+#include <linux/of_platform.h>
+#include <linux/init.h>
+#include <linux/kexec.h>
+#include <linux/of_fdt.h>
+#include <linux/cpu.h>
+#include <linux/interrupt.h>
+#include <linux/smp.h>
+#include <linux/proc_fs.h>
+#include <linux/memblock.h>
+#include <linux/bug.h>
+#include <linux/compiler.h>
+#include <linux/sort.h>
+#include <linux/psci.h>
+
+#include <asm/unified.h>
+#include <asm/cp15.h>
+#include <asm/cpu.h>
+#include <asm/cputype.h>
+#include <asm/efi.h>
+#include <asm/elf.h>
+#include <asm/early_ioremap.h>
+#include <asm/fixmap.h>
+#include <asm/procinfo.h>
+#include <asm/psci.h>
+#include <asm/sections.h>
+#include <asm/setup.h>
+#include <asm/smp_plat.h>
+#include <asm/mach-types.h>
+#include <asm/cacheflush.h>
+#include <asm/cachetype.h>
+#include <asm/tlbflush.h>
+#include <asm/xen/hypervisor.h>
+
+#include <asm/prom.h>
+#include <asm/mach/arch.h>
+#include <asm/mach/irq.h>
+#include <asm/mach/time.h>
+#include <asm/system_info.h>
+#include <asm/system_misc.h>
+#include <asm/traps.h>
+#include <asm/unwind.h>
+#include <asm/memblock.h>
+#include <asm/virt.h>
+
+#include "atags.h"
+
+
+#if defined(CONFIG_FPE_NWFPE) || defined(CONFIG_FPE_FASTFPE)
+char fpe_type[8];
+
+static int __init fpe_setup(char *line)
+{
+	memcpy(

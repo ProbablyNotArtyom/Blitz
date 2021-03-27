@@ -1,0 +1,16 @@
+USB Legacy support
+~~~~~~~~~~~~~~~~~~
+
+Vojtech Pavlik <vojtech@suse.cz>, January 2004
+
+
+Also known as "USB Keyboard" or "USB Mouse support" in the BIOS Setup is a
+feature that allows one to use the USB mouse and keyboard as if they were
+their classic PS/2 counterparts.  This means one can use an USB keyboard to
+type in LILO for example.
+
+It has several drawbacks, though:
+
+1) On some machines, the emulated PS/2 mouse takes over even when no USB
+   mouse is present and a real PS/2 mouse is present.  In that case the extra
+   features (wheel, extra button

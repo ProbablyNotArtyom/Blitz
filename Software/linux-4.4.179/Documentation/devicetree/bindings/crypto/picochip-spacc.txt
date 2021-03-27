@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *  linux/arch/alpha/kernel/core_wildfire.c
+ *
+ *  Wildfire support.
+ *
+ *  Copyright (C) 2000 Andrea Arcangeli <andrea@suse.de> SuSE
+ */
+
+#define __EXTERN_INLINE inline
+#include <asm/io.h>
+#include <asm/core_wildfire.h>
+#undef __EXTERN_INLINE
+
+#include <linux/types.h>
+#include <linux/pci.h>
+#include <linux/sched.h>
+#include <linux/init.h>
+
+#include <asm/ptrace.h>
+#include <asm/smp.h>
+
+#include "proto.h"
+#include "pci_impl.h"
+
+#define DEBUG_CONFIG 0
+#define DEBUG_DUMP_REGS 0
+#define DEBUG_DUMP_CONFIG 1
+
+#if DEBUG_CONFIG
+# define DBG_CFG(args)	printk args
+#else
+# define DBG_CFG(args)
+#endif
+
+#if DEBUG_DUMP_REGS
+static void wildfire_dump_pci_regs(int qbbno, int hoseno);
+static void wildfire_dump_pca_regs(int qbbno, int pcano);
+static void wil

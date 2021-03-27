@@ -1,0 +1,113 @@
+
+-------
+PHY Abstraction Layer
+(Updated 2008-04-08)
+
+Purpose
+
+ Most network devices consist of set of registers which provide an interface
+ to a MAC layer, which communicates with the physical connection through a
+ PHY.  The PHY concerns itself with negotiating link parameters with the link
+ partner on the other side of the network connection (typically, an ethernet
+ cable), and provides a register interface to allow drivers to determine what
+ settings were chosen, and to configure what settings are allowed.
+
+ While these devices are distinct from the network devices, and conform to a
+ standard layout for the registers, it has been common practice to integrate
+ the PHY management code with the network driver.  This has resulted in large
+ amounts of redundant code.  Also, on embedded systems with multiple (and
+ sometimes quite different) ethernet controllers connected to the same 
+ management bus, it is difficult to ensure safe use of the bus.
+
+ Since the PHYs are devices, and the management busses through which they are
+ accessed are, in fact, busses, the PHY Abstraction Layer treats them as such.
+ In doing so, it has these goals:
+
+   1) Increase code-reuse
+   2) Increase overall code-maintainability
+   3) Speed development time for new network drivers, and for new systems
+ 
+ Basically, this layer is meant to provide an interface to PHY devices which
+ allows network driver writers to write as little code as possible, while
+ still providing a full feature set.
+
+The MDIO bus
+
+ Most network devices are connected to a PHY by means of a management bus.
+ Different devices use different busses (though some share common interfaces).
+ In order to take advantage of the PAL, each bus interface needs to be
+ registered as a distinct device.
+
+ 1) read and write functions must be implemented.  Their prototypes are:
+
+     int write(struct mii_bus *bus, int mii_id, int regnum, u16 value);
+     int read(struct mii_bus *bus, int mii_id, int regnum);
+
+   mii_id is the address on the bus for the PHY, and regnum is the register
+   number.  These functions are guaranteed not to be called from interrupt
+   time, so it is safe for them to block, waiting for an interrupt to signal
+   the operation is complete
+ 
+ 2) A reset function is optional.  This is used to return the bus to an
+   initialized state.
+
+ 3) A probe function is needed.  This function should set up anything the bus
+   driver needs, setup the mii_bus structure, and register with the PAL using
+   mdiobus_register.  Similarly, there's a remove function to undo all of
+   that (use mdiobus_unregister).
+ 
+ 4) Like any driver, the device_driver structure must be configured, and init
+   exit functions are used to register the driver.
+
+ 5) The bus must also be declared somewhere as a device, and registered.
+
+ As an example for how one driver implemented an mdio bus driver, see
+ drivers/net/ethernet/freescale/fsl_pq_mdio.c and an associated DTS file
+ for one of the users. (e.g. "git grep fsl,.*-mdio arch/powerpc/boot/dts/")
+
+(RG)MII/electrical interface considerations
+
+ The Reduced Gigabit Medium Independent Interface (RGMII) is a 12-pin
+ electrical signal interface using a synchronous 125Mhz clock signal and several
+ data lines. Due to this design decision, a 1.5ns to 2ns delay must be added
+ between the clock line (RXC or TXC) and the data lines to let the PHY (clock
+ sink) have enough setup and hold times to sample the data lines correctly. The
+ PHY library offers different types of PHY_INTERFACE_MODE_RGMII* values to let
+ the PHY driver and optionally the MAC driver, implement the required delay. The
+ values of phy_interface_t must be understood from the perspective of the PHY
+ device itself, leading to the following:
+
+ * PHY_INTERFACE_MODE_RGMII: the PHY is not responsible for inserting any
+   internal delay by itself, it assumes that either the Ethernet MAC (if capable
+   or the PCB traces) insert the correct 1.5-2ns delay
+
+ * PHY_INTERFACE_MODE_RGMII_TXID: the PHY should insert an internal delay
+   for the transmit data lines (TXD[3:0]) processed by the PHY device
+
+ * PHY_INTERFACE_MODE_RGMII_RXID: the PHY should insert an internal delay
+   for the receive data lines (RXD[3:0]) processed by the PHY device
+
+ * PHY_INTERFACE_MODE_RGMII_ID: the PHY should insert internal delays for
+   both transmit AND receive data lines from/to the PHY device
+
+ Whenever possible, use the PHY side RGMII delay for these reasons:
+
+ * PHY devices may offer sub-nanosecond granularity in how they allow a
+   receiver/transmitter side delay (e.g: 0.5, 1.0, 1.5ns) to be specified. Such
+   precision may be required to account for differences in PCB trace lengths
+
+ * PHY devices are typically qualified for a large range of applications
+   (industrial, medical, automotive...), and they provide a constant and
+   reliable delay across temperature/pressure/voltage ranges
+
+ * PHY device drivers in PHYLIB being reusable by nature, being able to
+   configure correctly a specified delay enables more designs with similar delay
+   requirements to be operate correctly
+
+ For cases where the PHY is not capable of providing this delay, but the
+ Ethernet MAC driver is capable of doing so, the correct phy_interface_t value
+ should be PHY_INTERFACE_MODE_RGMII, and the Ethernet MAC driver should be
+ configured correctly in order to provide the required transmit and/or receive
+ side delay from the perspective of the PHY device. Conversely, if the Ethernet
+ MAC driver looks at the phy_interface_t value, for any other mode but
+ PHY_INTERF

@@ -1,0 +1,143 @@
+ 
+-----------------------------------------------------------------------------
+1) This file is a supplement to arcnet.txt.  Please read that for general
+   driver configuration help.
+-----------------------------------------------------------------------------
+2) This file is no longer Linux-specific.  It should probably be moved out of
+   the kernel sources.  Ideas?
+-----------------------------------------------------------------------------
+
+Because so many people (myself included) seem to have obtained ARCnet cards
+without manuals, this file contains a quick introduction to ARCnet hardware,
+some cabling tips, and a listing of all jumper settings I can find. Please
+e-mail apenwarr@worldvisions.ca with any settings for your particular card,
+or any other information you have!
+
+
+INTRODUCTION TO ARCNET
+----------------------
+
+ARCnet is a network type which works in a way similar to popular Ethernet
+networks but which is also different in some very important ways.
+
+First of all, you can get ARCnet cards in at least two speeds: 2.5 Mbps
+(slower than Ethernet) and 100 Mbps (faster than normal Ethernet).  In fact,
+there are others as well, but these are less common.  The different hardware
+types, as far as I'm aware, are not compatible and so you cannot wire a
+100 Mbps card to a 2.5 Mbps card, and so on.  From what I hear, my driver does
+work with 100 Mbps cards, but I haven't been able to verify this myself,
+since I only have the 2.5 Mbps variety.  It is probably not going to saturate
+your 100 Mbps card.  Stop complaining. :)
+
+You also cannot connect an ARCnet card to any kind of Ethernet card and
+expect it to work.  
+
+There are two "types" of ARCnet - STAR topology and BUS topology.  This
+refers to how the cards are meant to be wired together.  According to most
+available documentation, you can only connect STAR cards to STAR cards and
+BUS cards to BUS cards.  That makes sense, right?  Well, it's not quite
+true; see below under "Cabling."
+
+Once you get past these little stumbling blocks, ARCnet is actually quite a
+well-designed standard.  It uses something called "modified token passing"
+which makes it completely incompatible with so-called "Token Ring" cards,
+but which makes transfers much more reliable than Ethernet does.  In fact,
+ARCnet will guarantee that a packet arrives safely at the destination, and
+even if it can't possibly be delivered properly (ie. because of a cable
+break, or because the destination computer does not exist) it will at least
+tell the sender about it.
+
+Because of the carefully defined action of the "token", it will always make
+a pass around the "ring" within a maximum length of time.  This makes it
+useful for realtime networks.
+
+In addition, all known ARCnet cards have an (almost) identical programming
+interface.  This means that with one ARCnet driver you can support any
+card, whereas with Ethernet each manufacturer uses what is sometimes a
+completely different programming interface, leading to a lot of different,
+sometimes very similar, Ethernet drivers.  Of course, always using the same
+programming interface also means that when high-performance hardware
+facilities like PCI bus mastering DMA appear, it's hard to take advantage of
+them.  Let's not go into that.
+
+One thing that makes ARCnet cards difficult to program for, however, is the
+limit on their packet sizes; standard ARCnet can only send packets that are
+up to 508 bytes in length.  This is smaller than the Internet "bare minimum"
+of 576 bytes, let alone the Ethernet MTU of 1500.  To compensate, an extra
+level of encapsulation is defined by RFC1201, which I call "packet
+splitting," that allows "virtual packets" to grow as large as 64K each,
+although they are generally kept down to the Ethernet-style 1500 bytes.
+
+For more information on the advantages and disadvantages (mostly the
+advantages) of ARCnet networks, you might try the "ARCnet Trade Association"
+WWW page:
+	http://www.arcnet.com
+
+
+CABLING ARCNET NETWORKS
+-----------------------
+
+This section was rewritten by 
+        Vojtech Pavlik     <vojtech@suse.cz>
+using information from several people, including:
+        Avery Pennraun     <apenwarr@worldvisions.ca>
+ 	Stephen A. Wood    <saw@hallc1.cebaf.gov>
+ 	John Paul Morrison <jmorriso@bogomips.ee.ubc.ca>
+ 	Joachim Koenig     <jojo@repas.de>
+and Avery touched it up a bit, at Vojtech's request.
+
+ARCnet (the classic 2.5 Mbps version) can be connected by two different
+types of cabling: coax and twisted pair.  The other ARCnet-type networks
+(100 Mbps TCNS and 320 kbps - 32 Mbps ARCnet Plus) use different types of
+cabling (Type1, Fiber, C1, C4, C5).
+
+For a coax network, you "should" use 93 Ohm RG-62 cable.  But other cables
+also work fine, because ARCnet is a very stable network. I personally use 75
+Ohm TV antenna cable.
+
+Cards for coax cabling are shipped in two different variants: for BUS and
+STAR network topologies.  They are mostly the same.  The only difference
+lies in the hybrid chip installed.  BUS cards use high impedance output,
+while STAR use low impedance.  Low impedance card (STAR) is electrically
+equal to a high impedance one with a terminator installed.
+
+Usually, the ARCnet networks are built up from STAR cards and hubs.  There
+are two types of hubs - active and passive.  Passive hubs are small boxes
+with four BNC connectors containing four 47 Ohm resistors:
+
+   |         | wires
+   R         + junction
+-R-+-R-      R 47 Ohm resistors
+   R
+   |
+
+The shielding is connected together.  Active hubs are much more complicated;
+they are powered and contain electronics to amplify the signal and send it
+to other segments of the net.  They usually have eight connectors.  Active
+hubs come in two variants - dumb and smart.  The dumb variant just
+amplifies, but the smart one decodes to digital and encodes back all packets
+coming through.  This is much better if you have several hubs in the net,
+since many dumb active hubs may worsen the signal quality.
+
+And now to the cabling.  What you can connect together:
+
+1. A card to a card.  This is the simplest way of creating a 2-computer
+   network.
+
+2. A card to a passive hub.  Remember that all unused connectors on the hub
+   must be properly terminated with 93 Ohm (or something else if you don't
+   have the right ones) terminators.
+   	(Avery's note: oops, I didn't know that.  Mine (TV cable) works
+	anyway, though.)
+
+3. A card to an active hub.  Here is no need to terminate the unused
+   connectors except some kind of aesthetic feeling.  But, there may not be
+   more than eleven active hubs between any two computers.  That of course
+   doesn't limit the number of active hubs on the network.
+   
+4. An active hub to another.
+
+5. An active hub to passive hub.
+
+Remember that you cannot connect two passive hubs together.  The power loss
+implied by such a connection is too high for the net 

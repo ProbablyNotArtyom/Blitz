@@ -1,0 +1,9 @@
+/bin/expand /etc/ramfs.img /dev/ram0
+mount -t proc proc /proc
+mount -t ext2 /dev/ram0 /var
+mkdir /var/tmp
+mkdir /var/log
+mkdir /var/run
+mkdir /var/lock
+cat /etc/motd
+

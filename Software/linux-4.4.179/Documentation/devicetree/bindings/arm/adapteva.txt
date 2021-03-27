@@ -1,0 +1,4 @@
+Chinese translated version of Documentation/basic_profiling
+
+If you have any comment or update to the content, please post to LKML directly.
+However, if you have problem co

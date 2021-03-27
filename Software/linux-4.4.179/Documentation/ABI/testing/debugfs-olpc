@@ -1,0 +1,36 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_ENUMAUDIO:
+
+**********************
+ioctl VIDIOC_ENUMAUDIO
+**********************
+
+Name
+====
+
+VIDIOC_ENUMAUDIO - Enumerate audio inputs
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_ENUMAUDIO, struct v4l2_audio *argp )
+    :name: VIDIOC_ENUMAUDIO
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_audio`.
+
+
+Description
+===========
+
+To query the attributes of an audio input applications initialize the
+``index`` field and z

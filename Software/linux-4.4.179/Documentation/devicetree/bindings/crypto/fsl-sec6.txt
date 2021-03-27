@@ -1,0 +1,176 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/core_lca.c
+ *
+ * Written by David Mosberger (davidm@cs.arizona.edu) with some code
+ * taken from Dave Rusling's (david.rusling@reo.mts.dec.com) 32-bit
+ * bios code.
+ *
+ * Code common to all LCA core logic chips.
+ */
+
+#define __EXTERN_INLINE inline
+#include <asm/io.h>
+#include <asm/core_lca.h>
+#undef __EXTERN_INLINE
+
+#include <linux/types.h>
+#include <linux/pci.h>
+#include <linux/init.h>
+#include <linux/tty.h>
+
+#include <asm/ptrace.h>
+#include <asm/irq_regs.h>
+#include <asm/smp.h>
+
+#include "proto.h"
+#include "pci_impl.h"
+
+
+/*
+ * BIOS32-style PCI interface:
+ */
+
+/*
+ * Machine check reasons.  Defined according to PALcode sources
+ * (osf.h and platform.h).
+ */
+#define MCHK_K_TPERR		0x0080
+#define MCHK_K_TCPERR		0x0082
+#define MCHK_K_HERR		0x0084
+#define MCHK_K_ECC_C		0x0086
+#define MCHK_K_ECC_NC		0x0088
+#define MCHK_K_UNKNOWN		0x008A
+#define MCHK_K_CACKSOFT		0x008C
+#define MCHK_K_BUGCHECK		0x008E
+#define MCHK_K_OS_BUGCHECK	0x0090
+#define MCHK_K_DCPERR		0x0092
+#define MCHK_K_ICPERR		0x0094
+
+
+/*
+ * Platform-specific machine-check reasons:
+ */
+#define MCHK_K_SIO_SERR		0x204	/* all platforms so far */
+#define MCHK_K_SIO_IOCHK	0x206	/* all platforms so far */
+#define MCHK_K_DCSR		0x208	/* all but Noname */
+
+
+/*
+ * Given a bus, device, and function number, compute resulting
+ * configuration space address and setup the LCA_IOC_CONF register
+ * accordingly.  It is therefore not safe to have concurrent
+ * invocations to configuration space access routines, but there
+ * really shouldn't be any need for this.
+ *
+ * Type 0:
+ *
+ *  3 3|3 3 2 2|2 2 2 2|2 2 2 2|1 1 1 1|1 1 1 1|1 1 
+ *  3 2|1 0 9 8|7 6 5 4|3 2 1 0|9 8 7 6|5 4 3 2|1 0 9 8|7 6 5 4|3 2 1 0
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * | | | | | | | | | | | | | | | | | | | | | | | |F|F|F|R|R|R|R|R|R|0|0|
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ *
+ *	31:11	Device select bit.
+ * 	10:8	Function number
+ * 	 7:2	Register number
+ *
+ * Type 1:
+ *
+ *  3 3|3 3 2 2|2 2 2 2|2 2 2 2|1 1 1 1|1 1 1 1|1 1 
+ *  3 2|1 0 9 8|7 6 5 4|3 2 1 0|9 8 7 6|5 4 3 2|1 0 9 8|7 6 5 4|3 2 1 0
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * | | | | | | | | | | |B|B|B|B|B|B|B|B|D|D|D|D|D|F|F|F|R|R|R|R|R|R|0|1|
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ *
+ *	31:24	reserved
+ *	23:16	bus number (8 bits = 128 possible buses)
+ *	15:11	Device number (5 bits)
+ *	10:8	function number
+ *	 7:2	register number
+ *  
+ * Notes:
+ *	The function number selects which function of a multi-function device 
+ *	(e.g., SCSI and Ethernet).
+ * 
+ *	The register selects a DWORD (32 bit) register offset.  Hence it
+ *	doesn't get shifted by 2 bits as we want to "drop" the bottom two
+ *	bits.
+ */
+
+static int
+mk_conf_addr(struct pci_bus *pbus, unsigned int device_fn, int where,
+	     unsigned long *pci_addr)
+{
+	unsigned long addr;
+	u8 bus = pbus->number;
+
+	if (bus == 0) {
+		int device = device_fn >> 3;
+		int func = device_fn & 0x7;
+
+		/* Type 0 configuration cycle.  */
+
+		if (device > 12) {
+			return -1;
+		}
+
+		*(vulp)LCA_IOC_CONF = 0;
+		addr = (1 << (11 + device)) | (func << 8) | where;
+	} else {
+		/* Type 1 configuration cycle.  */
+		*(vulp)LCA_IOC_CONF = 1;
+		addr = (bus << 16) | (device_fn << 8) | where;
+	}
+	*pci_addr = addr;
+	return 0;
+}
+
+static unsigned int
+conf_read(unsigned long addr)
+{
+	unsigned long flags, code, stat0;
+	unsigned int value;
+
+	local_irq_save(flags);
+
+	/* Reset status register to avoid losing errors.  */
+	stat0 = *(vulp)LCA_IOC_STAT0;
+	*(vulp)LCA_IOC_STAT0 = stat0;
+	mb();
+
+	/* Access configuration space.  */
+	value = *(vuip)addr;
+	draina();
+
+	stat0 = *(vulp)LCA_IOC_STAT0;
+	if (stat0 & LCA_IOC_STAT0_ERR) {
+		code = ((stat0 >> LCA_IOC_STAT0_CODE_SHIFT)
+			& LCA_IOC_STAT0_CODE_MASK);
+		if (code != 1) {
+			printk("lca.c:conf_read: got stat0=%lx\n", stat0);
+		}
+
+		/* Reset error status.  */
+		*(vulp)LCA_IOC_STAT0 = stat0;
+		mb();
+
+		/* Reset machine check.  */
+		wrmces(0x7);
+
+		value = 0xffffffff;
+	}
+	local_irq_restore(flags);
+	return value;
+}
+
+static void
+conf_write(unsigned long addr, unsigned int value)
+{
+	unsigned long flags, code, stat0;
+
+	local_irq_save(flags);	/* avoid getting hit by machine check */
+
+	/* Reset status register to avoid losing errors.  */
+	stat0 = *(vulp)LCA_IOC_STAT0;
+	*(vulp)LC

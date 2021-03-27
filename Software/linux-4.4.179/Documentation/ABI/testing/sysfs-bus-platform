@@ -1,0 +1,37 @@
+The VPBE V4L2 driver design
+===========================
+
+File partitioning
+-----------------
+
+ V4L2 display device driver
+         drivers/media/platform/davinci/vpbe_display.c
+         drivers/media/platform/davinci/vpbe_display.h
+
+ VPBE display controller
+         drivers/media/platform/davinci/vpbe.c
+         drivers/media/platform/davinci/vpbe.h
+
+ VPBE venc sub device driver
+         drivers/media/platform/davinci/vpbe_venc.c
+         drivers/media/platform/davinci/vpbe_venc.h
+         drivers/media/platform/davinci/vpbe_venc_regs.h
+
+ VPBE osd driver
+         drivers/media/platform/davinci/vpbe_osd.c
+         drivers/media/platform/davinci/vpbe_osd.h
+         drivers/media/platform/davinci/vpbe_osd_regs.h
+
+Functional partitioning
+-----------------------
+
+Consists of the following (in the same order as the list under file
+partitioning):
+
+ 1. V4L2 display driver
+    Implements creation of video2 and video3 device nodes and
+    provides v4l2 device interface to manage VID0 and VID1 layers.
+
+ 2. Display controller
+    Loads up VENC, OSD and external encoders such as ths8200. It provides
+    a set of API calls to V4L2 dri

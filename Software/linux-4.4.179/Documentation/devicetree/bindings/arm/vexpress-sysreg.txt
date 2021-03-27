@@ -1,0 +1,86 @@
+ARM Virtual Interrupt Translation Service (ITS)
+===============================================
+
+Device types supported:
+  KVM_DEV_TYPE_ARM_VGIC_ITS    ARM Interrupt Translation Service Controller
+
+The ITS allows MSI(-X) interrupts to be injected into guests. This extension is
+optional.  Creating a virtual ITS controller also requires a host GICv3 (see
+arm-vgic-v3.txt), but does not depend on having physical ITS controllers.
+
+There can be multiple ITS controllers per guest, each of them has to have
+a separate, non-overlapping MMIO region.
+
+
+Groups:
+  KVM_DEV_ARM_VGIC_GRP_ADDR
+  Attributes:
+    KVM_VGIC_ITS_ADDR_TYPE (rw, 64-bit)
+      Base address in the guest physical address space of the GICv3 ITS
+      control register frame.
+      This address needs to be 64K aligned and the region covers 128K.
+  Errors:
+    -E2BIG:  Address outside of addressable IPA range
+    -EINVAL: Incorrectly aligned address
+    -EEXIST: Address already configured
+    -EFAULT: Invalid user pointer for attr->addr.
+    -ENODEV: Incorrect attribute or the ITS is not supported.
+
+
+  KVM_DEV_ARM_VGIC_GRP_CTRL
+  Attributes:
+    KVM_DEV_ARM_VGIC_CTRL_INIT
+      request the initialization of the ITS, no additional parameter in
+      kvm_device_attr.addr.
+
+    KVM_DEV_ARM_ITS_CTRL_RESET
+      reset the ITS, no additional parameter in kvm_device_attr.addr.
+      See "ITS Reset State" section.
+
+    KVM_DEV_ARM_ITS_SAVE_TABLES
+      save the ITS table data into guest RAM, at the location provisioned
+      by the guest in corresponding registers/table entries.
+
+      The layout of the tables in guest memory defines an ABI. The entries
+      are laid out in little endian format as described in the last paragraph.
+
+    KVM_DEV_ARM_ITS_RESTORE_TABLES
+      restore the ITS tables from guest RAM to ITS internal structures.
+
+      The GICV3 must be restored before the ITS and all ITS registers but
+      the GITS_CTLR must be restored before restoring the ITS tables.
+
+      The GITS_IIDR read-only register must also be restored before
+      calling KVM_DEV_ARM_ITS_RESTORE_TABLES as the IIDR revision field
+      encodes the ABI revision.
+
+      The expected ordering when restoring the GICv3/ITS is described in section
+      "ITS Restore Sequence".
+
+  Errors:
+    -ENXIO:  ITS not properly configured as required prior to setting
+             this attribute
+    -ENOMEM: Memory shortage when allocating ITS internal data
+    -EINVAL: Inconsistent restored data
+    -EFAULT: Invalid guest ram access
+    -EBUSY:  One or more VCPUS are running
+    -EACCES: The virtual ITS is backed by a physical GICv4 ITS, and the
+	     state is not available
+
+  KVM_DEV_ARM_VGIC_GRP_ITS_REGS
+  Attributes:
+      The attr field of kvm_device_attr encodes the offset of the
+      ITS register, relative to the ITS control frame base address
+      (ITS_base).
+
+      kvm_device_attr.addr points to a __u64 value whatever the width
+      of the addressed register (32/64 bits). 64 bit registers can only
+      be accessed with full length.
+
+      Writes to read-only registers are ignored by the kernel except for:
+      - GITS_CREADR. It must be restored otherwise commands in the queue
+        will be re-executed after restoring CWRITER. GITS_CREADR must be
+        restored before restoring the GITS_CTLR which is likely to enable the
+        ITS. Also it must be restored after GITS_CBASER since a write to
+        GITS_CBASER resets GITS_CREADR.
+      - GITS_IIDR. The Revision field encodes th

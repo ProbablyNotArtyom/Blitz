@@ -1,0 +1,62 @@
+
+                   Firmware-Assisted Dump
+                   ------------------------
+                       July 2011
+
+The goal of firmware-assisted dump is to enable the dump of
+a crashed system, and to do so from a fully-reset system, and
+to minimize the total elapsed time until the system is back
+in production use.
+
+- Firmware assisted dump (fadump) infrastructure is intended to replace
+  the existing phyp assisted dump.
+- Fadump uses the same firmware interfaces and memory reservation model
+  as phyp assisted dump.
+- Unlike phyp dump, fadump exports the memory dump through /proc/vmcore
+  in the ELF format in the same way as kdump. This helps us reuse the
+  kdump infrastructure for dump capture and filtering.
+- Unlike phyp dump, userspace tool does not need to refer any sysfs
+  interface while reading /proc/vmcore.
+- Unlike phyp dump, fadump allows user to release all the memory reserved
+  for dump, with a single operation of echo 1 > /sys/kernel/fadump_release_mem.
+- Once enabled through kernel boot parameter, fadump can be
+  started/stopped through /sys/kernel/fadump_registered interface (see
+  sysfs files section below) and can be easily integrated with kdump
+  service start/stop init scripts.
+
+Comparing with kdump or other strategies, firmware-assisted
+dump offers several strong, practical advantages:
+
+-- Unlike kdump, the system has been reset, and loaded
+   with a fresh copy of the kernel.  In particular,
+   PCI and I/O devices have been reinitialized and are
+   in a clean, consistent state.
+-- Once the dump is copied out, the memory that held the dump
+   is immediately available to the running kernel. And therefore,
+   unlike kdump, fadump doesn't need a 2nd reboot to get back
+   the system to the production configuration.
+
+The above can only be accomplished by coordination with,
+and assistance from the Power firmware. The procedure is
+as follows:
+
+-- The first kernel registers the sections of memory with the
+   Power firmware for dump preservation during OS initialization.
+   These registered sections of memory are reserved by the first
+   kernel during early boot.
+
+-- When a system crashes, the Power firmware will save
+   the low memory (boot memory of size larger of 5% of system RAM
+   or 256MB) of RAM to the previous registered region. It will
+   also save system registers, and hardware PTE's.
+
+   NOTE: The term 'boot memory' means size of the low memory chunk
+         that is required for a kernel to boot successfully when
+         booted with restricted memory. By default, the boot memory
+         size will be the larger of 5% of system RAM or 256MB.
+         Alternatively, user can also specify boot memory size
+         through boot parameter 'crashkernel=' which will override
+         the default calculated size. Use this option if default
+         boot memory size is not sufficient for second kernel to
+         boot successfully. For syntax of crashkernel= parameter,
+         refer to Do

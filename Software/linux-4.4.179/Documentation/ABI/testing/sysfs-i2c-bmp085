@@ -1,0 +1,39 @@
+    Originally,   this  driver  was    written  for the  Digital   Equipment
+    Corporation series of EtherWORKS Ethernet cards:
+
+        DE425 TP/COAX EISA
+	DE434 TP PCI
+	DE435 TP/COAX/AUI PCI
+	DE450 TP/COAX/AUI PCI
+	DE500 10/100 PCI Fasternet
+
+    but it  will  now attempt  to  support all  cards which   conform to the
+    Digital Semiconductor   SROM   Specification.    The  driver   currently
+    recognises the following chips:
+
+        DC21040  (no SROM) 
+	DC21041[A]  
+	DC21140[A] 
+	DC21142 
+	DC21143 
+
+    So far the driver is known to work with the following cards:
+
+        KINGSTON
+	Linksys
+	ZNYX342
+	SMC8432
+	SMC9332 (w/new SROM)
+	ZNYX31[45]
+	ZNYX346 10/100 4 port (can act as a 10/100 bridge!) 
+
+    The driver has been tested on a relatively busy network using the DE425,
+    DE434, DE435 and DE500 cards and benchmarked with 'ttcp': it transferred
+    16M of data to a DECstation 5000/200 as follows:
+
+                TCP           UDP
+             TX     RX     TX     RX
+    DE425   1030k  997k   1170k  1128k
+    DE434   1063k  995k   1170k  1125k
+    DE435   1063k  995k   1170k  1125k
+    DE500   1063k  998k   1170k  1125k  in 10Mb/s mode

@@ -1,0 +1,1190 @@
+
+Changes from version 22.0.2 to 22.1 (31-Oct-2001) John Coffman
+
+  Utilities
+  ---------
+    - Add version 1.0 of 'mkrescue'
+
+  Boot Installer
+  --------------
+    - Support 4 more SCSI controllers & IBM iSeries v.disk.
+    - Add M-Systems Disk-On-Chip devices 62(?) and 93
+    - Fix bug in 'part_verify' to correct partition mask.
+    - Passwords use SHS (FIPS PUB 180-1) 160-bit hash or 64-bit CRC-32
+    - RAID1 relocations now check for files within the boot Raid
+      partition.
+    - Correct operation of -I flag; add option "r" (now "i" & "r")
+    - Strengthen "part_verify" to disallow installing on secondary 
+      partitions (in addition to primary partitions) other than Linux
+      partitions
+
+  Boot Loader
+  -----------
+    - Allow variable number of Descriptor Sectors (DSECS=n)
+    - Load second-stage loader using single sector map segment; removes
+      size constraint on second-stage loader (15->~100 sectors).
+    - First-stage loader avoids BPB area -- doesn't clobber FAT16 --
+      unless DSECS>5.
+    - RAID1 sector address relocation performed only if flagged.
+
+
+Changes from version 22.0.1 to 22.0.2 (13-Oct-2001) John Coffman
+
+  Compilation
+  -----------
+    - Fix 'partition.c' to compile with 2.4.12 kernel headers
+    - Fix compilation bug to allow omission of -DBDATA from Makefile
+
+  DISK.COM utility
+  ----------------
+    - Add BIOS data collection VERBOSE diagnostic.
+
+
+Changes from version 22.0 to 22.0.1 (02-Oct-2001) John Coffman
+
+  Boot Installer
+  --------------
+    - Fixed password security hole to create 'lilo.conf.crc' with
+      mode 0600 (not 0644).
+
+
+Changes from version 21.7.5 to 22.0 (29-Aug-2001) John Coffman   [released 9/27]
+
+  Boot Installer
+  --------------
+    - Passwords are now hashed using a CRC-32 checksum.  Allows
+      for a full pass-PHRASE
+    - Using password="" (null string) will trigger interactive pass-
+      phrase input; such passphrases persist until -p switch is used
+      to force re-creation of CRC save file:  'lilo.conf.crc'
+    - Password options expanded.  Now there are 'mandatory', 're-
+      stricted', and 'bypass', strongest to weakest.  'mandatory'
+      remains the default.
+    - The config file parser now handles garbage input with a good
+      diagnostic, rather than an unexpected parse.
+    - RAID installations now create a single map file, install the
+      boot record on the RAID partition, install auxiliary boot
+      records only on MBRs if needed, except BIOS device 0x80.  Back-
+      ward compatibility is possible with new config-file and command
+      line options (raid-extra-boot= or '-x' switch).  Even with
+      stored boot command lines ('-R', lock, fallback), RAID set
+      coherency can be maintained.
+    - Add the '-A' switch to activate a partition.  Replaces activate.c.
+    - Add the '-M' switch to allow restoration of a Master Boot Record.
+    - Allow 'loader=' in the global section of config file.
+    - Add 'bitmap=' to specify a 640x480x16 bitmap file to be used as 
+      a splash screen upon booting.  RGB (uncompressed) and RLE (com-
+      pressed) Windows/OS2 bitmaps are supported.
+    - Add 'bmp-table=', 'bmp-colors=', and 'bmp-timer=' to support posi-
+      tioning and color specification for bitmap screens.
+    - Modify 'bmp-X' input routines to allow pixel addressing (in addition
+      to the character addressing).
+    - Use bios data from boot-time to help identify bios device codes.
+    - Add 'geometric' and the '-g' switch to specify sector/head/cylinder
+      disk addressing.
+    - Add LBA32 compile switch, and make it the default:  'lba32' is now
+      assumed, unless 'geometric' or 'linear' is specified.
+    - Raid scans 'raid_disks + spare_disks'
+    - Add HPT370 controller (major device 114)
+
+  Boot Loader
+  -----------
+    - os2_d.b may now be obsolete with extensive checking added
+      to chain.b to see if it should fill in bytes 24 & 25 in the
+      boot record
+    - boot-bmp.b generated to display bitmapped boot screen
+    - read.S updated to allow #heads==256 (bios not IBM-compliant)
+    - disk.S updated to 1.4 to account for #heads==256 (hosed bios)
+    - second.S updated to allow for EBDA > 64k
+
+
+Changes from version 21.7.4 to 21.7.5 (26-Apr-2001) John Coffman
+
+  Boot Installer
+  --------------
+    - Correct DAC960 partition mask -- again.
+
+  Chain Loader
+  ------------
+    - Reverse map device code if "map-drive" is in effect
+
+
+Changes from version 21.7.3 to 21.7.4 (10-Apr-2001) John Coffman
+
+  Boot Installer
+  --------------
+    - Issue warning when CHANGE AUTOMATIC is to be inserted.
+    - Correct DAC960 partition mask.
+
+  Boot Loader
+  -----------
+    - Fix password timeout security hole which allowed booting with-
+      out entering a password.
+
+
+Changes from version 21.7.1 to 21.7.2 (20-Mar-2001) John Coffman
+  (issued as "patch-21.7.1-to-21.7.2-diff.txt)
+
+  Boot Installer
+  --------------
+    - Add several devices supported by the 2.4.2 kernel only
+    - Bugfix for -I switch
+
+
+Changes from version 21.7 to 21.7-1 (08-Mar-2001) John Coffman
+  (issued as "patch-21.7-to-21.7.1-diff.txt")
+
+  Boot Installer
+  --------------
+    - Makefile is simplified to remove 'filesize.c'
+    - New devices are added (Compaq), and ide5 is made to work
+    - A new diagnostic is added for when the '-r' switch is used
+    - Raid update for devfs support
+
+
+Changes from version 21.6.1 to 21.7 (24-Feb-2001) John Coffman
+
+  Boot Installer
+  --------------
+    - Added code to 'do_cr_auto' to account for 'devfs' specifications
+    - Corrected code for -u/-U switches to make argument optional
+    - Fix for I2O major block device (SCSI raid)
+    - Expanded 'default=' error message
+    - Fix to strip <cr> from 'lilo.conf' to accomodate DOS text files
+    - Changed & expanded setup of serial line parameter specifier
+
+  Boot Loader
+  -----------
+    - Accepts new serial line parameter and supports higher baud rates
+
+
+Changes from version 21.6 to 21.6.1 (16-Dec-2000) John Coffman
+
+  Boot Installer
+  --------------
+    - Bug fix to make '-r' and '-s' swithes work correctly.
+    - Bug fix for automatic change-rules to work correctly.
+    - Re-order some includes for glibc-2.2 compilation.
+
+  Boot Loader
+  -----------
+    - Added compile time option 'HP_TTRC' to add a 150ms delay
+      to boot process to accomodate HP TTRC card.
+
+
+Changes from version 21.5.1 to 21.6 (01-Oct-2000) John Coffman
+
+  License
+  -------
+    - Corrects license wording problems by issuing all code and
+      documentation under a BSD license.
+
+  Boot Installer
+  --------------
+    - Supports booting from Reiser FileSystem 3.6.18 and later,
+      without the need to mount 'notail'.
+    - Added -T diagnostic capability, which includes real-mode
+      bios tests.  "make floppy" is still supported for patho-
+      logical installations.
+    - Updated default change-rules.  Added "change/automatic"
+      facility, as well as automatic generation of change-rules in
+      the abscence of "change" keyword.
+
+  Boot Loader
+  -----------
+    - Dynamically determines where second-stage loader is loaded,
+      thus allowing maximum room for kernel setup.S real-mode
+      code.
+    - First-stage loader no longer relocates itself.
+
+
+Changes from version 21.5 to 21.5.1 (24-Aug-2000) John Coffman
+
+  Boot Loader
+  -----------
+    - Perl script keytab-lilo.pl updated for problem static decls
+    - Corrected assertion of DTR/RTS at all serial bitrates
+
+  Boot Installer
+  --------------
+    - Fix for RAID segmentation fault if boot= is not specified
+    - Fix for RAID to allow enough characters in expanded names
+
+
+Changes from version 21.4.4 to 21.5 (17-Jul-2000) John Coffman
+
+  Boot Installer
+  --------------
+    - Now recognizes the option `table=<letter>' to support
+      booting OS/2 or DOS-like systems from a secondary partition.
+    - Supports `menu-title=<string>' and `menu-scheme=<color-spec>'
+      to all customization of the Boot Loader menu-driven user
+      interface (see Boot Loader, below).
+    - Updated man-pages (lilo and lilo.conf) for all new features
+      (and even some older ones).
+
+  Boot Loader
+  -----------
+    - Completely new menu-driven user interface.  Preserves backward
+      compatibility with command line interface on console or serial
+      terminal.  Menu title may be specified in 'lilo.conf'.  Menu
+      color scheme may be customized on VGA, but is fixed on MDA.
+    - Passes cmdline to kernel in Setup.S, not bootsect.S, if kernel
+      header is 0x0202 or greater.  Uses old bootsect.S method for
+      0x0201 kernels and earlier
+    - Uses significatly less memory, none above 0x099200, to account
+      for large Extended BIOS Data Areas of up to 27K.  Allows for
+      considerable growth in kernel's Setup.S code.
+    - Default compile is without LARGE_EBDA, so zImages up to 512k
+      may be loaded.
+
+  Chain Loader
+  ------------
+    - The OS/2 chain loader, `os2_d.b', now correctly sets parameters
+      for booting OS/2 from an extended partition.  This requires use
+      of a new form of the `table=' option.
+
+  DISK.COM utility
+  ----------------
+    - The .asciz pseudo-op has been removed so that the utility will
+      assemble under earlier versions of the as86 assembler.
+    - Now reports EBDA information.
+
+
+Changes from version 21.4.3 to 21.4.4 (10-Jun-2000) John Coffman
+
+  Map Installer
+  -------------
+    - Added a minor RAID patch from Richard Bollinger: 'lilo-21_4_3.also'
+      http://www.elliott-turbo.com/lilo/
+    - Expand COMPACT/LINEAR warning message to include COMPACT/LBA32
+
+  Boot Loader
+  -----------
+    - LARGE_EBDA option now loads second stage loader at 800:0000, and
+      position of command line is changed; makes room for 512K kernels
+      to be loaded low.
+    - Minor optimizations when ES is reloaded (PUSH/POP) vs (mov thru AX)
+    - Serial line now turns on DTR/RTS at initialization
+    - Minor bugfix in numeric conversion (k/K-suffix)
+
+  DISK.COM utility
+  ----------------
+    - The disk.com utility no longer requires 'nasm' to assemble.  The
+      source code now makes the diagnostic floppy with "make floppy".
+
+
+Changes from version 21.4.2 to 21.4.3 (06-May-2000) John Coffman
+
+  Map Installer
+  -------------
+    - Added RAID patches from 'lilo.raid1.also' from Richard Bollinger
+      http://www.elliott-turbo.com/lilo/lilo.raid1.also
+
+
+Changes from version 21-3 to 21.4.2 (12-Apr-2000) -- John Coffman
+
+  Boot loader
+  -----------
+    - bugfix in 'read.S' that disabled the combination 'linear' with
+      'compact' ( '-l' and '-c' together).
+    - fixed numeric convesions; kernel accepts octal, decimal, and hex, so 
+      octal is now recognized by the boot loader.
+    - bugfix patch where ES segment prefix was ommitted (RHL 'second.patch')
+    - bugfix for compilation with 'LARGE_EBDA' option which caused command
+      line passed to the kernel to be truncated at 78 characters
+    
+  Map installer
+  -------------
+    - RHL6.2 loopdev updates added
+      
+      
+Changes from version 21 to 21-3 (24-FEB-2000)  -- John Coffman 
+-----------------------------                  <johninsd@san.rr.com>
+
+  Boot loader
+  -----------
+  
+    - will boot from disks up to 2048Gb in size, as long as the BIOS allows
+      the Enhanced BIOS calls for 32-bit sector addressing using packet calls.
+    - checks if BIOS supports packet calls (int 0x13, AH=0x42), and uses
+      these calls if 'lba32' was specified.  Otherwise, it uses
+      the C:H:S addressing scheme of the original IBM-PC BIOS.
+    - the disk read routine is separated into its own source file, "read.S",
+      which is included in the first-stage, and second-stage loader codes.
+      The first stage loader uses a very stripped down read routine, since it
+      only deals in single sector transfers.
+    - if BIOS does not support 32-bit packet calls, and the cylinder address
+      overflows when the 32-bit address is converted to C:H:S, then a "9f"
+      error code is issued.
+
+  Map installer
+  -------------
+  
+    - added the '-L' command line switch and 'lba32' configuration file 
+      global option.  
+    - map compaction of 'lba32' addresses is supported with the existing
+      '-c' switch (or 'compact' configuration file global option).
+    - floppy disks now will always fall back to C:H:S addressing.
+    - changed the -v option to now accept a single digit to set the verbosity
+      level; e.g., 'lilo -v 5 ...' replaces 'lilo -v -v -v -v -v ...'
+      for maximum diagnostic output.
+    - LILO version information is moved to the file 'version.h', and VERSION
+      is now deleted.  This allows for tracking of VERSION_MAJOR (=21) and
+      VERSION_MINOR (=3) for this and future code paths.
+      
+  BIOS tester
+  -----------
+  
+    - Inspired by 'dparam.com', a much more extensive BIOS test program is
+      included with this version.  Called 'disk.com', it was developed 
+      under DOS, and requires 'nasm' to be assembled.
+    - DISK.COM will probe the BIOS for disks supported by the BIOS, and report
+      on their CHS geometry.  If EDD is supported, the EDD geometry is also
+      reported.  If disks with cylinder numbers of 1024 or above are detected,
+      it will issue a recommendation to use LILO with the 'lba32' option.
+    - Creation of the bootable floppy image version of this utility is in-
+      complete at this time.
+      
+    
+Changes from version 20 to 21 (5-DEC-1998)
+-----------------------------
+
+  Boot loader
+  -----------
+
+    - cylinder calculation could overflow when using LINEAR (fix by Jonas
+      Aaberg and an anonymous contributor)
+    - first-stage loader code begins with the byte 0xFA (a CLI instruction).
+      This works around the "INACCESSIBLE_BOOT_DEVICE" blue screen bug of
+      Windows NT 4 (reported by too many people to mention)
+    - new build-time option LARGE_EBDA to load boot loader in the 0x8xxxx area
+      instead of the 0x9xxxx area (disabled by default; problem reported by
+      Josef Moellers)
+
+  Map installer
+  -------------
+
+    - new build-time option USE_TMPDIR to honor TMPDIR when creating temporary
+      devices (disabled by default)
+    - now only 0x1b6 bytes of the boot sector are overwritten, which preserves
+      the passwords DR DOS stores there (fixed by Roy Millar)
+    - -u and -U accidently implied -v
+    - "BIOS drive 0xNN may not be accessible" warning was printed in cases
+       where the drive code was never used (fixed by Andries Brouwer)
+    - change rule for DOS16_big incorrectly used DOS16_small_hidden when
+      hiding (fixed by Anthony Richardson)
+    - RESET in CHANGE-RULES did not remove default rules (fixed by Kurt
+      Garloff)
+    - added support for Mylex DAC960 PCI RAID controllers (by Leonard Zubkoff)
+    - added support for third to sixth IDE interface
+    - build-time option READONLY was not used properly
+    - fixed a few harmless compiler warnings
+
+  Documentation and installation
+  ------------------------------
+
+    - user's guide claimed that partitions are hidden by setting the highest
+      bit in the type (i.e. 0x80). The correct value is 0x10, which is also
+      what is used in the code.
+    - removed useless (and potentially harmful) DEFAULT_PATH from
+      keytab-lilo.pl (fixed by Andries Brouwer)
+    - consistency of build-time options is now checked before build starts
+    - QuickInst has now limited knowledge of multi-disk configurations
+    - doc/Makefile: added targets user.ps and tech.ps
+    - user's guide still claimed that kernels can't be larger than 512 kB
+      (reported by Jean-Albert Ferrez)
+    - weird description of the purpose of option BEEP (reported by Tom Toffoli)
+
+
+Changes from version 19 to 20 (20-JUN-1997)
+-----------------------------
+
+  Boot loader
+  -----------
+
+    - now supports 19200 bps and 38400 bps on the serial line (UNTESTED)
+    - when reaching the end of the command line buffer, input is ignored
+      instead of being treated like [Enter] (by Martin Mares)
+    - fixed numerous bugs in patching of heap end pointer in setup.S (by Martin
+      Mares)
+    - images can now optionally be launched with a single keystroke (no [Enter]
+      required)
+    - now supports non-US keyboard layouts
+
+  Map installer
+  -------------
+
+    - DISK sections may now also define non-disk devices, e.g. /dev/ram
+    - increased debug level for the "Caching device ..." message
+    - changed the chain loader format to allow sizes > 512 Bytes
+    - chain loader now supports arbitrary drive mappings (option MAP-DRIVE)
+    - chain loader now supports arbitrary partition table modifications (option
+      CHANGE)
+    - removed the configuration option REWRITE-TABLE
+    - removed the build-time options FIX_TABLE and HIDE_DOS
+    - added the global configuration option CHANGE-RULES plus sub-options
+      RESET, TYPE, NORMAL, and HIDDEN
+    - OTHER sections have new configuration option CHANGE plus sub-options
+      PARTITION, SET, ACTIVATE, and DEACTIVATE
+    - OTHER sections have new configuration option MAP-DRIVE with sub-option TO
+    - now only 0x1b8 bytes of the boot sector are overwritten, which preserves
+      some magic numbers NT stores there
+    - compiles with 2.1 kernels (asm/boot.h problem - reported by many people)
+    - should also compile under 0.93 or such again (required NORMAL_VGA etc.,
+      which didn't exist back then)
+    - lilo -q  now prints unknown VGA modes also in hex (by Martin Mares)
+    - option SINGLE-KEY to allow single-key activation
+    - -Wno-parentheses  is no longer needed
+    - didn't complain if image label was equal to alias
+    - removed some ancient dead code
+    - new option KEYTABLE to specify non-standard keyboard mappings
+    - PS/2 ESDI disk (/dev/eda and /dev/edb) support (by Andrew Kroll)
+    - geometry.c:last_dev now only probes for the first two IDE disks
+    - because chain.b is used for everything anyway, specifying the chain
+      loader when booting from a driver other than the first one is no longer
+      mandatory
+
+  Documentation and installation
+  ------------------------------
+
+    - changed all references to nic.funet.fi to ftp.funet.fi
+    - updated the user's guide and did some restructuring (many changes)
+    - QuickInst no longer puts ramdisk=0 into lilo.conf
+    - QuickInst now consistently checks for LILO >= version 15
+    - make clean  and  make spotless  now also remove dump.s and dump.b (by
+      Martin Mares)
+    - changed package names from lilo[.part].<version> to
+      lilo[-part]-<version> for compatibility with sunsite's archive
+      maintenance scripts
+    - new tool keytab-lilo.pl to generate LILO keyboard tables
+    - updated t2a.pl to a version compatible with Perl 5
+    - READONLY implicitly turns off REWRITE_TABLE
+
+
+Changes from version 18 to 19 (21-MAY-1996)
+-----------------------------
+
+  Boot loader
+  -----------
+
+    - new compile-time option to beep after displaying "LILO"
+
+  Map installer
+  -------------
+
+    - common.h broke compilation if CONFIG_BSD_DISKLABEL is enabled
+    - no longer tries to interpret dollar signs and such in comments
+    - check for too many images didn't work (patch by Andries Brouwer)
+
+  Documentation and installation
+  ------------------------------
+
+    - removed some "dead" targets in Makefile
+    - stopped using -N, because recent binutils link statically then
+    - INCOMPAT no longer promises that REWRITE_TABLE will be fixed in
+      version 19
+
+
+Changes from version 17 to 18 (16-MAY-1996)
+-----------------------------
+
+  Boot loader
+  -----------
+
+    - added ability to load data (e.g. kernels) at addresses >= 0x100000
+    - added support for loading an initial RAM disk
+    - any_*.b became too big when using REWRITE_TABLE
+    - included trimmed sector read function for first.S by Ted Ts'o
+    - now prints spaces before error codes
+    - temporarily removed support for REWRITE_TABLE
+    - added support for heap size indication to kernel setup.S
+    - added compile-time option XL_SECS for extra large disks
+
+  Map installer
+  -------------
+
+    - new option INITRD to load an initial RAM disk
+    - added support for "big" kernels (> 0.5 MB compressed), which are loaded
+      directly at 0x100000
+    - long quoted strings can now be distributed over several lines using
+      a backslash
+    - environment variables are accessible in lilo.conf with $name or ${name}
+    - now properly identifies attempts to map from NFS and such
+    - refuses to overwrite unsuitable partitions
+    - caches device names and numbers, thereby significantly reducing the
+      number of readdir and stat system calls (typically, the total number of
+      system call decreases by about 80%)
+    - temporarily removed support for REWRITE_TABLE
+    - geometry.c:exists now opens devices read-write in order to avoid
+      reading from CD-ROM devices (patch by Alain Knaff)
+    - added a warning if COMPACT is used with LINEAR
+
+  Documentation and installation
+  ------------------------------
+
+    - documentation, QuickInst, and on-line usage information no longer mention
+      the disktab file (a DISK section should be used instead)
+    - mkdist now uses the VERSION file
+    - distribution now includes .lsm file
+    - LILO is now compiled without -O2
+    - updated FTP references and rewrote them to conform to RFC1738
+
+
+Changes from version 16 to 17 (19-DEC-1995)
+-----------------------------
+
+  Boot loader
+  -----------
+
+    - changes for FALLBACK and new map section structure (see below)
+    - LCF_READONLY now disables the LOCK option (and FALLBACK too)
+    - added command-line option  kbd  to preload keyboard buffer
+    - write errors are now reported (Wxx)
+    - chain loaders now support changing the active partition (enabled with
+      REWRITE-TABLE)
+    - chain loader can also "un-hide" a DOS partition if its partition type
+      has been changed by OS/2 BM (build-time option FIX_TYPE)
+    - when enabling HIDE_DOS in addition to FIX_TYPE, DOS partitions (except
+      for the one being booted) are hidden, just like OS/2 BM does (build-time
+      option HIDE_DOS)
+
+  Map installer
+  -------------
+
+    - added FALLBACK option to change default command line before booting
+      the current image
+    - added REWRITE-TABLE option to patch partition table at boot time
+    - added REWRITE_TABLE build-time option to enable REWRITE-TABLE
+    - added DISK section flag INACCESSIBLE to mark disk as inaccessible for
+      the BIOS so that the map installer can refuse bad mappings
+    - options and fallback sectors are now at the beginning of map sections
+    - -q and -R were accidentially marked as optional in usage
+    - fixed incorrect partition check for  other = <non-root>
+
+  Documentation and installation
+  ------------------------------
+
+    - changed LILO version numbers to always be of the form <number> instead
+      of 0.<number>
+    - README now also contains the version number
+    - make install  now strips /sbin/lilo instead of trying to strip /sbin
+    - various bug fixes in QuickInst
+    - added file VERSION containing the current version number and new
+      make target  version  to rename ../lilo to ../lilo-<version>
+    - changed a footnote which yielded an asterisk at the end of a command
+      line in the ASCII README
+    - -q and -R were accidentally marked as optional in command-line
+      descriptions
+    - mentioned -D option in command line description
+    - new section "System overview" in the user's manual and several minor
+      additions
+    - a few minor corrections and addition of unusual error messages
+    - the last traces of "old-style" configuration have been removed
+
+
+Changes from version 15 to 16 (26-FEB-1995)
+-----------------------------
+
+  Boot loader
+  -----------
+
+    - added register dump boot sector (dump.S) for debugging
+    - chain loaders now clear BP. This might help in some cases where DOS
+      refused to boot.
+
+  Map installer
+  -------------
+
+    - really fixed -R this time
+    - now suggests to "use a DISK section" (instead of disktab) if HDIO_REQ
+      fails
+    - removed incorrect error message when using a disktab
+    - added check to detect CD-ROMs with major numbers of hard disks
+    - no longer complains about corrupt partition table if 3D address is
+      smaller than linear address and (3D) cylinder is 1023  (OS/2 does
+      is this way)
+    - LOADER is now required when booting an operating system from any device
+      than the first hard or floppy disk
+    - changed header protection macros from _xxx_H_ to xxx_H
+    - added (untested) support for 2nd IDE controller (major 22)
+
+  Documentation and installation
+  ------------------------------
+
+    - user.tex is now compatible with LaTeX 2e (\textfont0 problem)
+    - tech.tex now avoids \SetFigFont (LaTeX 2e again)
+    - /sbin/lilo is now optimized and stripped when installing
+    - ASCIIfied "Booting basics" section
+    - removed all references to the old directory structure
+    - added description of LOCK in config file
+    - updated FD TMC-1680 warning
+    - added reminder to re-run /sbin/lilo when modifying partition tables
+    - updated list of kernel options
+    - added detailed description of >2 disks and >1024 cylinders
+    - added description of putting /boot on a DOS partition
+    - reordered sections in "Installation and updates"
+    - updated tech.tex
+
+
+Changes from version 14 to 15 (23-OCT-1994)
+-----------------------------
+
+  General
+  -------
+
+    - upon popular demand, a copyright notice has been added
+
+  Boot loader
+  -----------
+
+    - now also drains the keyboard type-ahead buffer
+    - new command-line option "lock" to make the specified command line the
+      default for the following boots too
+    - default command line execution can now be interrupted in prompt mode too
+
+  Map installer
+  -------------
+
+    - fixed -R arguments handling bug
+    - fixed -P argument handling bug
+    - fixed yet another recursion problem with /dev/fd -> /proc/self/fd
+    - added option -D and configuration variable DEFAULT to specify the
+      default image without changing the oder of entries in /etc/lilo.conf
+    - added configuration variable LOCK to make the specified command line the
+      default for the following boots too
+    - added disk geometry configuration in the general configuration file.
+      /etc/disktab is now considered obsolete.
+    - added option -w and configuration variable NOWARN to disable some
+      warnings
+    - added warning when putting the boot sector on a non-boot disk
+    - added warning for possibly inaccessible devices (e.g. third disk)
+    - added warning for disks/partitions with more than 1024 cylinders
+    - added warnings for bad permissions of the configuration file
+    - fixed handling of floppies in geo_open_boot
+    - removed erroneous call to part_verify when booting other systems
+      from files
+    - added support for variable-size setup segments as supported by kernels
+      >= 1.1.43
+    - restructured verbosity levels
+    - allowed escaping of backslashes in quoted strings (/etc/lilo.conf)
+    - /sbin/lilo -q -v  now displays all settings
+
+  Documentation and installation
+  ------------------------------
+
+    - lots of things have been restructured
+    - many changes to describe the current Linux environment
+    - "new" directory structure is now the default
+    - README is now generated from user.tex by a Perl script
+    - lots of minor corrections and clarifications
+    - added a copyright notice and adapted several comments
+    - QuickInst: updated default kernel names
+    - QuickInst: now runs  /sbin/lilo -t  before trying to install
+    - doc/Makefile: removed extra "Label(s) may have changed" output
+    - disktab: changed header comment and added second example line
+    - /etc/disktab is no longer automatically created by  make install
+    - linking /etc/lilo/install -> /sbin/lilo is no longer suggested
+    - removed mkbindist. I don't think anybody used it anyway.
+
+
+Changes from version 13 to 14
+-----------------------------
+
+  Map installer
+  -------------
+
+    - added a few missing closedirs to device.c:scan_dir
+    - added detection of directory loops to device.c:scan_dir and
+      geometry.c:last_dev
+    - fixed handling of dangling links in /dev
+    - new option -u [ device ] to restore boot sector. Unsafe mode with -U
+    - fixed/improved usage message
+
+  Documentation and installation
+  ------------------------------
+
+    - QuickInst: did not write "other" sections to configuration file
+    - QuickInst.new: improved handling of disks without active partitions
+    - QuickInst.new now knows about /etc/disktab (relict from Shoelace,
+      still in some distributions)
+    - QuickInst.new now uses *_d.b chain loaders when configuring non-Linux
+      systems on the second disk
+
+
+Changes from version 12 to 13
+-----------------------------
+
+  General
+  -------
+
+    - BSS is no longer cleared by LILO, because the kernel itself does
+      that now.
+    - added support for the new directory structure. Makefile and QuickInst
+      come in .old and .new versions. See INCOMPAT for details.
+    - removed support for unstripped kernels. Therefore, mkck is no longer
+      part of the distribution.
+
+  Boot loader
+  -----------
+
+    - added missing  seg es  override to UI_MAGIC check at "input".
+
+  Map installer
+  -------------
+
+    - new options LITERAL and APPEND.
+    - the root setting is no longer being shown on -q -v
+    - the configuration file may now contain quoted strings in which spaces
+      and equal signs do not have to be escaped.
+
+  Documentation and installation
+  ------------------------------
+
+    - fixed bug in QuickInst that prevented correct renaming of the config
+      file when ROOT is set.
+    - added comment to disktab indicating that it is typically not needed.
+    - distributed files are now readable for group and other.
+    - mkdist is now included in the distribution.
+    - changed the name of kernels from "(traditional) boot image" to
+      "kernel image".
+    - changed the name of the string passed to the kernel from "command
+      line" to "parameter line".
+    - removed obsolescent terms "rootimage" and "bootimage".
+    - fixed documentation bug claiming only kernels can be protected by
+      passwords.
+    - fixed some additional minor documentation errors.
+
+
+Changes from version 11 to 12
+-----------------------------
+
+  Boot loader
+  ----------
+
+    - removed accidential swapping of A:/B: when swapping C:/D: from
+      the chain loader.
+    - added new chain loader any_b.b (swaps A:/B:)
+    - fixed incorrect handling of drive number resetting in swapping
+      versions of the chain loader.
+    - now generates diagnostics when failing to load the second stage
+      loader.
+    - new compile-time option NO1STDIAG to disable these diagnostics.
+
+  Map installer
+  -------------
+
+    - fixed stat/fstat when creating temporary devices.
+    - subdirectories of /dev are now recursively searched for disk devices
+      in addition to /dev
+    - devices are now counted by highest device number, not by name.
+    - some minor fixes.
+
+  Documentation and installation
+  ------------------------------
+
+    - QuickInst now warns if there is an obsolete LILO boot sector on
+      the MBR.
+    - QuickInst is now prepared to handle symbolic links hda -> sda
+    - other minor fixes to QuickInst.
+    - removed all references to compound unstripped kernels from the
+      user's guide.
+    - activate is now compiled as a stripped, statically linked, impure
+      executable.
+    - fixed a few minor omissions in the technical overview.
+
+
+Changes from version 10 to 11
+-----------------------------
+
+  Boot loader
+  -----------
+
+    - added on the fly patching of the BIOS disk parameter table to
+      fix the "Error 0x04" observed on some systems.
+
+  Map installer
+  -------------
+
+    - floppy devices are no longer opened at all when using the UNSAFE
+      option in OTHER.
+    - fixed partition table checking.
+    - new option -V to display the version number.
+    - INSTALL = /etc/lilo/boot.b  is now the default if INSTALL is
+      omitted.
+    - new compile-time configuration option NOINSTDEF to restore the old
+      semantics of INSTALL.
+
+  Documentation and installation
+  ------------------------------
+
+    - QuickInst no longer asks whether to change the active partition if
+      installing LILO as the MBR.
+    - QuickInst now suggests configuring other operating systems if
+      installing LILO as the MBR.
+    - added a version check to QuickInst.
+    - added de-installation instructions.
+    - fixed a few minor documentation bugs.
+    - added script mkbindist that generates a minimal binary distribution
+      of LILO.
+
+
+Changes from version 9 to 10
+----------------------------
+
+  Boot loader
+  -----------
+
+    - added support for read-only setting of root.
+    - new chain loader os2.b to load OS/2 from the second disk.
+    - new chain loader any_d.b to load BIOS-based operating systems
+      (e.g. PC/MS-DOS) from the second disk.
+
+  Map installer
+  -------------
+
+    - removed support for old-style configuration.
+    - removed the dump option -D
+    - removed support for not-compound unstripped kernels.
+    - limited partition checking to hard disks and primary partitions.
+    - -C now accepts - for standard input.
+    - -P now has sub-options "fix" and "ignore". New configuration
+      variable "ignore-table" coresponds to "-P ignore"
+    - added automatic backup of the partition table when fixing it.
+    - new configuration variables "readonly" and "read-write" to change
+      read-only mounting of root.
+    - made partition offset field in /etc/lilo/disktab optional.
+    - added tentative support for XT-type hard disks.
+    - improved some error messages.
+    - some minor fixes.
+
+  Documentation and installation
+  ------------------------------
+
+    - changed many "echo"s in QuickInst to "cat"s.
+    - suggesting using a symbolic link to lilo for /etc/lilo/install.
+    - removed the configuration option NOAUTO.
+    - split the documentation in a user's guide and the technical
+      overview.
+    - removed all references to older versions of LILO, the kernel or
+      other programs.
+    - removed all references to old-style configuration and not-compound
+      unstripped kernels.
+    - using the fullpage style.
+    - removed and "ascified" anew the shared sections of README and the
+      LaTeX documentation.
+    - some minor corrections.
+
+
+Changes from version 8 to 9
+---------------------------
+
+  Boot sector
+  -----------
+
+    - can now get the command line from the map file and overwrite
+      that sector.
+    - passes the word "auto" on the command line if booting after a
+      timeout.
+    - new command-line option vga={ask,normal,ext,extended,<number>}
+      to alter the VGA mode on the fly.
+    - image name matching can now be made case-insensitive (default)
+    - added sanity checks for the second stage loader and the
+      descriptor tables.
+
+  Map installer
+  -------------
+
+    - added new compound unstripped kernel format.
+    - -r is now implied if the environment variable ROOT is set.
+    - new option -I to translate a label name (e.g. obtained from
+      BOOT_IMAGE) to the path of the kernel image.
+    - new variable MESSAGE to define a startup message.
+    - new variable UNSAFE to bypass sanity checks and floppy spin-up
+      when defining other operating systems.
+    - new variable ALIAS to define a second label name.
+    - new variable RESTRICTED to confine password protection to
+      invocations with parameters.
+    - added a missing #include <sys/stat.h> to map.c
+    - fixed the BIOS_MAX_* parameters in lilo.h
+    - removed too restrictive cylinder number check.
+    - new option -R to set/clear the default command line in the
+      map file.
+    - added verification of 3D and linear address equality of
+      partition starts (in the partition table).
+    - suppressed outputting the version string when using -D with -v
+    - "vga=extended" can now be abbreviated to "vga=ext".
+
+  Documentation and installation
+  ------------------------------
+
+    - added a test for broken regexp in sed, grep and egrep to
+      QuickInst. Other minor improvements.
+    - now uses build-time configuration variables in Makefile or
+      /etc/lilo/config.defines
+    - copied section "LILO start messages" from doc.tex to README
+    - removed the description of a floppy test installation from
+      README. (doc.tex never contained that part.)
+    - fixed some minor documentation errors and omissions.
+    - fixed some minor Makefile bugs.
+    - included the LaTeX translations of the FIG files.
+    - moved the "Technical overview" to the end.
+
+
+Changes from version 7 to 8
+---------------------------
+
+  Boot sector
+  -----------
+
+    - now supports password protection for boot images.
+    - fixed occasional omission of delays.
+    - passes the name of the boot image to the kernel, which stores
+      it in the environment variable BOOT_IMAGE.
+    - parameters are now preserved when trying to boot the same
+      image again after a media error.
+    - the command line is preserved on error.
+    - can be operated from a serial line.
+    - made timeout handling interrupt-driven to fix time-wrap problems
+      at midnight.
+    - now clears all bytes after text and data of traditional boot
+      images booted from a file.
+
+  Map installer
+  -------------
+
+    - added detection of missing HDIO_REQ support.
+    - added sanity checking for disk parameters.
+    - fixed BIOS code computation for SCSI disks.
+    - command-line settings can now override /etc/lilo/config
+    - defaults for ROOT, VGA, RAMDISK, PASSWORD and OPTIONAL can be set
+      in the options section.
+    - new option PROMPT to unconditionally enter the boot prompt.
+    - new option TIMEOUT to specify an input timeout.
+    - new flag OPTIONAL to specify that an image can be omitted if it
+      isn't present.
+    - new value CURRENT for ROOT to specify the "current" root device.
+    - special characters are now correctly escaped in dumps.
+    - temporary files are now removed on error.
+    - updated the usage output to reflect the changes since 0.6.
+    - added a missing closedir to device.c
+
+  Documentation and installation
+  ------------------------------
+
+    - wrote a quick installation script.
+    - fixed many small documentation errors.
+    - wrote a README for the doc directory.
+    - added descriptions of the configuration parameters passed in
+      the boot sector and of the kernel's command-line interface.
+    - Makefile now explicitly uses /bin/sh
+    - changed echo \c to echo -n in the Makefile
+    - added ability to print the name of the active partition to
+      activate.
+
+
+Changes from version 6 to 7
+---------------------------
+
+  Boot sector
+  -----------
+
+    - supports video mode and RAM disk size settings.
+    - loads original boot sector to make possible additional settings
+      available.
+    - now uses defaults from the boot sector even if the boot sector
+      has been changed after map creation.
+
+  Map installer
+  -------------
+
+    - new configuration based on /etc/lilo/config
+    - can get SCSI geometry without using /etc/lilo/disktab (doesn't
+      work with 0.98pl6)
+    - removed support for BIOS codes (name:code)
+    - removed support for setting the swap device.
+    - new command-line options: -q, -C and -D
+
+  Documentation
+  -------------
+
+    - updated to cover new-style configuration
+    - extended the plain-ASCII README
+
+
+Changes from version 5 to 6
+---------------------------
+
+  Boot sector
+  -----------
+
+    - added command-line argument passing.
+    - now clears BSS of traditional images too.
+    - chain.b is now more careful about register values when invoking
+      the boot sector of the other OS.
+    - added an interface for externally provided command lines.
+    - added experimental recognition of linear addresses.
+
+  Map installer
+  -------------
+
+    - fixed opening the disktab file. (Using -f didn't work.)
+    - fixed use of BIOS codes for the map file: the tilde is now appended
+      before the BIOS code.
+    - added a chdir("/") when using -r
+    - added more sanity checks.
+    - added generation of linear addresses.
+
+  Documentation
+  -------------
+
+    - removed all references to swap device settings in the kernel because
+      recent kernels don't support that any longer.
+    - added a troubleshooting section.
+    - several minor fixes and improvements.
+
+
+Changes from version 4 to 5
+---------------------------
+
+  Map installer
+  -------------
+
+    - added automatic boot sector backup.
+    - fixed variable block size detection. (Didn't work with the 0.97-pl2
+      kernel.)
+    - added the chroot (-r) option.
+    - made the partition table part of a foreign OS boot descriptor
+      optional.
+
+  Documentation and installation
+  ------------------------------
+
+    - most of README has moved into doc.tex (LaTeX)
+    - added a utility to activate a partition.
+    - make install  now reminds the user to update the map.
+    - dd is now used in a more efficient way in the Makefile.
+      (Fewer subshells, etc.)
+
+
+Changes from version 3 to 4
+---------------------------
+
+  Boot sector
+  -----------
+
+    - added a configurable delay.
+    - added a diagnostic title message.
+
+  Map installer
+  -------------
+
+    - fixed all known include file conflicts.
+    - added support for variable block sizes. (Not used yet.)
+    - added some more sanity checks.
+    - added a tool to determine SCSI disk parameters.
+
+  Documentation and installation
+  ------------------------------
+
+    - extended coverage of SCSI disks.
+    - make install  now backs up chain.b and boot.b of any older LILO
+      installation. (To say: your system remains bootable even if you
+      forget to run /etc/lilo/install after the update or if this fails
+      for some reason.)
+    - moved the changes section from README into CHANGES.
+    - a set of pre-compiled executables of lilo, boot.b, chain.b and
+      dparam.com is available too.
+
+
+Changes from version 2 to 3
+---------------------------
+
+  Boot sector
+  -----------
+
+    - can initialize BSS of unstripped kernels.
+    - also accepts [Tab] to show the list of known images.
+
+  Map installer
+  -------------
+
+    - fixed parsing of the root device specification.
+    - fixed setting of the root device when the boot image doesn't
+      define it.
+    - reduced the number of installable images from 19 to 16. (Because the
+      descriptors have grown.)
+
+  Documentation
+  -------------
+
+    - added a booting basics section.
+    - many minor changes.
+
+
+Changes from version 1 to 2
+---------------------------
+
+  Boot sector
+  -----------
+
+    - added command-line editing.
+    - added debugging support (-DDEBUG).
+    - added support for compacted maps.
+    - some cosmetic changes.
+
+  Map installer
+  -------------
+
+    - major rewrite.
+    - files that contain "holes" are now handled properly.
+    - added map compaction.
+    - devices are now created on the fly only if they can't be found in /dev.
+    - improved sanity checking.
+    - can now boot other operating systems.
+    - can now boot unstripped kernel executables.
+    - added support for a disk parameter file.
+    - reduced the number of installable images from 21 to 19.
+    - changed the command-line syntax.
+    - root and boot can now be specified on the command line.
+
+  Documentation
+  -------------
+
+    - many changes, including correction of some minor errors.
+
+
+Changes from version 0 to 1
+---------------------------
+
+  Boot sector
+  -----------
+
+    - tested as master boot record.
+    - improved the boot prompt invocation method.
+    - increased the number of installable images to 21.
+    - added a help facility.
+    - improved read error handling and error reporting in the boot loader.
+    - added a second stage boot loader.
+
+  Map installer
+  -------------
+
+    - fixed some minor bugs in the map installer. Removed all compiler
+      warnings.
+    - added labeling of images.
+    - added version checking for the boot sector.
+    - replaced option -r by -m. -r will be available for a while for
+      compatibility.
+    - added booting from device files (that have boot images written on them).
+    - BIOS device codes can now be specified for boot image files too.
+    - added concatenation of images. (This is a test feature that will be
+      changed in the future.)
+
+  Documentation
+  -------------
+
+    - some minor documentation errors have been corrected.
+    - the README now warns that the map has to be rebuilt after the images are
+      replaced or moved.
+    - added a files, a hints and an examples section.

@@ -1,0 +1,88 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * at91-som60.dtsi - Device Tree file for the SOM60 module
+ *
+ *  Copyright (C) 2018 Laird,
+ *		  2018 Ben Whitten <ben.whitten@lairdtech.com>
+ *
+ */
+#include "sama5d36.dtsi"
+
+/ {
+	model = "Laird SOM60";
+	compatible = "laird,som60", "atmel,sama5d36", "atmel,sama5d3", "atmel,sama5";
+
+	chosen {
+		stdout-path = &dbgu;
+	};
+
+	memory {
+		reg = <0x20000000 0x8000000>;
+	};
+
+	clocks {
+		slow_xtal {
+			clock-frequency = <32768>;
+		};
+
+		main_xtal {
+			clock-frequency = <12000000>;
+		};
+	};
+};
+
+&pinctrl {
+	board {
+		pinctrl_mmc0_cd: mmc0_cd {
+			atmel,pins =
+				<AT91_PIOE 31 AT91_PERIPH_GPIO AT91_PINCTRL_DEGLITCH>;
+		};
+
+		pinctrl_mmc0_en: mmc0_en {
+			atmel,pins =
+				<AT91_PIOE 30 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+		};
+
+		pinctrl_nand0_wp: nand0_wp {
+			atmel,pins =
+				<AT91_PIOE 14 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP>;
+		};
+
+		pinctrl_usb_vbus: usb_vbus {
+			atmel,pins =
+				<AT91_PIOE 20 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
+				/* Conflicts with USART2_SCK */
+		};
+
+		pinctrl_usart2_sck: usart2_sck {
+			atmel,pins =
+				<AT91_PIOE 20 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+				/* Conflicts with USB_VBUS */
+		};
+
+		pinctrl_usb_oc: usb_oc {
+			atmel,pins =
+				<AT91_PIOE 15 AT91_PERIPH_GPIO AT91_PINCTRL_DEGLITCH>;
+				/* Conflicts with USART3_SCK */
+		};
+
+		pinctrl_usart3_sck: usart3_sck {
+			atmel,pins =
+				<AT91_PIOE 15 AT91_PERIPH_B AT91_PINCTRL_NONE>;
+				/* Conflicts with USB_OC */
+		};
+
+		pinctrl_usba_vbus: usba_vbus {
+		   atmel,pins =
+				<AT91_PIOC 14 AT91_PERIPH_GPIO AT91_PINCTRL_DEGLITCH>;
+		};
+
+		pinctrl_geth_int: geth_int {
+			atmel,pins =
+				<AT91_PIOB 25 AT91_PERIPH_GPIO AT91_PINCTRL_DEGLITCH>;
+				/* Conflicts with USART1_SCK */
+		};
+
+		pinctrl_usart1_sck: usart1_sck {
+			atmel,pins =
+				<AT91_

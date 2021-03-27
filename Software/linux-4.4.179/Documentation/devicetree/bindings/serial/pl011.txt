@@ -1,0 +1,67 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Keystone 2 lamarr SoC clock nodes
+ *
+ * Copyright (C) 2013-2017 Texas Instruments Incorporated - http://www.ti.com/
+ */
+
+clocks {
+	armpllclk: armpllclk@2620370 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,pll-clock";
+		clocks = <&refclksys>;
+		clock-output-names = "arm-pll-clk";
+		reg = <0x02620370 4>;
+		reg-names = "control";
+	};
+
+	mainpllclk: mainpllclk@2310110 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,main-pll-clock";
+		clocks = <&refclksys>;
+		reg = <0x02620350 4>, <0x02310110 4>, <0x02310108 4>;
+		reg-names = "control", "multiplier", "post-divider";
+	};
+
+	papllclk: papllclk@2620358 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,pll-clock";
+		clocks = <&refclksys>;
+		clock-output-names = "papllclk";
+		reg = <0x02620358 4>;
+		reg-names = "control";
+	};
+
+	ddr3apllclk: ddr3apllclk@2620360 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,pll-clock";
+		clocks = <&refclksys>;
+		clock-output-names = "ddr-3a-pll-clk";
+		reg = <0x02620360 4>;
+		reg-names = "control";
+	};
+
+	clkdfeiqnsys: clkdfeiqnsys@2350004 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,psc-clock";
+		clocks = <&chipclk12>;
+		clock-output-names = "dfe";
+		reg-names = "control", "domain";
+		reg = <0x02350004 0xb00>, <0x02350000 0x400>;
+		domain-id = <0>;
+	};
+
+	clkpcie1: clkpcie1@235002c {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,psc-clock";
+		clocks = <&chipclk12>;
+		clock-output-names = "pcie";
+		reg = <0x0235002c 0xb00>, <0x02350000 0x400>;
+		reg-names = "control", "domain";
+		domain-id = <4>;
+	};
+
+	clkgem1: clkgem1@2350040 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,psc-clock";
+		clock

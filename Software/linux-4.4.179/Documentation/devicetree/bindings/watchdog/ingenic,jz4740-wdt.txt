@@ -1,0 +1,15 @@
+/*
+ * DTS file for CSR SiRFprimaII Evaluation Board
+ *
+ * Copyright (c) 2012 Cambridge Silicon Radio Limited, a CSR plc group company.
+ *
+ * Licensed under GPLv2 or later.
+ */
+
+/dts-v1/;
+
+/include/ "prima2.dtsi"
+
+/ {
+	model = "CSR SiRFprimaII Evaluation Board";
+	compatible = "sirf,prima2

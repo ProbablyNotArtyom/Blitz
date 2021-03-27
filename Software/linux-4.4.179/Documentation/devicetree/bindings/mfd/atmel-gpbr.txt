@@ -1,0 +1,16 @@
+/*
+ * at91sam9261ek.dts - Device Tree file for Atmel at91sam9261 reference board
+ *
+ *  Copyright (C) 2013 Jean-Jacques Hiblot <jjhiblot@traphandler.com>
+ *
+ * Licensed under GPLv2 only.
+ */
+/dts-v1/;
+#include "at91sam9261.dtsi"
+
+/ {
+	model = "Atmel at91sam9261ek";
+	compatible = "atmel,at91sam9261ek", "atmel,at91sam9261", "atmel,at91sam9";
+
+	chosen {
+		bootargs = "rootfst

@@ -1,0 +1,22 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ * Definitions for use with the Alpha wrperfmon PAL call.
+ */
+
+#ifndef __ALPHA_WRPERFMON_H
+#define __ALPHA_WRPERFMON_H
+
+/* Following commands are implemented on all CPUs */
+#define PERFMON_CMD_DISABLE 0
+#define PERFMON_CMD_ENABLE 1
+#define PERFMON_CMD_DESIRED_EVENTS 2
+#define PERFMON_CMD_LOGGING_OPTIONS 3
+/* Following commands on EV5/EV56/PCA56 only */
+#define PERFMON_CMD_INT_FREQ 4
+#define PERFMON_CMD_ENABLE_CLEAR 7
+/* Following commands are on EV5 and better CPUs */
+#define PERFMON_CMD_READ 5
+#define PERFMON_CMD_WRITE 6
+/* Following command are on EV6 and better CPUs */
+#define PERFMON_CMD_ENABLE_WRITE 7
+/* Following command are on EV67 and

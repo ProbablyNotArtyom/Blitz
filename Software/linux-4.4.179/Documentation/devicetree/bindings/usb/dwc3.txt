@@ -1,0 +1,136 @@
+/*
+ * Copyright (C) 2011 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include "omap443x.dtsi"
+#include "elpida_ecb240abacn.dtsi"
+
+/ {
+	model = "TI OMAP4 SDP board";
+	compatible = "ti,omap4-sdp", "ti,omap4430", "ti,omap4";
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x40000000>; /* 1 GB */
+	};
+
+	aliases {
+		display0 = &lcd0;
+		display1 = &lcd1;
+		display2 = &hdmi0;
+	};
+
+	vdd_eth: fixedregulator-vdd-eth {
+		compatible = "regulator-fixed";
+		regulator-name = "VDD_ETH";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpio2 16 GPIO_ACTIVE_HIGH>;  /* gpio line 48 */
+		enable-active-high;
+		regulator-boot-on;
+		startup-delay-us = <25000>;
+	};
+
+	vbat: fixedregulator-vbat {
+		compatible = "regulator-fixed";
+		regulator-name = "VBAT";
+		regulator-min-microvolt = <3750000>;
+		regulator-max-microvolt = <3750000>;
+		regulator-boot-on;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		debug0 {
+			label = "omap4:green:debug0";
+			gpios = <&gpio2 29 GPIO_ACTIVE_HIGH>; /* 61 */
+		};
+
+		debug1 {
+			label = "omap4:green:debug1";
+			gpios = <&gpio1 30 GPIO_ACTIVE_HIGH>; /* 30 */
+		};
+
+		debug2 {
+			label = "omap4:green:debug2";
+			gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>; /* 7 */
+		};
+
+		debug3 {
+			label = "omap4:green:debug3";
+			gpios = <&gpio1 8 GPIO_ACTIVE_HIGH>; /* 8 */
+		};
+
+		debug4 {
+			label = "omap4:green:debug4";
+			gpios = <&gpio2 18 GPIO_ACTIVE_HIGH>; /* 50 */
+		};
+
+		user1 {
+			label = "omap4:blue:user";
+			gpios = <&gpio6 9 GPIO_ACTIVE_HIGH>; /* 169 */
+		};
+
+		user2 {
+			label = "omap4:red:user";
+			gpios = <&gpio6 10 GPIO_ACTIVE_HIGH>; /* 170 */
+		};
+
+		user3 {
+			label = "omap4:green:user";
+			gpios = <&gpio5 11 GPIO_ACTIVE_HIGH>; /* 139 */
+		};
+	};
+
+	pwmleds {
+		compatible = "pwm-leds";
+		kpad {
+			label = "omap4::keypad";
+			pwms = <&twl_pwm 0 7812500>;
+			max-brightness = <127>;
+		};
+
+		charging {
+			label = "omap4:green:chrg";
+			pwms = <&twl_pwmled 0 7812500>;
+			max-brightness = <255>;
+		};
+	};
+
+	backlight {
+		compatible = "pwm-backlight";
+		pwms = <&twl_pwm 1 7812500>;
+		brightness-levels = <
+				0 10 20 30 40
+				50 60 70 80 90
+				100 110 120 127
+				>;
+		default-brightness-level = <13>;
+	};
+
+	sound {
+		compatible = "ti,abe-twl6040";
+		ti,model = "SDP4430";
+
+		ti,jack-detection = <1>;
+		ti,mclk-freq = <38400000>;
+
+		ti,mcpdm = <&mcpdm>;
+		ti,dmic = <&dmic>;
+
+		ti,twl6040 = <&twl6040>;
+
+		/* Audio routing */
+		ti,audio-routing =
+			"Headset Stereophone", "HSOL",
+			"Headset Stereophone", "HSOR",
+			"Earphone Spk", "EP",
+			"Ext Spk", "HFL",
+			"Ext Spk", "HFR",
+			"Line Out", "AUXL",
+	

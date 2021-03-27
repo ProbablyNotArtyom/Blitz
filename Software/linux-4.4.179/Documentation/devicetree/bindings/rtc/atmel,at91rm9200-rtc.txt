@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Digi International's ConnectCore 6UL System-On-Module device tree source
+ *
+ * Copyright 2018 Digi International, Inc.
+ *
+ */
+
+/ {
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		linux,cma {
+			compatible = "shared-dma-pool";
+			reusable;
+			size = <0x4000000>;
+			linux,cma-default;
+		};
+	};
+};
+
+&adc1 {
+	vref-supply = <&vdda_adc_3v3>;
+};
+
+&gpmi {
+	pinct

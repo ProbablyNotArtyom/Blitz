@@ -1,0 +1,34 @@
+Some warnings, first.
+
+ * BIG FAT WARNING *********************************************************
+ *
+ * If you touch anything on disk between suspend and resume...
+ *				...kiss your data goodbye.
+ *
+ * If you do resume from initrd after your filesystems are mounted...
+ *				...bye bye root partition.
+ *			[this is actually same case as above]
+ *
+ * If you have unsupported (*) devices using DMA, you may have some
+ * problems. If your disk driver does not support suspend... (IDE does),
+ * it may cause some problems, too. If you change kernel command line
+ * between suspend and resume, it may do something wrong. If you change
+ * your hardware while system is suspended... well, it was not good idea;
+ * but it will probably only crash.
+ *
+ * (*) suspend/resume support is needed to make it safe.
+ *
+ * If you have any filesystems on USB devices mounted before software suspend,
+ * they won't be accessible after resume and you may lose data, as though
+ * you have unplugged the USB devices with mounted filesystems on them;
+ * see the FAQ below for details.  (This is not true for more traditional
+ * power states like "standby", which normally don't turn USB off.)
+
+Swap partition:
+You need to append resume=/dev/your_swap_partition to kernel command
+line or specify it using /sys/power/resume.
+
+Swap file:
+If using a swapfile you can also specify a resume offset using
+resume_offset=<number> on the kernel command line or specify it
+in /sy

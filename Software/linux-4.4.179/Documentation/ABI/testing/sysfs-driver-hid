@@ -1,0 +1,43 @@
+
+Intel(R) PRO/Wireless 2915ABG Driver for Linux in support of:
+
+Intel(R) PRO/Wireless 2200BG Network Connection
+Intel(R) PRO/Wireless 2915ABG Network Connection
+
+Note: The Intel(R) PRO/Wireless 2915ABG Driver for Linux and Intel(R)
+PRO/Wireless 2200BG Driver for Linux is a unified driver that works on
+both hardware adapters listed above. In this document the Intel(R)
+PRO/Wireless 2915ABG Driver for Linux will be used to reference the
+unified driver.
+
+Copyright (C) 2004-2006, Intel Corporation
+
+README.ipw2200
+
+Version: 1.1.2
+Date   : March 30, 2006
+
+
+Index
+-----------------------------------------------
+0.   IMPORTANT INFORMATION BEFORE USING THIS DRIVER
+1.   Introduction
+1.1. Overview of features
+1.2. Module parameters
+1.3. Wireless Extension Private Methods
+1.4. Sysfs Helper Files
+1.5. Supported channels
+2.   Ad-Hoc Networking
+3.   Interacting with Wireless Tools
+3.1. iwconfig mode
+3.2. iwconfig sens
+4.   About the Version Numbers
+5.   Firmware installation
+6.   Support
+7.   License
+
+
+0.   IMPORTANT INFORMATION BEFORE USING THIS DRIVER
+-----------------------------------------------
+
+Important Notice FOR A

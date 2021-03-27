@@ -1,0 +1,85 @@
+This is gmp.info, produced by makeinfo version 4.0 from gmp.texi.
+
+START-INFO-DIR-ENTRY
+* gmp: (gmp.info).               GNU Multiple Precision Arithmetic Library.
+END-INFO-DIR-ENTRY
+
+   This file documents GNU MP, a library for arbitrary-precision
+arithmetic.
+
+   Copyright (C) 1991, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000
+Free Software Foundation, Inc.
+
+   Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+   Permission is granted to copy and distribute modified versions of
+this manual under the conditions for verbatim copying, provided that
+the entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+   Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Foundation.
+
+
+Indirect:
+gmp.info-1: 1024
+gmp.info-2: 50033
+gmp.info-3: 98641
+
+Tag Table:
+(Indirect)
+Node: Top1024
+Node: Copying2208
+Node: Introduction to GMP3909
+Node: Installing GMP6013
+Node: GMP Basics15062
+Node: Nomenclature and Types15956
+Node: Function Classes16994
+Node: GMP Variable Conventions18467
+Node: GMP and reentrancy20319
+Node: Useful Macros and Constants21464
+Node: Compatibility with older versions22067
+Node: Compatibility with Version 1.x22373
+Node: Compatibility with Version 2.0.x24120
+Node: Getting the Latest Version of GMP24502
+Node: Reporting Bugs24870
+Node: Integer Functions26577
+Node: Initializing Integers27169
+Node: Assigning Integers29285
+Node: Simultaneous Integer Init & Assign30660
+Node: Converting Integers32276
+Node: Integer Arithmetic34373
+Node: Comparison Functions46589
+Node: Integer Logic and Bit Fiddling47761
+Node: I/O of Integers50033
+Node: Miscellaneous Integer Functions52514
+Node: Rational Number Functions56295
+Node: Initializing Rationals57591
+Node: Assigning Rationals58761
+Node: Comparing Rationals59724
+Node: Applying Integer Functions61007
+Node: Miscellaneous Rational Functions61825
+Node: Floating-point Functions63974
+Node: Initializing Floats65850
+Node: Assigning Floats68651
+Node: Simultaneous Float Init & Assign70242
+Node: Converting Floats71761
+Node: Float Arithmetic73453
+Node: Float Comparison75473
+Node: I/O of Floats76499
+Node: Miscellaneous Float Functions78615
+Node: Low-level Functions79959
+Node: Random Number Functions96364
+Node: Random State Initialization98641
+Node: BSD Compatible Functions102376
+Node: Custom Allocation106830
+Node: Contributors109172
+Node: References112411
+Node: Concept Index113683
+Node: Function Index116460
+
+End Tag Table

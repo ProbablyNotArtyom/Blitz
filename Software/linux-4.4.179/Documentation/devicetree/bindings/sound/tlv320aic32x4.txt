@@ -1,0 +1,44 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Copyright (c) 2014 MediaTek Inc.
+ * Author: Joe.C <yingjoe.chen@mediatek.com>
+ *
+ */
+
+/dts-v1/;
+#include "mt8135.dtsi"
+
+/ {
+	model = "MediaTek MT8135 evaluation board";
+	compatible = "mediatek,mt8135-evbp1", "mediatek,mt8135";
+
+	memory {
+		reg = <0 0x80000000 0 0x40000000>;
+	};
+};
+
+&pwrap {
+	pmic: mt6397 {
+		compatible = "mediatek,mt6397";
+
+		mt6397regulator: mt6397regulator {
+			compatible = "mediatek,mt6397-regulator";
+
+			mt6397_vpca15_reg: buck_vpca15 {
+				regulator-name = "vpca15";
+				regulator-min-microvolt = < 850000>;
+				regulator-max-microvolt = <1350000>;
+				regulator-ramp-delay = <12500>;
+				regulator-always-on;
+			};
+
+			mt6397_vpca7_reg: buck_vpca7 {
+				regulator-name = "vpca7";
+				regulator-min-microvolt = < 850000>;
+				regulator-max-microvolt = <1350000>;
+				regulator-ramp-delay = <12500>;
+				regulator-always-on;
+			};
+
+			mt6397_vsramca15_reg: buck_vsramca15 {
+				regu

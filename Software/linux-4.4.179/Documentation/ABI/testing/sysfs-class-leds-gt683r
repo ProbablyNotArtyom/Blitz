@@ -1,0 +1,19 @@
+Cropping and Scaling algorithm, used in the sh_mobile_ceu_camera driver
+=======================================================================
+
+Author: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
+
+Terminology
+-----------
+
+sensor scales: horizontal and vertical scales, configured by the sensor driver
+host scales: -"- host driver
+combined scales: sensor_scale * host_scale
+
+
+Generic scaling / cropping scheme
+---------------------------------
+
+.. code-block:: none
+
+	-1--

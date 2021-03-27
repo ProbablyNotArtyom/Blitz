@@ -1,0 +1,45 @@
+/* a.out coredump register dumper
+ *
+ * Copyright (C) 2007 Red Hat, Inc. All Rights Reserved.
+ * Written by David Howells (dhowells@redhat.com)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public Licence
+ * as published by the Free Software Foundation; either version
+ * 2 of the Licence, or (at your option) any later version.
+ */
+
+#ifndef _ASM_A_OUT_CORE_H
+#define _ASM_A_OUT_CORE_H
+
+#ifdef __KERNEL__
+
+#include <linux/user.h>
+#include <linux/mm_types.h>
+
+/*
+ * Fill in the user structure for an ECOFF core dump.
+ */
+static inline void aout_dump_thread(struct pt_regs *pt, struct user *dump)
+{
+	/* switch stack follows right below pt_regs: */
+	struct switch_stack * sw = ((struct switch_stack *) pt) - 1;
+
+	dump->magic = CMAGIC;
+	dump->start_code  = current->mm->start_code;
+	dump->start_data  = current->mm->start_data;
+	dump->start_stack = rdusp() & ~(PAGE_SIZE - 1);
+	dump->u_tsize = ((current->mm->end_code - dump->start_code)
+			 >> PAGE_SHIFT);
+	dump->u_dsize = ((current->mm->brk + PAGE_SIZE-1 - dump->start_data)
+			 >> PAGE_SHIFT);
+	dump->u_ssize = (current->mm->start_stack - dump->start_stack
+			 + PAGE_SIZE-1) >> PAGE_SHIFT;
+
+	/*
+	 * We store the registers in an order/format that is
+	 * compatible with DEC Unix/OSF/1 as this makes life easier
+	 * for gdb.
+	 */
+	dump->regs[EF_V0]  = pt->r0;
+	dump->regs[

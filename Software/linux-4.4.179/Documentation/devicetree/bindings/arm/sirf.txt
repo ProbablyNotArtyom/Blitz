@@ -1,0 +1,14 @@
+KVM CPUID bits
+Glauber Costa <glommer@redhat.com>, Red Hat Inc, 2010
+=====================================================
+
+A guest running on a kvm host, can check some of its features using
+cpuid. This is not always guaranteed to work, since userspace can
+mask-out some, or even all KVM-related cpuid features before launching
+a guest.
+
+KVM cpuid functions are:
+
+function: KVM_CPUID_SIGNATURE (0x40000000)
+returns : eax = 0x40000001,
+          ebx

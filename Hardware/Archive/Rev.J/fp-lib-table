@@ -1,4 +1,0 @@
-(fp_lib_table
-  (lib (name Blitz)(type KiCad)(uri /home/artyom/Desktop/Projects/Blitz/Hardware/Rev.A/Blitz.pretty)(options "")(descr ""))
-  (lib (name BBlitz)(type KiCad)(uri /home/artyom/Desktop/Projects/BBlitz/Hardware/BBlitz.pretty)(options "")(descr ""))
-)

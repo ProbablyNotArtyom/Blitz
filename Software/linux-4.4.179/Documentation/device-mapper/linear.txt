@@ -1,0 +1,49 @@
+		Lockless Ring Buffer Design
+		===========================
+
+Copyright 2009 Red Hat Inc.
+   Author:   Steven Rostedt <srostedt@redhat.com>
+  License:   The GNU Free Documentation License, Version 1.2
+               (dual licensed under the GPL v2)
+Reviewers:   Mathieu Desnoyers, Huang Ying, Hidetoshi Seto,
+	     and Frederic Weisbecker.
+
+
+Written for: 2.6.31
+
+Terminology used in this Document
+---------------------------------
+
+tail - where new writes happen in the ring buffer.
+
+head - where new reads happen in the ring buffer.
+
+producer - the task that writes into the ring buffer (same as writer)
+
+writer - same as producer
+
+consumer - the task that reads from the buffer (same as reader)
+
+reader - same as consumer.
+
+reader_page - A page outside the ring buffer used solely (for the most part)
+    by the reader.
+
+head_page - a pointer to the page that the reader will use next
+
+tail_page - a pointer to the page that will be written to next
+
+commit_page - a pointer to the page with the last finished non-nested write.
+
+cmpxchg - hardware-assisted atomic transaction that performs the following:
+
+   A = B iff previous A == C
+
+   R = cmpxchg(A, C, B) is saying that we replace A with B if and only if
+      current A is equal to C, and we put the old (current) A into R
+
+   R gets the previous A regardless if A is updated with B or not.
+
+   To see if the update was successful a compare of R == C may be used.
+
+The Generic Ring Buf

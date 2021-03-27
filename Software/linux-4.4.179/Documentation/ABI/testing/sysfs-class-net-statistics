@@ -1,0 +1,180 @@
+The Virtual Video Test Driver (vivid)
+=====================================
+
+This driver emulates video4linux hardware of various types: video capture, video
+output, vbi capture and output, radio receivers and transmitters and a software
+defined radio receiver. In addition a simple framebuffer device is available for
+testing capture and output overlays.
+
+Up to 64 vivid instances can be created, each with up to 16 inputs and 16 outputs.
+
+Each input can be a webcam, TV capture device, S-Video capture device or an HDMI
+capture device. Each output can be an S-Video output device or an HDMI output
+device.
+
+These inputs and outputs act exactly as a real hardware device would behave. This
+allows you to use this driver as a test input for application development, since
+you can test the various features without requiring special hardware.
+
+This document describes the features implemented by this driver:
+
+- Support for read()/write(), MMAP, USERPTR and DMABUF streaming I/O.
+- A large list of test patterns and variations thereof
+- Working brightness, contrast, saturation and hue controls
+- Support for the alpha color component
+- Full colorspace support, including limited/full RGB range
+- All possible control types are present
+- Support for various pixel aspect ratios and video aspect ratios
+- Error injection to test what happens if errors occur
+- Supports crop/compose/scale in any combination for both input and output
+- Can emulate up to 4K resolutions
+- All Field settings are supported for testing interlaced capturing
+- Supports all standard YUV and RGB formats, including two multiplanar YUV formats
+- Raw and Sliced VBI capture and output support
+- Radio receiver and transmitter support, including RDS support
+- Software defined radio (SDR) support
+- Capture and output overlay support
+
+These features will be described in more detail below.
+
+Configuring the driver
+----------------------
+
+By default the driver will create a single instance that has a video capture
+device with webcam, TV, S-Video and HDMI inputs, a video output device with
+S-Video and HDMI outputs, one vbi capture device, one vbi output device, one
+radio receiver device, one radio transmitter device and one SDR device.
+
+The number of instances, devices, video inputs and outputs and their types are
+all configurable using the following module options:
+
+- n_devs:
+
+	number of driver instances to create. By default set to 1. Up to 64
+	instances can be created.
+
+- node_types:
+
+	which devices should each driver instance create. An array of
+	hexadecimal values, one for each instance. The default is 0x1d3d.
+	Each value is a bitmask with the following meaning:
+
+		- bit 0: Video Capture node
+		- bit 2-3: VBI Capture node: 0 = none, 1 = raw vbi, 2 = sliced vbi, 3 = both
+		- bit 4: Radio Receiver node
+		- bit 5: Software Defined Radio Receiver node
+		- bit 8: Video Output node
+		- bit 10-11: VBI Output node: 0 = none, 1 = raw vbi, 2 = sliced vbi, 3 = both
+		- bit 12: Radio Transmitter node
+		- bit 16: Framebuffer for testing overlays
+
+	So to create four instances, the first two with just one video capture
+	device, the second two with just one video output device you would pass
+	these module options to vivid:
+
+	.. code-block:: none
+
+		n_devs=4 node_types=0x1,0x1,0x100,0x100
+
+- num_inputs:
+
+	the number of inputs, one for each instance. By default 4 inputs
+	are created for each video capture device. At most 16 inputs can be created,
+	and there must be at least one.
+
+- input_types:
+
+	the input types for each instance, the default is 0xe4. This defines
+	what the type of each input is when the inputs are created for each driver
+	instance. This is a hexadecimal value with up to 16 pairs of bits, each
+	pair gives the type and bits 0-1 map to input 0, bits 2-3 map to input 1,
+	30-31 map to input 15. Each pair of bits has the following meaning:
+
+		- 00: this is a webcam input
+		- 01: this is a TV tuner input
+		- 10: this is an S-Video input
+		- 11: this is an HDMI input
+
+	So to create a video capture device with 8 inputs where input 0 is a TV
+	tuner, inputs 1-3 are S-Video inputs and inputs 4-7 are HDMI inputs you
+	would use the following module options:
+
+	.. code-block:: none
+
+		num_inputs=8 input_types=0xffa9
+
+- num_outputs:
+
+	the number of outputs, one for each instance. By default 2 outputs
+	are created for each video output device. At most 16 outputs can be
+	created, and there must be at least one.
+
+- output_types:
+
+	the output types for each instance, the default is 0x02. This defines
+	what the type of each output is when the outputs are created for each
+	driver instance. This is a hexadecimal value with up to 16 bits, each bit
+	gives the type and bit 0 maps to output 0, bit 1 maps to output 1, bit
+	15 maps to output 15. The meaning of each bit is as follows:
+
+		- 0: this is an S-Video output
+		- 1: this is an HDMI output
+
+	So to create a video output device with 8 outputs where outputs 0-3 are
+	S-Video outputs and outputs 4-7 are HDMI outputs you would use the
+	following module options:
+
+	.. code-block:: none
+
+		num_outputs=8 output_types=0xf0
+
+- vid_cap_nr:
+
+	give the desired videoX start number for each video capture device.
+	The default is -1 which will just take the first free number. This allows
+	you to map capture video nodes to specific videoX device nodes. Example:
+
+	.. code-block:: none
+
+		n_devs=4 vid_cap_nr=2,4,6,8
+
+	This will attempt to assign /dev/video2 for the video capture device of
+	the first vivid instance, video4 for the next up to video8 for the last
+	instance. If it can't succeed, then it will just take the next free
+	number.
+
+- vid_out_nr:
+
+	give the desired videoX start number for each video output device.
+	The default is -1 which will just take the first free number.
+
+- vbi_cap_nr:
+
+	give the desired vbiX start number for each vbi capture device.
+	The default is -1 which will just take the first free number.
+
+- vbi_out_nr:
+
+	give the desired vbiX start number for each vbi output device.
+	The default is -1 which will just take the first free number.
+
+- radio_rx_nr:
+
+	give the desired radioX start number for each radio receiver device.
+	The default is -1 which will just take the first free number.
+
+- radio_tx_nr:
+
+	give the desired radioX start number for each radio transmitter
+	device. The default is -1 which will just take the first free number.
+
+- sdr_cap_nr:
+
+	give the desired swradioX start number for each SDR capture device.
+	The default is -1 which will just take the first free number.
+
+- ccs_cap_mode:
+
+	specify the allowed video capture crop/compose/scaling combination
+	for each driver instance. Video capture devices can have any combination
+	of cropping, composing and scaling capabilities and this will

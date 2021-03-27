@@ -1,0 +1,59 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_SLICED_VBI_CAP:
+
+*****************************
+ioctl VIDIOC_G_SLICED_VBI_CAP
+*****************************
+
+Name
+====
+
+VIDIOC_G_SLICED_VBI_CAP - Query sliced VBI capabilities
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_G_SLICED_VBI_CAP, struct v4l2_sliced_vbi_cap *argp )
+    :name: VIDIOC_G_SLICED_VBI_CAP
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_sliced_vbi_cap`.
+
+
+Description
+===========
+
+To find out which data services are supported by a sliced VBI capture or
+output device, applications initialize the ``type`` field of a struct
+:c:type:`v4l2_sliced_vbi_cap`, clear the
+``reserved`` array and call the :ref:`VIDIOC_G_SLICED_VBI_CAP <VIDIOC_G_SLICED_VBI_CAP>` ioctl. The
+driver fills in the remaining fields or returns an ``EINVAL`` error code if
+the sliced VBI API is unsupported or ``type`` is invalid.
+
+.. note::
+
+   The ``type`` field was added, and the ioctl changed from read-only
+   to write-read, in Linux 2.6.19.
+
+
+.. c:type:: v4l2_sliced_vbi_cap
+
+.. tabularcolumns:: |p{1.2cm}|p{4.2cm}|p{4.1cm}|p{4.0cm}|p{4.0cm}|
+
+.. flat-table:: struct v4l2_sliced_vbi_cap
+    :header-rows:  0
+    :stub-columns: 0
+    :widths:       3 3 2 2 2
+
+    * - __u16
+      - ``service_set``
+      - :cspan:`2` A set of all data services supp

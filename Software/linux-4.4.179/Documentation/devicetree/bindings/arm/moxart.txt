@@ -1,0 +1,8 @@
+PRELIMINARY DRAFT, MAY CONTAIN MISTAKES!
+28 Jun 2011
+
+The USB/IP protocol follows a server/client architecture. The server exports the
+USB devices and the clients imports them. The device driver for the exported
+USB device runs on the client machine.
+
+T

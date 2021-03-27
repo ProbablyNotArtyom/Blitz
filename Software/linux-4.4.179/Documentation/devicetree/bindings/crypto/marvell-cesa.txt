@@ -1,0 +1,65 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/core_mcpcia.c
+ *
+ * Based on code written by David A Rusling (david.rusling@reo.mts.dec.com).
+ *
+ * Code common to all MCbus-PCI Adaptor core logic chipsets
+ */
+
+#define __EXTERN_INLINE inline
+#include <asm/io.h>
+#include <asm/core_mcpcia.h>
+#undef __EXTERN_INLINE
+
+#include <linux/types.h>
+#include <linux/pci.h>
+#include <linux/sched.h>
+#include <linux/init.h>
+#include <linux/delay.h>
+
+#include <asm/ptrace.h>
+
+#include "proto.h"
+#include "pci_impl.h"
+
+/*
+ * NOTE: Herein lie back-to-back mb instructions.  They are magic. 
+ * One plausible explanation is that the i/o controller does not properly
+ * handle the system transaction.  Another involves timing.  Ho hum.
+ */
+
+/*
+ * BIOS32-style PCI interface:
+ */
+
+#define DEBUG_CFG 0
+
+#if DEBUG_CFG
+# define DBG_CFG(args)	printk args
+#else
+# define DBG_CFG(args)
+#endif
+
+/*
+ * Given a bus, device, and function number, compute resulting
+ * configuration space address and setup the MCPCIA_HAXR2 register
+ * accordingly.  It is therefore not safe to have concurrent
+ * invocations to configuration space access routines, but there
+ * really shouldn't be any need for this.
+ *
+ * Type 0:
+ *
+ *  3 3|3 3 2 2|2 2 2 2|2 2 2 2|1 1 1 1|1 1 1 1|1 1 
+ *  3 2|1 0 9 8|7 6 5 4|3 2 1 0|9 8 7 6|5 4 3 2|1 0 9 8|7 6 5 4|3 2 1 0
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * | | |D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|F|F|F|R|R|R|R|R|R|0|0|
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ *
+ *	31:11	Device select bit.
+ * 	10:8	Function number
+ * 	 7:2	Register number
+ *
+ * Type 1:
+ *
+ *  3 3|3 3 2 2|2 2 2 2|2 2 2 2|1 1 1

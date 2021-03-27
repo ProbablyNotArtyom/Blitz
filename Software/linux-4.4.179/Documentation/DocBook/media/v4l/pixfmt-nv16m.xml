@@ -1,0 +1,169 @@
+Coherent Accelerator Interface (CXL)
+====================================
+
+Introduction
+============
+
+    The coherent accelerator interface is designed to allow the
+    coherent connection of accelerators (FPGAs and other devices) to a
+    POWER system. These devices need to adhere to the Coherent
+    Accelerator Interface Architecture (CAIA).
+
+    IBM refers to this as the Coherent Accelerator Processor Interface
+    or CAPI. In the kernel it's referred to by the name CXL to avoid
+    confusion with the ISDN CAPI subsystem.
+
+    Coherent in this context means that the accelerator and CPUs can
+    both access system memory directly and with the same effective
+    addresses.
+
+
+Hardware overview
+=================
+
+         POWER8/9             FPGA
+       +----------+        +---------+
+       |          |        |         |
+       |   CPU    |        |   AFU   |
+       |          |        |         |
+       |          |        |         |
+       |          |        |         |
+       +----------+        +---------+
+       |   PHB    |        |         |
+       |   +------+        |   PSL   |
+       |   | CAPP |<------>|         |
+       +---+------+  PCIE  +---------+
+
+    The POWER8/9 chip has a Coherently Attached Processor Proxy (CAPP)
+    unit which is part of the PCIe Host Bridge (PHB). This is managed
+    by Linux by calls into OPAL. Linux doesn't directly program the
+    CAPP.
+
+    The FPGA (or coherently attached device) consists of two parts.
+    The POWER Service Layer (PSL) and the Accelerator Function Unit
+    (AFU). The AFU is used to implement specific functionality behind
+    the PSL. The PSL, among other things, provides memory address
+    translation services to allow each AFU direct access to userspace
+    memory.
+
+    The AFU is the core part of the accelerator (eg. the compression,
+    crypto etc function). The kernel has no knowledge of the function
+    of the AFU. Only userspace interacts directly with the AFU.
+
+    The PSL provides the translation and interrupt services that the
+    AFU needs. This is what the kernel interacts with. For example, if
+    the AFU needs to read a particular effective address, it sends
+    that address to the PSL, the PSL then translates it, fetches the
+    data from memory and returns it to the AFU. If the PSL has a
+    translation miss, it interrupts the kernel and the kernel services
+    the fault. The context to which this fault is serviced is based on
+    who owns that acceleration function.
+
+    POWER8 <-----> PSL Version 8 is compliant to the CAIA Version 1.0.
+    POWER9 <-----> PSL Version 9 is compliant to the CAIA Version 2.0.
+    This PSL Version 9 provides new features such as:
+    * Interaction with the nest MMU on the P9 chip.
+    * Native DMA support.
+    * Supports sending ASB_Notify messages for host thread wakeup.
+    * Supports Atomic operations.
+    * ....
+
+    Cards with a PSL9 won't work on a POWER8 system and cards with a
+    PSL8 won't work on a POWER9 system.
+
+AFU Modes
+=========
+
+    There are two programming modes supported by the AFU. Dedicated
+    and AFU directed. AFU may support one or both modes.
+
+    When using dedicated mode only one MMU context is supported. In
+    this mode, only one userspace process can use the accelerator at
+    time.
+
+    When using AFU directed mode, up to 16K simultaneous contexts can
+    be supported. This means up to 16K simultaneous userspace
+    applications may use the accelerator (although specific AFUs may
+    support fewer). In this mode, the AFU sends a 16 bit context ID
+    with each of its requests. This tells the PSL which context is
+    associated with each operation. If the PSL can't translate an
+    operation, the ID can also be accessed by the kernel so it can
+    determine the userspace context associated with an operation.
+
+
+MMIO space
+==========
+
+    A portion of the accelerator MMIO space can be directly mapped
+    from the AFU to userspace. Either the whole space can be mapped or
+    just a per context portion. The hardware is self describing, hence
+    the kernel can determine the offset and size of the per context
+    portion.
+
+
+Interrupts
+==========
+
+    AFUs may generate interrupts that are destined for userspace. These
+    are received by the kernel as hardware interrupts and passed onto
+    userspace by a read syscall documented below.
+
+    Data storage faults and error interrupts are handled by the kernel
+    driver.
+
+
+Work Element Descriptor (WED)
+=============================
+
+    The WED is a 64-bit parameter passed to the AFU when a context is
+    started. Its format is up to the AFU hence the kernel has no
+    knowledge of what it represents. Typically it will be the
+    effective address of a work queue or status block where the AFU
+    and userspace can share control and status information.
+
+
+
+
+User API
+========
+
+1. AFU character devices
+
+    For AFUs operating in AFU directed mode, two character device
+    files will be created. /dev/cxl/afu0.0m will correspond to a
+    master context and /dev/cxl/afu0.0s will correspond to a slave
+    context. Master contexts have access to the full MMIO space an
+    AFU provides. Slave contexts have access to only the per process
+    MMIO space an AFU provides.
+
+    For AFUs operating in dedicated process mode, the driver will
+    only create a single character device per AFU called
+    /dev/cxl/afu0.0d. This will have access to the entire MMIO space
+    that the AFU provides (like master contexts in AFU directed).
+
+    The types described below are defined in include/uapi/misc/cxl.h
+
+    The following file operations are supported on both slave and
+    master devices.
+
+    A userspace library libcxl is available here:
+	https://github.com/ibm-capi/libcxl
+    This provides a C interface to this kernel API.
+
+open
+----
+
+    Opens the device and allocates a file descriptor to be used with
+    the rest of the API.
+
+    A dedicated mode AFU only has one context and only allows the
+    device to be opened once.
+
+    An AFU directed mode AFU can have many contexts, the device can be
+    opened once for each context that is available.
+
+    When all available contexts are allocated the open call will fail
+    and return -ENOSPC.
+
+    Note: IRQs need to be allocated for each context, which may limit
+     

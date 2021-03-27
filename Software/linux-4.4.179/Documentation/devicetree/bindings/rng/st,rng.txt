@@ -1,0 +1,15 @@
+// SPDX-License-Identifier: GPL-2.0
+//
+// Copyright 2014 Freescale Semiconductor, Inc.
+
+#include <dt-bindings/clock/imx6sx-clock.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include "imx6sx-pinfunc.h"
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	/*
+	 * The decompressor and also some bootloaders rely

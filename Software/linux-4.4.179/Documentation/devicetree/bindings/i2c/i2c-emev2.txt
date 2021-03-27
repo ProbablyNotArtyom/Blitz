@@ -1,0 +1,25 @@
+/*
+ * Copyright (C) 2011-12 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ */
+
+#include <linux/interrupt.h>
+#include <linux/irqchip.h>
+#include <asm/mach_desc.h>
+#include <asm/smp.h>
+
+/*
+ * Late Interrupt system init called from start_kernel for Boot CPU only
+ *
+ * Since slab must already be initialized, platforms can start doing any
+ * needed request_irq( )s
+ */
+void __init init_IRQ(void)
+{
+	/*
+	 * process the entire interrupt tree in one go
+	 * Any exte

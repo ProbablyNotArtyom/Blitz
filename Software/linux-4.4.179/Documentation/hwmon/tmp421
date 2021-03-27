@@ -1,0 +1,94 @@
+// SPDX-License-Identifier: GPL-2.0 OR MIT
+/dts-v1/;
+
+#include <dt-bindings/input/input.h>
+#include "tegra20-colibri.dtsi"
+
+/ {
+	model = "Toradex Colibri T20 on Colibri Evaluation Board";
+	compatible = "toradex,colibri_t20-eval-v3", "toradex,colibri_t20",
+		     "nvidia,tegra20";
+
+	aliases {
+		rtc0 = "/i2c@7000c000/rtc@68";
+		rtc1 = "/i2c@7000d000/pmic@34";
+		rtc2 = "/rtc@7000e000";
+		serial0 = &uarta;
+		serial1 = &uartd;
+		serial2 = &uartb;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	host1x@50000000 {
+		dc@54200000 {
+			rgb {
+				status = "okay";
+				nvidia,panel = <&panel>;
+			};
+		};
+
+		hdmi@54280000 {
+			status = "okay";
+			hdmi-supply = <&reg_5v0>;
+		};
+	};
+
+	pinmux@70000014 {
+		state_default: pinmux {
+			bl-on {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			ddc {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			hotplug-detect {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			i2c {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			lcd {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			lm1 {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			mmc {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			mmccd {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			pwm-a-b {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			pwm-c-d {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			ssp {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			uart-a {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			uart-b {
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+			};
+
+			uart-c {
+				nvidia,tristate = <TEGRA_PIN_DIS

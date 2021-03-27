@@ -1,0 +1,104 @@
+// SPDX-License-Identifier: GPL-2.0+
+#include <dt-bindings/clock/aspeed-clock.h>
+
+/ {
+	model = "Aspeed BMC";
+	compatible = "aspeed,ast2400";
+	#address-cells = <1>;
+	#size-cells = <1>;
+	interrupt-parent = <&vic>;
+
+	aliases {
+		i2c0 = &i2c0;
+		i2c1 = &i2c1;
+		i2c2 = &i2c2;
+		i2c3 = &i2c3;
+		i2c4 = &i2c4;
+		i2c5 = &i2c5;
+		i2c6 = &i2c6;
+		i2c7 = &i2c7;
+		i2c8 = &i2c8;
+		i2c9 = &i2c9;
+		i2c10 = &i2c10;
+		i2c11 = &i2c11;
+		i2c12 = &i2c12;
+		i2c13 = &i2c13;
+		serial0 = &uart1;
+		serial1 = &uart2;
+		serial2 = &uart3;
+		serial3 = &uart4;
+		serial4 = &uart5;
+		serial5 = &vuart;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			compatible = "arm,arm926ej-s";
+			device_type = "cpu";
+			reg = <0>;
+		};
+	};
+
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0x40000000 0>;
+	};
+
+	ahb {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		fmc: flash-controller@1e620000 {
+			reg = < 0x1e620000 0x94
+				0x20000000 0x10000000 >;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			compatible = "aspeed,ast2400-fmc";
+			clocks = <&syscon ASPEED_CLK_AHB>;
+			status = "disabled";
+			interrupts = <19>;
+			flash@0 {
+				reg = < 0 >;
+				compatible = "jedec,spi-nor";
+				status = "disabled";
+			};
+		};
+
+		spi: flash-controller@1e630000 {
+			reg = < 0x1e630000 0x18
+				0x30000000 0x10000000 >;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			compatible = "aspeed,ast2400-spi";
+			clocks = <&syscon ASPEED_CLK_AHB>;
+			status = "disabled";
+			flash@0 {
+				reg = < 0 >;
+				compatible = "jedec,spi-nor";
+				status = "disabled";
+			};
+		};
+
+		vic: interrupt-controller@1e6c0080 {
+			compatible = "aspeed,ast2400-vic";
+			interrupt-controller;
+			#interrupt-cells = <1>;
+			valid-sources = <0xffffffff 0x0007ffff>;
+			reg = <0x1e6c0080 0x80>;
+		};
+
+		cvic: copro-interrupt-controller@1e6c2000 {
+			compatible = "aspeed,ast2400-cvic", "aspeed-cvic";
+			valid-sources = <0x7fffffff>;
+			reg = <0x1e6c2000 0x80>;
+		};
+
+		mac0: ethernet@1e660000 {
+			compatible = "aspeed,ast2400-mac", "faraday,ftgmac100";
+			reg = <0x1e660000 0x180>;
+			interru

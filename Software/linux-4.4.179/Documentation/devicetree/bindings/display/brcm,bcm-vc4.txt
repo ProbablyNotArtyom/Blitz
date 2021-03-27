@@ -1,0 +1,92 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/err_titan.c
+ *
+ *	Copyright (C) 2000 Jeff Wiedemeier (Compaq Computer Corporation)
+ *
+ *	Error handling code supporting TITAN systems
+ */
+
+#include <linux/init.h>
+#include <linux/pci.h>
+#include <linux/sched.h>
+
+#include <asm/io.h>
+#include <asm/core_titan.h>
+#include <asm/hwrpb.h>
+#include <asm/smp.h>
+#include <asm/err_common.h>
+#include <asm/err_ev6.h>
+#include <asm/irq_regs.h>
+
+#include "err_impl.h"
+#include "proto.h"
+
+
+static int
+titan_parse_c_misc(u64 c_misc, int print)
+{
+#ifdef CONFIG_VERBOSE_MCHECK
+	char *src;
+	int nxs = 0;
+#endif
+	int status = MCHK_DISPOSITION_REPORT;
+
+#define TITAN__CCHIP_MISC__NXM		(1UL << 28)
+#define TITAN__CCHIP_MISC__NXS__S	(29)
+#define TITAN__CCHIP_MISC__NXS__M	(0x7)
+
+	if (!(c_misc & TITAN__CCHIP_MISC__NXM))
+		return MCHK_DISPOSITION_UNKNOWN_ERROR;
+
+#ifdef CONFIG_VERBOSE_MCHECK
+	if (!print)
+		return status;
+
+	nxs = EXTRACT(c_misc, TITAN__CCHIP_MISC__NXS);
+	switch(nxs) {
+	case 0:	/* CPU 0 */
+	case 1:	/* CPU 1 */
+	case 2:	/* CPU 2 */
+	case 3:	/* CPU 3 */
+		src = "CPU";
+		/* num is already the CPU number */
+		break;
+	case 4:	/* Pchip 0 */
+	case 5:	/* Pchip 1 */
+		src = "Pchip";
+		nxs -= 4;
+		break;
+	default:/* reserved */
+		src = "Unknown, NXS =";
+		/* leave num untouched */
+		break;
+	}
+
+	printk("%s    Non-existent memory access from: %s %d\n", 
+	       err_print_prefix, src, nxs);
+#endif /* CONFIG_VERBOSE_MCHECK */
+
+	return status;
+}
+
+static int
+titan_parse_p_serror(int which, u64 serror, int print)
+{
+	int status = MCHK_DISPOSITION_REPORT;
+
+#ifdef CONFIG_VERBOSE_MCHECK
+	static const char * const serror_src[] = {
+		"GPCI", "APCI", "AGP HP", "AGP LP"
+	};
+	static const char * const serror_cmd[] = {
+		"DMA Read", "DMA RMW", "SGTE Read", "Reserved"
+	};
+#endif /* CONFIG_VERBOSE_MCHECK */
+
+#define TITAN__PCHIP_SERROR__LOST_UECC	(1UL << 0)
+#define TITAN__PCHIP_SERROR__UECC	(1UL << 1)
+#define TITAN__PCHIP_SERROR__CRE	(1UL << 2)
+#define TITAN__PCHIP_SERROR__NXIO	(1UL << 3)
+#define TITAN__PCHIP_SERROR__LOST_CRE	(1UL << 4)
+#define TITA

@@ -1,0 +1,172 @@
+/*
+ * Copyright 2012-2017 <LW@KARO-electronics.de>
+ * based on imx53-qsb.dts
+ *   Copyright 2011 Freescale Semiconductor, Inc.
+ *   Copyright 2011 Linaro Ltd.
+ *
+ * This file is dual-licensed: you can use it either under the terms
+ * of the GPL or the X11 license, at your option. Note that this dual
+ * licensing only applies to this file, and not this project as a
+ * whole.
+ *
+ *  a) This file is free software; you can redistribute it and/or
+ *     modify it under the terms of the GNU General Public License
+ *     version 2 as published by the Free Software Foundation.
+ *
+ *     This file is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ * Or, alternatively,
+ *
+ *  b) Permission is hereby granted, free of charge, to any person
+ *     obtaining a copy of this software and associated documentation
+ *     files (the "Software"), to deal in the Software without
+ *     restriction, including without limitation the rights to use,
+ *     copy, modify, merge, publish, distribute, sublicense, and/or
+ *     sell copies of the Software, and to permit persons to whom the
+ *     Software is furnished to do so, subject to the following
+ *     conditions:
+ *
+ *     The above copyright notice and this permission notice shall be
+ *     included in all copies or substantial portions of the Software.
+ *
+ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ *     OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+#include "imx53.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	model = "Ka-Ro electronics TX53 module";
+	compatible = "karo,tx53", "fsl,imx53";
+
+	/* Will be filled by the bootloader */
+	memory@70000000 {
+		reg = <0x70000000 0>;
+	};
+
+	aliases {
+		can0 = &can2; /* Make the can interface indices consistent with TX28/TX48 modules */
+		can1 = &can1;
+		ipu = &ipu;
+		reg-can-xcvr = &reg_can_xcvr;
+		usbh1 = &usbh1;
+		usbotg = &usbotg;
+	};
+
+	clocks {
+		ckih1 {
+			clock-frequency = <0>;
+		};
+	};
+
+	mclk: clock-mclk {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_gpio_key>;
+
+		power {
+			label = "Power Button";
+			gpios = <&gpio5 2 GPIO_ACTIVE_HIGH>;
+			linux,code = <116>; /* KEY_POWER */
+			wakeup-source;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_stk5led>;
+
+		user {
+			label = "Heartbeat";
+			gpios = <&gpio2 20 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "heartbeat";
+		};
+	};
+
+	reg_2v5: regulator-2v5 {
+		compatible = "regulator-fixed";
+		regulator-name = "2V5";
+		regulator-min-microvolt = <2500000>;
+		regulator-max-microvolt = <2500000>;
+	};
+
+	reg_3v3: regulator-3v3 {
+		compatible = "regulator-fixed";
+		regulator-name = "3V3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+	};
+
+	reg_can_xcvr: regulator-can-xcvr {
+		compatible = "regulator-fixed";
+		regulator-name = "CAN XCVR";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_can_xcvr>;
+		gpio = <&gpio4 21 GPIO_ACTIVE_HIGH>;
+	};
+
+	reg_usbh1_vbus: regulator-usbh1-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usbh1_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_usbh1_vbus>;
+		gpio = <&gpio3 31 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	reg_usbotg_vbus: regulator-usbotg-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usbotg_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_usbotg_vbus>;
+		gpio = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	sound {
+		compatible = "karo,tx53-audio-sgtl5000", "fsl,imx-audio-sgtl5000";
+		model = "tx53-audio-sgtl5000";
+		ssi-controller = <&ssi1>;
+		audio-codec = <&sgtl5000>;
+		audio-routing =
+			"MIC_IN", "Mic Jack",
+			"Mic Jack", "Mic Bias",
+			"Headphone Jack", "HP_OUT";
+		/* '1' based port numbers according to datasheet names */
+		mux-int-port = <1>;
+		mux-ext-port = <5>;
+	};
+};
+
+&audmux {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_ssi1>;
+	status = "okay";
+};
+
+&can1 {
+	pinctrl-names = "default";
+	pinctrl

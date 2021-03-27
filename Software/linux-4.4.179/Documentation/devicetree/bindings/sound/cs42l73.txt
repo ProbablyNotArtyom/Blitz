@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree file for LaCie 2Big NAS
+ *
+ * Copyright (C) 2015 Seagate
+ *
+ * Author: Simon Guinot <simon.guinot@sequanux.org>
+ *
+*/
+
+/dts-v1/;
+
+#include "kirkwood-netxbig.dtsi"
+
+/ {
+	model = "LaCie 2Big NAS";
+	compatible = "lacie,nas2big", "lacie,netxbig", "marvell,kirkwood-88f6282", "marvell,kirkwood";
+
+	memory {
+		device_type = "memory";

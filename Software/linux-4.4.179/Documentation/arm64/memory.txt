@@ -1,0 +1,121 @@
+==============================================================
+Advanced Linux Sound Architecture - Driver Configuration guide
+==============================================================
+
+
+Kernel Configuration
+====================
+
+To enable ALSA support you need at least to build the kernel with
+primary sound card support (``CONFIG_SOUND``).  Since ALSA can emulate
+OSS, you don't have to choose any of the OSS modules.
+
+Enable "OSS API emulation" (``CONFIG_SND_OSSEMUL``) and both OSS mixer
+and PCM supports if you want to run OSS applications with ALSA.
+
+If you want to support the WaveTable functionality on cards such as
+SB Live! then you need to enable "Sequencer support"
+(``CONFIG_SND_SEQUENCER``).
+
+To make ALSA debug messages more verbose, enable the "Verbose printk"
+and "Debug" options.  To check for memory leaks, turn on "Debug memory"
+too.  "Debug detection" will add checks for the detection of cards.
+
+Please note that all the ALSA ISA drivers support the Linux isapnp API
+(if the card supports ISA PnP).  You don't need to configure the cards
+using isapnptools.
+
+
+Module parameters
+=================
+
+The user can load modules with options. If the module supports more than
+one card and you have more than one card of the same type then you can
+specify multiple values for the option separated by commas.
+
+
+Module snd
+----------
+
+The core ALSA module.  It is used by all ALSA card drivers.
+It takes the following options which have global effects.
+
+major
+    major number for sound driver;
+    Default: 116
+cards_limit
+    limiting card index for auto-loading (1-8);
+    Default: 1;
+    For auto-loading more than one card, specify this option
+    together with snd-card-X aliases.
+slots
+    Reserve the slot index for the given driver;
+    This option takes multiple strings.
+    See `Module Autoloading Support`_ section for details.
+debug
+    Specifies the debug message level;
+    (0 = disable debug prints, 1 = normal debug messages,
+    2 = verbose debug messages);
+    This option appears only when ``CONFIG_SND_DEBUG=y``.
+    This option can be dynamically changed via sysfs
+    /sys/modules/snd/parameters/debug file.
+  
+Module snd-pcm-oss
+------------------
+
+The PCM OSS emulation module.
+This module takes options which change the mapping of devices.
+
+dsp_map
+    PCM device number maps assigned to the 1st OSS device;
+    Default: 0
+adsp_map
+    PCM device number maps assigned to the 2st OSS device;
+    Default: 1
+nonblock_open
+    Don't block opening busy PCM devices;
+    Default: 1
+
+For example, when ``dsp_map=2``, /dev/dsp will be mapped to PCM #2 of
+the card #0.  Similarly, when ``adsp_map=0``, /dev/adsp will be mapped
+to PCM #0 of the card #0.
+For changing the second or later card, specify the option with
+commas, such like ``dsp_map=0,1``.
+
+``nonblock_open`` option is used to change the behavior of the PCM
+regarding opening the device.  When this option is non-zero,
+opening a busy OSS PCM device won't be blocked but return
+immediately with EAGAIN (just like O_NONBLOCK flag).
+    
+Module snd-rawmidi
+------------------
+
+This module takes options which change the mapping of devices.
+similar to those of the snd-pcm-oss module.
+
+midi_map
+    MIDI device number maps assigned to the 1st OSS device;
+    Default: 0
+amidi_map
+    MIDI device number maps assigned to the 2st OSS device;
+    Default: 1
+
+Common parameters for top sound card modules
+--------------------------------------------
+
+Each of top level sound card module takes the following options.
+
+index
+    index (slot #) of sound card;
+    Values: 0 through 31 or negative;
+    If nonnegative, assign that index number;
+    if negative, interpret as a bitmask of permissible indices;
+    the first free permitted index is assigned;
+    Default: -1
+id
+    card ID (identifier or name);
+    Can be up to 15 characters long;
+    Default: the card type;
+    A directory by this name is created under /proc/asound/
+    containing information about the card;
+ 

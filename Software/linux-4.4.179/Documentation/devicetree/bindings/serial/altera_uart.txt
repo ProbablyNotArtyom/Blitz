@@ -1,0 +1,11 @@
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
+//
+// Copyright (C) 2015 Freescale Semiconductor, Inc.
+
+/dts-v1/;
+
+#include "imx7d.dtsi"
+
+/ {
+	model = "Freescale i.MX7 SabreSD Board";
+	compatible = "fsl,imx7d-sdb", "

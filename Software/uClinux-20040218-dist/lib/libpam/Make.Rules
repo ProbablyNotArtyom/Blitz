@@ -1,0 +1,93 @@
+##
+## $Id: Make.Rules,v 1.1 2001/12/11 04:23:18 philipc Exp $
+##
+## Generated automatically from Make.Rules.in by configure.
+##
+
+srcdir = .
+top_srcdir = .
+prefix = 
+exec_prefix = ${prefix}
+
+bindir = ${exec_prefix}/bin
+sbindir = ${exec_prefix}/sbin
+libexecdir = ${exec_prefix}/libexec
+datadir = ${prefix}/share
+sysconfdir = ${prefix}/etc
+sharedstatedir = ${prefix}/com
+localstatedir = ${prefix}/var
+libdir = ${exec_prefix}/lib
+infodir = ${prefix}/info
+mandir = ${prefix}/man
+includedir = ${prefix}/include
+
+absolute_srcdir = $(ROOTDIR)/lib/libpam
+
+# major and minor numbers of this release
+MAJOR_REL=0
+MINOR_REL=75
+
+# The following is the generic set of compiler options for compiling
+# Linux-PAM. True, they are a little anal. Pay attention to the comments
+# they generate.
+
+HEADER_DIRS=-I./include -I$(absolute_srcdir)/libpam/include \
+	-I$(absolute_srcdir) -I$(absolute_srcdir)/libpamc/include
+WARNINGS=-Wall -Wwrite-strings 	-Wpointer-arith -Wcast-qual -Wcast-align 	-Wstrict-prototypes -Wmissing-prototypes 	-Wnested-externs -Winline -Wshadow
+OS_CFLAGS=-ansi -D_POSIX_SOURCE -pedantic
+PIC=-fPIC
+
+# Mode to install shared libraries with
+SHLIBMODE=755
+
+NEED_LINK_LIB_C=$(LIBC)
+HAVE_LCKPWDF=yes
+HAVE_LIBCRACK=yes
+HAVE_LIBCRYPT=yes
+HAVE_LIBUTIL=yes
+HAVE_NDBM_H=no
+HAVE_LIBNDBM=yes
+HAVE_LIBDB=yes
+HAVE_LIBFL=yes
+HAVE_LIBNSL=yes
+HAVE_LIBPWDB=yes
+
+# documentation support
+HAVE_SGML2TXT=yes
+HAVE_SGML2HTML=yes
+PSER=sgml2latex -o ps
+
+# configuration settings
+WITH_DEBUG=no
+WITH_LIBDEBUG=no
+WITH_PAMLOCKING=no
+WITH_LCKPWDF=yes
+STATIC_LIBPAM=no
+DYNAMIC_LIBPAM=yes
+STATIC=
+DYNAMIC=-DPAM_DYNAMIC
+
+# Location of libraries when installed on the system
+FAKEROOT=
+SECUREDIR=${exec_prefix}/lib/security
+SCONFIGD=${prefix}/etc/security
+SUPLEMENTED=${exec_prefix}/sbin
+INCLUDED=/usr/include/security
+CRACKLIB_DICTPATH=/usr/lib/cracklib_dict
+
+# generic build setup
+OS=linux
+#CC=gcc
+CFLAGS+=$(WARNINGS) -D$(OS) $(OS_CFLAGS) $(HEADER_DIRS) 
+#LD=ld
+LD_D=$(GCC) -shared -Xlinker -x
+LD_L=$(LD) -x -shared
+DYNTYPE=so
+#LIBDL=-ldl
+MKDIR=mkdir -p
+INSTALL=/usr/bin/install
+#RANLIB=ranlib
+3STRIP=strip
+CC_STATIC=-Xlinker -export-dynamic
+
+LINKLIBS = $(NEED_LINK_LIB_C) $(LIBDL)

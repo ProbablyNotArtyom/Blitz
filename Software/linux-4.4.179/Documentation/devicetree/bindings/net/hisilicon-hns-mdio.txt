@@ -1,0 +1,26 @@
+/*
+ * Copyright (C) 2016 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include "dra72-evm-common.dtsi"
+#include "dra7-mmc-iodelay.dtsi"
+#include "dra72x-mmc-iodelay.dtsi"
+#include <dt-bindings/net/ti-dp83867.h>
+
+/ {
+	compatible = "ti,dra718-evm", "ti,dra718", "ti,dra722", "ti,dra72", "ti,dra7";
+	model = "TI DRA718 EVM";
+
+	memory {
+		device_type = "memory";
+		reg = <0x0 0x80000000 0x0 0x80000000>; /* 2GB */
+	};
+
+	vpo_sd_1v8_3v3: gpio-regulator-TPS74801 {
+		compatible = "regulator-gpio";
+
+	

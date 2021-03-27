@@ -1,0 +1,29 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * vineetg: May 2011
+ *  -Folded PAGE_PRESENT (used by VM) and PAGE_VALID (used by MMU) into 1.
+ *     They are semantically the same although in different contexts
+ *     VALID marks a TLB entry exists and it will only happen if PRESENT
+ *  - Utilise some unused free bits to confine PTE flags to 12 bits
+ *     This is a must for 4k pg-sz
+ *
+ * vineetg: Mar 2011 - changes to accommodate MMU TLB Page Descriptor mods
+ *  -TLB Locking never really existed, except for initial specs
+ *  -SILENT_xxx not needed for our port
+ *  -Per my request, MMU V3 changes the layout of some of the bits
+ *     to avoid a few shifts in TLB Miss handlers.
+ *
+ * vineetg: April 2010
+ *  -PGD entry no longer contains any flags. If empty it is 0, otherwise has
+ *   Pg-Tbl ptr. Thus pmd_present(), pmd_valid(), pmd_set( ) become simpler
+ *
+ * vineetg: April 2010
+ *  -Switched form 8:11:13 split for page table lookup to 11:8:13
+ *  -this speeds up page table allocation itself as we now have to memset 1K
+ *    instead of 8k per page table.
+ * -TODO: Right

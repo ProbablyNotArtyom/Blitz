@@ -1,0 +1,76 @@
+/*
+ * TI DaVinci DM644x chip specific setup
+ *
+ * Author: Kevin Hilman, Deep Root Systems, LLC
+ *
+ * 2007 (c) Deep Root Systems, LLC. This file is licensed under
+ * the terms of the GNU General Public License version 2. This program
+ * is licensed "as is" without any warranty of any kind, whether express
+ * or implied.
+ */
+
+#include <linux/clk-provider.h>
+#include <linux/clk/davinci.h>
+#include <linux/clkdev.h>
+#include <linux/dmaengine.h>
+#include <linux/init.h>
+#include <linux/platform_data/edma.h>
+#include <linux/platform_data/gpio-davinci.h>
+#include <linux/platform_device.h>
+#include <linux/serial_8250.h>
+
+#include <asm/mach/map.h>
+
+#include <mach/common.h>
+#include <mach/cputype.h>
+#include <mach/irqs.h>
+#include <mach/mux.h>
+#include <mach/serial.h>
+#include <mach/time.h>
+
+#include "asp.h"
+#include "davinci.h"
+#include "mux.h"
+
+/*
+ * Device specific clocks
+ */
+#define DM644X_REF_FREQ		27000000
+
+#define DM644X_EMAC_BASE		0x01c80000
+#define DM644X_EMAC_MDIO_BASE		(DM644X_EMAC_BASE + 0x4000)
+#define DM644X_EMAC_CNTRL_OFFSET	0x0000
+#define DM644X_EMAC_CNTRL_MOD_OFFSET	0x1000
+#define DM644X_EMAC_CNTRL_RAM_OFFSET	0x2000
+#define DM644X_EMAC_CNTRL_RAM_SIZE	0x2000
+
+static struct emac_platform_data dm644x_emac_pdata = {
+	.ctrl_reg_offset	= DM644X_EMAC_CNTRL_OFFSET,
+	.ctrl_mod_reg_offset	= DM644X_EMAC_CNTRL_MOD_OFFSET,
+	.ctrl_ram_offset	= DM644X_EMAC_CNTRL_RAM_OFFSET,
+	.ctrl_ram_size		= DM644X_EMAC_CNTRL_RAM_SIZE,
+	.version		= EMAC_VERSION_1,
+};
+
+static struct resource dm644x_emac_resources[] = {
+	{
+		.start	= DM644X_EMAC_BASE,
+		.end	= DM644X_EMAC_BASE + SZ_16K - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+	{
+		.start = IRQ_EMACINT,
+		.end   = IRQ_EMACINT,
+		.flags = IORESOURCE_IRQ,
+	},
+};
+
+static struct platform_device dm644x_emac_device = {
+       .name		= "davinci_emac",
+       .id		= 1,
+       .dev = {
+	       .platform_data	= &dm644x_emac_pdata,
+       },
+       .num_resources	= ARRAY_SIZE(dm644x_emac_resources),
+       .resource	= dm644x_emac_resources,
+}

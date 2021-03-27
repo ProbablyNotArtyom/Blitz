@@ -1,0 +1,153 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_EXT_CTRLS:
+
+******************************************************************
+ioctl VIDIOC_G_EXT_CTRLS, VIDIOC_S_EXT_CTRLS, VIDIOC_TRY_EXT_CTRLS
+******************************************************************
+
+Name
+====
+
+VIDIOC_G_EXT_CTRLS - VIDIOC_S_EXT_CTRLS - VIDIOC_TRY_EXT_CTRLS - Get or set the value of several controls, try control values
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_G_EXT_CTRLS, struct v4l2_ext_controls *argp )
+    :name: VIDIOC_G_EXT_CTRLS
+
+
+.. c:function:: int ioctl( int fd, VIDIOC_S_EXT_CTRLS, struct v4l2_ext_controls *argp )
+    :name: VIDIOC_S_EXT_CTRLS
+
+
+.. c:function:: int ioctl( int fd, VIDIOC_TRY_EXT_CTRLS, struct v4l2_ext_controls *argp )
+    :name: VIDIOC_TRY_EXT_CTRLS
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_ext_controls`.
+
+
+Description
+===========
+
+These ioctls allow the caller to get or set multiple controls
+atomically. Control IDs are grouped into control classes (see
+:ref:`ctrl-class`) and all controls in the control array must belong
+to the same control class.
+
+Applications must always fill in the ``count``, ``which``, ``controls``
+and ``reserved`` fields of struct
+:c:type:`v4l2_ext_controls`, and initialize the
+struct :c:type:`v4l2_ext_control` array pointed to
+by the ``controls`` fields.
+
+To get the current value of a set of controls applications initialize
+the ``id``, ``size`` and ``reserved2`` fields of each struct
+:c:type:`v4l2_ext_control` and call the
+:ref:`VIDIOC_G_EXT_CTRLS <VIDIOC_G_EXT_CTRLS>` ioctl. String controls controls must also set the
+``string`` field. Controls of compound types
+(``V4L2_CTRL_FLAG_HAS_PAYLOAD`` is set) must set the ``ptr`` field.
+
+If the ``size`` is too small to receive the control result (only
+relevant for pointer-type controls like strings), then the driver will
+set ``size`` to a valid value and return an ``ENOSPC`` error code. You
+should re-allocate the memory to this new size and try again. For the
+string type it is possible that the same issue occurs again if the
+string has grown in the meantime. It is recommended to call
+:ref:`VIDIOC_QUERYCTRL` first and use
+``maximum``\ +1 as the new ``size`` value. It is guaranteed that that is
+sufficient memory.
+
+N-dimensional arrays are set and retrieved row-by-row. You cannot set a
+partial array, all elements have to be set or retrieved. The total size
+is calculated as ``elems`` * ``elem_size``. These values can be obtained
+by calling :ref:`VIDIOC_QUERY_EXT_CTRL <VIDIOC_QUERYCTRL>`.
+
+To change the value of a set of controls applications initialize the
+``id``, ``size``, ``reserved2`` and ``value/value64/string/ptr`` fields
+of each struct :c:type:`v4l2_ext_control` and call
+the :ref:`VIDIOC_S_EXT_CTRLS <VIDIOC_G_EXT_CTRLS>` ioctl. The controls will only be set if *all*
+control values are valid.
+
+To check if a set of controls have correct values applications
+initialize the ``id``, ``size``, ``reserved2`` and
+``value/value64/string/ptr`` fields of each struct
+:c:type:`v4l2_ext_control` and call the
+:ref:`VIDIOC_TRY_EXT_CTRLS <VIDIOC_G_EXT_CTRLS>` ioctl. It is up to the driver whether wrong
+values are automatically adjusted to a valid value or if an error is
+returned.
+
+When the ``id`` or ``which`` is invalid drivers return an ``EINVAL`` error
+code. When the value is out of bounds drivers can choose to take the
+closest valid value or return an ``ERANGE`` error code, whatever seems more
+appropriate. In the first case the new value is set in struct
+:c:type:`v4l2_ext_control`. If the new control value
+is inappropriate (e.g. the given menu index is not supported by the menu
+control), then this will also result in an ``EINVAL`` error code error.
+
+If ``request_fd`` is set to a not-yet-queued :ref:`request <media-request-api>`
+file descriptor and ``which`` is set to ``V4L2_CTRL_WHICH_REQUEST_VAL``,
+then the controls are not applied immediately when calling
+:ref:`VIDIOC_S_EXT_CTRLS <VIDIOC_G_EXT_CTRLS>`, but instead are applied by
+the driver for the buffer associated with the same request.
+If the device does not support requests, then ``EACCES`` will be returned.
+If requests are supported but an invalid request file descriptor is given,
+then ``EINVAL`` will be returned.
+
+An attempt to call :ref:`VIDIOC_S_EXT_CTRLS <VIDIOC_G_EXT_CTRLS>` for a
+request that has already been queued will result in an ``EBUSY`` error.
+
+If ``request_fd`` is specified and ``which`` is set to
+``V4L2_CTRL_WHICH_REQUEST_VAL`` during a call to
+:ref:`VIDIOC_G_EXT_CTRLS <VIDIOC_G_EXT_CTRLS>`, then it will return the
+values of the controls at the time of request completion.
+If the request is not yet completed, then this will result in an
+``EACCES`` error.
+
+The driver will only set/get these controls if all control values are
+correct. This prevents the situation where only some of the controls
+were set/get. Only low-level errors (e. g. a failed i2c command) can
+still cause this situation.
+
+
+.. tabularcolumns:: |p{1.2cm}|p{3.0cm}|p{1.5cm}|p{11.8cm}|
+
+.. c:type:: v4l2_ext_control
+
+.. cssclass: longtable
+
+.. flat-table:: struct v4l2_ext_control
+    :header-rows:  0
+    :stub-columns: 0
+    :widths:       1 1 1 2
+
+    * - __u32
+      - ``id``
+      -
+      - Identifies the control, set by the application.
+    * - __u32
+      - ``size``
+      -
+      - The total size in bytes of the payload of this control. This is
+	normally 0, but for pointer controls this should be set to the
+	size of the memory containing the payload, or that will receive
+	the payload. If :ref:`VIDIOC_G_EXT_CTRLS <VIDIOC_G_EXT_CTRLS>` finds that this value is
+	less than is required to store the payload result, then it is set
+	to a value large enough to store the payload result and ``ENOSPC`` is
+	returned.
+
+	.. note::
+
+	   For string controls, this ``size`` field should
+	   not be confused with the length of the string. This field refers
+	   to the size of th

@@ -1,0 +1,15 @@
+The s390 DIAGNOSE call on KVM
+=============================
+
+KVM on s390 supports the DIAGNOSE call for making hypercalls, both for
+native hypercalls and for selected hypercalls found on other s390
+hypervisors.
+
+Note that bits are numbered as by the usual s390 convention (most significant
+bit on the left).
+
+
+General remarks
+---------------
+
+DIAGNOSE calls by the guest cau

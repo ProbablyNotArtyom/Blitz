@@ -1,0 +1,14 @@
+Devlink configuration parameters
+================================
+Following is the list of configuration parameters via devlink interface.
+Each parameter can be generic or driver specific and are device level
+parameters.
+
+Note that the driver-specific files should contain the generic params
+they support to, with supported config modes.
+
+Each parameter can be set in different configuration modes:
+	runtime		- set while driver is running, no reset required.
+	driverinit	- applied while driver initializes, requires restart
+			driver by devlink reload command.
+	permanent	- written to device's non-volatile memory, h

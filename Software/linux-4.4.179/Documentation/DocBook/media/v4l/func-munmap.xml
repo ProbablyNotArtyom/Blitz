@@ -1,0 +1,41 @@
+Freezing of tasks
+	(C) 2007 Rafael J. Wysocki <rjw@sisk.pl>, GPL
+
+I. What is the freezing of tasks?
+
+The freezing of tasks is a mechanism by which user space processes and some
+kernel threads are controlled during hibernation or system-wide suspend (on some
+architectures).
+
+II. How does it work?
+
+There are three per-task flags used for that, PF_NOFREEZE, PF_FROZEN
+and PF_FREEZER_SKIP (the last one is auxiliary).  The tasks that have
+PF_NOFREEZE unset (all user space processes and some kernel threads) are
+regarded as 'freezable' and treated in a special way before the system enters a
+suspend state as well as before a hibernation image is created (in what follows
+we only consider hibernation, but the description also applies to suspend).
+
+Namely, as the first step of the hibernation procedure the function
+freeze_processes() (defined in kernel/power/process.c) is called.  A system-wide
+variable system_freezing_cnt (as opposed to a per-task flag) is used to indicate
+whether the system is to undergo a freezing operation. And freeze_processes()
+sets this variable.  After this, it executes try_to_freeze_tasks() that sends a
+fake signal to all user space processes, and wakes up all the kernel threads.
+All freezable tasks must react to that by calling try_to_freeze(), which
+results in a call to __refrigerator() (defined in kernel/freezer.c), which sets
+the task's PF_FROZEN flag, changes its state to TASK_UNINTERRUPTIBLE and makes
+it loop until PF_FROZEN is cleared for it. Then, we say that the task is
+'frozen' and therefore the set of functions handling this mechanism is referred
+to as 'the freezer' (these functions are defined in kernel/power/process.c,
+kernel/freezer.c & include/linux/freezer.h). User space processes are generally
+frozen before kernel threads.
+
+__refrigerator() must not be called directly.  Instead, use the
+try_to_freeze() function (defined in include/linux/freezer.h), that checks
+if the task is to be frozen and makes the task enter __refrigerator().
+
+For user space processes try_to_freeze() is called automatically from the
+signal-handling code, but the freezable kernel threads need to call it
+explicitly in suitable places or use the wait_event_freezable() or
+wait_event_freezable_timeout() macros (defined in includ

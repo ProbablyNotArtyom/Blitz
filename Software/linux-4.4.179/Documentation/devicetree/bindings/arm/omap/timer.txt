@@ -1,0 +1,26 @@
+Secure Memory Encryption (SME) and Secure Encrypted Virtualization (SEV) are
+features found on AMD processors.
+
+SME provides the ability to mark individual pages of memory as encrypted using
+the standard x86 page tables.  A page that is marked encrypted will be
+automatically decrypted when read from DRAM and encrypted when written to
+DRAM.  SME can therefore be used to protect the contents of DRAM from physical
+attacks on the system.
+
+SEV enables running encrypted virtual machines (VMs) in which the code and data
+of the guest VM are secured so that a decrypted version is available only
+within the VM itself. SEV guest VMs have the concept of private and shared
+memory. Private memory is encrypted with the guest-specific key, while shared
+memory may be encrypted with hypervisor key. When SME is enabled, the hypervisor
+key is the same key which is used in SME.
+
+A page is encrypted when a page table entry has the encryption bit set (see
+below on how to determine its position).  The encryption bit can also be
+specified in the cr3 register, allowing the PGD table to be encrypted. Each
+successive level of page tables can also be encrypted by setting the encryption
+bit in the page table entry that points to the next table. This allows the full
+page table hierarchy to be encrypted. Note, this means that just because the
+encryption bit is set in cr3, doesn't imply the full hierarchy is encrypted.
+Each page table entry in the hierarchy needs to have the encryption bit set to
+achieve that. So, theoretically, you could have the encryption bit set in cr3
+so that the PGD is encrypted, but not set the e

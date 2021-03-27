@@ -1,0 +1,32 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ * Copyright 2016 Freescale Semiconductor, Inc.
+ * Copyright 2017-2018 NXP.
+ *
+ */
+
+#ifndef __DTS_IMX6SLL_PINFUNC_H
+#define __DTS_IMX6SLL_PINFUNC_H
+
+/*
+ * The pin function ID is a tuple of
+ * <mux_reg conf_reg input_reg mux_mode input_val>
+ */
+#define MX6SLL_PAD_WDOG_B__WDOG1_B                                0x0014 0x02DC 0x0000 0x0 0x0
+#define MX6SLL_PAD_WDOG_B__WDOG1_RESET_B_DEB                      0x0014 0x02DC 0x0000 0x1 0x0
+#define MX6SLL_PAD_WDOG_B__UART5_RI_B                             0x0014 0x02DC 0x0000 0x2 0x0
+#define MX6SLL_PAD_WDOG_B__GPIO3_IO18                             0x0014 0x02DC 0x0000 0x5 0x0
+#define MX6SLL_PAD_REF_CLK_24M__XTALOSC_REF_CLK_24M               0x0018 0x02E0 0x0000 0x0 0x0
+#define MX6SLL_PAD_REF_CLK_24M__I2C3_SCL                          0x0018 0x02E0 0x068C 0x1 0x0
+#define MX6SLL_PAD_REF_CLK_24M__PWM3_OUT                          0x0018 0x02E0 0x0000 0x2 0x0
+#define MX6SLL_PAD_REF_CLK_24M__USB_OTG2_ID                       0x0018 0x02E0 0x0560 0x3 0x0
+#define MX6SLL_PAD_REF_CLK_24M__CCM_PMIC_READY                    0x0018 0x02E0 0x05AC 0x4 0x0
+#define MX6SLL_PAD_REF_CLK_24M__GPIO3_IO21                        0x0018 0x02E0 0x0000 0x5 0x0
+#define MX6SLL_PAD_REF_CLK_24M__SD3_WP                            0x0018 0x02E0 0x0794 0x6 0x0
+#define MX6SLL_PAD_REF_CLK_32K__XTALOSC_REF_CLK_32K               0x001C 0x02E4 0x0000 0x0 0x0
+#define MX6SLL_PAD_REF_CLK_32K__I2C3_SDA                          0x001C 0x02E4 0x0690 0x1 0x0
+#define MX6SLL_PAD_REF_CLK_32K__PWM4_OUT                          0x001C 0x02E4 0x0000 0x2 0x0
+#define MX6SLL_PAD_REF_CLK_32K__USB_OTG1_ID                       0x001C 0x02E4 0x055C 0x3 0x0
+#define MX6SLL_PAD_REF_CLK_32K__SD1_LCTL                          0x001C 0x02E4 0x0000 0x4 0x0
+#define MX6SLL_PAD_REF_CLK_32K__GPIO3_IO22                        0x001C 0x02E4 0x0000 0x5 0x0
+#define MX6SLL_PAD_REF_CLK_32K__SD3_CD_B                     

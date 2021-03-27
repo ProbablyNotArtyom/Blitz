@@ -1,0 +1,54 @@
+=============================
+More Notes on HD-Audio Driver
+=============================
+
+Takashi Iwai <tiwai@suse.de>
+
+
+General
+=======
+
+HD-audio is the new standard on-board audio component on modern PCs
+after AC97.  Although Linux has been supporting HD-audio since long
+time ago, there are often problems with new machines.  A part of the
+problem is broken BIOS, and the rest is the driver implementation.
+This document explains the brief trouble-shooting and debugging
+methods for the	HD-audio hardware.
+
+The HD-audio component consists of two parts: the controller chip and 
+the codec chips on the HD-audio bus.  Linux provides a single driver
+for all controllers, snd-hda-intel.  Although the driver name contains
+a word of a well-known hardware vendor, it's not specific to it but for
+all controller chips by other companies.  Since the HD-audio
+controllers are supposed to be compatible, the single snd-hda-driver
+should work in most cases.  But, not surprisingly, there are known
+bugs and issues specific to each controller type.  The snd-hda-intel
+driver has a bunch of workarounds for these as described below.
+
+A controller may have multiple codecs.  Usually you have one audio
+codec and optionally one modem codec.  In theory, there might be
+multiple audio codecs, e.g. for analog and digital outputs, and the
+driver might not work properly because of conflict of mixer elements.
+This should be fixed in future if such hardware really exists.
+
+The snd-hda-intel driver has several different codec parsers depending
+on the codec.  It has a generic parser as a fallback, but this
+functionality is fairly limited until now.  Instead of the generic
+parser, usually the codec-specific parser (coded in patch_*.c) is used
+for the codec-specific implementations.  The details about the
+codec-specific problems are explained in the later sections.
+
+If you are interested in the deep debugging of HD-audio, read the
+HD-audio specification at first.  The specification is found on
+Intel's web page, for example:
+
+* http://www.intel.com/standards/hdaudio/
+
+
+HD-Audio Controller
+===================
+
+DMA-Position Problem
+--------------------
+The most common problem of the controller is the inaccurate DMA
+pointer reporti

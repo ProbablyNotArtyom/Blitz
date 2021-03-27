@@ -1,0 +1,34 @@
+/*
+ * Copyright (C) 2013 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include <dt-bindings/input/input.h>
+#include "omap34xx.dtsi"
+#include "omap-gpmc-smsc911x.dtsi"
+
+/ {
+	model = "TI OMAP3430 LDP (Zoom1 Labrador)";
+	compatible = "ti,omap3-ldp", "ti,omap3";
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x8000000>; /* 128 MB */
+	};
+
+	cpus {
+		cpu@0 {
+			cpu0-supply = <&vcc>;
+		};
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&gpio_key_pins>;
+
+		

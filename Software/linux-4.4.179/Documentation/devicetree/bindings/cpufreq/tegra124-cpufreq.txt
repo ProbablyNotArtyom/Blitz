@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: GPL-2.0
+#
+# Makefile for the linux kernel.
+#
+
+extra-y		:= head.o vmlinux.lds
+asflags-y	:= $(KBUILD_CFLAGS)
+ccflags-y	:= -Wno-sign-compare
+
+obj-y    := entry.o traps.o process.o osf_sys.o irq.o \
+	    irq_alpha.o signal.o setup.o ptrace.o time.o \
+	    systbls.o err_common.o io.o bugs.o
+
+obj-$(CONFIG_VGA_HOSE)	+= console.o
+obj-$(CONFIG_SMP)	+= smp.o
+obj-$(CONFIG_PCI)	+= pci.o pci_iommu.o pci-sysfs.o
+obj-$(CONFIG_SRM_ENV)	+= srm_env.o
+obj-$(CONFIG_MODULES)	+= module.o
+obj-$(CONFIG_PERF_EVENTS) += perf_event.o
+obj-$(CONFIG_RTC_DRV_ALPHA) += rtc.o
+obj-$(CONFIG_AUDIT)	+= audit.o
+
+ifdef CONFIG_ALPHA_GENERIC
+
+obj-y 	 += core_apecs.o core_cia.o core_irongate.o core_lca.o \
+	    core_mcpcia.o core_polaris.o core_t2.o \
+	    core_tsunami.o
+
+obj-y	 += sys_alcor.o sys_cabriolet.o sys_dp264.o sys_eb64p.o sys_eiger.o \
+	    sys_jensen.o sys_miata.o sys_mikasa.o sys_nautilus.o \
+	    sys_noritake.o sys_rawhide.o sys_ruffian.o sys_rx164.o \
+	    sys_sable.o sys_sio.o sys_sx164.o sys_takara.o
+
+ifndef CONFIG_ALPHA_LEGACY_START_ADDRESS
+obj-y	 += core_marvel.o core_titan.o core_wildfire.o
+obj-y	 += sys_marvel.o sys_titan.o sys_wildfire.o
+obj-y    += err_ev7.o err_titan.o err_marvel.o
+endif
+
+obj-y	 += irq_pyxis.o irq_i8259.o irq_srm.o

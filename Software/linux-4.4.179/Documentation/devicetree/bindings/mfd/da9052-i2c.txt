@@ -1,0 +1,78 @@
+/*
+ * at91sam9g20ek_common.dtsi - Device Tree file for Atmel at91sam9g20ek board
+ *
+ * Copyright (C) 2012 Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>
+ *
+ * Licensed under GPLv2.
+ */
+#include "at91sam9g20.dtsi"
+
+/ {
+
+	chosen {
+		bootargs = "mem=64M root=/dev/mtdblock5 rw rootfstype=ubifs";
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory {
+		reg = <0x20000000 0x4000000>;
+	};
+
+	clocks {
+		slow_xtal {
+			clock-frequency = <32768>;
+		};
+
+		main_xtal {
+			clock-frequency = <18432000>;
+		};
+	};
+
+	ahb {
+		apb {
+			pinctrl@fffff400 {
+				board {
+					pinctrl_pck0_as_mck: pck0_as_mck {
+						atmel,pins =
+							<AT91_PIOC 1 AT91_PERIPH_B AT91_PINCTRL_NONE>;	/* PC1 periph B */
+					};
+
+				};
+
+				mmc0_slot1 {
+					pinctrl_board_mmc0_slot1: mmc0_slot1-board {
+						atmel,pins =
+							<AT91_PIOC 9 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP_DEGLITCH>;	/* PC9 gpio CD pin pull up and deglitch */
+					};
+				};
+			};
+
+			dbgu: serial@fffff200 {
+				status = "okay";
+			};
+
+			tcb0: timer@fffa0000 {
+				timer@0 {
+					compatible = "atmel,tcb-timer";
+					reg = <0>, <1>;
+				};
+
+				timer@2 {
+					compatible = "atmel,tcb-timer";
+					reg = <2>;
+				};
+			};
+
+			usart0: serial@fffb0000 {
+				pinctrl-0 =
+					<&pinctrl_usart0
+					 &pinctrl_usart0_rts
+					 &pinctrl_usart0_cts
+					 &pinctrl_usart0_dtr_dsr
+					 &pinctrl_usart0_dcd
+					 &pinctrl_usart0_ri>;
+				status = "okay";
+			};
+
+			usart1: serial@fffb4000 {
+			

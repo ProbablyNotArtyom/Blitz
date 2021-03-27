@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * kirkwood-sheevaplug.dts - Device tree file for Sheevaplug
+ *
+ * Copyright (C) 2013 Simon Baatz <gmbnomis@gmail.com>
+ */
+
+/dts-v1/;
+
+#include "kirkwood-sheevaplug-common.dtsi"
+
+/ {
+	model = "Globalscale Technologies SheevaPlug";
+	compatible = "globalscale,sheevaplug", "marvell,kirkwood-88f6281", "marvell,k

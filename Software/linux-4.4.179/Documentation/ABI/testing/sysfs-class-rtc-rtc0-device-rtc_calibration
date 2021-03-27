@@ -1,0 +1,25 @@
+Kernel driver apds990x
+======================
+
+Supported chips:
+Avago APDS990X
+
+Data sheet:
+Not freely available
+
+Author:
+Samu Onkalo <samu.p.onkalo@nokia.com>
+
+Description
+-----------
+
+APDS990x is a combined ambient light and proximity sensor. ALS and proximity
+functionality are highly connected. ALS measurement path must be running
+while the proximity functionality is enabled.
+
+ALS produces raw measurement values for two channels: Clear channel
+(infrared + visible light) and IR only. However, threshold comparisons happen
+using clear channel only. Lux value and the threshold level on the HW
+might vary quite much depending the spectrum of the light source.
+
+Driver makes necessary conversions to both directio

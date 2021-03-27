@@ -1,0 +1,53 @@
+/*
+ * Abilis Systems TB101 SOC device tree
+ *
+ * Copyright (C) Abilis Systems 2013
+ *
+ * Author: Christian Ruppert <christian.ruppert@abilis.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ */
+
+/include/ "abilis_tb10x.dtsi"
+
+
+/ {
+	soc100 {
+		bus-frequency	= <166666666>;
+
+		pll0: oscillator {
+			clock-frequency  = <1000000000>;
+		};
+		cpu_clk: clkdiv_cpu {
+			clock-mult = <1>;
+			clock-div = <2>;
+		};
+		ahb_clk: clkdiv_ahb {
+			clock-mult = <1>;
+			clock-div = <6>;
+		};
+
+		iomux: iomux@FF10601c {
+			/* Port 1 */
+			pctl_tsin_s0: pctl-tsin-s0 {   /* Serial TS-in 0 */
+				abilis,function = "mis0";
+			};
+			pctl_tsin_s1: pctl-tsin-s1 {   /* Serial TS-in 1 */
+				abilis,function = "mis1";
+			};
+			pctl_gpio_a: pctl-gpio-a {     /* GPIO bank A */
+				abilis,function = "gpioa";
+			};
+			pctl_tsin_p1: pctl-tsin-p1 {   /* Parallel TS-in 1 */
+				abilis,function = "mip1

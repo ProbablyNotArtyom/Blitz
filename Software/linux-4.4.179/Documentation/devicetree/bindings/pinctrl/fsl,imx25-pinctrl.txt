@@ -1,0 +1,37 @@
+/*
+ * Copyright 2015 Savoir-faire Linux
+ *
+ * This device tree is based on imx51-babbage.dts
+ *
+ * Licensed under the X11 license or the GPL v2 (or later)
+ */
+
+/dts-v1/;
+#include "imx51.dtsi"
+
+/ {
+	model = "Technologic Systems TS-4800";
+	compatible = "technologic,imx51-ts4800", "fsl,imx51";
+
+	chosen {
+		stdout-path = &uart1;
+	};
+
+	memory@90000000 {
+		reg = <0x90000000 0x10000000>;
+	};
+
+	clocks {
+		ckih1 {
+			clock-frequency = <22579200>;
+		};
+
+		ckih2 {
+			clock-frequency = <24576000>;
+		};
+	};
+
+	backlight_reg: regulator-backlight {
+		compatible = "regulator-fixed";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_en

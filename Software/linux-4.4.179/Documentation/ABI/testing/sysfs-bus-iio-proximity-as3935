@@ -1,0 +1,19 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_SUBDEV_G_SELECTION:
+
+**********************************************************
+ioctl VIDIOC_SUBDEV_G_SELECTION, VIDIOC_SUBDEV_S_SELECTION
+**********************************************************
+
+Name
+====
+
+VIDIOC_SUBDEV_G_SELECTION - VIDIOC_SUBDEV_S_SELECTION - Get or set selection rectangles on a subdev pad
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_SUBDEV_G_SELECTION, struct v4l2_subdev_selection *argp )
+    :name: VIDIOC_

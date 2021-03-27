@@ -1,0 +1,6 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Marvell DB-88F6282-BP Development Board Setup
+ *
+ * Saeed Bishara <saeed@marvell.com>
+ * Thomas Petaz

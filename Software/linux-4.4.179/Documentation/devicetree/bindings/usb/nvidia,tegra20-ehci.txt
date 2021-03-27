@@ -1,0 +1,44 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Support for CompuLab CM-T54
+ */
+/dts-v1/;
+
+#include "omap5.dtsi"
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+/ {
+	model = "CompuLab CM-T54";
+	compatible = "compulab,omap5-cm-t54", "ti,omap5";
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0 0x80000000 0 0x7f000000>; /* 2048 MB */
+	};
+
+	aliases {
+		display0 = &hdmi0;
+		display1 = &dvi0;
+		display2 = &lcd0;
+	};
+
+	vmmcsd_fixed: fixed-regulator-mmcsd {
+		compatible = "regulator-fixed";
+		regulator-name = "vmmcsd_fixed";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+	};
+
+	vwlan_pdn_fixed: fixed-regulator-vwlan-pdn {
+		compatible = "regulator-fixed";
+		regulator-name = "vwlan_pdn_fixed";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		vin-supply = <&ldo2_reg>;
+		gpio = <&gpio4 13 GPIO_ACTIVE_HIGH>;   /* gpio4_109 */
+		startup-delay-us = <1000>;
+		enable-active-high;
+	};
+
+	vwlan_fixed: fixe

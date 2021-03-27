@@ -1,0 +1,48 @@
+/*
+ * Copyright (C) 2013-15 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/*
+ * Device tree for AXC001 770D/EM6/AS221 CPU card
+ * Note that this file only supports the 770D CPU
+ */
+
+/include/ "skeleton.dtsi"
+
+/ {
+	compatible = "snps,arc";
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	cpu_card {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		ranges = <0x00000000 0x0 0xf0000000 0x10000000>;
+
+		core_clk: core_clk {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <750000000>;
+		};
+
+		core_intc: arc700-intc@cpu {
+			compatible = "snps,arc700-intc";
+			interrupt-controller;
+			#interrupt-cells = <1>;
+		};
+
+		/*
+		 * this GPIO block ORs all interrupts on CPU card (creg,..)
+		 * to uplink only 1 IRQ to ARC core intc
+		 */
+		dw-apb-gpio@0x2000 {
+			compatible = "snps,dw-apb-gpio";
+			reg = < 0x2000 0x80 >;
+			#address-cells = <1>;
+			#size-cells = <0>;

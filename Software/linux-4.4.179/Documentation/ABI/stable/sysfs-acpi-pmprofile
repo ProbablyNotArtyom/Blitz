@@ -1,0 +1,22 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _V4L2-PIX-FMT-YUV422P:
+
+*****************************
+V4L2_PIX_FMT_YUV422P ('422P')
+*****************************
+
+
+Format with ½ horizontal chroma resolution, also known as YUV 4:2:2.
+Planar layout as opposed to ``V4L2_PIX_FMT_YUYV``
+
+
+Description
+===========
+
+This format is not commonly used. This is a planar version of the YUYV
+format. The three components are separated into three sub-images or
+planes. The Y plane is first. The Y plane has one byte per pixel. The Cb
+plane immediately follows the Y plane in memory. The Cb plane is half
+the width of the Y plane (and of the image). Each Cb belongs to two
+pixels. For example, C

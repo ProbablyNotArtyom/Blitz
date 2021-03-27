@@ -1,0 +1,26 @@
+// SPDX-License-Identifier: GPL-2.0
+#include <linux/init.h>
+#include <linux/fs.h>
+#include <linux/file.h>
+#include <linux/mm_types.h>
+#include <linux/binfmts.h>
+#include <linux/a.out.h>
+
+static int load_binary(struct linux_binprm *bprm)
+{
+	struct exec *eh = (struct exec *)bprm->buf;
+	unsigned long loader;
+	struct file *file;
+	int retval;
+
+	if (eh->fh.f_magic != 0x183 || (eh->fh.f_flags & 0x3000) != 0x3000)
+		return -ENOEXEC;
+
+	if (bprm->loader)
+		return -ENOEXEC;
+
+	allow_write_access(bprm->file);
+	fput(bprm->file);
+	bprm->file = NULL;
+
+	loader = bprm->vma->vm_e

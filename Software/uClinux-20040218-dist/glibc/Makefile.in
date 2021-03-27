@@ -1,0 +1,74 @@
+# Generated from $Id: Makefile.in,v 1.7 2000/11/15 23:03:08 drepper Exp $.
+
+srcdir = @srcdir@
+
+# Uncomment the line below if you want to do parallel build.
+# PARALLELMFLAGS = -j 4
+
+# This option is for those who modify the sources and keep them in a
+# CVS repository.  Sometimes it is necessary to pass options to the cvs
+# program (not the command), like -z9 or -x.
+# CVSOPTS = -z9
+
+all:
+	[ -d bits ] || mkdir bits
+	$(MAKE) -r PARALLELMFLAGS="$(PARALLELMFLAGS)" CVSOPTS="$(CVSOPTS)" -C $(srcdir) objdir=`pwd` $@
+	$(MAKE) install
+	touch all
+
+clean:
+	$(MAKE) -r PARALLELMFLAGS="$(PARALLELMFLAGS)" CVSOPTS="$(CVSOPTS)" -C $(srcdir) objdir=`pwd` clean
+	# Removed everything "installed"
+	-rm -rf bin etc include info lib libexec sbin share all
+
+.DEFAULT:
+	$(MAKE) -r PARALLELMFLAGS="$(PARALLELMFLAGS)" CVSOPTS="$(CVSOPTS)" -C $(srcdir) objdir=`pwd` $@
+
+install:
+	LANGUAGE=C LC_ALL=C; export LANGUAGE LC_ALL; \
+	$(MAKE) -r PARALLELMFLAGS="$(PARALLELMFLAGS)" CVSOPTS="$(CVSOPTS)" -C $(srcdir) objdir=`pwd` $@
+
+romfs:
+	[ -d $(ROMFSDIR)/lib ] || mkdir -p $(ROMFSDIR)/lib
+	$(ROMFSINST) lib/libc.so.6 /lib/libc.so.6
+	$(ROMFSINST) lib/libm.so.6 /lib/libm.so.6
+	$(ROMFSINST) lib/libutil.so.1 /lib/libutil.so.1
+	if [ -f lib/ld-linux.so.2 ]; then \
+		$(ROMFSINST) lib/ld-linux.so.2 /lib/ld-linux.so.2 ; \
+		$(ROMFSINST) -s /lib/ld-linux.so.2 /lib/ld.so.1; \
+	fi
+	if [ -f lib/ld-2.2.5.so ]; then \
+		$(ROMFSINST) lib/ld-2.2.5.so /lib/ld-2.2.5.so; \
+		$(ROMFSINST) -s /lib/ld-2.2.5.so /lib/ld.so.1; \
+	fi
+	$(ROMFSINST) lib/libdl.so.2 /lib/libdl.so.2
+	$(ROMFSINST) lib/libresolv.so.2 /lib/libresolv.so.2
+	$(ROMFSINST) lib/libnsl.so.1 /lib/libnsl.so.1
+	$(ROMFSINST) lib/libnss_dns.so.2 /lib/libnss_dns.so.2
+	$(ROMFSINST) lib/libnss_files.so.2 /lib/libnss_files.so.2
+	$(ROMFSINST) lib/libpthread.so.0 /lib/libpthread.so.0
+	$(ROMFSINST) lib/libcrypt.so.1 /lib/libcrypt.so.1
+	LIBGCCS="`$(CC) $(CFLAGS) -print-file-name=libgcc_s.so.1`"; \
+	if [ -f "$$LIBGCCS" ] ; then \
+		$(ROMFSINST) -p 755 $$LIBGCCS /lib/libgcc_s.so.1 ; \
+	fi
+	LIBSTDCPP="`$(CC) $(CFLAGS) -print-file-name=libstdc++.so`"; \
+	if [ -f "$$LIBSTDCPP" ] ; then \
+		soname=`$(CROSS_COMPILE)readelf -d $$LIBSTDCPP | grep '(SONAME)' | sed -e 's/^.*[[]//' -e 's/].*$$//'`; \
+		$(ROMFSINST) -p 755 $$LIBSTDCPP /lib/$$soname ; \
+	fi
+	if [ "$(CONFIG_LIB_NCURSES)" = "y" -o "$(CONFIG_LIB_NCURSES_FORCE)" = "y" ] ; then \
+	    $(ROMFSINST) lib/libncurses.so /lib/libncurses.so ; \
+	    mkdir -p $(ROMFSDIR)/share/terminfo/a ; \
+	    $(ROMFSINST) share/terminfo/a/ansi /share/terminfo/a/ansi ; \
+	    mkdir -p $(ROMFSDIR)/share/terminfo/d ; \
+	    $(ROMFSINST) share/terminfo/d/dumb /share/terminfo/d/dumb ; \
+	    mkdir -p $(ROMFSDIR)/share/terminfo/l ; \
+	    $(ROMFSINST) share/terminfo/l/linux /share/terminfo/l/linux ; \
+	    mkdir -p $(ROMFSDIR)/share/terminfo/v ; \
+	    $(ROMFSINST) share/terminfo/v/vt100 /share/terminfo/v/vt100 ; \
+	    $(ROMFSINST) share/terminfo/v/vt102 /share/terminfo/v/vt102 ; \
+	    mkdir -p $(ROMFSDIR)/share/terminfo/x ; \
+	    $(ROMFSINST) share/terminfo/x/xterm /share/terminfo/x/xterm ; \
+	fi
+

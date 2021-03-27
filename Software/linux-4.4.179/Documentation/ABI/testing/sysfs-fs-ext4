@@ -1,0 +1,117 @@
+
+NOTE
+----
+
+This document was contributed by Cirrus Logic for kernel 2.2.5.  This version
+has been updated for 2.3.48 by Andrew Morton.
+
+Cirrus make a copy of this driver available at their website, as
+described below.  In general, you should use the driver version which
+comes with your Linux distribution.
+
+
+
+CIRRUS LOGIC LAN CS8900/CS8920 ETHERNET ADAPTERS
+Linux Network Interface Driver ver. 2.00 <kernel 2.3.48>
+===============================================================================
+ 
+
+TABLE OF CONTENTS
+
+1.0 CIRRUS LOGIC LAN CS8900/CS8920 ETHERNET ADAPTERS
+    1.1 Product Overview 
+    1.2 Driver Description
+	1.2.1 Driver Name
+	1.2.2 File in the Driver Package
+    1.3 System Requirements
+    1.4 Licensing Information
+
+2.0 ADAPTER INSTALLATION and CONFIGURATION
+    2.1 CS8900-based Adapter Configuration
+    2.2 CS8920-based Adapter Configuration 
+
+3.0 LOADING THE DRIVER AS A MODULE
+
+4.0 COMPILING THE DRIVER
+    4.1 Compiling the Driver as a Loadable Module
+    4.2 Compiling the driver to support memory mode
+    4.3 Compiling the driver to support Rx DMA 
+
+5.0 TESTING AND TROUBLESHOOTING
+    5.1 Known Defects and Limitations
+    5.2 Testing the Adapter
+        5.2.1 Diagnostic Self-Test
+        5.2.2 Diagnostic Network Test
+    5.3 Using the Adapter's LEDs
+    5.4 Resolving I/O Conflicts
+
+6.0 TECHNICAL SUPPORT
+    6.1 Contacting Cirrus Logic's Technical Support
+    6.2 Information Required Before Contacting Technical Support
+    6.3 Obtaining the Latest Driver Version
+    6.4 Current maintainer
+    6.5 Kernel boot parameters
+
+
+1.0 CIRRUS LOGIC LAN CS8900/CS8920 ETHERNET ADAPTERS
+===============================================================================
+
+
+1.1 PRODUCT OVERVIEW
+
+The CS8900-based ISA Ethernet Adapters from Cirrus Logic follow 
+IEEE 802.3 standards and support half or full-duplex operation in ISA bus 
+computers on 10 Mbps Ethernet networks.  The adapters are designed for operation 
+in 16-bit ISA or EISA bus expansion slots and are available in 
+10BaseT-only or 3-media configurations (10BaseT, 10Base2, and AUI for 10Base-5 
+or fiber networks).  
+
+CS8920-based adapters are similar to the CS8900-based adapter with additional 
+features for Plug and Play (PnP) support and Wakeup Frame recognition.  As 
+such, the configuration procedures differ somewhat between the two types of 
+adapters.  Refer to the "Adapter Configuration" section for details on 
+configuring both types of adapters.
+
+
+1.2 DRIVER DESCRIPTION
+
+The CS8900/CS8920 Ethernet Adapter driver for Linux supports the Linux
+v2.3.48 or greater kernel.  It can be compiled directly into the kernel
+or loaded at run-time as a device driver module.
+
+1.2.1 Driver Name: cs89x0
+
+1.2.2 Files in the Driver Archive:
+
+The files in the driver at Cirrus' website include:
+
+  readme.txt         - this file
+  build              - batch file to compile cs89x0.c.
+  cs89x0.c           - driver C code
+  cs89x0.h           - driver header file
+  cs89x0.o           - pre-compiled module (for v2.2.5 kernel)
+  config/Config.in   - sample file to include cs89x0 driver in the kernel.
+  config/Makefile    - sample file to include cs89x0 driver in the kernel.
+  config/Space.c     - sample file to include cs89x0 driver in the kernel.
+
+
+
+1.3 SYSTEM REQUIREMENTS
+
+The following hardware is required:
+
+   * Cirrus Logic LAN (CS8900/20-based) Ethernet ISA Adapter   
+
+   * IBM or IBM-compatible PC with:
+     * An 80386 or higher processor
+     * 16 bytes of contiguous IO space available between 210h - 370h
+     * One available IRQ (5,10,11,or 12 for the CS8900, 3-7,9-15 for CS8920).
+
+   * Appropriate cable (and connector for AUI, 10BASE-2) for your network
+     topology.
+
+The following software is required:
+
+* LINUX kernel version 2.3.48 or higher
+
+   * CS8900/20 Setup Utility 

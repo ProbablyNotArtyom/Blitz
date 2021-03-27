@@ -1,0 +1,100 @@
+// SPDX-License-Identifier: GPL-2.0+
+//
+// Copyright (C) 2016-2018 Vladimir Zapolskiy <vz@mleia.com>
+
+/dts-v1/;
+
+#include "imx31.dtsi"
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	model = "LogicPD i.MX31 Lite";
+	compatible = "logicpd,imx31-lite", "fsl,imx31";
+
+	chosen {
+		stdout-path = &uart1;
+	};
+
+	memory@80000000 {
+		reg = <0x80000000 0x8000000>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led0 {
+			gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
+		};
+
+		led1 {
+			gpios = <&gpio1 7 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&ata {
+	status = "okay";
+};
+
+&nfc {
+	nand-bus-width = <8>;
+	nand-ecc-mode = "hw";
+	nand-on-flash-bbt;
+	status = "okay";
+};
+
+&sdhci1 {
+	bus-width = <4>;
+	cd-gpios = <&gpio2 11 GPIO_ACTIVE_HIGH>;
+	wp-gpios = <&gpio1 6 GPIO_ACTIVE_HIGH>;
+	status = "okay";
+};
+
+&spi2 {
+	status = "okay";
+
+	pmic@0 {
+		compatible = "fsl,mc13783";
+		reg = <0>;
+		spi-cs-high;
+		spi-max-frequency = <1000000>;
+		interrupt-parent = <&gpio1>;
+		interrupts = <3 IRQ_TYPE_EDGE_RISING>;
+
+		fsl,mc13xxx-uses-adc;
+		fsl,mc13xxx-uses-rtc;
+
+		regulators {
+			sw1a {		/* QVCC */
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1500000>;
+				regulator-always-on;
+				regulator-boot-on;
+			};
+
+			sw1b {		/* QVCC */
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1500000>;
+				regulator-always-on;
+				regulator-boot-on;
+			};
+
+			sw2a {		/* 1.8V_DDR, NVCC2, NVCC21 and NVCC22 */
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <1800000>;
+				regulator-always-on;
+				regulator-boot-on;
+			};
+
+			sw2b {		/* NVCC10 */
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <1800000>;
+				regulator-always-on;
+				regulator-boot-on;
+			};
+
+			violo {		/* NVCC1 and NVCC7 */
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microv

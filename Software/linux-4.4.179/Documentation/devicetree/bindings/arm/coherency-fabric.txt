@@ -1,0 +1,60 @@
+This file summarizes information on basic testing of USB functions
+provided by gadgets.
+
+1. ACM function
+2. ECM function
+3. ECM subset function
+4. EEM function
+5. FFS function
+6. HID function
+7. LOOPBACK function
+8. MASS STORAGE function
+9. MIDI function
+10. NCM function
+11. OBEX function
+12. PHONET function
+13. RNDIS function
+14. SERIAL function
+15. SOURCESINK function
+16. UAC1 function (legacy implementation)
+17. UAC2 function
+18. UVC function
+19. PRINTER function
+20. UAC1 function (new API)
+
+
+1. ACM function
+===============
+
+The function is provided by usb_f_acm.ko module.
+
+Function-specific configfs interface
+------------------------------------
+
+The function name to use when creating the function directory is "acm".
+The ACM function provides just one attribute in its function directory:
+
+	port_num
+
+The attribute is read-only.
+
+There can be at most 4 ACM/generic serial/OBEX ports in the system.
+
+
+Testing the ACM function
+------------------------
+
+On the host: cat > /dev/ttyACM<X>
+On the device : cat /dev/ttyGS<Y>
+
+then the other way round
+
+On the device: cat > /dev/ttyGS<Y>
+On the host: cat /dev/ttyACM<X>
+
+2. ECM function
+===============
+
+The function is provided by usb_f_ecm.ko module.
+
+Fun

@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Common file for GPMC connected smsc9221 on omaps
+ *
+ * Compared to smsc911x, smsc9221 (and others like smsc9217
+ * or smsc 9218) has faster timings, leading to higher
+ * bandwidth.
+ *
+ * Note that the board specifc DTS file needs to specify
+ * ranges, pinctrl, reg, interrupt parent and interrupts.
+ */
+
+/ {
+	vdd

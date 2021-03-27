@@ -1,0 +1,123 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Device Tree file for Marvell Armada 385 development board
+ * (RD-88F6820-GP)
+ *
+ * Copyright (C) 2014 Marvell
+ *
+ * Gregory CLEMENT <gregory.clement@free-electrons.com>
+ */
+
+/dts-v1/;
+#include "armada-388.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	model = "Marvell Armada 388 DB-88F6820-GP";
+	compatible = "marvell,a388-gp", "marvell,armada388", "marvell,armada380";
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory {
+		device_type = "memory";
+		reg = <0x00000000 0x80000000>; /* 2 GB */
+	};
+
+	soc {
+		ranges = <MBUS_ID(0xf0, 0x01) 0 0xf1000000 0x100000
+			  MBUS_ID(0x01, 0x1d) 0 0xfff00000 0x100000
+			  MBUS_ID(0x09, 0x19) 0 0xf1100000 0x10000
+			  MBUS_ID(0x09, 0x15) 0 0xf1110000 0x10000
+			  MBUS_ID(0x0c, 0x04) 0 0xf1200000 0x100000>;
+
+		internal-regs {
+			i2c@11000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&i2c0_pins>;
+				status = "okay";
+				clock-frequency = <100000>;
+
+				expander0: pca9555@20 {
+					compatible = "nxp,pca9555";
+					pinctrl-names = "default";
+					pinctrl-0 = <&pca0_pins>;
+					interrupt-parent = <&gpio0>;
+					interrupts = <18 IRQ_TYPE_LEVEL_LOW>;
+					gpio-controller;
+					#gpio-cells = <2>;
+					interrupt-controller;
+					#interrupt-cells = <2>;
+					reg = <0x20>;
+				};
+
+				expander1: pca9555@21 {
+					compatible = "nxp,pca9555";
+					pinctrl-names = "default";
+					interrupt-parent = <&gpio0>;
+					interrupts = <18 IRQ_TYPE_LEVEL_LOW>;
+					gpio-controller;
+					#gpio-cells = <2>;
+					interrupt-controller;
+					#interrupt-cells = <2>;
+					reg = <0x21>;
+				};
+
+				eeprom@57 {
+					compatible = "atmel,24c64";
+					reg = <0x57>;
+				};
+			};
+
+			serial@12000 {
+				/*
+				 * Exported on the micro USB connector CON16
+				 * through an FTDI
+				 */
+
+				pinctrl-names = "default";
+				pinctrl-0 = <&uart0_pins>;
+				status = "okay";
+			};
+
+			/* GE1 CON15 */
+			ethernet@30000 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&ge1_rgmii_pins>;
+				status = "okay";
+				phy = <&phy1>;
+				phy-mode = "rgmii-id";
+				buffer-manager = <&bm>;
+				bm,pool-long = <2>;
+				bm,pool-short = <3>;
+			};
+
+			/* CON4 */
+			usb@58000 {
+				vcc-supply = <&reg_usb2_0_vbus>;
+				status = "okay";
+			};
+
+			/* GE0 CON1 */
+			ethernet@70000 {
+				pinctrl-names = "default";
+				/*
+				 * The Reference Clock 0 is used to provide a
+				 * clock to the PHY
+				 */
+				pinctrl-0 = <&ge0_rgmii_pins>, <&ref_clk0_pins>;
+				status = "okay";
+				phy = <&phy0>;
+				phy-mode = "rgmii-id";
+				buffer-manager = <&bm>;
+				bm,pool-long = <0>;
+				bm,pool-short = <1>;
+			};
+
+
+			mdio@72004 {
+				pinctrl-names = "default";
+				pinctrl-0 = <&mdio_pins>;
+
+				phy0: ethernet-phy@1 

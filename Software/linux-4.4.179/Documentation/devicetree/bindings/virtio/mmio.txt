@@ -1,0 +1,16 @@
+/*
+ * Copyright (C) 2016 Jamie Lentin <jm@lentin.co.uk>
+ *
+ * This file is licensed under the terms of the GNU General Public
+ * License version 2. This program is licensed "as is" without any
+ * warranty of any kind, whether express or implied.
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+#include "orion5x-mv88f5181.dtsi"
+
+/ {
+	model = "Netgear WNR854-t

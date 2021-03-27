@@ -1,0 +1,11 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (c) 2016-2017 Andreas Färber
+ */
+
+/dts-v1/;
+
+#include "owl-s500-guitar.dtsi"
+
+/ {
+	compatible = "lemaker,guitar-bb-rev-

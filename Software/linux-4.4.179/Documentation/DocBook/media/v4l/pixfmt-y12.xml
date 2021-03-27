@@ -1,0 +1,82 @@
+.. _applying_patches:
+
+Applying Patches To The Linux Kernel
+++++++++++++++++++++++++++++++++++++
+
+Original by:
+	Jesper Juhl, August 2005
+
+.. note::
+
+   This document is obsolete.  In most cases, rather than using ``patch``
+   manually, you'll almost certainly want to look at using Git instead.
+
+A frequently asked question on the Linux Kernel Mailing List is how to apply
+a patch to the kernel or, more specifically, what base kernel a patch for
+one of the many trees/branches should be applied to. Hopefully this document
+will explain this to you.
+
+In addition to explaining how to apply and revert patches, a brief
+description of the different kernel trees (and examples of how to apply
+their specific patches) is also provided.
+
+
+What is a patch?
+================
+
+A patch is a small text document containing a delta of changes between two
+different versions of a source tree. Patches are created with the ``diff``
+program.
+
+To correctly apply a patch you need to know what base it was generated from
+and what new version the patch will change the source tree into. These
+should both be present in the patch file metadata or be possible to deduce
+from the filename.
+
+
+How do I apply or revert a patch?
+=================================
+
+You apply a patch with the ``patch`` program. The patch program reads a diff
+(or patch) file and makes the changes to the source tree described in it.
+
+Patches for the Linux kernel are generated relative to the parent directory
+holding the kernel source dir.
+
+This means that paths to files inside the patch file contain the name of the
+kernel source directories it was generated against (or some other directory
+names like "a/" and "b/").
+
+Since this is unlikely to match the name of the kernel source dir on your
+local machine (but is often useful info to see what version an otherwise
+unlabeled patch was generated against) you should change into your kernel
+source directory and then strip the first element of the path from filenames
+in the patch file when applying it (the ``-p1`` argument to ``patch`` does
+this).
+
+To revert a previously applied patch, use the -R argument to patch.
+So, if you applied a patch like this::
+
+	patch -p1 < ../patch-x.y.z
+
+You can revert (undo) it like this::
+
+	patch -R -p1 < ../patch-x.y.z
+
+
+How do I feed a patch/diff file to ``patch``?
+=============================================
+
+This (as usual with Linux and other UNIX like operating systems) can be
+done in several different ways.
+
+In all the examples below I feed the file (in uncompressed form) to patch
+via stdin using the following syntax::
+
+	patch -p1 < path/to/patch-x.y.z
+
+If you just want to be able to follow the examples below and don't want to
+know of more than one way to use patch, then you can stop reading this
+section here.
+
+Patch can also get the name of the file to use via the

@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Device Tree file for Helios4
+ * based on SolidRun Clearfog revision A1 rev 2.0 (88F6828)
+ *
+ *  Copyright (C) 2017 Aditya Prayoga <aditya@kobol.io>
+ *
+ */
+
+/dts-v1/;
+#include "armada-388.dtsi"
+#include "armada-38x-solidrun-microsom.dtsi"
+
+/ {
+	model = "Helios4";
+	compatible = "kobol,helios4", "marvell,armada388",
+		"marvell,armada385", "marvell,armada380";
+
+	memory {
+		device_type = "memory";
+		reg = <0x00000000 0x80000000>; /* 2 GB */
+	};
+
+	aliases {
+		/* So that mvebu u-boot can update the MAC addresses */
+		ethernet1 = &eth0;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	reg_12v: regulator-12v {
+		compatible = "regulator-fixed";
+		regulator-name = "power_brick_12V";
+		regulator-min-microvolt = <12000000>;
+		regulator-max-microvolt = <12000000>;
+		regulator-always-on;
+	};
+
+	reg_3p3v: regulator-3p3v {
+		compatible = "regulator-fixed";
+		regulator-name = "3P3V";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always

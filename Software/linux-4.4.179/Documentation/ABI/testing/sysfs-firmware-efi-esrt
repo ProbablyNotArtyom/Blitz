@@ -1,0 +1,89 @@
+
+		Linux Ethernet Bonding Driver HOWTO
+
+		Latest update: 27 April 2011
+
+Initial release : Thomas Davis <tadavis at lbl.gov>
+Corrections, HA extensions : 2000/10/03-15 :
+  - Willy Tarreau <willy at meta-x.org>
+  - Constantine Gavrilov <const-g at xpert.com>
+  - Chad N. Tindel <ctindel at ieee dot org>
+  - Janice Girouard <girouard at us dot ibm dot com>
+  - Jay Vosburgh <fubar at us dot ibm dot com>
+
+Reorganized and updated Feb 2005 by Jay Vosburgh
+Added Sysfs information: 2006/04/24
+  - Mitch Williams <mitch.a.williams at intel.com>
+
+Introduction
+============
+
+	The Linux bonding driver provides a method for aggregating
+multiple network interfaces into a single logical "bonded" interface.
+The behavior of the bonded interfaces depends upon the mode; generally
+speaking, modes provide either hot standby or load balancing services.
+Additionally, link integrity monitoring may be performed.
+	
+	The bonding driver originally came from Donald Becker's
+beowulf patches for kernel 2.0. It has changed quite a bit since, and
+the original tools from extreme-linux and beowulf sites will not work
+with this version of the driver.
+
+	For new versions of the driver, updated userspace tools, and
+who to ask for help, please follow the links at the end of this file.
+
+Table of Contents
+=================
+
+1. Bonding Driver Installation
+
+2. Bonding Driver Options
+
+3. Configuring Bonding Devices
+3.1	Configuration with Sysconfig Support
+3.1.1		Using DHCP with Sysconfig
+3.1.2		Configuring Multiple Bonds with Sysconfig
+3.2	Configuration with Initscripts Support
+3.2.1		Using DHCP with Initscripts
+3.2.2		Configuring Multiple Bonds with Initscripts
+3.3	Configuring Bonding Manually with Ifenslave
+3.3.1		Configuring Multiple Bonds Manually
+3.4	Configuring Bonding Manually via Sysfs
+3.5	Configuration with Interfaces Support
+3.6	Overriding Configuration for Special Cases
+3.7 Configuring LACP for 802.3ad mode in a more secure way
+
+4. Querying Bonding Configuration
+4.1	Bonding Configuration
+4.2	Network Configuration
+
+5. Switch Configuration
+
+6. 802.1q VLAN Support
+
+7. Link Monitoring
+7.1	ARP Monitor Operation
+7.2	Configuring Multiple ARP Targets
+7.3	MII Monitor Operation
+
+8. Potential Trouble Sources
+8.1	Adventures in Routing
+8.2	Ethernet Device Renaming
+8.3	Painfully Slow Or No Failed Link Detection By Miimon
+
+9. SNMP agents
+
+10. Promiscuous mode
+
+11. Configuring Bonding for High Availability
+11.1	High Availability in a Single Switch Topology
+11.2	High Availability in a Multiple Switch Topology
+11.2.1		HA Bonding Mode Selection for Multiple Switch Topology
+11.2.2		HA Link Monitoring for Multiple Switch Topology
+
+12. Configuring Bonding for Maximum Throughput
+12.1	Maximum Throughput in a Single Switch Topology
+12.1.1		MT Bonding Mode Selection for Single Switch Topology
+12.1.2		MT Link Monitoring for Single Switch Topology
+12.2	Maximum Throughput in a Multiple Switch Topology
+12.2.1		MT Bonding M

@@ -1,0 +1,409 @@
+.. include:: ../disclaimer-ita.rst
+
+:Original: :ref:`Documentation/kernel-hacking/locking.rst <kernel_hacking_lock>`
+:Translator: Federico Vaga <federico.vaga@vaga.pv.it>
+
+.. _it_kernel_hacking_lock:
+
+==========================================
+L'inaffidabile guida alla sincronizzazione
+==========================================
+
+:Author: Rusty Russell
+
+Introduzione
+============
+
+Benvenuto, alla notevole ed inaffidabile guida ai problemi di sincronizzazione
+(locking) nel kernel. Questo documento descrive il sistema di sincronizzazione
+nel kernel Linux 2.6.
+
+Dato il largo utilizzo del multi-threading e della prelazione nel kernel
+Linux, chiunque voglia dilettarsi col kernel deve conoscere i concetti
+fondamentali della concorrenza e della sincronizzazione nei sistemi
+multi-processore.
+
+Il problema con la concorrenza
+==============================
+
+(Saltatelo se sapete già cos'è una corsa critica).
+
+In un normale programma, potete incrementare un contatore nel seguente modo:
+
+::
+
+          contatore++;
+
+Questo è quello che vi aspettereste che accada sempre:
+
+
+.. table:: Risultati attesi
+
+  +------------------------------------+------------------------------------+
+  | Istanza 1                          | Istanza 2                          |
+  +====================================+====================================+
+  | leggi contatore (5)                |                                    |
+  +------------------------------------+------------------------------------+
+  | aggiungi 1 (6)                     |                                    |
+  +------------------------------------+------------------------------------+
+  | scrivi contatore (6)               |                                    |
+  +------------------------------------+------------------------------------+
+  |                                    | leggi contatore (6)                |
+  +------------------------------------+------------------------------------+
+  |                                    | aggiungi 1 (7)                     |
+  +------------------------------------+------------------------------------+
+  |                                    | scrivi contatore (7)               |
+  +------------------------------------+------------------------------------+
+
+Questo è quello che potrebbe succedere in realtà:
+
+.. table:: Possibile risultato
+
+  +------------------------------------+------------------------------------+
+  | Istanza 1                          | Istanza 2                          |
+  +====================================+====================================+
+  | leggi contatore (5)                |                                    |
+  +------------------------------------+------------------------------------+
+  |                                    | leggi contatore (5)                |
+  +------------------------------------+------------------------------------+
+  | aggiungi 1 (6)                     |                                    |
+  +------------------------------------+------------------------------------+
+  |                                    | aggiungi 1 (6)                     |
+  +------------------------------------+------------------------------------+
+  | scrivi contatore (6)               |                                    |
+  +------------------------------------+------------------------------------+
+  |                                    | scrivi contatore (6)               |
+  +------------------------------------+------------------------------------+
+
+
+Corse critiche e sezioni critiche
+---------------------------------
+
+Questa sovrapposizione, ovvero quando un risultato dipende dal tempo che
+intercorre fra processi diversi, è chiamata corsa critica. La porzione
+di codice che contiene questo problema è chiamata sezione critica.
+In particolar modo da quando Linux ha incominciato a girare su
+macchine multi-processore, le sezioni critiche sono diventate uno dei
+maggiori problemi di progettazione ed implementazione del kernel.
+
+La prelazione può sortire gli stessi effetti, anche se c'è una sola CPU:
+interrompendo un processo nella sua sezione critica otterremo comunque
+la stessa corsa critica. In questo caso, il thread che si avvicenda
+nell'esecuzione potrebbe eseguire anch'esso la sezione critica.
+
+La soluzione è quella di riconoscere quando avvengono questi accessi
+simultanei, ed utilizzare i *lock* per accertarsi che solo un'istanza
+per volta possa entrare nella sezione critica. Il kernel offre delle buone
+funzioni a questo scopo. E poi ci sono quelle meno buone, ma farò finta
+che non esistano.
+
+Sincronizzazione nel kernel Linux
+=================================
+
+Se posso darvi un suggerimento: non dormite mai con qualcuno più pazzo di
+voi. Ma se dovessi darvi un suggerimento sulla sincronizzazione:
+**mantenetela semplice**.
+
+Siate riluttanti nell'introduzione di nuovi *lock*.
+
+Abbastanza strano, quest'ultimo è l'esatto opposto del mio suggerimento
+su quando **avete** dormito con qualcuno più pazzo di voi. E dovreste
+pensare a prendervi un cane bello grande.
+
+I due principali tipi di *lock* nel kernel: spinlock e mutex
+------------------------------------------------------------
+
+Ci sono due tipi principali di *lock* nel kernel. Il tipo fondamentale è lo
+spinlock (``include/asm/spinlock.h``), un semplice *lock* che può essere
+trattenuto solo da un processo: se non si può trattenere lo spinlock, allora
+rimane in attesa attiva (in inglese *spinning*) finché non ci riesce.
+Gli spinlock sono molto piccoli e rapidi, possono essere utilizzati ovunque.
+
+Il secondo tipo è il mutex (``include/linux/mutex.h``): è come uno spinlock,
+ma potreste bloccarvi trattenendolo. Se non potete trattenere un mutex
+il vostro processo si auto-sospenderà; verrà riattivato quando il mutex
+verrà rilasciato. Questo significa che il processore potrà occuparsi d'altro
+mentre il vostro processo è in attesa. Esistono molti casi in cui non potete
+permettervi di sospendere un processo (vedere
+:ref:`Quali funzioni possono essere chiamate in modo sicuro dalle interruzioni? <it_sleeping-things>`)
+e quindi dovrete utilizzare gli spinlock.
+
+Nessuno di questi *lock* è ricorsivo: vedere
+:ref:`Stallo: semplice ed avanzato <it_deadlock>`
+
+I *lock* e i kernel per sistemi monoprocessore
+----------------------------------------------
+
+Per i kernel compilati senza ``CONFIG_SMP`` e senza ``CONFIG_PREEMPT``
+gli spinlock non esistono. Questa è un'ottima scelta di progettazione:
+quando nessun altro processo può essere eseguito in simultanea, allora
+non c'è la necessità di avere un *lock*.
+
+Se il kernel è compilato senza ``CONFIG_SMP`` ma con ``CONFIG_PREEMPT``,
+allora gli spinlock disabilitano la prelazione; questo è sufficiente a
+prevenire le corse critiche. Nella maggior parte dei casi, possiamo considerare
+la prelazione equivalente ad un sistema multi-processore senza preoccuparci
+di trattarla indipendentemente.
+
+Dovreste verificare sempre la sincronizzazione con le opzioni ``CONFIG_SMP`` e
+``CONFIG_PREEMPT`` abilitate, anche quando non avete un sistema
+multi-processore, questo vi permetterà di identificare alcuni problemi
+di sincronizzazione.
+
+Come vedremo di seguito, i mutex continuano ad esistere perché sono necessari
+per la sincronizzazione fra processi in contesto utente.
+
+Sincronizzazione in contesto utente
+-----------------------------------
+
+Se avete una struttura dati che verrà utilizzata solo dal contesto utente,
+allora, per proteggerla, potete utilizzare un semplice mutex
+(``include/linux/mutex.h``). Questo è il caso più semplice: inizializzate il
+mutex; invocate :c:func:`mutex_lock_interruptible()` per trattenerlo e
+:c:func:`mutex_unlock()` per rilasciarlo. C'è anche :c:func:`mutex_lock()`
+ma questa dovrebbe essere evitata perché non ritorna in caso di segnali.
+
+Per esempio: ``net/netfilter/nf_sockopt.c`` permette la registrazione
+di nuove chiamate per :c:func:`setsockopt()` e :c:func:`getsockopt()`
+usando la funzione :c:func:`nf_register_sockopt()`. La registrazione e
+la rimozione vengono eseguite solamente quando il modulo viene caricato
+o scaricato (e durante l'avvio del sistema, qui non abbiamo concorrenza),
+e la lista delle funzioni registrate viene consultata solamente quando
+:c:func:`setsockopt()` o :c:func:`getsockopt()` sono sconosciute al sistema.
+In questo caso ``nf_sockopt_mutex`` è perfetto allo scopo, in particolar modo
+visto che setsockopt e getsockopt potrebbero dormire.
+
+Sincronizzazione fra il contesto utente e i softirq
+---------------------------------------------------
+
+Se un softirq condivide dati col contesto utente, avete due problemi.
+Primo, il contesto utente corrente potrebbe essere interroto da un softirq,
+e secondo, la sezione critica potrebbe essere eseguita da un altro
+processore. Questo è quando :c:func:`spin_lock_bh()`
+(``include/linux/spinlock.h``) viene utilizzato. Questo disabilita i softirq
+sul processore e trattiene il *lock*. Invece, :c:func:`spin_unlock_bh()` fa
+l'opposto. (Il suffisso '_bh' è un residuo storico che fa riferimento al
+"Bottom Halves", il vecchio nome delle interruzioni software. In un mondo
+perfetto questa funzione si chiamerebbe 'spin_lock_softirq()').
+
+Da notare che in questo caso potete utilizzare anche :c:func:`spin_lock_irq()`
+o :c:func:`spin_lock_irqsave()`, queste fermano anche le interruzioni hardware:
+vedere :ref:`Contesto di interruzione hardware <it_hardirq-context>`.
+
+Questo funziona alla perfezione anche sui sistemi monoprocessore: gli spinlock
+svaniscono e questa macro diventa semplicemente :c:func:`local_bh_disable()`
+(``include/linux/interrupt.h``), la quale impedisce ai softirq d'essere
+eseguiti.
+
+Sincronizzazione fra contesto utente e i tasklet
+------------------------------------------------
+
+Questo caso è uguale al precedente, un tasklet viene eseguito da un softirq.
+
+Sincronizzazione fra contesto utente e i timer
+----------------------------------------------
+
+Anche questo caso è uguale al precedente, un timer viene eseguito da un
+softirq.
+Dal punto di vista della sincronizzazione, tasklet e timer sono identici.
+
+Sincronizzazione fra tasklet e timer
+------------------------------------
+
+Qualche volta un tasklet od un timer potrebbero condividere i dati con
+un altro tasklet o timer
+
+Lo stesso tasklet/timer
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Dato che un tasklet non viene mai eseguito contemporaneamente su due
+processori, non dovete preoccuparvi che sia rientrante (ovvero eseguito
+più volte in contemporanea), perfino su sistemi multi-processore.
+
+Differenti tasklet/timer
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Se un altro tasklet/timer vuole condividere dati col vostro tasklet o timer,
+allora avrete bisogno entrambe di :c:func:`spin_lock()` e
+:c:func:`spin_unlock()`. Qui :c:func:`spin_lock_bh()` è inutile, siete già
+in un tasklet ed avete la garanzia che nessun altro verrà eseguito sullo
+stesso processore.
+
+Sincronizzazione fra softirq
+----------------------------
+
+Spesso un softirq potrebbe condividere dati con se stesso o un tasklet/timer.
+
+Lo stesso softirq
+~~~~~~~~~~~~~~~~~
+
+Lo stesso softirq può essere eseguito su un diverso processore: allo scopo
+di migliorare le prestazioni potete utilizzare dati riservati ad ogni
+processore (vedere :ref:`Dati per processore <it_per-cpu>`). Se siete arrivati
+fino a questo punto nell'uso dei softirq, probabilmente tenete alla scalabilità
+delle prestazioni abbastanza da giustificarne la complessità aggiuntiva.
+
+Dovete utilizzare :c:func:`spin_lock()` e :c:func:`spin_unlock()` per
+proteggere i dati condivisi.
+
+Diversi Softirqs
+~~~~~~~~~~~~~~~~
+
+Dovete utilizzare :c:func:`spin_lock()` e :c:func:`spin_unlock()` per
+proteggere i dati condivisi, che siano timer, tasklet, diversi softirq o
+lo stesso o altri softirq: uno qualsiasi di essi potrebbe essere in esecuzione
+su un diverso processore.
+
+.. _`it_hardirq-context`:
+
+Contesto di interruzione hardware
+=================================
+
+Solitamente le interruzioni hardware comunicano con un tasklet o un softirq.
+Spesso questo si traduce nel mettere in coda qualcosa da fare che verrà
+preso in carico da un softirq.
+
+Sincronizzazione fra interruzioni hardware e softirq/tasklet
+------------------------------------------------------------
+
+Se un gestore di interruzioni hardware condivide dati con un softirq, allora
+avrete due preoccupazioni. Primo, il softirq può essere interrotto da
+un'interruzione hardware, e secondo, la sezione critica potrebbe essere
+eseguita da un'interruzione hardware su un processore diverso. Questo è il caso
+dove :c:func:`spin_lock_irq()` viene utilizzato. Disabilita le interruzioni
+sul processore che l'esegue, poi trattiene il lock. :c:func:`spin_unlock_irq()`
+fa l'opposto.
+
+Il gestore d'interruzione hardware non usa :c:func:`spin_lock_irq()` perché
+i softirq non possono essere eseguiti quando il gestore d'interruzione hardware
+è in esecuzione: per questo si può usare :c:func:`spin_lock()`, che è un po'
+più veloce. L'unica eccezione è quando un altro gestore d'interruzioni
+hardware utilizza lo stesso *lock*: :c:func:`spin_lock_irq()` impedirà a questo
+secondo gestore di interrompere quello in esecuzione.
+
+Questo funziona alla perfezione anche sui sistemi monoprocessore: gli spinlock
+svaniscono e questa macro diventa semplicemente :c:func:`local_irq_disable()`
+(``include/asm/smp.h``), la quale impedisce a softirq/tasklet/BH d'essere
+eseguiti.
+
+:c:func:`spin_lock_irqsave()` (``include/linux/spinlock.h``) è una variante che
+salva lo stato delle interruzioni in una variabile, questa verrà poi passata
+a :c:func:`spin_unlock_irqrestore()`. Questo significa che lo stesso codice
+potrà essere utilizzato in un'interruzione hardware (dove le interruzioni sono
+già disabilitate) e in un softirq (dove la disabilitazione delle interruzioni
+è richiesta).
+
+Da notare che i softirq (e quindi tasklet e timer) sono eseguiti al ritorno
+da un'interruzione hardware, quindi :c:func:`spin_lock_irq()` interrompe
+anche questi. Tenuto conto di questo si può dire che
+:c:func:`spin_lock_irqsave()` è la funzione di sincronizzazione più generica
+e potente.
+
+Sincronizzazione fra due gestori d'interruzioni hardware
+--------------------------------------------------------
+
+Condividere dati fra due gestori di interruzione hardware è molto raro, ma se
+succede, dovreste usare :c:func:`spin_lock_irqsave()`: è una specificità
+dell'architettura il fatto che tutte le interruzioni vengano interrotte
+quando si eseguono di gestori di interruzioni.
+
+Bigino della sincronizzazione
+=============================
+
+Pete Zaitcev ci offre il seguente riassunto:
+
+-  Se siete in un contesto utente (una qualsiasi chiamata di sistema)
+   e volete sincronizzarvi con altri processi, usate i mutex. Potete trattenere
+   il mutex e dormire (``copy_from_user*(`` o ``kmalloc(x,GFP_KERNEL)``).
+
+-  Altrimenti (== i dati possono essere manipolati da un'interruzione) usate
+   :c:func:`spin_lock_irqsave()` e :c:func:`spin_unlock_irqrestore()`.
+
+-  Evitate di trattenere uno spinlock per più di 5 righe di codice incluse
+   le chiamate a funzione (ad eccezione di quell per l'accesso come
+   :c:func:`readb()`).
+
+Tabella dei requisiti minimi
+----------------------------
+
+La tabella seguente illustra i requisiti **minimi** per la sincronizzazione fra
+diversi contesti. In alcuni casi, lo stesso contesto può essere eseguito solo
+da un processore per volta, quindi non ci sono requisiti per la
+sincronizzazione (per esempio, un thread può essere eseguito solo su un
+processore alla volta, ma se deve condividere dati con un altro thread, allora
+la sincronizzazione è necessaria).
+
+Ricordatevi il suggerimento qui sopra: potete sempre usare
+:c:func:`spin_lock_irqsave()`, che è un sovrainsieme di tutte le altre funzioni
+per spinlock.
+
+============== ============= ============= ========= ========= ========= ========= ======= ======= ============== ==============
+.              IRQ Handler A IRQ Handler B Softirq A Softirq B Tasklet A Tasklet B Timer A Timer B User Context A User Context B
+============== ============= ============= ========= ========= ========= ========= ======= ======= ============== ==============
+IRQ Handler A  None
+IRQ Handler B  SLIS          None
+Softirq A      SLI           SLI           SL
+Softirq B      SLI           SLI           SL        SL
+Tasklet A      SLI           SLI           SL        SL        None
+Tasklet B      SLI           SLI           SL        SL        SL        None
+Timer A        SLI           SLI           SL        SL        SL        SL        None
+Timer B        SLI           SLI           SL        SL        SL        SL        SL      None
+User Context A SLI           SLI           SLBH      SLBH      SLBH      SLBH      SLBH    SLBH    None
+User Context B SLI           SLI           SLBH      SLBH      SLBH      SLBH      SLBH    SLBH    MLI            None
+============== ============= ============= ========= ========= ========= ========= ======= ======= ============== ==============
+
+Table: Tabella dei requisiti per la sincronizzazione
+
++--------+----------------------------+
+| SLIS   | spin_lock_irqsave          |
++--------+----------------------------+
+| SLI    | spin_lock_irq              |
++--------+----------------------------+
+| SL     | spin_lock                  |
++--------+----------------------------+
+| SLBH   | spin_lock_bh               |
++--------+----------------------------+
+| MLI    | mutex_lock_interruptible   |
++--------+----------------------------+
+
+Table: Legenda per la tabella dei requisiti per la sincronizzazione
+
+Le funzioni *trylock*
+=====================
+
+Ci sono funzioni che provano a trattenere un *lock* solo una volta e
+ritornano immediatamente comunicato il successo od il fallimento
+dell'operazione. Posso essere usate quando non serve accedere ai dati
+protetti dal *lock* quando qualche altro thread lo sta già facendo
+trattenendo il *lock*. Potrete acquisire il *lock* più tardi se vi
+serve accedere ai dati protetti da questo *lock*.
+
+La funzione :c:func:`spin_trylock()` non ritenta di acquisire il *lock*,
+se ci riesce al primo colpo ritorna un valore diverso da zero, altrimenti
+se fallisce ritorna 0. Questa funzione può essere utilizzata in un qualunque
+contesto, ma come :c:func:`spin_lock()`: dovete disabilitare i contesti che
+potrebbero interrompervi e quindi trattenere lo spinlock.
+
+La funzione :c:func:`mutex_trylock()` invece di sospendere il vostro processo
+ritorna un valore diverso da zero se è possibile trattenere il lock al primo
+colpo, altrimenti se fallisce ritorna 0. Nonostante non dorma, questa funzione
+non può essere usata in modo sicuro in contesti di interruzione hardware o
+software.
+
+Esempi più comuni
+=================
+
+Guardiamo un semplice esempio: una memoria che associa nomi a numeri.
+La memoria tiene traccia di quanto spesso viene utilizzato ogni oggetto;
+quando è piena, l'oggetto meno usato viene eliminato.
+
+Tutto in contesto utente
+------------------------
+
+Nel primo esempio, supponiamo che tutte le operazioni avvengano in contesto
+utente (in soldoni, da una chiamata di sistema), quindi possiamo dormire.
+Questo significa che possiamo usare i mutex per proteggere la nostra memoria
+e tutti gli oggetti che contiene. Ecco il codice::
+
+    #include <linux/list.h>
+ 

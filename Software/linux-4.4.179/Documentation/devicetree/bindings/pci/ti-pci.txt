@@ -1,0 +1,98 @@
+/*
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+#include "imx27-phytec-phycore-som.dtsi"
+
+/ {
+	model = "Phytec pcm970";
+	compatible = "phytec,imx27-pcm970", "phytec,imx27-pcm038", "fsl,imx27";
+
+	chosen {
+		stdout-path = &uart1;
+	};
+
+	display0: LQ035Q7 {
+		model = "Sharp-LQ035Q7";
+		native-mode = <&timing0>;
+		bits-per-pixel = <16>;
+		fsl,pcr = <0xf00080c0>;
+
+		display-timings {
+			timing0: 240x320 {
+				clock-frequency = <5500000>;
+				hactive = <240>;
+				vactive = <320>;
+				hback-porch = <5>;
+				hsync-len = <7>;
+				hfront-porch = <16>;
+				vback-porch = <7>;
+				vsync-len = <1>;
+				vfront-porch = <9>;
+				pixelclk-active = <1>;
+				hsync-active = <1>;
+				vsync-active = <1>;
+				de-active = <0>;
+			};
+		};
+	};
+
+	regulators {
+		regulator@2 {
+			compatible = "regulator-fixed";
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_csien>;
+			reg = <2>;
+			regulator-name = "CSI_EN";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			gpio = <&gpio2 24 GPIO_ACTIVE_LOW>;
+			regulator-always-on;
+		};
+	};
+
+	usbphy {
+		usbphy2: usbphy@2 {
+			compatible = "usb-nop-xceiv";
+			reg = <2>;
+			vcc-supply = <&reg_5v0>;
+			clocks = <&clks IMX27_CLK_DUMMY>;
+			clock-names = "main_clk";
+			#phy-cells = <0>;
+		};
+	};
+};
+
+&cspi1 {
+	pinctrl-0 = <&pinctrl_cspi1>, <&pinctrl_cspi1cs1>;
+	cs-gpios = <&gpio4 28 GPIO_ACTIVE_HIGH>,
+		   <&gpio4 27 GPIO_ACTIVE_LOW>;
+};
+
+&fb {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_imxfb1>;
+	display = <&display0>;
+	lcd-supply = <&reg_5v0>;
+	fsl,dmacr = <0x00020010>;
+	fsl,lscr1 = <0x00120300>;
+	fsl,lpccr = <0x00a903ff>;
+	status = "okay";
+};
+
+&i2c1 {
+	clock-frequency = <400000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c1>;
+	status = "okay";
+
+	camgpio: pca9536@41 {
+		compatible = "nxp,pca9536";
+		reg = <0x41>;
+		gpio-controller;
+		#gpio-cells = <2

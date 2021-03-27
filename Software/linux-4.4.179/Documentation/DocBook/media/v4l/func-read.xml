@@ -1,0 +1,128 @@
+PCI Power Management
+
+Copyright (c) 2010 Rafael J. Wysocki <rjw@sisk.pl>, Novell Inc.
+
+An overview of concepts and the Linux kernel's interfaces related to PCI power
+management.  Based on previous work by Patrick Mochel <mochel@transmeta.com>
+(and others).
+
+This document only covers the aspects of power management specific to PCI
+devices.  For general description of the kernel's interfaces related to device
+power management refer to Documentation/driver-api/pm/devices.rst and
+Documentation/power/runtime_pm.txt.
+
+---------------------------------------------------------------------------
+
+1. Hardware and Platform Support for PCI Power Management
+2. PCI Subsystem and Device Power Management
+3. PCI Device Drivers and Power Management
+4. Resources
+
+
+1. Hardware and Platform Support for PCI Power Management
+=========================================================
+
+1.1. Native and Platform-Based Power Management
+-----------------------------------------------
+In general, power management is a feature allowing one to save energy by putting
+devices into states in which they draw less power (low-power states) at the
+price of reduced functionality or performance.
+
+Usually, a device is put into a low-power state when it is underutilized or
+completely inactive.  However, when it is necessary to use the device once
+again, it has to be put back into the "fully functional" state (full-power
+state).  This may happen when there are some data for the device to handle or
+as a result of an external event requiring the device to be active, which may
+be signaled by the device itself.
+
+PCI devices may be put into low-power states in two ways, by using the device
+capabilities introduced by the PCI Bus Power Management Interface Specification,
+or with the help of platform firmware, such as an ACPI BIOS.  In the first
+approach, that is referred to as the native PCI power management (native PCI PM)
+in what follows, the device power state is changed as a result of writing a
+specific value into one of its standard configuration registers.  The second
+approach requires the platform firmware to provide special methods that may be
+used by the kernel to change the device's power state.
+
+Devices supporting the native PCI PM usually can generate wakeup signals called
+Power Management Events (PMEs) to let the kernel know about external events
+requiring the device to be active.  After receiving a PME the kernel is supposed
+to put the device that sent it into the full-power state.  However, the PCI Bus
+Power Management Interface Specification doesn't define any standard method of
+delivering the PME from the device to the CPU and the operating system kernel.
+It is assumed that the platform firmware will perform this task and therefore,
+even though a PCI device is set up to generate PMEs, it also may be necessary to
+prepare the platform firmware for notifying the CPU of the PMEs coming from the
+device (e.g. by generating interrupts).
+
+In turn, if the methods provided by the platform firmware are used for changing
+the power state of a device, usually the platform also provides a method for
+preparing the device to generate wakeup signals.  In that case, however, it
+often also is necessary to prepare the device for generating PMEs using the
+native PCI PM mechanism, because the method provided by the platform depends on
+that.
+
+Thus in many situations both the native and the platform-based power management
+mechanisms have to be used simultaneously to obtain the desired result.
+
+1.2. Native PCI Power Management
+--------------------------------
+The PCI Bus Power Management Interface Specification (PCI PM Spec) was
+introduced between the PCI 2.1 and PCI 2.2 Specifications.  It defined a
+standard interface for performing various operations related to power
+management.
+
+The implementation of the PCI PM Spec is optional for conventional PCI devices,
+but it is mandatory for PCI Express devices.  If a device supports the PCI PM
+Spec, it has an 8 byte power management capability field in its PCI
+configuration space.  This field is used to describe and control the standard
+features related to the native PCI power management.
+
+The PCI PM Spec defines 4 operating states for devices (D0-D3) and for buses
+(B0-B3).  The higher the number, the less power is drawn by the device or bus
+in that state.  However, the higher the number, the longer the latency for
+the device or bus to return to the full-power state (D0 or B0, respectively).
+
+There are two variants of the D3 state defined by the specification.  The first
+one is D3hot, referred to as the software accessible D3, because devices can be
+programmed to go into it.  The second one, D3cold, is the state that PCI devices
+are in when the supply voltage (Vcc) is removed from them.  It is not possible
+to program a PCI device to go into D3cold, although there may be a programmable
+interface for putting the bus the device is on into a state in which Vcc is
+removed from all devices on the bus.
+
+PCI bus power management, however, is not supported by the Linux kernel at the
+time of this writing and therefore it is not covered by this document.
+
+Note that every PCI device can be in the full-power state (D0) or in D3cold,
+regardless of whether or not it implements the PCI PM Spec.  In addition to
+that, if the PCI PM Spec is implemented by the device, it must support D3hot
+as well as D0.  The support for the D1 and D2 power states is optional.
+
+PCI devices supporting the PCI PM Spec can be programmed to go to any of the
+supported low-power states (except for D3cold).  While in D1-D3hot the
+standard configuration registers of the device must be accessible to software
+(i.e. the device is required to respond to PCI configuration accesses), although
+its I/O and memory spaces are then disabled.  This allows the device to be
+programmatically put into D0.  Thus the kernel can switch the device back and
+forth between D0 and the supported low-power states (except for D3cold) and the
+possible power state transitions the device can undergo are the following:
+
++----------------------------+
+| Current State | New State  |
++----------------------------+
+| D0            | D1, D2, D3 |
++----------------------------+
+| D1            | D2, D3     |
++----------------------------+
+| D2            | D3         |
++----------------------------+
+| D1, D2, D3    | D0         |
++----------------------------+
+
+The transition from D3cold to D0 occurs when the supply voltage is provided to
+the device (i.e. power is restored).  In that case the device returns to D0 with
+a full power-on reset sequence and the power-on defaults are restored to the
+device by hardware just as at initial power up.
+
+PCI devices supporting the PCI PM Spec can be pr

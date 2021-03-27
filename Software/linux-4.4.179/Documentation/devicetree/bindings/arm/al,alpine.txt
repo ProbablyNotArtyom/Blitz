@@ -1,0 +1,38 @@
+Chinese translated version of Documentation/process/coding-style.rst
+
+If you have any comment or update to the content, please post to LKML directly.
+However, if you have problem communicating in English you can also ask the
+Chinese maintainer for help.  Contact the Chinese maintainer, if this
+translation is outdated or there is problem with translation.
+
+Chinese maintainer: Zhang Le <r0bertz@gentoo.org>
+
+---------------------------------------------------------------------
+
+Documentation/process/coding-style.rst 的中文翻译
+
+如果想评论或更新本文的内容，请直接发信到LKML。如果你使用英文交流有困难的话，
+也可以向中文版维护者求助。如果本翻译更新不及时或者翻译存在问题，请联系中文版
+维护者::
+
+  中文版维护者： 张乐 Zhang Le <r0bertz@gentoo.org>
+  中文版翻译者： 张乐 Zhang Le <r0bertz@gentoo.org>
+  中文版校译者： 王聪 Wang Cong <xiyou.wangcong@gmail.com>
+                 wheelz <kernel.zeng@gmail.com>
+                 管旭东 Xudong Guan <xudong.guan@gmail.com>
+                 Li Zefan <lizf@cn.fujitsu.com>
+                 Wang Chen <wangchen@cn.fujitsu.com>
+
+以下为正文
+
+---------------------------------------------------------------------
+
+Linux 内核代码风格
+=========================
+
+这是一个简短的文档，描述了 linux 内核的首选代码风格。代码风格是因人而异的，
+而且我不愿意把自己的观点强加给任何人，但这就像我去做任何事情都必须遵循的原则
+那样，我也希望在绝大多数事上保持这种的态度。请 (在写代码时) 至少考虑一下这里
+的代码风格。
+
+首先，我建议

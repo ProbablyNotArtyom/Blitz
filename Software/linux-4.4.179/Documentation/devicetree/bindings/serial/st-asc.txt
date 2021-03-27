@@ -1,0 +1,26 @@
+// SPDX-License-Identifier: GPL-2.0+
+/*
+ * Device Tree file for Seagate Blackarmor NAS220
+ *
+ * Copyright (C) 2014 Evgeni Dobrev <evgeni@studio-punkt.com>
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+#include "kirkwood.dtsi"
+#include "kirkwood-6192.dtsi"
+
+/ {
+	model = "Seagate Blackarmor NAS220";
+	compatible = "seagate,blackarmor-nas220","marvell,kirkwood-88f6192",
+		     "marvell,kirkwood";
+
+	memory { /* 128 MB */
+		device_type = "memory";
+		reg = <0x00000000 0x8000000>;
+	};
+
+	chosen {
+		bootargs = "console=t

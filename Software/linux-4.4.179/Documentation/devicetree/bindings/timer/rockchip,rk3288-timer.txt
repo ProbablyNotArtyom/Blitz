@@ -1,0 +1,21 @@
+/*
+ * Device Tree Source for OMAP36xx clock data
+ *
+ * Copyright (C) 2013 Texas Instruments, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+&cm_clocks {
+	dpll4_ck: dpll4_ck@d00 {
+		#clock-cells = <0>;
+		compatible = "ti,omap3-dpll-per-j-type-clock";
+		clocks = <&sys_ck>, <&sys_ck>;
+		reg = <0x0d00>, <0x0d20>, <0x0d44>, <0x0d30>;
+	};
+
+	dpll4_m5x2_ck: dpll4_m5x2_ck@d00 {
+		#clock-cells = <0>;
+		compatible = "ti,hsdiv-gate-clock";
+		cl

@@ -1,0 +1,104 @@
+========================================================
+Guide to using M-Audio Audiophile USB with ALSA and Jack
+========================================================
+
+v1.5
+
+Thibault Le Meur <Thibault.LeMeur@supelec.fr>
+
+This document is a guide to using the M-Audio Audiophile USB (tm) device with 
+ALSA and JACK.
+
+History
+=======
+
+* v1.4 - Thibault Le Meur (2007-07-11)
+
+  - Added Low Endianness nature of 16bits-modes
+    found by Hakan Lennestal <Hakan.Lennestal@brfsodrahamn.se>
+  - Modifying document structure
+
+* v1.5 - Thibault Le Meur (2007-07-12)
+  - Added AC3/DTS passthru info
+
+
+Audiophile USB Specs and correct usage
+======================================
+
+This part is a reminder of important facts about the functions and limitations 
+of the device.
+
+The device has 4 audio interfaces, and 2 MIDI ports:
+
+ * Analog Stereo Input (Ai)
+
+   - This port supports 2 pairs of line-level audio inputs (1/4" TS and RCA) 
+   - When the 1/4" TS (jack) connectors are connected, the RCA connectors
+     are disabled
+
+ * Analog Stereo Output (Ao)
+ * Digital Stereo Input (Di)
+ * Digital Stereo Output (Do)
+ * Midi In (Mi)
+ * Midi Out (Mo)
+
+The internal DAC/ADC has the following characteristics:
+
+* sample depth of 16 or 24 bits
+* sample rate from 8kHz to 96kHz
+* Two interfaces can't use different sample depths at the same time.
+
+Moreover, the Audiophile USB documentation gives the following Warning:
+  Please exit any audio application running before switching between bit depths
+
+Due to the USB 1.1 bandwidth limitation, a limited number of interfaces can be 
+activated at the same time depending on the audio mode selected:
+
+ * 16-bit/48kHz ==> 4 channels in + 4 channels out
+
+   - Ai+Ao+Di+Do
+
+ * 24-bit/48kHz ==> 4 channels in + 2 channels out, 
+   or 2 channels in + 4 channels out
+
+   - Ai+Ao+Do or Ai+Di+Ao or Ai+Di+Do or Di+Ao+Do
+
+ * 24-bit/96kHz ==> 2 channels in _or_ 2 channels out (half duplex only)
+
+   - Ai or Ao or Di or Do
+
+Important facts about the Digital interface:
+--------------------------------------------
+
+ * The Do port additionally supports surround-encoded AC-3 and DTS passthrough, 
+   though I haven't tested it under Linux
+
+   - Note that in this setup only the Do interface can be enabled
+
+ * Apart from recording an audio digital stream, enabling the Di port is a way 
+   to synchronize the device to an external sample clock
+
+   - As a consequence, the Di port must be enable only if an active Digital 
+     source is connected
+   - Enabling Di when no digital source is connected can result in a 
+     synchronization error (for instance sound played at an odd sample rate)
+
+
+Audiophile USB MIDI support in ALSA
+===================================
+
+The Audiophile USB MIDI ports will be automatically supported once the
+following modules have been loaded:
+
+ * snd-usb-audio
+ * snd-seq-midi
+
+No additional setting is required.
+
+
+Audiophile USB Audio support in ALSA
+====================================
+
+Audio functions of the Audiophile USB device are handled by the snd-usb-audio 
+module. This module can work in a default mode (without any device-specific 
+parameter), or in an "advanced" mode with the device-specific paramet

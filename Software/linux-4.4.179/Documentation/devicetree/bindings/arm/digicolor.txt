@@ -1,0 +1,9 @@
+
+                       Linux USB Printer Gadget Driver
+                                 06/04/2007
+
+              Copyright (C) 2007 Craig W. Nadler <craig@nadler.us>
+
+
+
+GENER

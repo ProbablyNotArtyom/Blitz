@@ -1,0 +1,11 @@
+*How FunctionFS works*
+
+From kernel point of view it is just a composite function with some
+unique behaviour.  It may be added to an USB configuration only after
+the user space driver has registered by writing descriptors and
+strings (the user space program has to provide the same information
+that kernel level composite functions provide when they are added to
+the configuration).
+
+This in particular means that the composite initialisation functions
+may not be in init section (i

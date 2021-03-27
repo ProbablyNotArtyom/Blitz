@@ -1,0 +1,37 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Keystone 2 Kepler/Hawking SoC clock nodes
+ *
+ * Copyright (C) 2013-2017 Texas Instruments Incorporated - http://www.ti.com/
+ */
+
+clocks {
+	armpllclk: armpllclk@2620370 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,pll-clock";
+		clocks = <&refclkarm>;
+		clock-output-names = "arm-pll-clk";
+		reg = <0x02620370 4>;
+		reg-names = "control";
+	};
+
+	mainpllclk: mainpllclk@2310110 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,main-pll-clock";
+		clocks = <&refclksys>;
+		reg = <0x02620350 4>, <0x02310110 4>, <0x02310108 4>;
+		reg-names = "control", "multiplier", "post-divider";
+	};
+
+	papllclk: papllclk@2620358 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,pll-clock";
+		clocks = <&refclkpass>;
+		clock-output-names = "papllclk";
+		reg = <0x02620358 4>;
+		reg-names = "control";
+	};
+
+	ddr3apllclk: ddr3apllclk@2620360 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,p

@@ -1,0 +1,34 @@
+===========================================
+Seccomp BPF (SECure COMPuting with filters)
+===========================================
+
+Introduction
+============
+
+A large number of system calls are exposed to every userland process
+with many of them going unused for the entire lifetime of the process.
+As system calls change and mature, bugs are found and eradicated.  A
+certain subset of userland applications benefit by having a reduced set
+of available system calls.  The resulting set reduces the total kernel
+surface exposed to the application.  System call filtering is meant for
+use with those applications.
+
+Seccomp filtering provides a means for a process to specify a filter for
+incoming system calls.  The filter is expressed as a Berkeley Packet
+Filter (BPF) program, as with socket filters, except that the data
+operated on is related to the system call being made: system call
+number and the system call arguments.  This allows for expressive
+filtering of system calls using a filter program language with a long
+history of being exposed to userland and a straightforward data set.
+
+Additionally, BPF makes it impossible for users of seccomp to fall prey
+to time-of-check-time-of-use (TOCTOU) attacks that are common in system
+call interposition frameworks.  BPF programs may not dereference
+pointers which constrains all filters to solely evaluating the system
+call arguments directly.
+
+What it isn't
+=============
+
+System call filtering isn't a sandbox.  It provides a clearly defined
+mechanism for minimizing the exposed kernel surface.  It is m

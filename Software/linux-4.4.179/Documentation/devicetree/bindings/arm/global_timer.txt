@@ -1,0 +1,26 @@
+; Windows USB CDC ACM Setup File
+
+; Based on INF template which was:
+;     Copyright (c) 2000 Microsoft Corporation
+;     Copyright (c) 2007 Microchip Technology Inc.
+; likely to be covered by the MLPL as found at:
+;    <http://msdn.microsoft.com/en-us/cc300389.aspx#MLPL>.
+; For use only on Windows operating systems.
+
+[Version]
+Signature="$Windows NT$"
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%Linux%
+DriverVer=11/15/2007,5.1.2600.0
+
+[Manufacturer]
+%Linux%=DeviceList, NTamd64
+
+[DestinationDirs]
+DefaultDestDir=12
+
+
+;------------------------------------------------------------------------------
+;  Windows 2000/XP/Vista-32bit Sections
+;------------------------------------------

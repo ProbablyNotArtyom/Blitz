@@ -1,0 +1,6 @@
+=============================================================================
+          MOXA Smartio/Industio Family Device Driver Installation Guide
+		    for Linux Kernel 2.4.x, 2.6.x
+	       Copyright (C) 2008, Moxa Inc.
+=============================================================================
+Date

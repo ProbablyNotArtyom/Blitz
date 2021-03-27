@@ -1,0 +1,21 @@
+/*
+ * at91sam9x5dm.dtsi - Device Tree file for SAM9x5 display module
+ *
+ *  Copyright (C) 2014 Atmel,
+ *                2014 Free Electrons
+ *
+ *  Author: Boris Brezillon <boris.brezillon@free-electrons.com>
+ *
+ * Licensed under GPLv2 or later.
+ */
+
+/ {
+	ahb {
+		apb {
+			i2c0: i2c@f8010000 {
+				qt1070: keyboard@1b {
+					compatible = "qt1070";
+					reg = <0x1b>;
+					interrupt-parent = <&pioA>;
+					interrupts = <7 0x0>;
+					pinctrl-nam

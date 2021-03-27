@@ -1,0 +1,120 @@
+#####################################################
+# Makefile for stunnel by Michal Trojnara 1998-2001 #
+#                                                   #
+# Modified by Brian Hatch <bri@stunnel.org>         #
+#####################################################
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+sbindir=@sbindir@
+libdir=@libdir@
+man8dir=@mandir@/man8
+piddir=@localstatedir@/stunnel/
+ssldir=@ssldir@
+PEM_DIR=@PEM_DIR@
+@SET_MAKE@
+VERSION=stunnel-@VERSION@
+RANDOM_OPT="-rand @RANDOM_FILE@"
+CC=@CC@
+INSTALL=@INSTALL@
+CFLAGS=@CFLAGS@ @DEFS@ -Dlibdir=\"$(libdir)\" -DPIDDIR=\"$(piddir)\"
+LIBS=@LIBS@
+OBJS=stunnel.o ssl.o protocol.o sthreads.o pty.o log.o
+DESTFILES=$(sbindir)/stunnel $(libdir)/stunnel.so $(man8dir)/stunnel.8  $(PEM_DIR)/stunnel.pem
+
+WINGCC=i386-mingw32msvc-gcc 
+WINCFLAGS=-O2 -Wall -DUSE_WIN32 -DHAVE_OPENSSL -I../openssl-0.9.6/outinc
+WINSRC=stunnel.c ssl.c protocol.c sthreads.c log.c
+WINLIBS=-L../openssl-0.9.6/out -leay32 -lssl32 -lwsock32 -lgdi32
+
+# standard external rules
+
+all: stunnel stunnel.8 stunnel.html stunnel.so stunnel.pem
+
+install: all installdirs $(DESTFILES)
+
+uninstall:
+	rm -f $(DESTFILES)
+
+install-strip:
+	$(MAKE) INSTALL='$(INSTALL) -s' install
+
+clean:
+	rm -f stunnel stunnel.so $(OBJS) core config.log
+
+distclean: clean
+	rm -f config.cache config.status Makefile stunnel.pem
+
+mostlyclean: distclean
+
+maintainer-clean: distclean
+
+dist: distclean ../dist/$(VERSION).exe
+	cp -rp . ../dist/$(VERSION)
+	tar -cf - -C ../dist $(VERSION) | gzip > ../dist/$(VERSION).tar.gz
+	rm -rf ../dist/$(VERSION)
+	gpg --yes --armor --detach-sign ../dist/$(VERSION).tar.gz
+
+installdirs: mkinstalldirs
+	./mkinstalldirs $(sbindir) $(libdir) $(man8dir) $(PEM_DIR) $(piddir)
+	chmod a=rwx,+t $(piddir)
+
+# non-standard external rules
+
+stunnel.exe: $(WINSRC)
+	$(WINGCC) $(WINCFLAGS) -s -o stunnel.exe $(WINSRC) $(WINLIBS)
+
+stunnel.8: stunnel.sdf
+	sdf -2man stunnel.sdf > stunnel.8
+	rm -f stunnel.out
+
+stunnel.html: stunnel.sdf
+	sdf -2html stunnel.sdf
+
+cert:
+	rm -f stunnel.pem
+	$(MAKE) stunnel.pem
+
+# internal rules
+
+stunnel: $(OBJS)
+	$(CC) $(LDFLAGS) -o stunnel $(OBJS) $(LIBS)
+
+stunnel.so: Makefile env.c
+	$(CC) -fPIC -shared $(LDFLAGS) -o stunnel.so env.c $(LIBS) || \
+	touch stunnel.so
+
+Makefile: configure Makefile.in
+	./configure
+	$(MAKE) clean
+
+configure: configure.in
+	autoconf
+
+$(OBJS): Makefile common.h
+
+stunnel.pem: stunnel.cnf
+	$(ssldir)/bin/openssl req -new -x509 -days 365 -nodes \
+		-config stunnel.cnf -out stunnel.pem -keyout stunnel.pem
+	$(ssldir)/bin/openssl x509 -subject -dates -fingerprint -noout \
+		-in stunnel.pem
+
+$(sbindir)/stunnel: stunnel
+	$(INSTALL) -m 711 stunnel $(sbindir)
+
+$(libdir)/stunnel.so: stunnel.so
+	test -s stunnel.so && $(INSTALL) -m 755 stunnel.so $(libdir)
+
+$(man8dir)/stunnel.8: stunnel.8
+	$(INSTALL) -m 644 stunnel.8 $(man8dir)
+
+$(PEM_DIR)/stunnel.pem: stunnel.pem
+	if [ -n "$(PEM_DIR)" ] ; then \
+		$(INSTALL) -m 600 stunnel.pem $(PEM_DIR); \
+	fi
+
+../dist/$(VERSION).exe: stunnel.exe
+	./mkinstalldirs ../dist
+	cp -f stunnel.exe ../dist/$(VERSION).exe
+	gpg --yes --armor --detach-sign ../dist/$(VERSION).exe
+

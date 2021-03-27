@@ -1,0 +1,44 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#ifndef _ASM_ARC_ATOMIC_H
+#define _ASM_ARC_ATOMIC_H
+
+#ifndef __ASSEMBLY__
+
+#include <linux/types.h>
+#include <linux/compiler.h>
+#include <asm/cmpxchg.h>
+#include <asm/barrier.h>
+#include <asm/smp.h>
+
+#define ATOMIC_INIT(i)	{ (i) }
+
+#ifndef CONFIG_ARC_PLAT_EZNPS
+
+#define atomic_read(v)  READ_ONCE((v)->counter)
+
+#ifdef CONFIG_ARC_HAS_LLSC
+
+#define atomic_set(v, i) WRITE_ONCE(((v)->counter), (i))
+
+#define ATOMIC_OP(op, c_op, asm_op)					\
+static inline void atomic_##op(int i, atomic_t *v)			\
+{									\
+	unsigned int val;						\
+									\
+	__asm__ __volatile__(						\
+	"1:	llock   %[val], [%[ctr]]		\n"		\
+	"	" #asm_op " %[val], %[val], %[i]	\n"		\
+	"	scond   %[val], [%[ctr]]		\n"		\
+	"	bnz     1b				\n"		\
+	: [val]	"=&r"	(val) /* Early clobber to prevent reg reuse */	\
+	: [ctr]	"r"	(&v->counter), /* Not "m": llock only supports reg direct addr mode */	\
+	  [i]	"ir"	(i)						\
+	: "cc");							\
+}						

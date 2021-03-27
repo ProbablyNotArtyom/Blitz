@@ -1,0 +1,44 @@
+Name     BZ1b;
+PartNo   00;
+Date     7/27/2018;
+Revision 01;
+Designer Engineer;
+Company  notartyom;
+Assembly None;
+Location ;
+Device   g16v8a;
+
+/* *************** INPUT PINS ******************** */
+
+PIN 1 = A0;
+PIN 2 = A1;
+PIN 3 = A19;
+PIN 4 = A20;
+PIN 5 = A25;
+
+PIN 6 = SIZ0;
+PIN 7 = SIZ1;
+
+PIN 8 = DS;
+
+/* *************** OUTPUT PINS ******************* */
+
+PIN 13 = RAM;
+PIN 14 = DUMMY0;
+PIN 15 = DUMMY1;
+PIN 16 = DUMMY2;
+PIN 17 = ROM;
+PIN 18 = UART;
+PIN 19 = EXT;
+
+/*-------- LOGIC EQUATIONS --------*/
+
+DUMMY0 = 'b'1;
+DUMMY1 = 'b'1;
+DUMMY2 = 'b'1;
+
+!ROM = !A19 & !A20 & !A25;
+!RAM = !DS & !A19 & A20 & !A25;
+!UART = !DS & A19 & !A20 & !A25;
+!EXT = !DS & A19 & A20 & !A25;
+

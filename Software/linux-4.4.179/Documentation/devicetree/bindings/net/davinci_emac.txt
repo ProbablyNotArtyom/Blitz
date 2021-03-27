@@ -1,0 +1,59 @@
+/*
+ * Copyright 2012 DENX Software Engineering GmbH
+ * Heiko Schocher <hs@denx.de>
+ *
+ * This program is free software; you can redistribute  it and/or modify it
+ * under  the terms of  the GNU General  Public License as published by the
+ * Free Software Foundation;  either version 2 of the  License, or (at your
+ * option) any later version.
+ */
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	chosen { };
+	aliases { };
+
+	memory@c0000000 {
+		device_type = "memory";
+		reg = <0xc0000000 0x0>;
+	};
+
+	arm {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+		intc: interrupt-controller@fffee000 {
+			compatible = "ti,cp-intc";
+			interrupt-controller;
+			#interrupt-cells = <1>;
+			ti,intc-size = <101>;
+			reg = <0xfffee000 0x2000>;
+		};
+	};
+	clocks: clocks {
+		ref_clk: ref_clk {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-output-names = "ref_clk";
+		};
+		sata_refclk: sata_refclk {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-output-names = "sata_refclk";
+			status = "disabled";
+		};
+		usb_refclkin: usb_refclkin {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-output-names = "usb_refclkin";
+			status = "disabled";
+		};
+	};
+	dsp: dsp@11800000 {
+		compatible = "ti,da850-dsp";
+		reg = <0x11800000 0x40000>,
+		      <0x11e00000 0x8000>,
+		      <0x11f00000 0x8000>,
+		    

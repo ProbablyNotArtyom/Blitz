@@ -1,0 +1,108 @@
+/*
+ * Copyright (C) 2014 Alexander Shiyan <shc_work@mail.ru>
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/dts-v1/;
+#include "imx51.dtsi"
+
+/ {
+	model = "Digi ConnectCore CC(W)-MX51";
+	compatible = "digi,connectcore-ccxmx51-som", "fsl,imx51";
+
+	memory@90000000 {
+		reg = <0x90000000 0x08000000>;
+	};
+};
+
+&ecspi1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_ecspi1>;
+	cs-gpios = <&gpio4 24 GPIO_ACTIVE_HIGH>;
+	status = "okay";
+
+	pmic: mc13892@0 {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_mc13892>;
+		compatible = "fsl,mc13892";
+		spi-max-frequency = <16000000>;
+		spi-cs-high;
+		reg = <0>;
+		interrupt-parent = <&gpio1>;
+		interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
+		fsl,mc13xxx-uses-rtc;
+
+		regulators {
+			sw1_reg: sw1 {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <1100000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			sw2_reg: sw2 {
+				regulator-min-microvolt = <1225000>;
+				regulator-max-microvolt = <1225000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			sw3_reg: sw3 {
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1200000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			swbst_reg: swbst { };
+
+			viohi_reg: viohi {
+				regulator-always-on;
+			};
+
+			vpll_reg: vpll {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <1800000>;
+				regulator-always-on;
+			};
+
+			vdig_reg: vdig {
+				regulator-min-microvolt = <1250000>;
+				regulator-max-microvolt = <1250000>;
+				regulator-always-on;
+			};
+
+			vsd_reg: vsd {
+				regulator-min-microvolt = <3150000>;
+				regulator-max-microvolt = <3150000>;
+				regulator-always-on;
+			};
+
+			vusb2_reg: vusb2 {
+				regulator-min-microvolt = <2600000>;
+				regulator-max-microvolt = <2600000>;
+				regulator-always-on;
+			};
+
+			vvideo_reg: vvideo {
+				regulator-min-microvolt = <2775000>;
+				regulator-max-microvolt = <2775000>;
+				regulator-always-on;
+			};
+
+			vaudio_reg: vaudio {
+				regulator-min-microvolt = <3000000>;
+				regulator-max-microvolt = <3000000>;
+				regulator-always-on;
+			};
+
+			vcam_reg: vcam {
+				regulator-min-microvolt = <2750000>;
+				regulator-max-microvolt = <2750000>;
+			

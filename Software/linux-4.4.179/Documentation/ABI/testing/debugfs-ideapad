@@ -1,0 +1,27 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_ENUM_FREQ_BANDS:
+
+****************************
+ioctl VIDIOC_ENUM_FREQ_BANDS
+****************************
+
+Name
+====
+
+VIDIOC_ENUM_FREQ_BANDS - Enumerate supported frequency bands
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_ENUM_FREQ_BANDS, struct v4l2_frequency_band *argp )
+    :name: VIDIOC_ENUM_FREQ_BANDS
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+

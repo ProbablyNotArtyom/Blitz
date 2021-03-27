@@ -1,0 +1,100 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+
+#ifndef __ASM_ARC_ENTRY_ARCV2_H
+#define __ASM_ARC_ENTRY_ARCV2_H
+
+#include <asm/asm-offsets.h>
+#include <asm/irqflags-arcv2.h>
+#include <asm/thread_info.h>	/* For THREAD_SIZE */
+
+/*------------------------------------------------------------------------*/
+.macro INTERRUPT_PROLOGUE	called_from
+
+	; Before jumping to Interrupt Vector, hardware micro-ops did following:
+	;   1. SP auto-switched to kernel mode stack
+	;   2. STATUS32.Z flag set to U mode at time of interrupt (U:1, K:0)
+	;   3. Auto saved: r0-r11, blink, LPE,LPS,LPC, JLI,LDI,EI, PC, STAT32
+	;
+	; Now manually save: r12, sp, fp, gp, r25
+
+#ifdef CONFIG_ARC_HAS_ACCL_REGS
+	PUSH	r59
+	PUSH	r58
+#endif
+
+	PUSH	r30
+	PUSH	r12
+
+	; Saving pt_regs->sp correctly requires some extra work due to the way
+	; Auto stack switch works
+	;  - U mode: retrieve it from AUX_USER_SP
+	;  - K mode: add the offset from current SP where H/w starts auto push
+	;
+	; Utilize the fact that Z bit is set if Intr taken in U mode
+	mov.nz	r9, sp
+	add.nz	r9, r9, SZ_PT_REGS - PT_sp - 4
+	bnz	1f
+
+	lr	r9, [AUX_USER_SP]
+1:
+	PUSH	r9	; SP
+
+	PUSH	fp
+	PUSH	gp
+
+#ifdef CONFIG_ARC_CURR_IN_REG
+	PUSH	r25			; user_r25
+	GET_CURR_TASK_ON_CPU	r25
+#else
+	sub	sp, sp, 4
+#endif
+
+.ifnc \called_from, exception
+	sub	sp, sp, 12	; BTA/ECR/orig_r0 placeholder per pt_regs
+.endif
+
+.endm
+
+/*------------------------------------------------------------------------*/
+.macro INTERRUPT_EPILOGUE	called_from
+
+.ifnc \called_from, exception
+	add	sp, sp, 12	; skip BTA/ECR/orig_r0 placeholderss
+.endif
+
+#ifdef CONFIG_ARC_CURR_IN_REG
+	POP	r25
+#else
+	add	sp, sp, 4
+#endif
+
+	POP	gp
+	POP	fp
+
+	; Don't touch AUX_USER_SP if returning to K mode (Z bit set)
+	; (Z bit set on K mode is inverse of INTERRUPT_PROLOGUE)
+	add.z	sp, sp, 4
+	bz	1f
+
+	POPAX	AUX_USER_SP
+1:
+	POP	r12
+	POP	r30
+
+#ifdef CONFIG_ARC_HAS_ACCL_REGS
+	POP	r58
+	POP	r59
+#endif
+
+.endm
+
+/*------------------------------------------------------------------------*/
+.macro EXCEPTION_PROLOGUE
+
+	; Before jumping to Exception Vector, hardware micro-ops did following:
+	;   1. SP auto-switched to kernel mode stack
+	;   2. STATUS32.Z flag set to U mode at time of interrupt (U:1,K:0)
+	;
+	; Now manually save the complete reg file
+
+	PUSH	r9		; fre

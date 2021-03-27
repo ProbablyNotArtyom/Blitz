@@ -1,0 +1,47 @@
+                             SCSI FC Tansport
+                 =============================================
+
+Date:  11/18/2008
+Kernel Revisions for features:
+  rports : <<TBS>>
+  vports : 2.6.22
+  bsg support : 2.6.30 (?TBD?)
+
+
+Introduction
+============
+This file documents the features and components of the SCSI FC Transport.
+It also provides documents the API between the transport and FC LLDDs.
+The FC transport can be found at:
+  drivers/scsi/scsi_transport_fc.c
+  include/scsi/scsi_transport_fc.h
+  include/scsi/scsi_netlink_fc.h
+  include/scsi/scsi_bsg_fc.h
+
+This file is found at Documentation/scsi/scsi_fc_transport.txt
+
+
+FC Remote Ports (rports)
+========================================================================
+<< To Be Supplied >>
+
+
+FC Virtual Ports (vports)
+========================================================================
+
+Overview:
+-------------------------------
+
+  New FC standards have defined mechanisms which allows for a single physical
+  port to appear on as multiple communication ports. Using the N_Port Id
+  Virtualization (NPIV) mechanism, a point-to-point connection to a Fabric
+  can be assigned more than 1 N_Port_ID.  Each N_Port_ID appears as a
+  separate port to other endpoints on the fabric, even though it shares one
+  physical link to the switch for communication. Each N_Port_ID can have a
+  unique view of the fabric based on fabric zoning and array lun-masking
+  (just like a normal non-NPIV adapter).  Using the Virtual Fabric (VF)
+  mechanism, adding a fabric header to each frame allows the port to
+  interact with the Fabric Port to join multiple fabrics. The port will
+  obtain an N_Port_ID on each fabric it joins. Each fabric will have its
+  own unique view of endpoints and configuration parameters.  NPIV may be
+  used together with VF so that the port can obtain mult

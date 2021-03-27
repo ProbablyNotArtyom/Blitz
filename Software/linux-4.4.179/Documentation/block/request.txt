@@ -1,0 +1,67 @@
+===============================
+OSS Sequencer Emulation on ALSA
+===============================
+
+Copyright (c) 1998,1999 by Takashi Iwai
+
+ver.0.1.8; Nov. 16, 1999
+
+Description
+===========
+
+This directory contains the OSS sequencer emulation driver on ALSA. Note
+that this program is still in the development state.
+
+What this does - it provides the emulation of the OSS sequencer, access
+via ``/dev/sequencer`` and ``/dev/music`` devices.
+The most of applications using OSS can run if the appropriate ALSA
+sequencer is prepared.
+
+The following features are emulated by this driver:
+
+* Normal sequencer and MIDI events:
+
+    They are converted to the ALSA sequencer events, and sent to the
+    corresponding port.
+
+* Timer events:
+
+    The timer is not selectable by ioctl. The control rate is fixed to
+    100 regardless of HZ. That is, even on Alpha system, a tick is always
+    1/100 second. The base rate and tempo can be changed in ``/dev/music``.
+
+* Patch loading:
+
+    It purely depends on the synth drivers whether it's supported since
+    the patch loading is realized by callback to the synth driver.
+
+* I/O controls:
+
+    Most of controls are accepted. Some controls
+    are dependent on the synth driver, as well as even on original OSS.
+
+Furthermore, you can find the following advanced features:
+
+* Better queue mechanism:
+
+    The events are queued before processing them.
+
+* Multiple applications:
+
+    You can run two or more applications simultaneously (even for OSS
+    sequencer)!
+    However, each MIDI device is exclusive - that is, if a MIDI device
+    is opened once by some application, other applications can't use
+    it. No such a restriction in synth devices.
+
+* Real-time event processing:
+
+    The events can be processed in real time without using out of bound
+    ioctl. To switch to real-time mode, send ABSTIME 0 event. The followed
+    events will be processed in real-time without queued. To switch off the
+    real-time mode, send RELTIME 0 event.
+
+* ``/proc`` interface:
+
+    The status of applications and devices can be shown via
+    `

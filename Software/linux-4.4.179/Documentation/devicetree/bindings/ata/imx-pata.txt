@@ -1,0 +1,8 @@
+Valid-License-Identifier: GPL-1.0+
+SPDX-URL: https://spdx.org/licenses/GPL-1.0.html
+Usage-Guide:
+  The GNU General Public License (GPL) version 1 should not be used in new
+  code. For existing kernel code the 'or any later version' option is
+  required to be compatible with the general license of the project: GPLv2.
+  To use the license in source code, put the following SPDX tag/value pair
+  into a comment ac

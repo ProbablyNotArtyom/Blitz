@@ -1,0 +1,18 @@
+NOTE:
+This is Japanese translated version of "Documentation/process/stable-kernel-rules.rst".
+This one is maintained by Tsugikazu Shibata <tshibata@ab.jp.nec.com>
+and JF Project team <www.linux.or.jp/JF>.
+If you find difference with original file or problem in translation,
+please contact maintainer of this file or JF project.
+
+Please also note that purpose of this file is easier to read for non
+English natives and do no intended to fork. So, if you have any
+comment or update of this file, please try to update Original(English)
+file at first.
+
+==================================
+これは、
+linux-2.6.29/Documentation/process/stable-kernel-rules.rst
+の和訳です。
+
+翻訳団�

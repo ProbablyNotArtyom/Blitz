@@ -1,0 +1,146 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Alpha IO and memory functions.
+ */
+
+#include <linux/kernel.h>
+#include <linux/types.h>
+#include <linux/string.h>
+#include <linux/module.h>
+#include <asm/io.h>
+
+/* Out-of-line versions of the i/o routines that redirect into the 
+   platform-specific version.  Note that "platform-specific" may mean
+   "generic", which bumps through the machine vector.  */
+
+unsigned int
+ioread8(void __iomem *addr)
+{
+	unsigned int ret = IO_CONCAT(__IO_PREFIX,ioread8)(addr);
+	mb();
+	return ret;
+}
+
+unsigned int ioread16(void __iomem *addr)
+{
+	unsigned int ret = IO_CONCAT(__IO_PREFIX,ioread16)(addr);
+	mb();
+	return ret;
+}
+
+unsigned int ioread32(void __iomem *addr)
+{
+	unsigned int ret = IO_CONCAT(__IO_PREFIX,ioread32)(addr);
+	mb();
+	return ret;
+}
+
+void iowrite8(u8 b, void __iomem *addr)
+{
+	mb();
+	IO_CONCAT(__IO_PREFIX,iowrite8)(b, addr);
+}
+
+void iowrite16(u16 b, void __iomem *addr)
+{
+	mb();
+	IO_CONCAT(__IO_PREFIX,iowrite16)(b, addr);
+}
+
+void iowrite32(u32 b, void __iomem *addr)
+{
+	mb();
+	IO_CONCAT(__IO_PREFIX,iowrite32)(b, addr);
+}
+
+EXPORT_SYMBOL(ioread8);
+EXPORT_SYMBOL(ioread16);
+EXPORT_SYMBOL(ioread32);
+EXPORT_SYMBOL(iowrite8);
+EXPORT_SYMBOL(iowrite16);
+EXPORT_SYMBOL(iowrite32);
+
+u8 inb(unsigned long port)
+{
+	return ioread8(ioport_map(port, 1));
+}
+
+u16 inw(unsigned long port)
+{
+	return ioread16(ioport_map(port, 2));
+}
+
+u32 inl(unsigned long port)
+{
+	return ioread32(ioport_map(port, 4));
+}
+
+void outb(u8 b, unsigned long port)
+{
+	iowrite8(b, ioport_map(port, 1));
+}
+
+void outw(u16 b, unsigned long port)
+{
+	iowrite16(b, ioport_map(port, 2));
+}
+
+void outl(u32 b, unsigned long port)
+{
+	iowrite32(b, ioport_map(port, 4));
+}
+
+EXPORT_SYMBOL(inb);
+EXPORT_SYMBOL(inw);
+EXPORT_SYMBOL(inl);
+EXPORT_SYMBOL(outb);
+EXPORT_SYMBOL(outw);
+EXPORT_SYMBOL(outl);
+
+u8 __raw_readb(const volatile void __iomem *addr)
+{
+	return IO_CONCAT(__IO_PREFIX,readb)(addr);
+}
+
+u16 __raw_readw(const volatile void __iomem *addr)
+{
+	return IO_CONCAT(__IO_PREFIX,readw)(addr);
+}
+
+u32 __raw_readl(const volatile void __iomem *addr)
+{
+	return IO_CONCAT(__IO_PREFIX,readl)(addr);
+}
+
+u64 __raw_readq(const volatile void __iomem *addr)
+{
+	return IO_CONCAT(__IO_PREFIX,readq)(addr);
+}
+
+void __raw_writeb(u8 b, volatile void __iomem *addr)
+{
+	IO_CONCAT(__IO_PREFIX,writeb)(b, addr);
+}
+
+void __raw_writew(u16 b, volatile void __iomem *addr)
+{
+	IO_CONCAT(__IO_PREFIX,writew)(b, addr);
+}
+
+void __raw_writel(u32 b, volatile void __iomem *addr)
+{
+	IO_CONCAT(__IO_PREFIX,writel)(b, addr);
+}
+
+void __raw_writeq(u64 b, volatile void __iomem *addr)
+{
+	IO_CONCAT(__IO_PREFIX,writeq)(b, addr);
+}
+
+EXPORT_SYMBOL(__raw_readb); 
+EXPORT_SYMBOL(__raw_readw); 
+EXPORT_SYMBOL(__raw_readl); 
+EXPORT_SYMBOL(__raw_readq); 
+EXPORT_SYMBOL(__raw_writeb); 
+EXPORT_SYMBOL(__raw_writew); 
+EXPORT_SYMBOL(__raw_writ

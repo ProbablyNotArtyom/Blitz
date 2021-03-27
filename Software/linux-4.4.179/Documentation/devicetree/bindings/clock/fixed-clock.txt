@@ -1,0 +1,26 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_MCPCIA__H__
+#define __ALPHA_MCPCIA__H__
+
+/* Define to experiment with fitting everything into one 128MB HAE window.
+   One window per bus, that is.  */
+#define MCPCIA_ONE_HAE_WINDOW 1
+
+#include <linux/types.h>
+#include <asm/compiler.h>
+#include <asm/mce.h>
+
+/*
+ * MCPCIA is the internal name for a core logic chipset which provides
+ * PCI access for the RAWHIDE family of systems.
+ *
+ * This file is based on:
+ *
+ * RAWHIDE System Programmer's Manual
+ * 16-May-96
+ * Rev. 1.4
+ *
+ */
+
+/*------------------------------------------------------------------------**
+**                                    

@@ -1,0 +1,124 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+//
+// Copyright 2013 Freescale Semiconductor, Inc.
+
+#include "vf610-pinfunc.h"
+#include <dt-bindings/clock/vf610-clock.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	aliases {
+		can0 = &can0;
+		can1 = &can1;
+		ethernet0 = &fec0;
+		ethernet1 = &fec1;
+		serial0 = &uart0;
+		serial1 = &uart1;
+		serial2 = &uart2;
+		serial3 = &uart3;
+		serial4 = &uart4;
+		serial5 = &uart5;
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+		gpio2 = &gpio2;
+		gpio3 = &gpio3;
+		gpio4 = &gpio4;
+		usbphy0 = &usbphy0;
+		usbphy1 = &usbphy1;
+	};
+
+	fxosc: fxosc {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <24000000>;
+	};
+
+	sxosc: sxosc {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <32768>;
+	};
+
+	reboot: syscon-reboot {
+		compatible = "syscon-reboot";
+		regmap = <&src>;
+		offset = <0x0>;
+		mask = <0x1000>;
+	};
+
+	tempsensor: iio-hwmon {
+		compatible = "iio-hwmon";
+		io-channels = <&adc0 16>, <&adc1 16>;
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		interrupt-parent = <&mscm_ir>;
+		ranges;
+
+		aips0: aips-bus@40000000 {
+			compatible = "fsl,aips-bus", "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0x40000000 0x00070000>;
+			ranges;
+
+			mscm_cpucfg: cpucfg@40001000 {
+				compatible = "fsl,vf610-mscm-cpucfg", "syscon";
+				reg = <0x40001000 0x800>;
+			};
+
+			mscm_ir: interrupt-controller@40001800 {
+				compatible = "fsl,vf610-mscm-ir";
+				reg = <0x40001800 0x400>;
+				fsl,cpucfg = <&mscm_cpucfg>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+			};
+
+			edma0: dma-controller@40018000 {
+				#dma-cells = <2>;
+				compatible = "fsl,vf610-edma";
+				reg = <0x40018000 0x2000>,
+					<0x40024000 0x1000>,
+					<0x40025000 0x1000>;
+				dma-channels = <32>;
+				interrupts = <8 IRQ_TYPE_LEVEL_HIGH>,
+						<9 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-names = "edma-tx", "edma-err";
+				clock-names = "dmamux0", "dmamux1";
+				clocks = <&clks VF610_CLK_DMAMUX0>,
+					<&clks VF610_CLK_DMAMUX1>;
+				status = "disabled";
+			};
+
+			can0: flexcan@40020000 {
+				compatible = "fsl,vf610-flexcan";
+				reg = <0x40020000 0x4000>;
+				interrupts = <58 IRQ_TYPE_LEVEL_HIGH>;
+				clocks = <&clks VF610_CLK_FLEXCAN0>,
+					 <&clks VF610_CLK_FLEXCAN0>;
+				clock-names = "ipg", "per";
+				status = "disabled";
+			};
+
+			uart0: serial@40027000 {
+				compatible = "fsl,vf610-lpuart";
+				reg = <0x40027000 0x1000>;
+				interrupts = <61 IRQ_TYPE_LEVEL_HIGH>;
+				clocks = <&clks VF610_CLK_UART0>;
+				clock-names = "ipg";
+				dmas = <&edma0 0 2>,
+					<&edma0 0 3>;
+				dma-names = "rx","tx";
+				status = "disabled";
+			};
+
+			uart1: serial@40028000 {
+				compatible = "fsl,vf610-lpuart";
+				reg = <0x40028000 0x1000>;
+				interrupts = <62 IRQ_TYPE_LEVEL_HIGH>;
+				clocks = <&

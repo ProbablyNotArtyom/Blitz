@@ -1,0 +1,15 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree file for Seagate Personal Cloud NAS 2-Bay (Armada 370 SoC).
+ *
+ * Copyright (C) 2015 Seagate
+ *
+ * Author: Simon Guinot <simon.guinot@sequanux.org>
+ */
+
+/*
+ * Here are some information allowing to identify the device:
+ *
+ * Product name                 : Seagate Personal Cloud 2-Bay
+ * Code name (board/PCB)        : Cumulus Max
+ * Model name (case sticker)    :

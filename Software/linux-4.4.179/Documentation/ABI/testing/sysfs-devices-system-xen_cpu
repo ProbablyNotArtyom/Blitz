@@ -1,0 +1,21 @@
+PLIP: The Parallel Line Internet Protocol Device
+
+Donald Becker (becker@super.org)
+I.D.A. Supercomputing Research Center, Bowie MD 20715
+
+At some point T. Thorn will probably contribute text,
+Tommy Thorn (tthorn@daimi.aau.dk)
+
+PLIP Introduction
+-----------------
+
+This document describes the parallel port packet pusher for Net/LGX.
+This device interface allows a point-to-point connection between two
+parallel ports to appear as a IP network interface.
+
+What is PLIP?
+=============
+
+PLIP is Parallel Line IP, that is, the transportation of IP packages
+over a parallel port. In the case of a PC, the obvious choice is the
+printer port.  PLIP is a non-standard, but [can 

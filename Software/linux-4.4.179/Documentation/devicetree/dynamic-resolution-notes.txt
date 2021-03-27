@@ -1,0 +1,29 @@
+.. include:: ../disclaimer-ita.rst
+
+.. note:: Per leggere la documentazione originale in inglese:
+	  :ref:`Documentation/doc-guide/index.rst <doc_guide>`
+
+.. _it_kernel_doc:
+
+Scrivere i commenti in kernel-doc
+=================================
+
+Nei file sorgenti del kernel Linux potrete trovare commenti di documentazione
+strutturanti secondo il formato kernel-doc. Essi possono descrivere funzioni,
+tipi di dati, e l'architettura del codice.
+
+.. note:: Il formato kernel-doc può sembrare simile a gtk-doc o Doxygen ma
+   in realtà è molto differente per ragioni storiche. I sorgenti del kernel
+   contengono decine di migliaia di commenti kernel-doc. Siete pregati
+   d'attenervi allo stile qui descritto.
+
+La struttura kernel-doc è estratta a partire dai commenti; da questi viene
+generato il `dominio Sphinx per il C`_ con un'adeguata descrizione per le
+funzioni ed i tipi di dato con i loro relativi collegamenti. Le descrizioni
+vengono filtrare per cercare i riferimenti ed i marcatori.
+
+Vedere di seguito per maggiori dettagli.
+
+.. _`dominio Sphinx per il C`: http://www.sphinx-doc.org/en/stable/domains.html
+
+T

@@ -1,0 +1,18 @@
+Comtrol(tm) RocketPort(R)/RocketModem(TM) Series 
+Device Driver for the Linux Operating System
+
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+PRODUCT OVERVIEW
+----------------
+
+This driver provides a loadable kernel driver for the Comtrol RocketPort
+and RocketModem PCI boards. These boards provide, 2, 4, 8, 16, or 32 
+high-speed serial ports or modems.  This driver supports up to a combination
+of four RocketPort or RocketModems boards in one machine simultaneously.
+This file assumes that you are using the RocketPort driver which is
+integrated into the kernel sources.  
+
+The driver can also be installed as an external module using the usual 
+"make;make install" routine.  This external module driver, obtainable 
+from the C

@@ -1,0 +1,48 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ * arch/alpha/kernel/entry.S
+ *
+ * Kernel entry-points.
+ */
+
+#include <asm/asm-offsets.h>
+#include <asm/thread_info.h>
+#include <asm/pal.h>
+#include <asm/errno.h>
+#include <asm/unistd.h>
+
+	.text
+	.set noat
+	.cfi_sections	.debug_frame
+
+/* Stack offsets.  */
+#define SP_OFF			184
+#define SWITCH_STACK_SIZE	320
+
+.macro	CFI_START_OSF_FRAME	func
+	.align	4
+	.globl	\func
+	.type	\func,@function
+\func:
+	.cfi_startproc simple
+	.cfi_return_column 64
+	.cfi_def_cfa	$sp, 48
+	.cfi_rel_offset	64, 8
+	.cfi_rel_offset	$gp, 16
+	.cfi_rel_offset	$16, 24
+	.cfi_rel_offset	$17, 32
+	.cfi_rel_offset	$18, 40
+.endm
+
+.macro	CFI_END_OSF_FRAME	func
+	.cfi_endproc
+	.size	\func, . - \func
+.endm
+
+/*
+ * This defines the normal kernel pt-regs layout.
+ *
+ * regs 9-15 preserved by C code
+ * regs 16-18 saved by PAL-code
+ * regs 29-30 saved and set up by PAL-code
+ * JRP - Save

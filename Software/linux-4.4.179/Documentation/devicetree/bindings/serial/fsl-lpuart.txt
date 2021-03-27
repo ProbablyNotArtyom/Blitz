@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree Source for Keystone 2 clock tree
+ *
+ * Copyright (C) 2013-2017 Texas Instruments Incorporated - http://www.ti.com/
+ */
+
+clocks {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	ranges;
+
+	mainmuxclk: mainmuxclk@2310108 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,pll-mux-clock";
+		clocks = <&mainpllclk>, <&refclksys>;
+		reg = <0x02310108 4>;
+		bit-shift = <23>;
+		bit-mask = <1>;
+		clock-output-names = "mainmuxclk";
+	};
+
+	chipclk1: chipclk1 {
+		#clock-cells = <0>;
+		compatible = "fixed-factor-clock";
+		clocks = <&mainmuxclk>;
+		clock-div = <1>;
+		clock-mult = <1>;
+		clock-output-names = "chipclk1";
+	};
+
+	chipclk1rstiso: chipclk1rstiso {
+		#clock-cells = <0>;
+		compatible = "fixed-factor-clock";
+		clocks = <&mainmuxclk>;
+		clock-div = <1>;
+		clock-mult = <1>;
+		clock-output-names = "chipclk1rstiso";
+	};
+
+	gemtraceclk: gemtraceclk@2310120 {
+		#clock-cells = <0>;
+		compatible = "ti,keystone,pll-divider-clock";
+		clocks = <&mainmuxclk>;
+		reg = <0x02310120 4>;
+		bit-shift = <0>;
+		bit-mask = <8>;
+		clock-output-

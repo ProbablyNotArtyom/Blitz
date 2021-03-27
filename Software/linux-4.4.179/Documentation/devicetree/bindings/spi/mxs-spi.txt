@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Support for CompuLab CM-T3730
+ */
+/dts-v1/;
+
+#include "omap36xx.dtsi"
+#include "omap3-cm-t3x30.dtsi"
+
+/ {
+	model = "CompuLab CM-T3730";
+	compatible = "compulab,omap3-cm-t3730", "ti,omap36xx", "ti,omap3";
+
+	wl12xx_vmmc2: wl12xx_vmmc2 {
+		compatible = "regulator-fixed";
+		regulator-name = "vw1271";
+		pinctrl-names = "default";
+		pinctrl-0 = <&wl12xx_gpio>;
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		gpio = <&gpio3 9 GPIO_ACTIVE_HIGH>;   /* gpio73 */
+		startup-delay-us = <20000>;
+		enable-active-high;
+	};
+
+	wl12xx_vaux2: wl12xx_vaux2 {
+		compatible = "regulator-fixed";
+		regulator-name = "vwl1271_vaux2";
+		regulator-min-microvolt = <1800000>;
+		regula

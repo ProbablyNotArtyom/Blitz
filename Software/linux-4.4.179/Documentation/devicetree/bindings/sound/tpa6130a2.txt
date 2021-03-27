@@ -1,0 +1,26 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Copyright (c) 2014 MediaTek Inc.
+ * Author: Joe.C <yingjoe.chen@mediatek.com>
+ *
+ */
+
+#include <dt-bindings/clock/mt8135-clk.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/reset/mt8135-resets.h>
+#include "skeleton64.dtsi"
+#include "mt8135-pinfunc.h"
+
+/ {
+	compatible = "mediatek,mt8135";
+	interrupt-parent = <&sysirq>;
+
+	cpu-map {
+		cluster0 {
+			core0 {
+				cpu = <&cpu0>;
+			};
+			core1 {
+				cpu = <&cpu1>;
+			}

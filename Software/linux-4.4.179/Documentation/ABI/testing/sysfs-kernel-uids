@@ -1,0 +1,21 @@
+Document about softnet driver issues
+
+Transmit path guidelines:
+
+1) The ndo_start_xmit method must not return NETDEV_TX_BUSY under
+   any normal circumstances.  It is considered a hard error unless
+   there is no way your device can tell ahead of time when it's
+   transmit function will become busy.
+
+   Instead it must maintain the queue properly.  For example,
+   for a driver implementing scatter-gather this means:
+
+	static netdev_tx_t drv_hard_start_xmit(struct sk_buff *skb,
+					       struct net_device *dev)
+	{
+		struct drv *dp = netdev_priv(dev);
+
+		lock_tx(dp);
+		...
+		/* This is a hard error log it. */
+		if (TX_BUFFS_AVAIL(dp) <= (skb_shinfo(s

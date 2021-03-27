@@ -1,0 +1,54 @@
+#!/bin/bash
+# $Id: MAKEDEV,v 1.2 1999/08/23 14:51:36 dwmw2 Exp $
+
+function mkftl () {
+	mknod /dev/ftl$1 b 44 $2
+	for a in `seq 1 15`; do
+		mknod /dev/ftl$1$a b 44 `expr $2 + $a`
+	done
+}
+function mknftl () {
+	mknod /dev/nftl$1 b 93 $2
+	for a in `seq 1 15`; do
+		mknod /dev/nftl$1$a b 93 `expr $2 + $a`
+	done
+}
+
+mkftl a 0
+mkftl b 16
+mkftl c 32
+mkftl d 64
+mkftl e 80
+mkftl f 96
+mkftl g 112
+mkftl h 128
+mkftl i 144
+mkftl j 160
+mkftl k 176
+mkftl l 192
+mkftl m 208
+mkftl n 224
+mkftl o 240
+
+mknftl a 0
+mknftl b 16
+mknftl c 32
+mknftl d 64
+mknftl e 80
+mknftl f 96
+mknftl g 112
+mknftl h 128
+mknftl i 144
+mknftl j 160
+mknftl k 176
+mknftl l 192
+mknftl m 208
+mknftl n 224
+mknftl o 240
+
+for a in `seq 0 16` ; do
+	mknod /dev/mtd$a c 90 `expr $a + $a`
+	mknod /dev/mtdr$a c 90 `expr $a + $a + 1`
+	mknod /dev/mtdblock$a b 31 $a
+done	
+

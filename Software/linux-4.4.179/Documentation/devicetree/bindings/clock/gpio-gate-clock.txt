@@ -1,0 +1,28 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_TITAN__H__
+#define __ALPHA_TITAN__H__
+
+#include <linux/types.h>
+#include <asm/compiler.h>
+
+/*
+ * TITAN is the internal names for a core logic chipset which provides
+ * memory controller and PCI/AGP access for 21264 based systems.
+ *
+ * This file is based on:
+ *
+ * Titan Chipset Engineering Specification
+ * Revision 0.12
+ * 13 July 1999
+ *
+ */
+
+/* XXX: Do we need to conditionalize on this?  */
+#ifdef USE_48_BIT_KSEG
+#define TI_BIAS 0x80000000000UL
+#else
+#define TI_BIAS 0x10000000000UL
+#endif
+
+/*
+ * CChip, DChip

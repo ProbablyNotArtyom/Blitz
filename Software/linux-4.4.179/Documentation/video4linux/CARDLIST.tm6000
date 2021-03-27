@@ -1,0 +1,47 @@
+/*
+ * TI DA830/OMAP L137 chip specific setup
+ *
+ * Author: Mark A. Greer <mgreer@mvista.com>
+ *
+ * 2009 (c) MontaVista Software, Inc. This file is licensed under
+ * the terms of the GNU General Public License version 2. This program
+ * is licensed "as is" without any warranty of any kind, whether express
+ * or implied.
+ */
+#include <linux/clk-provider.h>
+#include <linux/clk/davinci.h>
+#include <linux/gpio.h>
+#include <linux/init.h>
+#include <linux/platform_data/gpio-davinci.h>
+
+#include <asm/mach/map.h>
+
+#include <mach/common.h>
+#include <mach/cputype.h>
+#include <mach/da8xx.h>
+#include <mach/irqs.h>
+#include <mach/time.h>
+
+#include "mux.h"
+
+/* Offsets of the 8 compare registers on the da830 */
+#define DA830_CMP12_0		0x60
+#define DA830_CMP12_1		0x64
+#define DA830_CMP12_2		0x68
+#define DA830_CMP12_3		0x6c
+#define DA830_CMP12_4		0x70
+#define DA830_CMP12_5		0x74
+#define DA830_CMP12_6		0x78
+#define DA830_CMP12_7		0x7c
+
+#define DA830_REF_FREQ		24000000
+
+/*
+ * Device specific mux setup
+ *
+ *	     soc      description	mux    mode    mode   mux	dbg
+ *					reg   offset   mask   mode
+ */
+static const struct mux_config da830_pins[] = {
+#ifdef CONFIG_DAVINCI_MUX
+	MUX_CFG(DA830, GPIO7

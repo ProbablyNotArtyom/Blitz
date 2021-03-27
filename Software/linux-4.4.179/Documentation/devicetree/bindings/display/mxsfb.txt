@@ -1,0 +1,44 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/irq.c
+ *
+ *	Copyright (C) 1995 Linus Torvalds
+ *
+ * This file contains the code used by various IRQ handling routines:
+ * asking for different IRQ's should be done through these routines
+ * instead of just grabbing them. Thus setups with different IRQ numbers
+ * shouldn't result in any weird surprises, and installing new handlers
+ * should be easier.
+ */
+
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/errno.h>
+#include <linux/kernel_stat.h>
+#include <linux/signal.h>
+#include <linux/sched.h>
+#include <linux/ptrace.h>
+#include <linux/interrupt.h>
+#include <linux/random.h>
+#include <linux/irq.h>
+#include <linux/proc_fs.h>
+#include <linux/seq_file.h>
+#include <linux/profile.h>
+#include <linux/bitops.h>
+
+#include <asm/io.h>
+#include <linux/uaccess.h>
+
+volatile unsigned long irq_err_count;
+DEFINE_PER_CPU(unsigned long, irq_pmi_count);
+
+void ack_bad_irq(unsigned int irq)
+{
+	irq_err_count++;
+	printk(KERN_CRIT "Unexpected IRQ trap at vector %u\n", irq);
+}
+
+#ifdef CONFIG_SMP 
+static char irq_user_affinity[NR_IRQS];
+
+int irq_select_affinity(unsigned int irq)

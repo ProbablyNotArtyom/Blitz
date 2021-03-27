@@ -1,0 +1,39 @@
+/*
+ * cloudengines-pogoplug-series-3.dtsi - Device tree file for Cloud Engines PogoPlug Series 3
+ *
+ * Copyright (C) 2016 Neil Armstrong <narmstrong@baylibre.com>
+ *
+ * Licensed under GPLv2 or later
+ */
+
+/dts-v1/;
+#include "ox820.dtsi"
+
+/ {
+	model = "Cloud Engines PogoPlug Series 3";
+
+	compatible = "cloudengines,pogoplugv3", "oxsemi,ox820";
+
+	chosen {
+		bootargs = "earlyprintk";
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory {
+		/* 128Mbytes DDR */
+		reg = <0x60000000 0x8000000>;
+	};
+
+	aliases {
+		serial0 = &uart0;
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		blue {
+			label = "pogoplug:blue";
+			gpios = <&gpio0 2 0>;
+			default-state = "kee

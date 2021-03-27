@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Samsung's Exynos4210 based Trats board device tree source
+ *
+ * Copyright (c) 2012 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * Device tree source file for Samsung's Trats board which is based on
+ * Samsung's Exynos4210 SoC.
+ */
+
+/dts-v1/;
+#include "exynos4210.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	model = "Samsung Trats based on Exynos4210";
+	compatible = "samsung,trats", "samsung,exynos4210", "samsung,exynos4";
+
+	memory@40000000 {
+		device_type = "memory";
+		reg =  <0x40000000 0x10000000
+			0x50000000 0x10000000
+			0x60000000 0x10000000
+			0x70000000 0x10000000>;
+	};
+
+	chosen {
+		bootargs = "console=ttySAC2,115200N8 root=/dev/mmcblk0p5 rootwait earlyprintk panic

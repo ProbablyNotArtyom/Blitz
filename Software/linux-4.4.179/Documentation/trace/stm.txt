@@ -1,0 +1,20 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __BCM63XX_SMP_H
+#define __BCM63XX_SMP_H
+
+struct device_node;
+
+extern int bcm63xx_pmb_power_on_cpu(struct device_node *dn);
+
+#endif /* __BCM63XX_SMP_H */
+stÖsszes megnyitásaKönyvjelző törléseEltávolítás az előzmények közülA kijelölt elemek eltávolításakeresési találatAz összes előzményIsmeretlen eszközA(z) $1 proxy felhasználónevet és jelszót kér.A webhellyel való kapcsolata nem privátA manóba!Valami nem sikerült a weboldal megjelenítése során.Nincs elég memória az oldal megnyitásáhozNem lehet megnyitni az oldaltPróbáljon meg bezárni más lapokat vagy programokat memória felszabadítása céljából.Próbáljon meg bezárni más programokat memória felszabadítása céljából.Oldal megnyitása új inkognitóablakban (Ctrl+Shift+N)Indítsa újra a Chrome-otIndítsa újra a számítógépetÖn inkognitómódra váltottMost privát módon böngészhet, így az eszközt használó többi személy nem láthatja az Ön tevékenységeit. A letöltéseket és a könyvjelzőket azonban menti a rendszer.A Chrome <em>nem menti</em> a következő adatokat:
+        <ul>
+          <li>Böngészési előzmények
+          <li>Cookie-k és webhelyadatok
+          <li>Űrlapokon megadott adatok
+        </ul>Tevékenysége <em>továbbra is látható maradhat</em> a következők számára:
+        <ul>
+          <li>A megtekintett webhelyek
+          <li>Munkaadója vagy iskolája
+          <li>Internetszolgáltatója
+        </ul>Cikkek ÖnnekA javasolt cikkek helyehttps://www.google.comKeresés: $1Vágólapra másolt linkVágólapra másolt szövegVágólapra másolt kép„$1”$1 [$2]BiztonságosNem biztonságosVeszélyesOfflineVáltás erre a lapraVáltásGoogle DokumentumokGoogle ŰrlapokGoogle TáblázatokGoogle DiákGoogle DriveTörölje a Chrome böngészési előzményeitKeresőmotor megváltoztatásaA keresőmotor beállításainak módosítása a Chrome-banJelszó kezeléseJelszavak kezelése a Chrome beállításaibanKezdőlap módosításaKezdőlap módosítása a Chrome beállításaibanHitelkártya frissítéseHitelkártyával kapcsolatos automatikus kitöltési adatok frissítése a Chrome beállításaibanInkognitóablak megnyitásaÚj Chrome-inkognitóablak megnyitásaÚjraindítás a frissítéshez$2 $1 location from history$1 keresése az előzményekben$1 keresése$1 keresési javaslat$1, $2, keresési javaslat$1. A válasz: $2$2 $1 bookmarkVágólapon lévő kép kereséseVágólapon lévő szöveg keresése, $2Vágólapon lévő URL, $2 kereséseKeresés ikon$1, $3 elemből a következő pozícióban: $2.$1, jelenleg meg van nyitva, a Tab, majd az Enter billentyűk lenyomásával válthat a megnyitott lapraLapváltó gomb. Nyomja meg az Entert a következő megnyitott lapra való váltáshoz: $1Lapváltó gomb. Az Enter billentyűvel erre a lapra válthat.A kapcsolat biztonságosKapcsolata a webhellyel nem teljesen biztonságosKapcsolata a webhellyel nem biztonságosA webhely rosszindulatú programokat tartalmazA webhely megtévesztőA webhely ártalmas programokat tartalmazJelenleg bővítményoldalt tekint megJelenleg weboldal forrását tekinti megHelyi vagy megosztott fájlt tekint megAdatai (például jelszava vagy hitelkártyaszáma) nem láthatók más számára, amikor a rendszer elküldi őket a webhelynek.A felhasználók esetleg láthatják a webhelyen éppen megtekintett képeit, és a képeket módosítva félrevezethetik Önt.Ne írjon be semmilyen bizalmas adatot (például jelszót vagy hitelkártyaadatot) a webhelyen, mivel a támadók ellophatják.Előfordulhat, hogy a támadók ezen a webhelyen olyan veszélyes programokat próbálnak telepíteni számítógépére, amelyek ellopják vagy törlik adatait (például fotóit, jelszavait, üzeneteit vagy bankkártyájának adatait).A támadók ezen a webhelyen megpróbálhatják csellel rávenni Önt, hogy p�

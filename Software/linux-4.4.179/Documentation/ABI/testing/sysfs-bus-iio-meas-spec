@@ -1,0 +1,18 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_SUBDEV_G_FMT:
+
+**********************************************
+ioctl VIDIOC_SUBDEV_G_FMT, VIDIOC_SUBDEV_S_FMT
+**********************************************
+
+Name
+====
+
+VIDIOC_SUBDEV_G_FMT - VIDIOC_SUBDEV_S_FMT - Get or set the data format on a subdev pad
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_SUBDEV_G_FMT, 

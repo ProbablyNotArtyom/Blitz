@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
+//
+// Copyright 2015 Freescale Semiconductor, Inc.
+// Copyright 2016 Toradex AG
+
+#include "imx7s.dtsi"
+#include <dt-bindings/reset/imx7-reset.h>
+
+/ {
+	cpus {
+		cpu0: cpu@0 {
+			clock-frequency = <996000000>;
+			operating-points-v2 = <&cpu0_opp_table>;
+			#cooling-cells = <2>;
+		};
+
+		cpu1: cpu@1 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			reg = <1>;
+			clock-frequency = <996000000>;
+			operating-points-v2 = <&cpu0_opp_table>;
+			cpu-idle-states = <&cpu_sleep_wait>;
+		};
+	};
+
+	cpu0_opp_table: opp-table {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-79

@@ -1,0 +1,12 @@
+
+SCSI EH
+======================================
+
+ This document describes SCSI midlayer error handling infrastructure.
+Please refer to Documentation/scsi/scsi_mid_low_api.txt for more
+information regarding SCSI midlayer.
+
+TABLE OF CONTENTS
+
+[1] How SCSI commands travel through the midlayer and to EH
+    [1-1]

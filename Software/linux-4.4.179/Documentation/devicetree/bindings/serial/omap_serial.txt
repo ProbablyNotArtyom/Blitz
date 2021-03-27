@@ -1,0 +1,79 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Keystone 2 Kepler/Hawking soc specific device tree
+ *
+ * Copyright (C) 2013-2017 Texas Instruments Incorporated - http://www.ti.com/
+ */
+
+#include <dt-bindings/reset/ti-syscon.h>
+
+/ {
+	compatible = "ti,k2hk", "ti,keystone";
+	model = "Texas Instruments Keystone 2 Kepler/Hawking SoC";
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		interrupt-parent = <&gic>;
+
+		cpu@0 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <0>;
+		};
+
+		cpu@1 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <1>;
+		};
+
+		cpu@2 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <2>;
+		};
+
+		cpu@3 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <3>;
+		};
+	};
+
+	aliases {
+		rproc0 = &dsp0;
+		rproc1 = &dsp1;
+		rproc2 = &dsp2;
+		rproc3 = &dsp3;
+		rproc4 = &dsp4;
+		rproc5 = &dsp5;
+		rproc6 = &dsp6;
+		rproc7 = &dsp7;
+	};
+};
+
+&soc0 {
+		/include/ "keystone-k2hk-clocks.dtsi"
+
+		msm_ram: msmram@c000000 {
+			compatible = "mmio-sram";
+			reg = <0x0c000000 0x600000>;
+			ranges = <0x0 0x0c000000 0x600000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			sram-bm@5f0000 {
+				reg = <0x5f0000 0x8000>;
+			};
+		};
+
+		psc: power-sleep-controller@2350000 {
+			pscrst: reset-controller {
+				compatible = "ti,k2hk-pscrst", "ti,syscon-reset";
+				#reset-cells = <1>;
+
+				ti,reset-bits = <
+					0xa3c 8 0xa3c 8 0x83c 8 (ASSERT_CLEAR | DEASSERT_SET | STATUS_CLEAR) /* 0: dsp0 */
+					0xa40

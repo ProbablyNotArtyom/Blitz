@@ -1,0 +1,36 @@
+/*
+ * Signal Handling for ARC
+ *
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * vineetg: Jan 2010 (Restarting of timer related syscalls)
+ *
+ * vineetg: Nov 2009 (Everything needed for TIF_RESTORE_SIGMASK)
+ *  -do_signal() supports TIF_RESTORE_SIGMASK
+ *  -do_signal() no loner needs oldset, required by OLD sys_sigsuspend
+ *  -sys_rt_sigsuspend() now comes from generic code, so discard arch implemen
+ *  -sys_sigsuspend() no longer needs to fudge ptregs, hence that arg removed
+ *  -sys_sigsuspend() no longer loops for do_signal(), sets TIF_xxx and leaves
+ *   the job to do_signal()
+ *
+ * vineetg: July 2009
+ *  -Modified Code to support the uClibc provided userland sigreturn stub
+ *   to avoid kernel synthesing it on user stack at runtime, costing TLB
+ *   probes and Cache line flushes.
+ *
+ * vineetg: July 2009
+ *  -In stash_usr_regs( ) and restore_usr_regs( ), save/restore of user regs
+ *   in done in block copy rather than one word at a time.
+ *   This saves around 2K of code and improves LMBench lat_sig <catch>
+ *
+ * rajeshwarr: Feb 2009
+ *  - Support for Realtime Signals
+ *
+ * vineetg: Aug 11th 2008: Bug #94183
+ *  -ViXS were still seeing crashes when using insmod to load drivers.
+ *   It turned out that the code to change Execute permssions for TLB entries
+ *   of user was not guarded for interrup

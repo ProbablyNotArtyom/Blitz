@@ -1,0 +1,78 @@
+.. _development_early_stage:
+
+Early-stage planning
+====================
+
+When contemplating a Linux kernel development project, it can be tempting
+to jump right in and start coding.  As with any significant project,
+though, much of the groundwork for success is best laid before the first
+line of code is written.  Some time spent in early planning and
+communication can save far more time later on.
+
+
+Specifying the problem
+----------------------
+
+Like any engineering project, a successful kernel enhancement starts with a
+clear description of the problem to be solved.  In some cases, this step is
+easy: when a driver is needed for a specific piece of hardware, for
+example.  In others, though, it is tempting to confuse the real problem
+with the proposed solution, and that can lead to difficulties.
+
+Consider an example: some years ago, developers working with Linux audio
+sought a way to run applications without dropouts or other artifacts caused
+by excessive latency in the system.  The solution they arrived at was a
+kernel module intended to hook into the Linux Security Module (LSM)
+framework; this module could be configured to give specific applications
+access to the realtime scheduler.  This module was implemented and sent to
+the linux-kernel mailing list, where it immediately ran into problems.
+
+To the audio developers, this security module was sufficient to solve their
+immediate problem.  To the wider kernel community, though, it was seen as a
+misuse of the LSM framework (which is not intended to confer privileges
+onto processes which they would not otherwise have) and a risk to system
+stability.  Their preferred solutions involved realtime scheduling access
+via the rlimit mechanism for the short term, and ongoing latency reduction
+work in the long term.
+
+The audio community, however, could not see past the particular solution
+they had implemented; they were unwilling to accept alternatives.  The
+resulting disagreement left those developers feeling disillusioned with the
+entire kernel development process; one of them went back to an audio list
+and posted this:
+
+	There are a number of very good Linux kernel developers, but they
+	tend to get outshouted by a large crowd of arrogant fools. Trying
+	to communicate user requirements to these people is a waste of
+	time. They are much too "intelligent" to listen to lesser mortals.
+
+(http://lwn.net/Articles/131776/).
+
+The reality of the situation was different; the kernel developers were far
+more concerned about system stability, long-term maintenance, and finding
+the right solution to the problem than they were with a specific module.
+The moral of the story is to focus on the problem - not a specific solution
+- and to discuss it with the development community before investing in the
+creation of a body of code.
+
+So, when contemplating a kernel development project, one should obtain
+answers to a short set of questions:
+
+ - What, exactly, is the problem which needs to be solved?
+
+ - Who are the users affected by this problem?  Which use cases should the
+   solution address?
+
+ - How does the kernel fall short in addressing that problem now?
+
+Only then does it make sense to start considering possible solutions.
+
+
+Early discussion
+----------------
+
+When planning a kernel development project, it makes great sense to hold
+discussions with the community before launching into implementation.  Early
+communication can save time and trouble in a number of ways:
+
+ - It may well be that the proble

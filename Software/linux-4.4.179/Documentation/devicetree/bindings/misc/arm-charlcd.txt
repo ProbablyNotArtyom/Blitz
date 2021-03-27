@@ -1,0 +1,26 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+#include "bcm2835.dtsi"
+#include "bcm2835-rpi.dtsi"
+#include "bcm283x-rpi-smsc9512.dtsi"
+#include "bcm283x-rpi-usb-host.dtsi"
+
+/ {
+	compatible = "raspberrypi,model-b", "brcm,bcm2835";
+	model = "Raspberry Pi Model B";
+
+	leds {
+		act {
+			gpios = <&gpio 16 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&gpio {
+	/*
+	 * Taken from Raspberry-Pi-Rev-1.0-Model-AB-Schematics.pdf
+	 * RPI00021 sheet 02
+	 *
+	 * Legend:
+	 * "NC" = not connected (no rail from the SoC)
+	 * "FOO" = GPIO line named "FOO" on the sc

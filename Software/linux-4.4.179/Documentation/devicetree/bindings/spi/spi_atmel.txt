@@ -1,0 +1,43 @@
+/*
+ * omap3-n950-n9.dtsi - Device Tree file for Nokia N950 & N9 (common stuff)
+ *
+ * Written by: Aaro Koskinen <aaro.koskinen@iki.fi>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include "omap36xx.dtsi"
+
+/ {
+	cpus {
+		cpu@0 {
+			cpu0-supply = <&vcc>;
+			operating-points = <
+				/* kHz    uV */
+				300000  1012500
+				600000  1200000
+				800000  1325000
+				1000000	1375000
+			>;
+		};
+	};
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x40000000>; /* 1 GB */
+	};
+
+	vemmc: fixedregulator0 {
+		compatible = "regulator-fixed";
+		regulator-name = "VEMMC";
+		regulator-min-microvolt = <2900000>;
+		regulator-max-microvolt = <2900000>;
+		gpio = <&gpio5 29 GPIO_ACTIVE_HIGH>; /* gpio line 157 */
+		startup-delay-us = <150>;
+		enable-active-high;
+	};
+
+	vwlan_fixed: fixedregulator2 {
+		compatible = "regulat

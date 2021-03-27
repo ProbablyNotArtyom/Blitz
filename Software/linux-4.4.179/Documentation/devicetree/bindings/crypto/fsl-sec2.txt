@@ -1,0 +1,106 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/core_cia.c
+ *
+ * Written by David A Rusling (david.rusling@reo.mts.dec.com).
+ * December 1995.
+ *
+ *	Copyright (C) 1995  David A Rusling
+ *	Copyright (C) 1997, 1998  Jay Estabrook
+ *	Copyright (C) 1998, 1999, 2000  Richard Henderson
+ *
+ * Code common to all CIA core logic chips.
+ */
+
+#define __EXTERN_INLINE inline
+#include <asm/io.h>
+#include <asm/core_cia.h>
+#undef __EXTERN_INLINE
+
+#include <linux/types.h>
+#include <linux/pci.h>
+#include <linux/sched.h>
+#include <linux/init.h>
+#include <linux/memblock.h>
+
+#include <asm/ptrace.h>
+#include <asm/mce.h>
+
+#include "proto.h"
+#include "pci_impl.h"
+
+
+/*
+ * NOTE: Herein lie back-to-back mb instructions.  They are magic. 
+ * One plausible explanation is that the i/o controller does not properly
+ * handle the system transaction.  Another involves timing.  Ho hum.
+ */
+
+#define DEBUG_CONFIG 0
+#if DEBUG_CONFIG
+# define DBGC(args)	printk args
+#else
+# define DBGC(args)
+#endif
+
+#define vip	volatile int  *
+
+/*
+ * Given a bus, device, and function number, compute resulting
+ * configuration space address.  It is therefore not safe to have
+ * concurrent invocations to configuration space access routines, but
+ * there really shouldn't be any need for this.
+ *
+ * Type 0:
+ *
+ *  3 3|3 3 2 2|2 2 2 2|2 2 2 2|1 1 1 1|1 1 1 1|1 1 
+ *  3 2|1 0 9 8|7 6 5 4|3 2 1 0|9 8 7 6|5 4 3 2|1 0 9 8|7 6 5 4|3 2 1 0
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * | | |D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|D|F|F|F|R|R|R|R|R|R|0|0|
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ *
+ *	31:11	Device select bit.
+ * 	10:8	Function number
+ * 	 7:2	Register number
+ *
+ * Type 1:
+ *
+ *  3 3|3 3 2 2|2 2 2 2|2 2 2 2|1 1 1 1|1 1 1 1|1 1 
+ *  3 2|1 0 9 8|7 6 5 4|3 2 1 0|9 8 7 6|5 4 3 2|1 0 9 8|7 6 5 4|3 2 1 0
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ * | | | | | | | | | | |B|B|B|B|B|B|B|B|D|D|D|D|D|F|F|F|R|R|R|R|R|R|0|1|
+ * +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ *
+ *	31:24	reserved
+ *	23:16	bus number (8 bits = 128 possible buses)
+ *	15:11	Device number (5 bits)
+ *	10:8	function number
+ *	 7:2	register number
+ *  
+ * Notes:
+ *	The function number selects which function of a multi-function device 
+ *	(e.g., SCSI and Ethernet).
+ * 
+ *	The register selects a DWORD (32 bit) register offset.  Hence it
+ *	doesn't get shifted by 2 bits as we want to "drop" the bottom two
+ *	bits.
+ */
+
+static int
+mk_conf_addr(struct pci_bus *bus_dev, unsigned int device_fn, int where,
+	     unsigned long *pci_addr, unsigned char *type1)
+{
+	u8 bus = bus_dev->number;
+
+	*type1 = (bus != 0);
+	*pci_addr = (bus << 16) | (device_fn << 8) | where;
+
+	DBGC(("mk_conf_addr(bus=%d ,device_fn=0x%x, where=0x%x,"
+	      " returning address 0x%p\n"
+	      bus, device_fn, where, *pci_addr));
+
+	return 0;
+}
+
+static unsigned int
+con

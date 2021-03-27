@@ -1,0 +1,42 @@
+Converting old watchdog drivers to the watchdog framework
+by Wolfram Sang <w.sang@pengutronix.de>
+=========================================================
+
+Before the watchdog framework came into the kernel, every driver had to
+implement the API on its own. Now, as the framework factored out the common
+components, those drivers can be lightened making it a user of the framework.
+This document shall guide you for this task. The necessary steps are described
+as well as things to look out for.
+
+
+Remove the file_operations struct
+---------------------------------
+
+Old drivers define their own file_operations for actions like open(), write(),
+etc... These are now handled by the framework and just call the driver when
+needed. So, in general, the 'file_operations' struct and assorted functions can
+go. Only very few driver-specific details have to be moved to other functions.
+Here is a overview of the functions and probably needed actions:
+
+- open: Everything dealing with resource management (file-open checks, magic
+  close preparations) can simply go. Device specific stuff needs to go to the
+  driver specific start-function. Note that for some drivers, the start-function
+  also serves as the ping-function. If that is the case and you need start/stop
+  to be balanced (clocks!), you are better off refactoring a separate start-function.
+
+- close: Same hints as for open apply.
+
+- write: Can simply go, all defined behaviour is taken care of by the framework,
+  i.e. ping on write and magic char ('V') handling.
+
+- ioctl: While the driver is allowed to have extensions to the IOCTL interface,
+  the most common ones are handled by the framework, supported by some assistance
+  from the driver:
+
+	WDIOC_GETSUPPORT:
+		Returns the mandatory watchdog_info struct from the driver
+
+	WDIOC_GETSTATUS:
+		Needs the status-callback defined, otherwise returns 0
+
+	WDIOC_GETBOOTSTATUS:

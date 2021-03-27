@@ -1,0 +1,63 @@
+/*
+ * Common device tree for IGEP boards based on AM/DM37x
+ *
+ * Copyright (C) 2012 Javier Martinez Canillas <javier@osg.samsung.com>
+ * Copyright (C) 2012 Enric Balletbo i Serra <eballetbo@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include "omap36xx.dtsi"
+
+/ {
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x20000000>; /* 512 MB */
+	};
+
+	chosen {
+		stdout-path = &uart3;
+	};
+
+	sound {
+		compatible = "ti,omap-twl4030";
+		ti,model = "igep2";
+		ti,mcbsp = <&mcbsp2>;
+	};
+
+	vdd33: regulator-vdd33 {
+		compatible = "regulator-fixed";
+		regulator-name = "vdd33";
+		regulator-always-on;
+	};
+
+};
+
+&omap3_pmx_core {
+	gpmc_pins: pinmux_gpmc_pins {
+		pinctrl-single,pins = <
+			/* OneNAND seems to require PIN_INPUT on clock. */
+                        OMAP3_CORE1_IOPAD(0x20be, PIN_INPUT | MUX_MODE0)        /* gpmc_clk.gpmc_clk */
+		>;
+	};
+
+	uart1_pins: pinmux_uart1_pins {
+		pinctrl-single,pins = <
+			OMAP3_CORE1_IOPAD(0x2182, PIN_INPUT | MUX_MODE0)	/* uart1_rx.uart1_rx */
+			OMAP3_CORE1_IOPAD(0x217c, PIN_OUTPUT | MUX_MODE0)	/* uart1_tx.uart1_tx */
+		>;
+	};
+
+	uart3_pins: pinmux_uart3_pins {
+		pinctrl-single,pins = <
+			OMAP3_CORE1_IOPAD(0x219e, PIN_INPUT | MUX_MODE0)	/* uart3_rx.uart3_rx */
+			OMAP3_CORE1_IOPAD(0x21a0, PIN_OUTPUT | MUX_MODE0)	/* uart3_tx.uart3_tx */
+		>;
+	};
+
+	mcbsp2_pins: pinmux_mcbsp2_pins {
+		pinctrl-single,pins = <
+			OMAP3_CORE1_IOPAD(0x213c, PIN_INPUT | MUX_MODE0)	/* mcbsp2_fsx.mcbsp2_f

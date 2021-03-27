@@ -1,0 +1,53 @@
+============================
+Kernel Key Retention Service
+============================
+
+This service allows cryptographic keys, authentication tokens, cross-domain
+user mappings, and similar to be cached in the kernel for the use of
+filesystems and other kernel services.
+
+Keyrings are permitted; these are a special type of key that can hold links to
+other keys. Processes each have three standard keyring subscriptions that a
+kernel service can search for relevant keys.
+
+The key service can be configured on by enabling:
+
+	"Security options"/"Enable access key retention support" (CONFIG_KEYS)
+
+This document has the following sections:
+
+.. contents:: :local:
+
+
+Key Overview
+============
+
+In this context, keys represent units of cryptographic data, authentication
+tokens, keyrings, etc.. These are represented in the kernel by struct key.
+
+Each key has a number of attributes:
+
+	- A serial number.
+	- A type.
+	- A description (for matching a key in a search).
+	- Access control information.
+	- An expiry time.
+	- A payload.
+	- State.
+
+
+  *  Each key is issued a serial number of type key_serial_t that is unique for
+     the lifetime of that key. All serial numbers are positive non-zero 32-bit
+     integers.
+
+     Userspace programs can use a key's serial numbers as a way to gain access
+     to it, subject to permission checking.
+
+  *  Each key is of a defined "type". Types must be registered inside the
+     kernel by a kernel service (such as a filesystem) before keys of that type
+     can be added or used. Userspace programs cannot define new types directly.
+
+     Key types are represented in the kernel by struct key_type. This defines a
+     number of operations that can be performed on a key of that type.
+
+     Should a type be removed from the system, all the keys of 

@@ -1,0 +1,191 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:572: checking host system type
+configure:593: checking target system type
+configure:611: checking build system type
+configure:705: checking for gcc
+configure:782: checking whether the C compiler (gcc  ) works
+configure:796: gcc -o conftest    conftest.c  1>&5
+configure:816: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:821: checking whether we are using GNU C
+configure:830: gcc -E conftest.c
+configure:845: checking whether gcc accepts -g
+configure:878: checking gcc version
+configure:1022: checking how to run the C preprocessor
+configure:1043: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1086: checking for fcntl.h
+configure:1096: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1086: checking for malloc.h
+configure:1096: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1086: checking for memory.h
+configure:1096: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1086: checking for rpc/rpcent.h
+configure:1096: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1092: rpc/rpcent.h: No such file or directory
+configure: failed program was:
+#line 1091 "configure"
+#include "confdefs.h"
+#include <rpc/rpcent.h>
+configure:1123: checking whether time.h and sys/time.h may both be included
+configure:1137: gcc -c -g -O2  conftest.c 1>&5
+configure:1162: checking Linux kernel version
+configure:1227: checking for vfprintf
+configure:1255: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1227: checking for strcasecmp
+configure:1255: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1284: checking for ether_ntoa
+configure:1312: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1284: checking for setlinebuf
+configure:1312: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1338: checking whether byte ordering is bigendian
+configure:1356: gcc -c -g -O2  conftest.c 1>&5
+configure:1371: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:1366: `not' undeclared (first use in this function)
+configure:1366: (Each undeclared identifier is reported only once
+configure:1366: for each function it appears in.)
+configure:1366: parse error before `big'
+configure: failed program was:
+#line 1360 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/param.h>
+int main() {
+
+#if BYTE_ORDER != BIG_ENDIAN
+ not big endian
+#endif
+; return 0; }
+configure:1429: checking for main in -ldnet
+configure:1444: gcc -o conftest -g -O2   conftest.c -ldnet   1>&5
+/usr/bin/ld: cannot find -ldnet
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 1437 "configure"
+#include "confdefs.h"
+
+int main() {
+main()
+; return 0; }
+configure:1472: checking for main in -lrpc
+configure:1487: gcc -o conftest -g -O2   conftest.c -lrpc   1>&5
+/usr/bin/ld: cannot find -lrpc
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 1480 "configure"
+#include "confdefs.h"
+
+int main() {
+main()
+; return 0; }
+configure:1517: checking return type of signal handlers
+configure:1539: gcc -c -g -O2  conftest.c 1>&5
+configure:1581: checking for sigset
+configure:1609: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1697: checking for gethostbyname
+configure:1725: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1931: checking for socket
+configure:1959: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2067: checking for putmsg in -lstr
+configure:2086: gcc -o conftest -g -O2   conftest.c -lstr   1>&5
+/usr/bin/ld: cannot find -lstr
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 2075 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char putmsg();
+
+int main() {
+putmsg()
+; return 0; }
+configure:2179: checking for local pcap library
+configure:2198: checking for main in -lpcap
+configure:2213: gcc -o conftest -g -O2   conftest.c -lpcap   1>&5
+configure:2294: checking for int32_t using gcc
+configure:2312: gcc -c -g -O2  conftest.c 1>&5
+configure:2332: checking for u_int32_t using gcc
+configure:2350: gcc -c -g -O2  conftest.c 1>&5
+configure:2410: checking if sockaddr struct has sa_len member
+configure:2424: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:2420: structure has no member named `sa_len'
+configure: failed program was:
+#line 2415 "configure"
+#include "confdefs.h"
+
+#	include <sys/types.h>
+#	include <sys/socket.h>
+int main() {
+u_int i = sizeof(((struct sockaddr *)0)->sa_len)
+; return 0; }
+configure:2445: checking if ether_header uses ether_addr structs
+configure:2470: gcc -c -g -O2  -Ilinux-include  conftest.c 1>&5
+configure: In function `main':
+configure:2466: request for member `ether_addr_octet' in something not a structure or union
+configure: failed program was:
+#line 2452 "configure"
+#include "confdefs.h"
+
+#	include <sys/types.h>
+#	if __STDC__
+	/* osf3 has REALLY good prototyes */
+	struct mbuf;
+	struct rtentry;
+#	endif
+#	include <sys/socket.h>
+#	include <net/if.h>
+#	include <netinet/in.h>
+#	include <netinet/if_ether.h>
+int main() {
+u_int i =
+	    sizeof(((struct ether_header *)0)->ether_dhost.ether_addr_octet)
+; return 0; }
+configure:2492: checking if ether_arp uses ether_addr structs
+configure:2517: gcc -c -g -O2  -Ilinux-include  conftest.c 1>&5
+configure: In function `main':
+configure:2513: request for member `ether_addr_octet' in something not a structure or union
+configure: failed program was:
+#line 2499 "configure"
+#include "confdefs.h"
+
+#	include <sys/types.h>
+#	if __STDC__
+	/* osf3 has REALLY good prototyes */
+	struct mbuf;
+	struct rtentry;
+#	endif
+#	include <sys/socket.h>
+#	include <net/if.h>
+#	include <netinet/in.h>
+#	include <netinet/if_ether.h>
+int main() {
+u_int i =
+	    sizeof(((struct ether_arp *)0)->arp_sha.ether_addr_octet)
+; return 0; }
+configure:2539: checking if ether_arp uses erp_xsha member
+configure:2563: gcc -c -g -O2  -Ilinux-include  conftest.c 1>&5
+configure: In function `main':
+configure:2559: structure has no member named `arp_xsha'
+configure: failed program was:
+#line 2546 "configure"
+#include "confdefs.h"
+
+#	include <sys/types.h>
+#	include <sys/socket.h>
+#	if __STDC__
+	/* osf3 has REALLY good prototyes */
+	struct mbuf;
+	struct rtentry;
+#	endif
+#	include <net/if.h>
+#	include <netinet/in.h>
+#	include <netinet/if_ether.h>
+int main() {
+u_int i = sizeof( ((struct ether_arp *)0)->arp_xsha)
+; return 0; }
+configure:2585: checking if unaligned accesses fail
+configure:2674: checking for a BSD compatible install

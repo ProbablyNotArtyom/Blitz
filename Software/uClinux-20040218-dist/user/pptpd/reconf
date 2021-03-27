@@ -1,0 +1,63 @@
+#! /bin/sh
+#
+# Reconfigure the beast, rebuilding dependencies and updating version numbers
+# as appropriate.
+#
+# $Id: reconf,v 1.1.1.1 1999/11/22 03:48:02 christ Exp $
+
+if test -f config.h
+then
+  mv -f config.h config.h.TMP
+fi
+touch config.h
+for makefile in Makefile.am Makefile.uClinux
+do
+  echo -n "Rebuilding $makefile..."
+  head -`grep -n 'DO NOT ADD BELOW THIS POINT' $makefile | \
+	cut -d: -f1` $makefile > $makefile.new
+  for file in *.c
+  do
+    if test "$makefile" = "Makefile.uClinux"
+    then
+      gcc -MM $file -include config.embed.h
+    else
+      gcc -MM $file -DHAVE_CONFIG_H
+    fi
+    echo ''
+  done >> $makefile.new
+  echo 'done.'
+  if ! cmp -s $makefile.new $makefile
+  then
+    echo "Changes: <=old >=new"
+    diff $makefile $makefile.new | grep '^[<>]'
+    mv -f $makefile.new $makefile
+  else
+    rm -f $makefile.new
+    echo "No change."
+  fi
+done
+rm -f config.h
+if test -f config.h.TMP
+then
+  mv -f config.h.TMP config.h
+fi
+SCONF=samples/pptpd.conf
+echo -n "Updating version number in $SCONF..."
+sed 's/^# for PoPToP version .*$/# for PoPToP version '`./version`/ < $SCONF > $SCONF.new
+if ! cmp -s $SCONF.new $SCONF
+then
+  echo 'done.'
+  echo "Updated: <=old >=new"
+  diff $SCONF $SCONF.new | grep '^[<>]'
+  mv -f $SCONF.new $SCONF
+else
+  rm -f $SCONF.new
+  echo "no change."
+fi
+set -x
+rm -f config.cache
+rm -f config.log
+aclocal
+autoconf
+automake -a --copy --verbose
+autoheader

@@ -1,0 +1,39 @@
+PMU Event Based Branches
+========================
+
+Event Based Branches (EBBs) are a feature which allows the hardware to
+branch directly to a specified user space address when certain events occur.
+
+The full specification is available in Power ISA v2.07:
+
+  https://www.power.org/documentation/power-isa-version-2-07/
+
+One type of event for which EBBs can be configured is PMU exceptions. This
+document describes the API for configuring the Power PMU to generate EBBs,
+using the Linux perf_events API.
+
+
+Terminology
+-----------
+
+Throughout this document we will refer to an "EBB event" or "EBB events". This
+just refers to a struct perf_event which has set the "EBB" flag in its
+attr.config. All events which can be configured on the hardware PMU are
+possible "EBB events".
+
+
+Background
+----------
+
+When a PMU EBB occurs it is delivered to the currently running process. As such
+EBBs can only sensibly be used by programs for self-monitoring.
+
+It is a feature of the perf_events API that events can be created on other
+processes, subject to standard permission checks. This is also true of EBB
+events, however unless the target process enables EBBs (via mtspr(BESCR)) no
+EBBs will ever be delivered.
+
+This makes it possible for a process to enable EBBs for itself, but not
+actually configure any events. At a later time another process can come along
+and attach an EBB event to the process, which will then cause EBBs to be
+deliver

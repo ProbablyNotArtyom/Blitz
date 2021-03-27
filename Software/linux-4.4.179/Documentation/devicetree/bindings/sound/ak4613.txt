@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+
+#include "kirkwood.dtsi"
+#include "kirkwood-6281.dtsi"
+
+/ {
+	model = "Iomega Iconnect";
+	compatible = "iom,iconnect-1.1", "iom,iconnect", "marvell,kirkwood-88f6281", "marvell,kirkwood";
+
+	memory {
+		device_type = "memor

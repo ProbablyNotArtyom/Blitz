@@ -1,0 +1,35 @@
+Introduction
+============
+
+Having looked at the linux mtd/nand driver and more specific at nand_ecc.c
+I felt there was room for optimisation. I bashed the code for a few hours
+performing tricks like table lookup removing superfluous code etc.
+After that the speed was increased by 35-40%.
+Still I was not too happy as I felt there was additional room for improvement.
+
+Bad! I was hooked.
+I decided to annotate my steps in this file. Perhaps it is useful to someone
+or someone learns something from it.
+
+
+The problem
+===========
+
+NAND flash (at least SLC one) typically has sectors of 256 bytes.
+However NAND flash is not extremely reliable so some error detection
+(and sometimes correction) is needed.
+
+This is done by means of a Hamming code. I'll try to explain it in
+laymans terms (and apologies to all the pro's in the field in case I do
+not use the right terminology, my coding theory class was almost 30
+years ago, and I must admit it was not one of my favourites).
+
+As I said before the ecc calculation is performed on sectors of 256
+bytes. This is done by calculating several parity bits over the rows and
+columns. The parity used is even parity which means that the parity bit = 1
+if the data over which the parity is calculated is 1 and the parity bit = 0
+if the data over which the parity is calculated is 0. So the total
+number of bits over the data over which the parity is calculated + the
+parity bit is even. (see wikipedia if you can't follow this).
+Parity is often calculated by means of an exclusive or operation,
+sometimes

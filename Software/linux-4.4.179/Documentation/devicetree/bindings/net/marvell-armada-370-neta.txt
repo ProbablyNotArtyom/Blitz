@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device tree for Energy Micro EFM32 Giant Gecko SoC.
+ *
+ * Documentation available from
+ * http://www.silabs.com/Support%20Documents/TechnicalDocs/EFM32GG-RM.pdf
+ */
+
+#include "armv7-m.dtsi"
+#include "dt-bindings/clock/efm32-cmu.h"
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	aliases {
+		i2c0 = &i2c0;
+		i2c1 = &i2c1;
+		serial0 = &uart0;
+		serial1 = &uart1;
+		serial2 = &uart2;
+		serial3 = &uart3;
+		serial4 = &uart4;
+		spi0 = &spi0;
+		spi1 = &spi1;
+		spi2 = &spi2;
+	};
+
+	soc {
+		adc: adc@40002000 {
+			compatible = "energymicro,efm32-adc";
+			reg = <0x40002000 0x400>;
+			interrupts = <7>;
+			clocks = <&cmu clk_HFPERCLKADC0>;
+			status = "disabled";
+		};
+
+		gpio: gpio@40006000 {
+			compatible = "energymicro,efm32-gpio";
+			reg = <0x40006000 0x1000>;
+			interrupts = <1 11>;
+			gpio-controller;
+			#gpio-cells = <2

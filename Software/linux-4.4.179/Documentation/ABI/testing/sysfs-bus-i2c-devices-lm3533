@@ -1,0 +1,32 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_QUERYCAP:
+
+*********************
+ioctl VIDIOC_QUERYCAP
+*********************
+
+Name
+====
+
+VIDIOC_QUERYCAP - Query device capabilities
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_QUERYCAP, struct v4l2_capability *argp )
+    :name: VIDIOC_QUERYCAP
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_capability`.
+
+
+Descriptio

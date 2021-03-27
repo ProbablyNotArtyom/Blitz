@@ -1,0 +1,105 @@
+=================================
+Using ftrace to hook to functions
+=================================
+
+.. Copyright 2017 VMware Inc.
+..   Author:   Steven Rostedt <srostedt@goodmis.org>
+..  License:   The GNU Free Documentation License, Version 1.2
+..               (dual licensed under the GPL v2)
+
+Written for: 4.14
+
+Introduction
+============
+
+The ftrace infrastructure was originally created to attach callbacks to the
+beginning of functions in order to record and trace the flow of the kernel.
+But callbacks to the start of a function can have other use cases. Either
+for live kernel patching, or for security monitoring. This document describes
+how to use ftrace to implement your own function callbacks.
+
+
+The ftrace context
+==================
+.. warning::
+
+  The ability to add a callback to almost any function within the
+  kernel comes with risks. A callback can be called from any context
+  (normal, softirq, irq, and NMI). Callbacks can also be called just before
+  going to idle, during CPU bring up and takedown, or going to user space.
+  This requires extra care to what can be done inside a callback. A callback
+  can be called outside the protective scope of RCU.
+
+The ftrace infrastructure has some protections against recursions and RCU
+but one must still be very careful how they use the callbacks.
+
+
+The ftrace_ops structure
+========================
+
+To register a function callback, a ftrace_ops is required. This structure
+is used to tell ftrace what function should be called as the callback
+as well as what protections the callback will perform and not require
+ftrace to handle.
+
+There is only one field that is needed to be set when registering
+an ftrace_ops with ftrace:
+
+.. code-block:: c
+
+ struct ftrace_ops ops = {
+       .func			= my_callback_func,
+       .flags			= MY_FTRACE_FLAGS
+       .private			= any_private_data_structure,
+ };
+
+Both .flags and .private are optional. Only .func is required.
+
+To enable tracing call:
+
+.. c:function::  register_ftrace_function(&ops);
+
+To disable tracing call:
+
+.. c:function::  unregister_ftrace_function(&ops);
+
+The above is defined by including the header:
+
+.. c:function:: #include <linux/ftrace.h>
+
+The registered callback will start being called some time after the
+register_ftrace_function() is called and before it returns. The exact time
+that callbacks start being called is dependent upon architecture and scheduling
+of services. The callback itself will have to handle any synchronization if it
+must begin at an exact moment.
+
+The unregister_ftrace_function() will guarantee that the callback is
+no longer being called by functions after the unregister_ftrace_function()
+returns. Note that to perform this guarantee, the unregister_ftrace_function()
+may take some time to finish.
+
+
+The callback function
+=====================
+
+The prototype of the callback function is as follows (as of v4.14):
+
+.. code-block:: c
+
+   void callback_func(unsigned long ip, unsigned long parent_ip,
+                      struct ftrace_ops *op, struct pt_regs *regs);
+
+@ip
+	 This is the instruction pointer of the function that is being traced.
+      	 (where the fentry or mcount is within the function)
+
+@parent_ip
+	This is the instruction pointer of the function that called the
+	the function being traced (where the call of the function occurred).
+
+@op
+	This is a pointer to ftrace_ops that was used to register the callback.
+	This can be used to pass data to the callback via the private pointer.
+
+@regs
+	If the FTRACE_OPS_FL_SAVE_REGS

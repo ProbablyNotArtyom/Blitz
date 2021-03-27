@@ -1,0 +1,16 @@
+The 1-wire (w1) subsystem
+------------------------------------------------------------------
+The 1-wire bus is a simple master-slave bus that communicates via a single
+signal wire (plus ground, so two wires).
+
+Devices communicate on the bus by pulling the signal to ground via an open
+drain output and by sampling the logic level of the signal line.
+
+The w1 subsystem provides the framework for managing w1 masters and
+communication with slaves.
+
+All w1 slave devices must be connected to a w1 bus master device.
+
+Example w1 master devices:
+    DS9490 usb device
+    W1-over-GPI

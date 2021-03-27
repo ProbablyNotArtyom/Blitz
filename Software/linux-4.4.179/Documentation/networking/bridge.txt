@@ -1,0 +1,16 @@
+/*
+ * ChaCha20 256-bit cipher algorithm, RFC7539, ARM NEON functions
+ *
+ * Copyright (C) 2016 Linaro, Ltd. <ard.biesheuvel@linaro.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * Based on:
+ * ChaCha20 256-bit cipher algorithm, RFC7539, x64 SSE3 functions
+ *
+ * Copyright (C) 2015 Martin Willi
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of t

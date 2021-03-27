@@ -1,0 +1,31 @@
+Valid-License-Identifier: MPL-1.1
+SPDX-URL: https://spdx.org/licenses/MPL-1.1.html
+Usage-Guide:
+  To use the Mozilla Public License version 1.1 put the following SPDX
+  tag/value pair into a comment according to the placement guidelines in
+  the licensing rules documentation:
+    SPDX-License-Identifier: MPL-1.1
+License-Text:
+
+                          MOZILLA PUBLIC LICENSE
+                                Version 1.1
+
+                              ---------------
+
+1. Definitions.
+
+     1.0.1. "Commercial Use" means distribution or otherwise making the
+     Covered Code available to a third party.
+
+     1.1. "Contributor" means each entity that creates or contributes to
+     the creation of Modifications.
+
+     1.2. "Contributor Version" means the combination of the Original
+     Code, prior Modifications used by a Contributor, and the Modifications
+     made by that particular Contributor.
+
+     1.3. "Covered Code" means the Original Code or Modifications or the
+     combination of the Original Code and Modifications, in each case
+     including portions thereof.
+
+     1.4. "Electroni

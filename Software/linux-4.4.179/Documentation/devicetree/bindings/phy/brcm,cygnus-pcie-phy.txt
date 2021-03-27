@@ -1,0 +1,28 @@
+/*
+ * Copyright 2013 Crystalfontz America, Inc.
+ * 				  Free Electrons
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/*
+ * The CFA-10055 is an expansion board for the CFA-10036 module and
+ * CFA-10037, thus we need to include the CFA-10037 DTS.
+ */
+#include "imx28-cfa10037.dts"
+
+/ {
+	model = "Crystalfontz CFA-10055 Board";
+	compatible = "crystalfontz,cfa10055", "crystalfontz,cfa10037", "crystalfontz,cfa10036", "fsl,imx28";
+
+	apb@80000000 {
+		apbh@80000000 {
+			pinctrl@80018000 {
+				spi2_pins_cfa10055: spi2-cfa10055@0 {
+					reg = <0>;
+					fsl,p

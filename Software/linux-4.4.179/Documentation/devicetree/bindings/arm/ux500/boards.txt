@@ -1,0 +1,44 @@
+Most (all) Intel-MP compliant SMP boards have the so-called 'IO-APIC',
+which is an enhanced interrupt controller. It enables us to route
+hardware interrupts to multiple CPUs, or to CPU groups. Without an
+IO-APIC, interrupts from hardware will be delivered only to the
+CPU which boots the operating system (usually CPU#0).
+
+Linux supports all variants of compliant SMP boards, including ones with
+multiple IO-APICs. Multiple IO-APICs are used in high-end servers to
+distribute IRQ load further.
+
+There are (a few) known breakages in certain older boards, such bugs are
+usually worked around by the kernel. If your MP-compliant SMP board does
+not boot Linux, then consult the linux-smp mailing list archives first.
+
+If your box boots fine with enabled IO-APIC IRQs, then your
+/proc/interrupts will look like this one:
+
+   ---------------------------->
+  hell:~> cat /proc/interrupts
+             CPU0
+    0:    1360293    IO-APIC-edge  timer
+    1:          4    IO-APIC-edge  keyboard
+    2:          0          XT-PIC  cascade
+   13:          1          XT-PIC  fpu
+   14:       1448    IO-APIC-edge  ide0
+   16:      28232   IO-APIC-level  Intel EtherExpress Pro 10/100 Ethernet
+   17:      51304   IO-APIC-level  eth0
+  NMI:          0
+  ERR:          0
+  hell:~>
+  <----------------------------
+
+Some interrupts are still listed as 'XT PIC', but this is not a problem;
+none of those IRQ sources is performance-critical.
+
+
+In the unlikely case that your board does not create a working mp-table,
+you can use the pirq= boot parameter to 'hand-construct' IRQ entries. This
+is non-trivial though and cannot be automated. One sample /etc/lilo.conf
+entry:
+
+	append="pirq=15,11,10"
+
+The actual numbers depend on your system,

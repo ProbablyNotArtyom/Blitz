@@ -1,0 +1,55 @@
+/*
+ * aks-cdu.dts - Device Tree file for AK signal CDU
+ *
+ * Copyright (C) 2012 AK signal Brno a.s.
+ *               2012 Jiri Prchal <jiri.prchal@aksignal.cz>
+ *
+ * Licensed under GPLv2 or later.
+ */
+
+/dts-v1/;
+
+#include "ge863-pro3.dtsi"
+
+/ {
+	chosen {
+		bootargs = "console=ttyS0,115200 ubi.mtd=4 root=ubi0:rootfs rootfstype=ubifs";
+	};
+
+	clocks {
+		slow_xtal {
+			clock-frequency = <32768>;
+		};
+	};
+
+	ahb {
+		apb {
+			usart0: serial@fffb0000 {
+				status = "okay";
+			};
+
+			usart1: serial@fffb4000 {
+				status = "okay";
+				linux,rs485-enabled-at-boot-time;
+				rs485-rts-delay = <0 0>;
+				};
+
+			usart2: serial@fffb8000 {
+				status = "okay";
+				linux,rs485-enabled-at-boot-time;
+				rs485-rts-delay = <0 0>;
+			};
+
+			usart3: serial@fffd0000 {
+				status = "okay";
+				linux,rs485-enabled-at-boot-time;
+				rs485-rts-delay = <0 0>;
+			};
+
+			macb0: ethernet@fffc4000 {
+				phy-mode = "rmii";
+				status = "okay";
+			};
+
+			usb1: gadget@fffa4000 {
+				atmel,vbus-gpio = <&pioC 15 GPIO_ACTIVE_HIGH

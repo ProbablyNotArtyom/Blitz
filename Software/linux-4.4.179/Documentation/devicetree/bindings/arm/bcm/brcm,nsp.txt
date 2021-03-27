@@ -1,0 +1,27 @@
+.. hwpoison:
+
+========
+hwpoison
+========
+
+What is hwpoison?
+=================
+
+Upcoming Intel CPUs have support for recovering from some memory errors
+(``MCA recovery``). This requires the OS to declare a page "poisoned",
+kill the processes associated with it and avoid using it in the future.
+
+This patchkit implements the necessary infrastructure in the VM.
+
+To quote the overview comment:
+
+ * High level machine check handler. Handles pages reported by the
+ * hardware as being corrupted usually due to a 2bit ECC memory or cache
+ * failure.
+ *
+ * This focusses on pages detected as corrupted in the background.
+ * When the current CPU tries to consume corruption the currently
+ * running process can just be killed directly instead. This implies
+ * that if the error cannot be handled for some reason it's safe to
+ * just ignore it because no corruption has been consumed yet. Instead
+ * when that happens another machine check will happen.

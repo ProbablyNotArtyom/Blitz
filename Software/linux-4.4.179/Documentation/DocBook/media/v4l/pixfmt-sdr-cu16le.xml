@@ -1,0 +1,39 @@
+GDB intends to support the following hardware debug features of BookE
+processors:
+
+4 hardware breakpoints (IAC)
+2 hardware watchpoints (read, write and read-write) (DAC)
+2 value conditions for the hardware watchpoints (DVC)
+
+For that, we need to extend ptrace so that GDB can query and set these
+resources. Since we're extending, we're trying to create an interface
+that's extendable and that covers both BookE and server processors, so
+that GDB doesn't need to special-case each of them. We added the
+following 3 new ptrace requests.
+
+1. PTRACE_PPC_GETHWDEBUGINFO
+
+Query for GDB to discover the hardware debug features. The main info to
+be returned here is the minimum alignment for the hardware watchpoints.
+BookE processors don't have restrictions here, but server processors have
+an 8-byte alignment restriction for hardware watchpoints. We'd like to avoid
+adding special cases to GDB based on what it sees in AUXV.
+
+Since we're at it, we added other useful info that the kernel can return to
+GDB: this query will return the number of hardware breakpoints, hardware
+watchpoints and whether it supports a range of addresses and a condition.
+The query will fill the following structure provided by the requesting process:
+
+struct ppc_debug_info {
+       unit32_t version;
+       unit32_t num_instruction_bps;
+       unit32_t num_data_bps;
+       unit32_t num_condition_regs;
+       unit32_t data_bp_alignment;
+       unit32_t sizeof_condition; /* size of the DVC register */
+       uint64_t features; /* bitmask of the individual flags */
+};
+
+features will have bits indicating whether there is support for:
+
+#def

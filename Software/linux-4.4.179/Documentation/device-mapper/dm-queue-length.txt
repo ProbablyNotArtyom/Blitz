@@ -1,0 +1,19 @@
+       2300 } hitcount:         11
+ { lat:         15, common_pid:       2299 } hitcount:          5
+ { lat:         15, common_pid:       2301 } hitcount:          1
+ { lat:         15, common_pid:       2304 } hitcount:          8
+ { lat:         15, common_pid:       2303 } hitcount:          1
+ { lat:         15, common_pid:       2306 } hitcount:          6
+ { lat:         16, common_pid:       2302 } hitcount:         31
+ { lat:         16, common_pid:       2306 } hitcount:          3
+ { lat:         16, common_pid:       2300 } hitcount:          5
+ { lat:         17, common_pid:       2302 } hitcount:          6
+ { lat:         17, common_pid:       2303 } hitcount:          1
+ { lat:         18, common_pid:       2304 } hitcount:          1
+ { lat:         18, common_pid:       2302 } hitcount:          8
+ { lat:         18, common_pid:       2299 } hitcount:          1
+ { lat:         18, common_pid:       2301 } hitcount:          1
+ { lat:         19, common_pid:       2303 } hitcount:          4
+ { lat:         19, common_pid:       2304 } hitcount:          5
+ { lat:         19, common_pid:       2302 } hitcount:          4
+ { lat:         19, common_pid:       2299 } hitcount:       

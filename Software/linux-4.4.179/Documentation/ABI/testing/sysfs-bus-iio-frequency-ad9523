@@ -1,0 +1,48 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_STREAMON:
+
+***************************************
+ioctl VIDIOC_STREAMON, VIDIOC_STREAMOFF
+***************************************
+
+Name
+====
+
+VIDIOC_STREAMON - VIDIOC_STREAMOFF - Start or stop streaming I/O
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_STREAMON, const int *argp )
+    :name: VIDIOC_STREAMON
+
+.. c:function:: int ioctl( int fd, VIDIOC_STREAMOFF, const int *argp )
+    :name: VIDIOC_STREAMOFF
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to an integer.
+
+Description
+===========
+
+The ``VIDIOC_STREAMON`` and ``VIDIOC_STREAMOFF`` ioctl start and stop
+the capture or output process during streaming
+(:ref:`memory mapping <mmap>`, :ref:`user pointer <userp>` or
+:ref:`DMABUF <dmabuf>`) I/O.
+
+Capture hardware is disabled and no input buffers are filled (if there
+are any empty buffers in the incoming queue) until ``VIDIOC_STREAMON``
+has been called. Output hardware is disabled and no video signal is
+produced until ``VIDIOC_STREAMON`` has been called. The ioctl will
+succeed when at least one output buffer is in the incoming queue.
+
+M

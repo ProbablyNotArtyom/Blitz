@@ -1,0 +1,37 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/err_ev6.c
+ *
+ *	Copyright (C) 2000 Jeff Wiedemeier (Compaq Computer Corporation)
+ *
+ *	Error handling code supporting Alpha systems
+ */
+
+#include <linux/sched.h>
+
+#include <asm/io.h>
+#include <asm/irq_regs.h>
+#include <asm/hwrpb.h>
+#include <asm/smp.h>
+#include <asm/err_common.h>
+#include <asm/err_ev6.h>
+
+#include "err_impl.h"
+#include "proto.h"
+
+static int
+ev6_parse_ibox(u64 i_stat, int print)
+{
+	int status = MCHK_DISPOSITION_REPORT;
+
+#define EV6__I_STAT__PAR	(1UL << 29)
+#define EV6__I_STAT__ERRMASK	(EV6__I_STAT__PAR)
+
+	if (!(i_stat & EV6__I_STAT__ERRMASK))
+		return MCHK_DISPOSITION_UNKNOWN_ERROR;
+
+	if (!print)
+		return status;
+
+	if (i_stat & EV6__I_STAT__PAR)
+		printk("%s    Icache parity error\n", err_pr

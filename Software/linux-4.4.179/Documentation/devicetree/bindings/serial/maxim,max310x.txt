@@ -1,0 +1,71 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Keystone 2 Edison soc device tree
+ *
+ * Copyright (C) 2013-2017 Texas Instruments Incorporated - http://www.ti.com/
+ */
+
+#include <dt-bindings/reset/ti-syscon.h>
+
+/ {
+	compatible = "ti,k2e", "ti,keystone";
+	model = "Texas Instruments Keystone 2 Edison SoC";
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		interrupt-parent = <&gic>;
+
+		cpu@0 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <0>;
+		};
+
+		cpu@1 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <1>;
+		};
+
+		cpu@2 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <2>;
+		};
+
+		cpu@3 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <3>;
+		};
+	};
+
+	aliases {
+		rproc0 = &dsp0;
+	};
+};
+
+&soc0 {
+		/include/ "keystone-k2e-clocks.dtsi"
+
+		usb: usb@2680000 {
+			interrupts = <GIC_SPI 152 IRQ_TYPE_EDGE_RISING>;
+			dwc3@2690000 {
+				interrupts = <GIC_SPI 152 IRQ_TYPE_EDGE_RISING>;
+			};
+		};
+
+		usb1_phy: usb_phy@2620750 {
+			compatible = "ti,keystone-usbphy";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0x2620750 24>;
+			status = "disabled";
+		};
+
+		keystone_usb1: usb@25000000 {
+			compatible = "ti,keystone-dwc3";
+			#address-cells = <1>;
+		

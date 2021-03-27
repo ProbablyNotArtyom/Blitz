@@ -1,0 +1,90 @@
+*******************************************************************************
+**                            ARECA FIRMWARE SPEC
+*******************************************************************************
+**	Usage of IOP331 adapter
+**	(All In/Out is in IOP331's view)
+**	1. Message 0 --> InitThread message and return code
+**	2. Doorbell is used for RS-232 emulation
+**		inDoorBell :    bit0 -- data in ready
+**			(DRIVER DATA WRITE OK)
+**				bit1 -- data out has been read
+**			(DRIVER DATA READ OK)
+**		outDooeBell:    bit0 -- data out ready
+**			(IOP331 DATA WRITE OK)
+**				bit1 -- data in has been read
+**			(IOP331 DATA READ OK)
+**	3. Index Memory Usage
+**	offset 0xf00 : for RS232 out (request buffer)
+**	offset 0xe00 : for RS232 in  (scratch buffer)
+**	offset 0xa00 : for inbound message code message_rwbuffer
+**			(driver send to IOP331)
+**	offset 0xa00 : for outbound message code message_rwbuffer
+**			(IOP331 send to driver)
+**	4. RS-232 emulation
+**		Currently 128 byte buffer is used
+**			1st uint32_t : Data length (1--124)
+**			Byte 4--127  : Max 124 bytes of data
+**	5. PostQ
+**	All SCSI Command must be sent through postQ:
+**	(inbound queue port)	Request frame must be 32 bytes aligned
+**	#bit27--bit31 => flag for post ccb
+**	#bit0--bit26  => real address (bit27--bit31) of post arcmsr_cdb
+**		bit31 :
+**			0 : 256 bytes frame
+**			1 : 512 bytes frame
+**		bit30 :
+**			0 : normal request
+**			1 : BIOS request
+**		bit29 : reserved
+**		bit28 : reserved
+**		bit27 : reserved
+**  ---------------------------------------------------------------------------
+**	(outbount queue port)	Request reply
+**	#bit27--bit31
+**		=> flag for reply
+**	#bit0--bit26
+**		=> real address (bit27--bit31) of reply arcmsr_cdb
+**			bit31 : must be 0 (for this type of reply)
+**			bit30 : reserved for BIOS handshake
+**			bit29 : reserved
+**			bit28 :
+**			0 : no error, ignore AdapStatus/DevStatus/SenseData
+**			1 : Error, error code in AdapStatus/DevStatus/SenseData
+**			bit27 : reserved
+**	6. BIOS request
+**		All BIOS request is the same with request from PostQ
+**		Except :
+**			Request frame is sent from configuration space
+**		offset: 0x78 : Request Frame (bit30 == 1)
+**		offset: 0x18 : writeonly to generate
+**					IRQ to IOP331
+**		Completion of request:
+**			(bit30 == 0, bit28==err flag)
+**	7. Definition of SGL entry (structure)
+**	8. Message1 Out - Diag Status Code (????)
+**	9. Message0 message code :
+**		0x00 : NOP
+**		0x01 : Get Config
+**		->offset 0xa00 :for outbound message code message_rwbuffer
+**		(IOP331 send to driver)
+**		Signature             0x87974060(4)
+**		Request len           0x00000200(4)
+**		numbers of queue      0x00000100(4)
+**		SDRAM Size            0x00000100(4)-->256 MB
+**		IDE Channels          0x00000008(4)
+**		vendor                40 bytes char
+**		model                  8 bytes char
+**		FirmVer               16 bytes char
+**		Device Map            16 bytes char
+**		FirmwareVersion DWORD <== Added for checking of
+**						new firmware capability
+**		0x02 : Set Config
+**		->offset 0xa00 :for inbound message code message_rwbuffer
+**		(driver send to IOP331)
+**		Signature             0x87974063(4)
+**		UPPER32 of Request Frame  (4)-->Driver Only
+**		0x03 : Reset (Abort all queued Command)
+**		0x04 : Stop Background Activity
+**		0x05 : Flush Cache
+**		0x06 : Start Background Activity
+**			(re-start if back

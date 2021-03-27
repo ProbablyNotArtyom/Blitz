@@ -1,0 +1,5 @@
+#!/bin/sh
+# Run me to clean out the tree and reconfigure myself...
+
+make clean
+./configure --target=m68k-elf --disable-nls --disable-debug

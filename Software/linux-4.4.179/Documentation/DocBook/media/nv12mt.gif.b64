@@ -1,0 +1,74 @@
+Ethernet switch device driver model (switchdev)
+===============================================
+Copyright (c) 2014 Jiri Pirko <jiri@resnulli.us>
+Copyright (c) 2014-2015 Scott Feldman <sfeldma@gmail.com>
+
+
+The Ethernet switch device driver model (switchdev) is an in-kernel driver
+model for switch devices which offload the forwarding (data) plane from the
+kernel.
+
+Figure 1 is a block diagram showing the components of the switchdev model for
+an example setup using a data-center-class switch ASIC chip.  Other setups
+with SR-IOV or soft switches, such as OVS, are possible.
+
+
+                             User-space tools
+
+       user space                   |
+      +-------------------------------------------------------------------+
+       kernel                       | Netlink
+                                    |
+                     +--------------+-------------------------------+
+                     |         Network stack                        |
+                     |           (Linux)                            |
+                     |                                              |
+                     +----------------------------------------------+
+
+                           sw1p2     sw1p4     sw1p6
+                      sw1p1  +  sw1p3  +  sw1p5  +          eth1
+                        +    |    +    |    +    |            +
+                        |    |    |    |    |    |            |
+                     +--+----+----+----+----+----+---+  +-----+-----+
+                     |         Switch driver         |  |    mgmt   |
+                     |        (this document)        |  |   driver  |
+                     |                               |  |           |
+                     +--------------+----------------+  +-----------+
+                                    |
+       kernel                       | HW bus (eg PCI)
+      +-------------------------------------------------------------------+
+       hardware                     |
+                     +--------------+----------------+
+                     |         Switch device (sw1)   |
+                     |  +----+                       +--------+
+                     |  |    v offloaded data path   | mgmt port
+                     |  |    |                       |
+                     +--|----|----+----+----+----+---+
+                        |    |    |    |    |    |
+                        +    +    +    +    +    +
+                       p1   p2   p3   p4   p5   p6
+
+                             front-panel ports
+
+
+                                    Fig 1.
+
+
+Include Files
+-------------
+
+#include <linux/netdevice.h>
+#include <net/switchdev.h>
+
+
+Configuration
+-------------
+
+Use "depends NET_SWITCHDEV" in driver's Kconfig to ensure switchdev model
+support is built for driver.
+
+
+Switch Ports
+------------
+
+On switchdev driver initializ

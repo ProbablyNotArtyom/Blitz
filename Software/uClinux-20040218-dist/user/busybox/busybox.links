@@ -1,0 +1,17 @@
+/usr/bin/[
+/bin/ash
+/bin/date
+/usr/bin/dirname
+/bin/echo
+/bin/grep
+/sbin/ifconfig
+/sbin/init
+/bin/mkdir
+/bin/more
+/bin/mv
+/bin/ping
+/bin/ps
+/bin/pwd
+/sbin/route
+/bin/sh
+/usr/bin/test

@@ -1,0 +1,45 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef _ASM_ARM_FUTEX_H
+#define _ASM_ARM_FUTEX_H
+
+#ifdef __KERNEL__
+
+#include <linux/futex.h>
+#include <linux/uaccess.h>
+#include <asm/errno.h>
+
+#define __futex_atomic_ex_table(err_reg)			\
+	"3:\n"							\
+	"	.pushsection __ex_table,\"a\"\n"		\
+	"	.align	3\n"					\
+	"	.long	1b, 4f, 2b, 4f\n"			\
+	"	.popsection\n"					\
+	"	.pushsection .text.fixup,\"ax\"\n"		\
+	"	.align	2\n"					\
+	"4:	mov	%0, " err_reg "\n"			\
+	"	b	3b\n"					\
+	"	.popsection"
+
+#ifdef CONFIG_SMP
+
+#define __futex_atomic_op(insn, ret, oldval, tmp, uaddr, oparg)	\
+({								\
+	unsigned int __ua_flags;				\
+	smp_mb();						\
+	prefetchw(uaddr);					\
+	__ua_flags = uaccess_save_and_enable();			\
+	__asm__ __volatile__(					\
+	"1:	ldrex	%1, [%3]\n"				\
+	"	" insn "\n"					\
+	"2:	strex	%2, %0, [%3]\n"				\
+	"	teq	%2, #0\n"				\
+	"	bne	1b\n"					\
+	"	mov	%0, #0\n"				\
+	__futex_atomic_ex_table("%5")				\
+	: "=&r" (ret), "=&r" (oldval), "=&r" (tmp)		\
+	: "r" (uaddr), "r" (oparg), "Ir" (-EFAULT)		\
+	: "cc", "memory");					\
+	uaccess_restore(__ua_flags);				\
+})
+
+static inline int

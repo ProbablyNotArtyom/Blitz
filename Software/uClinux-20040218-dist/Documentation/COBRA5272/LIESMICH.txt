@@ -1,0 +1,53 @@
+Datei:      LIESMICH.txt
+Ort:        uClinux-dist/Documentation/COBRA5272/
+Author:     Heiko Degenhardt (linux@sentec-elektronik.de)
+Inhalt:     Dies ist das Top-Level-Dokument fuer die Board-Doku.
+Version:    v01.00
+Datum:      Fri Mar 22 15:34:04 CET 2002
+Lizenz:     Dieses Dokument steht unter der GNU GPL
+            (siehe uClinux-dist/COPYING)
+______________________________________________________________________
+
+CHANGES
+020322   v01.00 Erstellung
+         (hede)
+______________________________________________________________________
+
+1  Einleitung
+
+Dies ist das Top-Level-Dokument der Verzeichnisstruktur fuer die
+Dokumentation unseres COBRA5272-Boards.
+
+2  Das Board
+
+Das COBRA5272-Board der senTec Elektronik GmbH ist ein Board auf Basis
+des Motorola ColdFire 5272.
+Ich habe den Support fuer unser Board in die uClinux-Distribution
+von Lineo (http://www.uclinux.org/) implementiert.
+
+3  Verzeichnisstruktur fuer die Dokumentation
+
+Einige einfuehrende Dokumente in Deutsch finden sich unter ./de.
+Derzeit gibt es dort ein Getting-Started und eine (noch sehr kleine)
+FAQ. Ich hoffe, dass ich die Dokumentation in naechster Zukunft erweitern
+kann.
+
+4  Die Homepage des COBRA5272
+
+Sollten Sie Interesse an dem Board haben, koennen Sie es ueber die
+Webseite von ELEKTRONIKLADEN (http://www.elektronikladen.de/cobra5272.html)
+bestellen. Die Homepage ist http://www.sentec-elektronik.de/cobra/. 
+Hier finden sich Neuigkeiten ueber das Board, Software, Dokumentation
+u.v.a.m.
+
+5  Feedback
+
+Wenn Sie Fehler in der Software oder der Dokumentation finden, oder
+Verbesserungsvorschlaege oder Fragen haben, bitte schreiben Sie eine
+EMail an linux@sentec-elektronik.de.
+
+Mit freundlichen Gruessen
+Heiko Degenhardt
+______________________________________________________________________
+(c) 2002, senTec Elektronik GmbH, Heiko Degenhardt
+

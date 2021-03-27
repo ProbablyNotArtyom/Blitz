@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: GPL-2.0 OR X11
+/*
+ * Copyright (C) 2016 Boundary Devices, Inc.
+ */
+
+/dts-v1/;
+
+#include "imx6sx.dtsi"
+
+/ {
+	model = "Boundary Devices i.MX6 SoloX Nitrogen6sx Board";
+	compatible = "boundary,imx6sx-nitrogen6sx", "fsl,imx6sx";
+
+	memory@80000000 {
+		reg = <0x80000000 0x40000000>;
+	};
+
+	backlight-lvds {
+		compatible = "pwm-backlight";
+		pwms = <&pwm4 0 5000000>;
+		brightness-levels = <0 4 8 16 32 64 128 255>;
+		default-brightness-level = <6>;
+		power-supply = <&reg_3p3v>;
+	};
+
+	reg_1p8v: regulator-1p8v {
+		compatible = "regulator-fixed";
+		regulator-name = "1P8V";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		regulator-always-on;
+	};
+
+	reg_3p3v: regulator-3p3v {
+		compatible = "regulator-fixed";
+		regulator-name = "3P3V";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+	};
+
+	reg_can1_3v3: regulator-can1-3v3 {
+		compatible = "regulator-fixed";
+		regulator-name = "can1-3v3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpio4 27 GPIO_ACTIVE_LOW>;
+	};
+
+	reg_can2_3v3: regulator-can2-3v3 {
+		compatible = "regulator-fixed";
+		regulator-name = "can2-3v3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt 

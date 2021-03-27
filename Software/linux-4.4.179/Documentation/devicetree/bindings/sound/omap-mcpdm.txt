@@ -1,0 +1,23 @@
+/*
+ * Copyright (C) 2017 Moxa Inc. - https://www.moxa.com/
+ *
+ * Author: Harry YJ Jhou (周亞諄) <harryyj.jhou@moxa.com>
+ *         Jimmy Chen (陳永達)    <jimmy.chen@moxa.com>
+ *         SZ Lin (林上智)        <sz.lin@moxa.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+#include "ls1021a.dtsi"
+
+/ {
+	model = "Moxa UC-8410A";
+
+	aliases {
+		enet0_rgmii_phy = &rgmi

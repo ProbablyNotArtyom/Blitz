@@ -1,0 +1,13 @@
+Kernel driver w1-gpio
+=====================
+
+Author: Ville Syrjala <syrjala@sci.fi>
+
+
+Description
+-----------
+
+GPIO 1-wire bus master driver. The driver uses the GPIO API to control the
+wire and the GPIO pin can be specified using GPIO machine descriptor tables.
+It is also possible to define the master using device tree, see
+Docume

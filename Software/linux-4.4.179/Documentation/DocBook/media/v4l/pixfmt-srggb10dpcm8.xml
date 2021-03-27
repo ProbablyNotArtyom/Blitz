@@ -1,0 +1,25 @@
+Introduction
+============
+
+Executive summary
+-----------------
+
+The rest of this section covers the scope of the kernel development process
+and the kinds of frustrations that developers and their employers can
+encounter there.  There are a great many reasons why kernel code should be
+merged into the official ("mainline") kernel, including automatic
+availability to users, community support in many forms, and the ability to
+influence the direction of kernel development.  Code contributed to the
+Linux kernel must be made available under a GPL-compatible license.
+
+:ref:`development_process` introduces the development process, the kernel
+release cycle, and the mechanics of the merge window.  The various phases in
+the patch development, review, and merging cycle are covered.  There is some
+discussion of tools and mailing lists.  Developers wanting to get started
+with kernel development are encouraged to track down and fix bugs as an
+initial exercise.
+
+:ref:`development_early_stage` covers early-stage project planning, with an
+emphasis on involving the development community as soon as possible.
+
+:ref:`development_coding` is about the coding process; several pitfalls 

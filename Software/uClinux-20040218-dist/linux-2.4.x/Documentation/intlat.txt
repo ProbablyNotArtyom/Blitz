@@ -1,0 +1,114 @@
+Documentation/intlat.txt
+http://www.uow.edu.au/~andrewm/linux/
+
+Andrew Morton <andrewm@uow.edu.au>
+25 March 2000
+
+NOTE-NOTE-NOTE
+==============
+
+The intlat patch alters include/linux/threads.h! It changes NR_CPUS
+from 32 to 2.  If you have more than two CPUs then you should change
+this appropriately.
+
+This is because intlat generates a _lot_ of storage for its data
+structures - about 6,000 structures whose size is O(NR_CPUS *
+N_TIMEPEG_ARCS).  THis can create a kernel which has a sixty megabyte
+footprint! Setting NR_CPUS to 2 results in a ~4 MByte kernel.
+
+
+Installation and Usage
+======================
+
+1: Grab the timepeg+intlat patch and the 'tpt' tool from the above
+   URL.  Build tpt and install it somewhere.
+
+2: Apply the patch to your kernel.
+
+3: Run 'make menuconfig' or whatever.
+
+4: Enable timepegs under 'Kernel Hacking'
+
+5: Enable intlat under 'Kernel Hacking'
+
+5: make clean && make dep && make bzImage && make modules
+
+Now run your kernel, and once it has booted run 'tpt'.  This will dump
+all the current timepegs and zero the timepeg accumulators.  You
+probably want to do this because the kernel boot process introduces
+once-off metrics which you aren't likely to be interested in.
+
+Now force the kernel to traverse the code paths which you are
+interested in (run some n/w traffic, force paging, etc).
+
+Now run
+
+	tpt -s | sort -nr +5
+
+to display the sorted list of interrupt blockages.
+
+
+Details
+=======
+
+intlat is a tool which allows you to measure the amount of time which
+the kernel spends with interrupts disabled.  intlat considers
+interrupts to be disabled in two circumstances:
+
+1: The processor's IF status register flag is cleared in
+   non-interrupt context and
+
+2: The processor is in interrupt context and has not set the IF
+   flag.
+
+The output is in timepeg format.  It displays the file-and-line at
+which interrupts were disabled and the file-and-line at which they were
+reenabled.  The min, max and average interrupts-off times are
+displayed, as is the number of times this path was traversed.  All
+times are in microseconds.
+
+Example:
+
+foo()
+{
+	local_irq_save();
+	...
+	local_irq_save();
+	...
+	local_irq_restore();
+	...
+	local_irq_restore();
+}
+
+In this case intlat will tell you the amount of time between the first
+local_irq_save() and the last local_irq_restore().
+
+Another example:
+
+interrupt_routine()
+{
+	...
+	__sti();
+	...
+	__cli();
+	...
+}
+
+In this case intlat will tell you:
+
+1: The amount of time between the interrupt being taken and the __sti() and 
+
+2: the amount of time between the __cli() and the return from interrupt.
+
+These two times represent periods when interrupts are blocked.
+
+Note that the figures here will be a little inaccurate (low) because
+the intlat library doesn't notice the start-of-interupt until we hit
+do_IRQ() and it assumes that the interrupt completes at the end of
+do_IRQ().  This probably makes 5-10 uSecs difference.
+
+Because it is based on timepegs, intlat accumulates statistics on a
+per-CPU basis.  The per-CPU data is aggregated by the offline 'tpt'
+tool.
+
+

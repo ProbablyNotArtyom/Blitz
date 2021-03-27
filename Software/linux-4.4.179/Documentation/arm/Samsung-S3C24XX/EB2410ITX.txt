@@ -1,0 +1,30 @@
+This file contains brief information about the SCSI tape driver.
+The driver is currently maintained by Kai Mäkisara (email
+Kai.Makisara@kolumbus.fi)
+
+Last modified: Tue Feb  9 21:54:16 2016 by kai.makisara
+
+
+BASICS
+
+The driver is generic, i.e., it does not contain any code tailored
+to any specific tape drive. The tape parameters can be specified with
+one of the following three methods:
+
+1. Each user can specify the tape parameters he/she wants to use
+directly with ioctls. This is administratively a very simple and
+flexible method and applicable to single-user workstations. However,
+in a multiuser environment the next user finds the tape parameters in
+state the previous user left them.
+
+2. The system manager (root) can define default values for some tape
+parameters, like block size and density using the MTSETDRVBUFFER ioctl.
+These parameters can be programmed to come into effect either when a
+new tape is loaded into the drive or if writing begins at the
+beginning of the tape. The second method is applicable if the tape
+drive performs auto-detection of the tape format well (like some
+QIC-drives). The result is that any tape can be read, writing can be
+continued using existing format, and the default format is used if
+the tape is rewritten from the beginning (or a new tape is written
+for the first time). The first method is applicable if the drive
+does not perform auto-detection well enough and there

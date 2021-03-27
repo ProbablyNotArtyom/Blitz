@@ -1,0 +1,15 @@
+Last reviewed: 10/05/2007
+
+
+The Linux Watchdog driver API.
+
+Copyright 2002 Christer Weingel <wingel@nano-system.com>
+
+Some parts of this document are copied verbatim from the sbc60xxwdt
+driver which is (c) Copyright 2000 Jakob Oestergaard <jakob@ostenfeld.dk>
+
+This document describes the state of the Linux 2.4.18 kernel.
+
+Introduction:
+
+A Watchdog Timer (WDT) is a hardware circuit that can reset t

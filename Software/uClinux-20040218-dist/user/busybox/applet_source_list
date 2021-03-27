@@ -1,0 +1,1 @@
+APPLET_SOURCES := ash.c date.c dirname.c echo.c grep.c ifconfig.c init.c mkdir.c more.c mv.c ping.c ps.c pwd.c route.c test.c 

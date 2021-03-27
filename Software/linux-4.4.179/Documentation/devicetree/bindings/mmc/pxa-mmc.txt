@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Broadcom BCM470X / BCM5301X ARM platform code.
+ * DTS for Asus RT-N18U
+ *
+ * Copyright (C) 2014 Rafał Miłecki <zajec5@gmail.com>
+ */
+
+/dts-v1/;
+
+#include "bcm47081.dtsi"
+#include "bcm5301x-nand-cs0-bch8.dtsi"
+
+/ {
+	compatible = "asus,rt-n18u", "brcm,bcm47081", "brcm,bcm4708";
+	model = "Asus RT-N18U (BCM47081)";
+
+	chosen {
+		bootargs = "console=ttyS0,115200";
+	};
+
+	memory {
+		reg = <0x00000000 0x08000000
+		       0x88000000 0x08000000>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		power {
+			label = "bcm53xx:blue:power";
+			gpios = <&chipcommon 0 GPI

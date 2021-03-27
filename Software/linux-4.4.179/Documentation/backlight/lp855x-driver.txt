@@ -1,0 +1,62 @@
+=======================================
+Software Interface ALSA-DSP MADI Driver 
+=======================================
+
+(translated from German, so no good English ;-), 
+
+2004 - winfried ritsch
+
+
+Full functionality has been added to the driver. Since some of
+the Controls and startup-options  are ALSA-Standard and only the
+special Controls are described and discussed below.
+
+
+Hardware functionality
+======================
+   
+Audio transmission
+------------------
+
+* number of channels --  depends on transmission mode
+
+		The number of channels chosen is from 1..Nmax. The reason to
+		use for a lower number of channels is only resource allocation,
+		since unused DMA channels are disabled and less memory is
+		allocated. So also the throughput of the PCI system can be
+		scaled. (Only important for low performance boards).
+
+* Single Speed -- 1..64 channels 
+
+.. note::
+		 (Note: Choosing the 56channel mode for transmission or as
+		 receiver, only 56 are transmitted/received over the MADI, but
+		 all 64 channels are available for the mixer, so channel count
+		 for the driver)
+
+* Double Speed -- 1..32 channels
+
+.. note::
+		 Note: Choosing the 56-channel mode for
+		 transmission/receive-mode , only 28 are transmitted/received
+		 over the MADI, but all 32 channels are available for the mixer,
+		 so channel count for the driver
+
+
+* Quad Speed -- 1..16 channels 
+
+.. note::
+		 Choosing the 56-channel mode for
+		 transmission/receive-mode , only 14 are transmitted/received
+		 over the MADI, but all 16 channels are available for the mixer,
+		 so channel count for the driver
+
+* Format -- signed 32 Bit Little Endian (SNDRV_PCM_FMTBIT_S32_LE)
+
+* Sample Rates --
+
+       Single Speed -- 32000, 44100, 48000
+
+       Double Speed -- 64000, 88200, 96000 (untested)
+
+       Quad 

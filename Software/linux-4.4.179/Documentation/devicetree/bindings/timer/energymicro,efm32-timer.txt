@@ -1,0 +1,35 @@
+/*
+ * Copyright (C) 2015
+ *   Nikolaus Schaller <hns@goldelico.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/*
+ * device tree for OpenPandora 1GHz with DM3730
+ */
+
+/dts-v1/;
+
+#include "omap36xx.dtsi"
+#include "omap3-pandora-common.dtsi"
+
+/ {
+	model = "Pandora Handheld Console 1GHz";
+
+	compatible = "openpandora,omap3-pandora-1ghz", "ti,omap36xx", "ti,omap3";
+};
+
+&omap3_pmx_core2 {
+
+	pinctrl-names = "default";
+	pinctrl-0 = <
+		&hsusb2_2_pins
+		&control_pins
+	>;
+
+	hsusb2_2_pins: pinmux_hsusb2_2_pins {
+		pinctrl-single,pins = <
+			OMAP3630_CORE2_IOPAD(0x25f0, PIN_O

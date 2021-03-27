@@ -1,0 +1,38 @@
+i.MX Video Capture Driver
+=========================
+
+Introduction
+------------
+
+The Freescale i.MX5/6 contains an Image Processing Unit (IPU), which
+handles the flow of image frames to and from capture devices and
+display devices.
+
+For image capture, the IPU contains the following internal subunits:
+
+- Image DMA Controller (IDMAC)
+- Camera Serial Interface (CSI)
+- Image Converter (IC)
+- Sensor Multi-FIFO Controller (SMFC)
+- Image Rotator (IRT)
+- Video De-Interlacing or Combining Block (VDIC)
+
+The IDMAC is the DMA controller for transfer of image frames to and from
+memory. Various dedicated DMA channels exist for both video capture and
+display paths. During transfer, the IDMAC is also capable of vertical
+image flip, 8x8 block transfer (see IRT description), pixel component
+re-ordering (for example UYVY to YUYV) within the same colorspace, and
+even packed <--> planar conversion. It can also perform a simple
+de-interlacing by interleaving even and odd lines during transfer
+(without motion compensation which requires the VDIC).
+
+The CSI is the backend capture unit that interfaces directly with
+camera sensors over Parallel, BT.656/1120, and MIPI CSI-2 busses.
+
+The IC handles color-space conversion, resizing (downscaling and
+upscaling), horizontal flip, and 90/270 degree rotation operations.
+
+There are three independent "tasks" within the IC that can carry out
+conversions concurrently: pre-process encoding, pre-process viewfinder,
+and post-processing. Within each task, conversions are split into three
+sections: downsizi

@@ -1,0 +1,72 @@
+/*
+ * Linux performance counter support for ARC700 series
+ *
+ * Copyright (C) 2013-2015 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This code is inspired by the perf support of various other architectures.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ */
+#include <linux/errno.h>
+#include <linux/interrupt.h>
+#include <linux/module.h>
+#include <linux/of.h>
+#include <linux/perf_event.h>
+#include <linux/platform_device.h>
+#include <asm/arcregs.h>
+#include <asm/stacktrace.h>
+
+struct arc_pmu {
+	struct pmu	pmu;
+	unsigned int	irq;
+	int		n_counters;
+	u64		max_period;
+	int		ev_hw_idx[PERF_COUNT_ARC_HW_MAX];
+};
+
+struct arc_pmu_cpu {
+	/*
+	 * A 1 bit for an index indicates that the counter is being used for
+	 * an event. A 0 means that the counter can be used.
+	 */
+	unsigned long	used_mask[BITS_TO_LONGS(ARC_PERF_MAX_COUNTERS)];
+
+	/*
+	 * The events that are active on the PMU for the given index.
+	 */
+	struct perf_event *act_counter[ARC_PERF_MAX_COUNTERS];
+};
+
+struct arc_callchain_trace {
+	int depth;
+	void *perf_stuff;
+};
+
+static int callchain_trace(unsigned int addr, void *data)
+{
+	struct arc_callchain_trace *ctrl = data;
+	struct perf_callchain_entry_ctx *entry = ctrl->perf_stuff;
+	perf_callchain_store(entry, addr);
+
+	if (ctrl->depth++ < 3)
+		return 0;
+
+	return -1;
+}
+
+void
+perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *regs)
+{
+	struct arc_callchain_trace ctrl = {
+		.depth = 0,
+		.perf_stuff = entry,
+	};
+
+	arc_unwind_core(NULL, regs, callchain_trace, &ctrl);
+}
+
+void
+perf_callchain_user(struct perf_callchain_entry_ctx 

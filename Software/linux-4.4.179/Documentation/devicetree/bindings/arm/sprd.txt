@@ -1,0 +1,12 @@
+KVM-specific MSRs.
+Glauber Costa <glommer@redhat.com>, Red Hat Inc, 2010
+=====================================================
+
+KVM makes use of some custom MSRs to service some requests.
+
+Custom MSRs have a range reserved for them, that goes from
+0x4b564d00 to 0x4b564dff. There are MSRs outside this area,
+but they are deprecated and their use is discouraged.
+
+Custom MSR list
+----

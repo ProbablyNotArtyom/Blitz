@@ -1,0 +1,86 @@
+/*
+ * Copyright (C) 2015, 2016 Zodiac Inflight Innovations
+ *
+ * Based on an original 'vf610-twr.dts' which is Copyright 2015,
+ * Freescale Semiconductor, Inc.
+ *
+ * This file is dual-licensed: you can use it either under the terms
+ * of the GPL or the X11 license, at your option. Note that this dual
+ * licensing only applies to this file, and not this project as a
+ * whole.
+ *
+ *  a) This file is free software; you can redistribute it and/or
+ *     modify it under the terms of the GNU General Public License
+ *     version 2 as published by the Free Software Foundation.
+ *
+ *     This file is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ * Or, alternatively,
+ *
+ *  b) Permission is hereby granted, free of charge, to any person
+ *     obtaining a copy of this software and associated documentation
+ *     files (the "Software"), to deal in the Software without
+ *     restriction, including without limitation the rights to use,
+ *     copy, modify, merge, publish, distribute, sublicense, and/or
+ *     sell copies of the Software, and to permit persons to whom the
+ *     Software is furnished to do so, subject to the following
+ *     conditions:
+ *
+ *     The above copyright notice and this permission notice shall be
+ *     included in all copies or substantial portions of the Software.
+ *
+ *     THE SOFTWARE IS PROVIDED , WITHOUT WARRANTY OF ANY KIND,
+ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ *     OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+/dts-v1/;
+#include "vf610-zii-dev.dtsi"
+
+/ {
+	model = "ZII VF610 Development Board, Rev C";
+	compatible = "zii,vf610dev-c", "zii,vf610dev", "fsl,vf610";
+
+	mdio-mux {
+		compatible = "mdio-mux-gpio";
+		pinctrl-0 = <&pinctrl_mdio_mux>;
+		pinctrl-names = "default";
+		gpios = <&gpio0 8  GPIO_ACTIVE_HIGH
+			 &gpio0 9  GPIO_ACTIVE_HIGH
+			 &gpio0 25 GPIO_ACTIVE_HIGH>;
+		mdio-parent-bus = <&mdio1>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		mdio_mux_1: mdio@1 {
+			reg = <1>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			switch0: switch@0 {
+				compatible = "marvell,mv88e6190";
+				pinctrl-0 = <&pinctrl_gpio_switch0>;
+				pinctrl-names = "default";
+				reg = <0>;
+				dsa,member = <0 0>;
+				eeprom-length = <65536>;
+				interrupt-parent = <&gpio0>;
+				interrupts = <27 IRQ_TYPE_LEVEL_LOW>;
+				interrupt-controller;
+				#interrupt-cells = <2>;
+
+				ports {
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					port@0 {
+						reg = <0>;
+						label = "cpu";

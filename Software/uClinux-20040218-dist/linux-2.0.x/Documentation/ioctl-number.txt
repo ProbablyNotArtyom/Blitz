@@ -1,0 +1,106 @@
+Ioctl Numbers
+6 Aug 1996
+Michael Chastain
+<mec@duracef.shout.net>
+
+If you are adding new ioctl's to the kernel, you should use the _IO
+macros defined in <linux/ioctl.h>:
+
+    _IO    an ioctl with no parameters
+    _IOW   an ioctl with write parameters (from user's point of view)
+    _IOR   an ioctl with read parameters (from user's point of view)
+    _IOWR  an ioctl with both write and read parameters.
+
+'Write' and 'read' are from the user's point of view.  This is like the
+system calls 'write' and 'read'.  For example, a SET_FOO ioctl would be
+_IOW, although the kernel would actually read data from user space; a
+GET_FOO ioctl would be _IOR, although the kernel would actually write
+data to user space.
+
+The first argument to _IO, _IOW, _IOR, or _IOWR is an identifying letter
+or number from the table below.  If you are writing a driver for a new
+device and need a letter, pick an unused letter.  You can register the
+letter by patching this file and submitting the patch to Linus Torvalds.
+Or you can e-mail me at <mec@duracef.shout.net> and I'll register one
+for you.
+
+The second argument to _IO, _IOW, _IOR, or _IOWR is a sequence number
+to distinguish ioctls from each other.  The third argument is the size
+of the structure going into the kernel or coming out of the kernel.
+
+Some devices use their major number as the identifier; this is not
+recommended.  Some devices are even more irregular and don't follow
+the convention at all.
+
+Following the convention is good because:
+
+(1) Keeping the ioctl's globally unique helps error checking:
+    if a program calls an ioctl on the wrong device, it will get an
+    error rather than some unexpected behaviour.
+
+(2) The 'strace' build procedure automatically finds ioctl numbers
+    defined with _IO, _IOW, _IOR, or _IOWR.
+
+(3) 'strace' can decode numbers back into useful names when the
+    numbers are unique.
+
+(4) People looking for ioctls can grep for them more easily when
+    the convention is used to define the ioctl numbers.
+
+(5) When following the convention, the driver code can use generic
+    code to call verify_area to validate parameters.
+
+This table lists ioctls visible from user land for Linux/i386.  It is
+current to Linux 2.0.11.
+
+Code	Seq#	Include File		Comments
+========================================================
+0x00	01-02	linux/fs.h		conflict!
+0x00	01-04	scsi/scsi_ioctl.h	conflict!
+0x02	all	linux/fd.h
+0x03	all	linux/hdreg.h
+0x04	all	linux/umsdos_fs.h
+0x06	all	linux/lp.h
+0x09	all	linux/md.h
+0x12	all	linux/fs.h
+0x20	all	linux/cm206.h
+0x22	all	linux/scc.h		conflict! (version 2.01 of z8530drv)
+0x22	all	scsi/sg.h		conflict!
+'A'	all	linux/apm_bios.h
+'B'	all	linux/baycom.h
+'C'	all	linux/soundcard.h
+'F'	all	linux/fb.h
+'I'	all	linux/isdn.h
+'K'	all	linux/kd.h
+'L'	all	linux/loop.h
+'M'	all	linux/soundcard.h
+'P'	all	linux/soundcard.h
+'Q'	all	linux/soundcard.h
+'R'	all	linux/random.h
+'S'	00-1F	linux/cdrom.h
+'S'	20-7F	linux/ucdrom.h
+'S'	80-81	scsi/scsi_ioctl.h
+'S'	82-FF	scsi/scsi.h
+'T'	all	linux/soundcard.h	conflict!
+'T'	all	asm-i386/ioctls.h	conflict!
+'V'	all	linux/vt.h
+'W'	00-1F	linux/pcwd.h
+'Y'	all	linux/cyclades.h
+'Z'	all	linux/scc.h		version 2.2 of z8530drv
+'a'	all	various, see http://lrcwww.epfl.ch/linux-atm/magic.html
+'c'	all	linux/comstats.h
+'f'	all	linux/ext2_fs.h
+'m'	all	linux/mtio.h		conflict!
+'m'	all	linux/soundcard.h	conflict!
+'n'	all	linux/ncp_fs.h
+'p'	all	linux/mc146818rtc.h
+'r'	all	linux/msdos_fs.h
+'s'	all	linux/cdk.h
+'t'	00-7F	linux/if_ppp.h
+'t'	80-8F	linux/isdn_ppp.h
+'u'	all	linux/smb_fs.h
+'v'	all	linux/ext2_fs.h
+'w'	all	CERN SCI driver (in development)
+0x89	00-0F	asm-i386/sockios.h
+0x89	10-FF	linux/sockios.h
+0x90	00	linux/sbpcd.h

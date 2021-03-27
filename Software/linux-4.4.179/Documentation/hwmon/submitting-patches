@@ -1,0 +1,238 @@
+// SPDX-License-Identifier: GPL-2.0
+/ {
+	clock@60006000 {
+		emc-timings-1 {
+			nvidia,ram-code = <1>;
+
+			timing-12750000 {
+				clock-frequency = <12750000>;
+				nvidia,parent-clock-frequency = <408000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_P>;
+				clock-names = "emc-parent";
+			};
+			timing-20400000 {
+				clock-frequency = <20400000>;
+				nvidia,parent-clock-frequency = <408000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_P>;
+				clock-names = "emc-parent";
+			};
+			timing-40800000 {
+				clock-frequency = <40800000>;
+				nvidia,parent-clock-frequency = <408000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_P>;
+				clock-names = "emc-parent";
+			};
+			timing-68000000 {
+				clock-frequency = <68000000>;
+				nvidia,parent-clock-frequency = <408000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_P>;
+				clock-names = "emc-parent";
+			};
+			timing-102000000 {
+				clock-frequency = <102000000>;
+				nvidia,parent-clock-frequency = <408000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_P>;
+				clock-names = "emc-parent";
+			};
+			timing-204000000 {
+				clock-frequency = <204000000>;
+				nvidia,parent-clock-frequency = <408000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_P>;
+				clock-names = "emc-parent";
+			};
+			timing-300000000 {
+				clock-frequency = <300000000>;
+				nvidia,parent-clock-frequency = <600000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_C>;
+				clock-names = "emc-parent";
+			};
+			timing-396000000 {
+				clock-frequency = <396000000>;
+				nvidia,parent-clock-frequency = <792000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_M>;
+				clock-names = "emc-parent";
+			};
+			/* TODO: Add 528MHz frequency */
+			timing-600000000 {
+				clock-frequency = <600000000>;
+				nvidia,parent-clock-frequency = <600000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_C_UD>;
+				clock-names = "emc-parent";
+			};
+			timing-792000000 {
+				clock-frequency = <792000000>;
+				nvidia,parent-clock-frequency = <792000000>;
+				clocks = <&tegra_car TEGRA124_CLK_PLL_M_UD>;
+				clock-names = "emc-parent";
+			};
+		};
+	};
+
+	emc@7001b000 {
+		emc-timings-1 {
+			nvidia,ram-code = <1>;
+
+			timing-12750000 {
+				clock-frequency = <12750000>;
+
+				nvidia,emc-auto-cal-config = <0xa1430000>;
+				nvidia,emc-auto-cal-config2 = <0x00000000>;
+				nvidia,emc-auto-cal-config3 = <0x00000000>;
+				nvidia,emc-auto-cal-interval = <0x001fffff>;
+				nvidia,emc-bgbias-ctl0 = <0x00000008>;
+				nvidia,emc-cfg = <0x73240000>;
+				nvidia,emc-cfg-2 = <0x000008c5>;
+				nvidia,emc-ctt-term-ctrl = <0x00000802>;
+				nvidia,emc-mode-1 = <0x80100003>;
+				nvidia,emc-mode-2 = <0x80200008>;
+				nvidia,emc-mode-4 = <0x00000000>;
+				nvidia,emc-mode-reset = <0x80001221>;
+				nvidia,emc-mrs-wait-cnt = <0x000c000c>;
+				nvidia,emc-sel-dpd-ctrl = <0x00040128>;
+				nvidia,emc-xm2dqspadctrl2 = <0x0130b118>;
+				nvidia,emc-zcal-cnt-long = <0x00000042>;
+				nvidia,emc-zcal-interval = <0x00000000>;
+
+				nvidia,emc-configuration = <
+					0x00000000
+					0x00000003
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000004
+					0x0000000a
+					0x00000003
+					0x0000000b
+					0x00000000
+					0x00000000
+					0x00000003
+					0x00000003
+					0x00000000
+					0x00000006
+					0x00000006
+					0x00000006
+					0x00000002
+					0x00000000
+					0x00000005
+					0x00000005
+					0x00010000
+					0x00000003
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000004
+					0x0000000c
+					0x0000000d
+					0x0000000f
+					0x00000060
+					0x00000000
+					0x00000018
+					0x00000002
+					0x00000002
+					0x00000001
+					0x00000000
+					0x00000007
+					0x0000000f
+					0x00000005
+					0x00000005
+					0x00000004
+					0x00000005
+					0x00000004
+					0x00000000
+					0x00000000
+					0x00000005
+					0x00000005
+					0x00000064
+					0x00000000
+					0x00000000
+					0x00000000
+					0x106aa298
+					0x002c00a0
+					0x00008000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00064000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00004000
+					0x00000000
+					0x00000000
+					0x00004000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x00000000
+					0x000fc000
+					0x000fc000
+					0x000fc000
+					0x000fc000
+					0x0000fc00
+					0x0000fc00
+					0x0000fc00
+					0x0000fc00
+					0x10000280
+					0x00000000
+					0x00111111
+					0x00000000
+					0x00000000
+					0x77ffc081
+					0x00000303
+					0x81f1f108
+					0x07070004
+					0x0000003f
+					0x016eeeee
+					0x51451400
+					0x00514514
+					0x00514514
+					0x51451400
+					0x0000003f
+					0x00000007
+					0x00000000
+					0x00000042
+					0x000c000c
+					0x00000000
+					0x00000003
+					0x0000f2f3
+					0x

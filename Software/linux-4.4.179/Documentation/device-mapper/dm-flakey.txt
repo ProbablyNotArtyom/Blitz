@@ -1,0 +1,56 @@
+========================
+ftrace - Function Tracer
+========================
+
+Copyright 2008 Red Hat Inc.
+
+:Author:   Steven Rostedt <srostedt@redhat.com>
+:License:  The GNU Free Documentation License, Version 1.2
+          (dual licensed under the GPL v2)
+:Original Reviewers:  Elias Oltmanns, Randy Dunlap, Andrew Morton,
+		      John Kacur, and David Teigland.
+
+- Written for: 2.6.28-rc2
+- Updated for: 3.10
+- Updated for: 4.13 - Copyright 2017 VMware Inc. Steven Rostedt
+- Converted to rst format - Changbin Du <changbin.du@intel.com>
+
+Introduction
+------------
+
+Ftrace is an internal tracer designed to help out developers and
+designers of systems to find what is going on inside the kernel.
+It can be used for debugging or analyzing latencies and
+performance issues that take place outside of user-space.
+
+Although ftrace is typically considered the function tracer, it
+is really a frame work of several assorted tracing utilities.
+There's latency tracing to examine what occurs between interrupts
+disabled and enabled, as well as for preemption and from a time
+a task is woken to the task is actually scheduled in.
+
+One of the most common uses of ftrace is the event tracing.
+Through out the kernel is hundreds of static event points that
+can be enabled via the tracefs file system to see what is
+going on in certain parts of the kernel.
+
+See events.txt for more information.
+
+
+Implementation Details
+----------------------
+
+See :doc:`ftrace-design` for details for arch porters and such.
+
+
+The File System
+---------------
+
+Ftrace uses the tracefs file system to hold the control files as
+well as the files to display output.
+
+When tracefs is configured into the kernel (which selecting any ftrace
+option will do) the directory /sys/kernel/tracing will be created. To mount
+this directory, you can add to your /etc/fstab file::
+
+ tracefs       /sys/kernel/tracing       tracefs defaults       

@@ -1,0 +1,49 @@
+/*
+ * at91sam9x5_lcd.dtsi - Device Tree Include file for AT91SAM9x5 SoC with an
+ * LCD controller.
+ *
+ * Copyright (C) 2013 Boris BREZILLON <b.brezillon@overkiz.com>
+ *
+ * Licensed under GPLv2.
+ */
+
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	ahb {
+		apb {
+			hlcdc: hlcdc@f8038000 {
+				compatible = "atmel,at91sam9x5-hlcdc";
+				reg = <0xf8038000 0x4000>;
+				interrupts = <25 IRQ_TYPE_LEVEL_HIGH 0>;
+				clocks = <&lcdc_clk>, <&lcdck>, <&clk32k>;
+				clock-names = "periph_clk","sys_clk", "slow_clk";
+				status = "disabled";
+
+				hlcdc-display-controller {
+					compatible = "atmel,hlcdc-display-controller";
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					port@0 {
+						#address-cells = <1>;
+						#size-cells = <0>;
+						reg = <0>;
+					};
+				};
+
+				hlcdc_pwm: hlcdc-pwm {
+					compatible = "atmel,hlcdc-pwm";
+					pinctrl-names = "default";
+					pinctrl-0 = <&pinctrl_lcd_pwm>;
+					#pwm-cells = <3>;
+				};
+			};
+
+			pinctrl@fffff400 {
+				lcd {
+					pinctrl_lcd_base: lcd-base-0 {
+						atmel,pins =
+							<AT91_PIOC 27 AT91_PERIPH_A AT91_PINCTRL_NONE	/* LCDVSYNC */
+							 AT91_PIOC 28 A

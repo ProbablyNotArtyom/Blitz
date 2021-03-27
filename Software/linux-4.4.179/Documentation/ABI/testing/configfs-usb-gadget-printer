@@ -1,0 +1,15 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_DBG_G_CHIP_INFO:
+
+****************************
+ioctl VIDIOC_DBG_G_CHIP_INFO
+****************************
+
+Name
+====
+
+VIDIOC_DBG_G_CHIP_INFO - Identify the chips on a TV card
+
+
+Sy

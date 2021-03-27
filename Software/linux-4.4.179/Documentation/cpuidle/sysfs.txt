@@ -1,0 +1,82 @@
+Power allocator governor tunables
+=================================
+
+Trip points
+-----------
+
+The governor works optimally with the following two passive trip points:
+
+1.  "switch on" trip point: temperature above which the governor
+    control loop starts operating.  This is the first passive trip
+    point of the thermal zone.
+
+2.  "desired temperature" trip point: it should be higher than the
+    "switch on" trip point.  This the target temperature the governor
+    is controlling for.  This is the last passive trip point of the
+    thermal zone.
+
+PID Controller
+--------------
+
+The power allocator governor implements a
+Proportional-Integral-Derivative controller (PID controller) with
+temperature as the control input and power as the controlled output:
+
+    P_max = k_p * e + k_i * err_integral + k_d * diff_err + sustainable_power
+
+where
+    e = desired_temperature - current_temperature
+    err_integral is the sum of previous errors
+    diff_err = e - previous_error
+
+It is similar to the one depicted below:
+
+                                      k_d
+                                       |
+current_temp                           |
+     |                                 v
+     |                +----------+   +---+
+     |         +----->| diff_err |-->| X |------+
+     |         |      +----------+   +---+      |
+     |         |                                |      tdp        actor
+     |         |                      k_i       |       |  get_requested_power()
+     |         |                       |        |       |        |     |
+     |         |                       |        |       |        |     | ...
+     v         |                       v        v       v        v     v
+   +---+       |      +-------+      +---+    +---+   +---+   +----------+
+   | S |-------+----->| sum e |----->| X |--->| S |-->| S |-->|power     |
+   +---+       |      +-------+      +---+    +---+   +---+   |allocation|
+     ^         |                                ^             +----------+
+     |         |                                |                |     |
+     |         |        +---+                   |                |     |
+     |         +------->| X |-------------------+                v     v
+     |                  +---+                               granted performance
+desired_temperature       ^
+                          |
+                          |
+                      k_po/k_pu
+
+Sustainable power
+-----------------
+
+An estimate of the sustainable dissipatable power (in mW) should be
+provided while registering the thermal zone.  This estimates the
+sustained power that can be dissipated at the desired control
+temperature.  This is the maximum sustained power for allocation at
+the desired maximum temperature.  The actual sustained power can vary
+for a number of reasons.  The closed loop controller will take care of
+variations such as environmental conditions, and some factors related
+to the speed-grade of the silicon.  `sustainable_power` is therefore
+simply an estimate, and may be tuned to affect the aggressiveness of
+the thermal ramp. For reference, the sustainable power of a 4" phone
+is typically 2000mW, while on a 10" tablet is around 4500mW (may vary
+depending on screen size).
+
+If you are using device tree, do add it as a property of the
+thermal-zone.  For example:
+
+	thermal-zones {
+		soc_thermal {
+			polling-delay = <1000>;
+			polling-delay-passive = <100>;
+			sustainable-power = <2

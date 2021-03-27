@@ -1,0 +1,109 @@
+
+                 Linux Gadget Serial Driver v2.0
+                           11/20/2004
+                  (updated 8-May-2008 for v2.3)
+
+
+License and Disclaimer
+----------------------
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of
+the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public
+License along with this program; if not, write to the Free
+Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+MA 02111-1307 USA.
+
+This document and the gadget serial driver itself are
+Copyright (C) 2004 by Al Borchers (alborchers@steinerpoint.com).
+
+If you have questions, problems, or suggestions for this driver
+please contact Al Borchers at alborchers@steinerpoint.com.
+
+
+Prerequisites
+-------------
+Versions of the gadget serial driver are available for the
+2.4 Linux kernels, but this document assumes you are using
+version 2.3 or later of the gadget serial driver in a 2.6
+Linux kernel.
+
+This document assumes that you are familiar with Linux and
+Windows and know how to configure and build Linux kernels, run
+standard utilities, use minicom and HyperTerminal, and work with
+USB and serial devices.  It also assumes you configure the Linux
+gadget and usb drivers as modules.
+
+With version 2.3 of the driver, major and minor device nodes are
+no longer statically defined.  Your Linux based system should mount
+sysfs in /sys, and use "mdev" (in Busybox) or "udev" to make the
+/dev nodes matching the sysfs /sys/class/tty files.
+
+
+
+Overview
+--------
+The gadget serial driver is a Linux USB gadget driver, a USB device
+side driver.  It runs on a Linux system that has USB device side
+hardware; for example, a PDA, an embedded Linux system, or a PC
+with a USB development card.
+
+The gadget serial driver talks over USB to either a CDC ACM driver
+or a generic USB serial driver running on a host PC.
+
+   Host
+   --------------------------------------
+  | Host-Side   CDC ACM       USB Host   |
+  | Operating |   or        | Controller |   USB
+  | System    | Generic USB | Driver     |--------
+  | (Linux or | Serial      | and        |        |
+  | Windows)    Driver        USB Stack  |        |
+   --------------------------------------         |
+                                                  |
+                                                  |
+                                                  |
+   Gadget                                         |
+   --------------------------------------         |
+  | Gadget                   USB Periph. |        |
+  | Device-Side |  Gadget  | Controller  |        |
+  | Linux       |  Serial  | Driver      |--------
+  | Operating   |  Driver  | and         |
+  | System                   USB Stack   |
+   --------------------------------------
+
+On the device-side Linux system, the gadget serial driver looks
+like a serial device.
+
+On the host-side system, the gadget serial device looks like a
+CDC ACM compliant class device or a simple vendor specific device
+with bulk in and bulk out endpoints, and it is treated similarly
+to other serial devices.
+
+The host side driver can potentially be any ACM compliant driver
+or any driver that can talk to a device with a simple bulk in/out
+interface.  Gadget serial has been tested with the Linux ACM driver,
+the Windows usbser.sys ACM driver, and the Linux USB generic serial
+driver.
+
+With the gadget serial driver and the host side ACM or generic
+serial driver running, you should be able to communicate between
+the host and the gadget side systems as if they were connected by a
+serial cable.
+
+The gadget serial driver only provides simple unreliable data
+communication.  It does not yet handle flow control or many other
+features of normal serial devices.
+
+
+Installing the Gadget Serial Driver
+-----------------------------------
+To use the gadget serial driver you must configure the Linux gadget
+side kernel for "Support for USB Gadgets", for a "USB Peripheral
+Controller" (for example, net2280), and for the "Serial Gadget"

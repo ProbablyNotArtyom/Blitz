@@ -1,0 +1,20 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree Source for Keystone 2 Edison Netcp driver
+ *
+ * Copyright (C) 2015-2017 Texas Instruments Incorporated - http://www.ti.com/
+ */
+
+qmss: qmss@2a40000 {
+	compatible = "ti,keystone-navigator-qmss";
+	dma-coherent;
+	#address-cells = <1>;
+	#size-cells = <1>;
+	clocks = <&chipclk13>;
+	ranges;
+	queue-range	= <0 0x2000>;
+	linkram0	= <0x100000 0x4000>;
+	linkram1	= <0 0x10000>;
+
+	qmgrs {
+		#

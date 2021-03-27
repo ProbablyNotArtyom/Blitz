@@ -1,0 +1,17 @@
+The Linux WatchDog Timer Driver Core kernel API.
+===============================================
+Last reviewed: 12-Feb-2013
+
+Wim Van Sebroeck <wim@iguana.be>
+
+Introduction
+------------
+This document does not describe what a WatchDog Timer (WDT) Driver or Device is.
+It also does not describe the API which can be used by user space to communicate
+with a WatchDog Timer. If you want to know this then please read the following
+file: Documentation/watchdog/watchdog-api.txt .
+
+So what does this document describe? It describes the API that can be used by
+WatchDog Timer Drivers that want to use the WatchDog Timer Driver Core
+Framework. This framework provides all interfacing towards user space so that
+the same code doe

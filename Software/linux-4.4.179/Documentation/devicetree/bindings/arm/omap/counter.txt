@@ -1,0 +1,18 @@
+Kernel driver w1_ds28e17
+========================
+
+Supported chips:
+  * Maxim DS28E17 1-Wire-to-I2C Master Bridge
+
+supported family codes:
+	W1_FAMILY_DS28E17  0x19
+
+Author: Jan Kandziora <jjj@gmx.de>
+
+
+Description
+-----------
+The DS28E17 is a Onewire slave device which acts as an I2C bus master.
+
+This driver creates a new I2C bus for any DS28E17 device detected. I2C buses
+come and go as the DS28E17 devices co

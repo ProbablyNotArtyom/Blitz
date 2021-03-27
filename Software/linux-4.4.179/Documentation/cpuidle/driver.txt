@@ -1,0 +1,46 @@
+			 =======================
+			 INTEL POWERCLAMP DRIVER
+			 =======================
+By: Arjan van de Ven <arjan@linux.intel.com>
+    Jacob Pan <jacob.jun.pan@linux.intel.com>
+
+Contents:
+	(*) Introduction
+	    - Goals and Objectives
+
+	(*) Theory of Operation
+	    - Idle Injection
+	    - Calibration
+
+	(*) Performance Analysis
+	    - Effectiveness and Limitations
+	    - Power vs Performance
+	    - Scalability
+	    - Calibration
+	    - Comparison with Alternative Techniques
+
+	(*) Usage and Interfaces
+	    - Generic Thermal Layer (sysfs)
+	    - Kernel APIs (TBD)
+
+============
+INTRODUCTION
+============
+
+Consider the situation where a system’s power consumption must be
+reduced at runtime, due to power budget, thermal constraint, or noise
+level, and where active cooling is not preferred. Software managed
+passive power reduction must be performed to prevent the hardware
+actions that are designed for catastrophic scenarios.
+
+Currently, P-states, T-states (clock modulation), and CPU offlining
+are used for CPU throttling.
+
+On Intel CPUs, C-states provide effective power reduction, but so far
+they’re only used opportunistically, based on workload. With the
+development of intel_powerclamp driver, the method of synchronizing
+idle injection across all online CPU threads was introduced. The goal
+is to achieve forced and controllable C-state residency.
+
+Test/Analysis has been made in the areas of power, performance,
+sca

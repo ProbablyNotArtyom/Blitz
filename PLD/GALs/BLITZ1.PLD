@@ -1,0 +1,50 @@
+Name     BZ1;
+PartNo   00;
+Date     7/27/2018;
+Revision 01;
+Designer Engineer;
+Company  notartyom;
+Assembly None;
+Location ;
+Device   g16v8a;
+
+/* *************** INPUT PINS ******************** */
+
+PIN 1 = A0;
+PIN 2 = A1;
+PIN 3 = A19;
+PIN 4 = A20;
+PIN 5 = A25;
+
+PIN 6 = SIZ0;
+PIN 7 = SIZ1;
+
+PIN 8 = AS;
+
+/* *************** OUTPUT PINS ******************* */
+
+PIN 13 = RAM0;
+PIN 14 = RAM1;
+PIN 15 = RAM2;
+PIN 16 = RAM3;
+PIN 17 = ROM;
+PIN 18 = UART;
+PIN 19 = EXT;
+
+/*-------- LOGIC EQUATIONS --------*/
+
+!RAM0 = !AS & A25 & !A0 & !A1;
+!RAM1 = !AS & A25 & ((!A0 & !A1 & !(SIZ0 & !SIZ1)) 
+	# (A0 & !A1));
+!RAM2 = !AS & A25 & ((!A0 & !A1 & (SIZ0 & SIZ1 # !SIZ0 & !SIZ1)) 
+	# (A0 & !A1 & !(SIZ0 & !SIZ1)) 
+	# (!A0 & A1));
+!RAM3 = !AS & A25 & ((!A0 & !A1 & !SIZ0 & !SIZ1) 
+	# (A0 & !A1 & (SIZ0 & SIZ1 # !SIZ0 & !SIZ1)) 
+	# (!A0 & A1 & !(SIZ0 & !SIZ1)) 
+	# (A0 & A1));
+
+!ROM = !AS & !A19 & !A20 & !A25;
+!UART = !AS & A19 & !A20 & !A25;
+!EXT = !AS & A19 & A20 & !A25;
+

@@ -1,0 +1,19 @@
+Renesas R-Car Fine Display Processor (FDP1) Driver
+==================================================
+
+The R-Car FDP1 driver implements driver-specific controls as follows.
+
+``V4L2_CID_DEINTERLACING_MODE (menu)``
+    The video deinterlacing mode (such as Bob, Weave, ...). The R-Car FDP1
+    driver implements the following modes.
+
+.. flat-table::
+    :header-rows:  0
+    :stub-columns: 0
+    :widths:       1 4
+
+    * - ``"Progressive" (0)``
+      - The input image video stream is progressive (not interlaced). No
+        deinterlacing is performed. Apart from (optional) format and encoding
+        conversion output frames are identical to the input frames.
+    * - ``"Adaptiv

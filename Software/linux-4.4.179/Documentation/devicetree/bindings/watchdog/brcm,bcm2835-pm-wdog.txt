@@ -1,0 +1,18 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Actions Semi S500 SoC
+ *
+ * Copyright (c) 2016-2017 Andreas Färber
+ */
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/power/owl-s500-powergate.h>
+
+/ {
+	compatible = "actions,s500";
+	interrupt-parent = <&gic>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	aliases {
+	};

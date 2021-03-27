@@ -1,0 +1,504 @@
+This is libc.info, produced by makeinfo version 4.1 from libc.texinfo.
+
+INFO-DIR-SECTION GNU libraries
+START-INFO-DIR-ENTRY
+* Libc: (libc).                 C library.
+END-INFO-DIR-ENTRY
+
+   This file documents the GNU C library.
+
+   This is Edition 0.10, last updated 2001-07-06, of `The GNU C Library
+Reference Manual', for Version 2.2.x.
+
+   Copyright (C) 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2001, 2002
+Free Software Foundation, Inc.
+
+   Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "Free Software Needs Free Documentation" and
+"GNU Lesser General Public License", the Front-Cover texts being (a)
+(see below), and with the Back-Cover Texts being (b) (see below).  A
+copy of the license is included in the section entitled "GNU Free
+Documentation License".
+
+   (a) The FSF's Front-Cover Text is:
+
+   A GNU Manual
+
+   (b) The FSF's Back-Cover Text is:
+
+   You have freedom to copy and modify this GNU Manual, like GNU
+software.  Copies published by the Free Software Foundation raise
+funds for GNU development.
+
+
+File: libc.info,  Node: Contributors,  Next: Free Manuals,  Prev: Maintenance,  Up: Top
+
+Contributors to the GNU C Library
+*********************************
+
+   The GNU C library was written originally by Roland McGrath, and is
+currently maintained by Ulrich Drepper.  Some parts of the library were
+contributed or worked on by other people.
+
+   * The `getopt' function and related code was written by Richard
+     Stallman, David J. MacKenzie, and Roland McGrath.
+
+   * The merge sort function `qsort' was written by Michael J. Haertel.
+
+   * The quick sort function used as a fallback by `qsort' was written
+     by Douglas C. Schmidt.
+
+   * The memory allocation functions `malloc', `realloc' and `free' and
+     related code were written by Michael J. Haertel, Wolfram Gloger,
+     and Doug Lea.
+
+   * Fast implementations of many of the string functions (`memcpy',
+     `strlen', etc.) were written by Torbjo"rn Granlund.
+
+   * The `tar.h' header file was written by David J. MacKenzie.
+
+   * The port to the MIPS DECStation running Ultrix 4
+     (`mips-dec-ultrix4') was contributed by Brendan Kehoe and Ian
+     Lance Taylor.
+
+   * The DES encryption function `crypt' and related functions were
+     contributed by Michael Glad.
+
+   * The `ftw' and `nftw' functions were contributed by Ulrich Drepper.
+
+   * The startup code to support SunOS shared libraries was contributed
+     by Tom Quinn.
+
+   * The `mktime' function was contributed by Paul Eggert.
+
+   * The port to the Sequent Symmetry running Dynix version 3
+     (`i386-sequent-bsd') was contributed by Jason Merrill.
+
+   * The timezone support code is derived from the public-domain
+     timezone package by Arthur David Olson and his many contributors.
+
+   * The port to the DEC Alpha running OSF/1 (`alpha-dec-osf1') was
+     contributed by Brendan Kehoe, using some code written by Roland
+     McGrath.
+
+   * The port to SGI machines running Irix 4 (`mips-sgi-irix4') was
+     contributed by Tom Quinn.
+
+   * The port of the Mach and Hurd code to the MIPS architecture
+     (`mips-ANYTHING-gnu') was contributed by Kazumoto Kojima.
+
+   * The floating-point printing function used by `printf' and friends
+     and the floating-point reading function used by `scanf', `strtod'
+     and friends were written by Ulrich Drepper.  The multi-precision
+     integer functions used in those functions are taken from GNU MP,
+     which was contributed by Torbjo"rn Granlund.
+
+   * The internationalization support in the library, and the support
+     programs `locale' and `localedef', were written by Ulrich Drepper.
+     Ulrich Drepper adapted the support code for message catalogs
+     (`libintl.h', etc.) from the GNU `gettext' package, which he also
+     wrote.  He also contributed the `catgets' support and the entire
+     suite of multi-byte and wide-character support functions
+     (`wctype.h', `wchar.h', etc.).
+
+   * The implementations of the `nsswitch.conf' mechanism and the files
+     and DNS backends for it were designed and written by Ulrich
+     Drepper and Roland McGrath, based on a backend interface defined
+     by Peter Eriksson.
+
+   * The port to Linux i386/ELF (`i386-ANYTHING-linux') was contributed
+     by Ulrich Drepper, based in large part on work done in Hongjiu
+     Lu's Linux version of the GNU C Library.
+
+   * The port to Linux/m68k (`m68k-ANYTHING-linux') was contributed by
+     Andreas Schwab.
+
+   * The ports to Linux/ARM (`arm-ANYTHING-linuxaout') and ARM
+     standalone (`arm-ANYTHING-none'), as well as parts of the IPv6
+     support code, were contributed by Philip Blundell.
+
+   * Richard Henderson contributed the ELF dynamic linking code and
+     other support for the Alpha processor.
+
+   * David Mosberger-Tang contributed the port to Linux/Alpha
+     (`alpha-ANYTHING-linux').
+
+   * The port to Linux on PowerPC (`powerpc-ANYTHING-linux') was
+     contributed by Geoffrey Keating.
+
+   * Miles Bader wrote the argp argument-parsing package, and the
+     argz/envz interfaces.
+
+   * Stephen R. van den Berg contributed a highly-optimized `strstr'
+     function.
+
+   * Ulrich Drepper contributed the `hsearch' and `drand48' families of
+     functions; reentrant `...`_r'' versions of the `random' family;
+     System V shared memory and IPC support code; and several
+     highly-optimized string functions for iX86 processors.
+
+   * The math functions are taken from `fdlibm-5.1' by Sun
+     Microsystems, as modified by J.T. Conklin, Ian Lance Taylor,
+     Ulrich Drepper, Andreas Schwab, and Roland McGrath.
+
+   * The `libio' library used to implement `stdio' functions on some
+     platforms was written by Per Bothner and modified by Ulrich
+     Drepper.
+
+   * Eric Youngdale and Ulrich Drepper implemented versioning of
+     objects on  symbol level.
+
+   * Thorsten Kukuk provided an implementation for NIS (YP) and NIS+,
+     securelevel 0, 1 and 2.
+
+   * Andreas Jaeger provided a test suite for the math library.
+
+   * Mark Kettenis implemented the utmpx interface and an utmp daemon.
+
+   * Ulrich Drepper added character conversion functions (`iconv').
+
+   * Thorsten Kukuk provided an implementation for a caching daemon for
+     NSS (nscd).
+
+   * Tim Waugh provided an implementation of the POSIX.2 wordexp
+     function family.
+
+   * Mark Kettenis provided a Hesiod NSS module.
+
+   * The Internet-related code (most of the `inet' subdirectory) and
+     several other miscellaneous functions and header files have been
+     included from 4.4 BSD with little or no modification.
+
+     All code incorporated from 4.4 BSD is under the following
+     copyright:
+
+               Copyright (C) 1991 Regents of the University of California.
+               All rights reserved.
+
+          Redistribution and use in source and binary forms, with or
+          without modification, are permitted provided that the
+          following conditions are met:
+
+            1. Redistributions of source code must retain the above
+               copyright notice, this list of conditions and the
+               following disclaimer.
+
+            2. Redistributions in binary form must reproduce the above
+               copyright notice, this list of conditions and the
+               following disclaimer in the documentation and/or other
+               materials provided with the distribution.
+
+            3. [This condition was removed.]
+
+            4. Neither the name of the University nor the names of its
+               contributors may be used to endorse or promote products
+               derived from this software without specific prior
+               written permission.
+
+          THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS "AS
+          IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+          LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+          FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT
+          SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+          INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+          DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+          SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+          OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+          LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+          (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+          THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+          OF SUCH DAMAGE.
+
+   * The random number generation functions `random', `srandom',
+     `setstate' and `initstate', which are also the basis for the
+     `rand' and `srand' functions, were written by Earl T. Cohen for
+     the University of California at Berkeley and are copyrighted by the
+     Regents of the University of California.  They have undergone minor
+     changes to fit into the GNU C library and to fit the ISO C
+     standard, but the functional code is Berkeley's.
+
+   * The DNS resolver code is taken directly from BIND 4.9.5, which is
+     under both the Berkeley copyright above and also:
+
+          Portions Copyright (C) 1993 by Digital Equipment Corporation.
+
+          Permission to use, copy, modify, and distribute this software
+          for any purpose with or without fee is hereby granted,
+          provided that the above copyright notice and this permission
+          notice appear in all copies, and that the name of Digital
+          Equipment Corporation not be used in advertising or publicity
+          pertaining to distribution of the document or software
+          without specific, written prior permission.
+
+          THE SOFTWARE IS PROVIDED "AS IS" AND DIGITAL EQUIPMENT CORP.
+          DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
+          INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
+          FITNESS.  IN NO EVENT SHALL DIGITAL EQUIPMENT CORPORATION BE
+          LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+          DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
+          DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE
+          OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION
+          WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+   * The code to support Sun RPC is taken verbatim from Sun's
+     RPCSRC-4.0 distribution, and is covered by this copyright:
+
+               Copyright (C) 1984, Sun Microsystems, Inc.
+
+          Sun RPC is a product of Sun Microsystems, Inc. and is
+          provided for unrestricted use provided that this legend is
+          included on all tape media and as a part of the software
+          program in whole or part.  Users may copy or modify Sun RPC
+          without charge, but are not authorized to license or
+          distribute it to anyone else except as part of a product or
+          program developed by the user.
+
+          SUN RPC IS PROVIDED AS IS WITH NO WARRANTIES OF ANY KIND
+          INCLUDING THE WARRANTIES OF DESIGN, MERCHANTIBILITY AND
+          FITNESS FOR A PARTICULAR PURPOSE, OR ARISING FROM A COURSE OF
+          DEALING, USAGE OR TRADE PRACTICE.
+
+          Sun RPC is provided with no support and without any
+          obligation on the part of Sun Microsystems, Inc. to assist in
+          its use, correction, modification or enhancement.
+
+          SUN MICROSYSTEMS, INC. SHALL HAVE NO LIABILITY WITH RESPECT
+          TO THE INFRINGEMENT OF COPYRIGHTS, TRADE SECRETS OR ANY
+          PATENTS BY SUN RPC OR ANY PART THEREOF.
+
+          In no event will Sun Microsystems, Inc. be liable for any
+          lost revenue or profits or other special, indirect and
+          consequential damages, even if Sun has been advised of the
+          possibility of such damages.
+
+               Sun Microsystems, Inc.
+               2550 Garcia Avenue
+               Mountain View, California  94043
+
+   * Some of the support code for Mach is taken from Mach 3.0 by CMU,
+     and is under the following copyright terms:
+
+               Mach Operating System
+               Copyright (C) 1991,1990,1989 Carnegie Mellon University
+               All Rights Reserved.
+
+          Permission to use, copy, modify and distribute this software
+          and its documentation is hereby granted, provided that both
+          the copyright notice and this permission notice appear in all
+          copies of the software, derivative works or modified
+          versions, and any portions thereof, and that both notices
+          appear in supporting documentation.
+
+          CARNEGIE MELLON ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS
+          IS" CONDITION.  CARNEGIE MELLON DISCLAIMS ANY LIABILITY OF
+          ANY KIND FOR ANY DAMAGES WHATSOEVER RESULTING FROM THE USE OF
+          THIS SOFTWARE.
+
+          Carnegie Mellon requests users of this software to return to
+
+                Software Distribution Coordinator
+                School of Computer Science
+                Carnegie Mellon University
+                Pittsburgh PA 15213-3890
+
+          or <Software.Distribution@CS.CMU.EDU> any improvements or
+          extensions that they make and grant Carnegie Mellon the
+          rights to redistribute these changes.
+
+   * The code for the database library `libdb' comes from the 2.3
+     release of Berkeley DB. That code is under the same copyright as
+     4.4 BSD and also:
+
+               Copyright (C) 1990, 1993, 1994, 1995, 1996, 1997
+               Sleepycat Software.  All rights reserved.
+
+          Redistribution and use in source and binary forms, with or
+          without modification, are permitted provided that the
+          following conditions are met:
+
+            1. Redistributions of source code must retain the above
+               copyright notice, this list of conditions and the
+               following disclaimer.
+
+            2. Redistributions in binary form must reproduce the above
+               copyright notice, this list of conditions and the
+               following disclaimer in the documentation and/or other
+               materials provided with the distribution.
+
+            3. Redistributions in any form must be accompanied by
+               information on how to obtain complete source code for
+               the DB software and any accompanying software that uses
+               the DB software.  The source code must either be
+               included in the distribution or be available for no more
+               than the cost of distribution plus a nominal fee, and
+               must be freely redistributable under reasonable
+               conditions.  For an executable file, complete source
+               code means the source code for all modules it contains.
+               It does not mean source code for modules or files that
+               typically accompany the operating system on which the
+               executable file runs, e.g., standard library modules or
+               system header files.
+
+          THIS SOFTWARE IS PROVIDED BY SLEEPYCAT SOFTWARE "AS IS" AND
+          ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+          TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+          A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL
+          SLEEPYCAT SOFTWARE BE LIABLE FOR ANY DIRECT, INDIRECT,
+          INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+          (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+          GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+          INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+          WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+          NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+          THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+          DAMAGE.
+
+               Portions copyright (C) 1995, 1996
+               The President and Fellows of Harvard University.
+               All rights reserved.
+
+          Redistribution and use in source and binary forms, with or
+          without modification, are permitted provided that the
+          following conditions are met:
+            1. Redistributions of source code must retain the above
+               copyright notice, this list of conditions and the
+               following disclaimer.
+
+            2. Redistributions in binary form must reproduce the above
+               copyright notice, this list of conditions and the
+               following disclaimer in the documentation and/or other
+               materials provided with the distribution.
+
+            3. All advertising materials mentioning features or use of
+               this software must display the following acknowledgement:
+                     This product includes software developed by
+                    Harvard University  and its contributors.
+
+            4. Neither the name of the University nor the names of its
+               contributors may be used to endorse or promote products
+               derived from this software without specific prior
+               written permission.
+
+          THIS SOFTWARE IS PROVIDED BY HARVARD AND ITS CONTRIBUTORS "AS
+          IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+          LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+          FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT
+          SHALL HARVARD OR ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+          INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+          DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+          SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+          OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+          LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+          (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+          THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY
+          OF SUCH DAMAGE.
+
+          For a license to use, redistribute or sell DB software under
+          conditions other than those described above, or to purchase
+          support for this software, please contact Sleepycat Software
+          at
+
+                Sleepycat Software
+                394 E. Riding Dr.
+                Carlisle, MA 01741
+                USA
+                +1-508-287-4781
+
+          or <db@sleepycat.com>.
+
+
+
+
+File: libc.info,  Node: Free Manuals,  Next: Copying,  Prev: Contributors,  Up: Top
+
+Free Software Needs Free Documentation
+**************************************
+
+   The biggest deficiency in the free software community today is not in
+the software--it is the lack of good free documentation that we can
+include with the free software.  Many of our most important programs do
+not come with free reference manuals and free introductory texts.
+Documentation is an essential part of any software package; when an
+important free software package does not come with a free manual and a
+free tutorial, that is a major gap.  We have many such gaps today.
+
+   Consider Perl, for instance.  The tutorial manuals that people
+normally use are non-free.  How did this come about?  Because the
+authors of those manuals published them with restrictive terms--no
+copying, no modification, source files not available--which exclude
+them from the free software world.
+
+   That wasn't the first time this sort of thing happened, and it was
+far from the last.  Many times we have heard a GNU user eagerly
+describe a manual that he is writing, his intended contribution to the
+community, only to learn that he had ruined everything by signing a
+publication contract to make it non-free.
+
+   Free documentation, like free software, is a matter of freedom, not
+price.  The problem with the non-free manual is not that publishers
+charge a price for printed copies--that in itself is fine.  (The Free
+Software Foundation sells printed copies of manuals, too.)  The problem
+is the restrictions on the use of the manual.  Free manuals are
+available in source code form, and give you permission to copy and
+modify.  Non-free manuals do not allow this.
+
+   The criteria of freedom for a free manual are roughly the same as for
+free software.  Redistribution (including the normal kinds of
+commercial redistribution) must be permitted, so that the manual can
+accompany every copy of the program, both on-line and on paper.
+
+   Permission for modification of the technical content is crucial too.
+When people modify the software, adding or changing features, if they
+are conscientious they will change the manual too--so they can provide
+accurate and clear documentation for the modified program.  A manual
+that leaves you no choice but to write a new manual to document a
+changed version of the program is not really available to our community.
+
+   Some kinds of limits on the way modification is handled are
+acceptable.  For example, requirements to preserve the original
+author's copyright notice, the distribution terms, or the list of
+authors, are ok.  It is also no problem to require modified versions to
+include notice that they were modified.  Even entire sections that may
+not be deleted or changed are acceptable, as long as they deal with
+nontechnical topics (like this one).  These kinds of restrictions are
+acceptable because they don't obstruct the community's normal use of
+the manual.
+
+   However, it must be possible to modify all the _technical_ content
+of the manual, and then distribute the result in all the usual media,
+through all the usual channels.  Otherwise, the restrictions obstruct
+the use of the manual, it is not free, and we need another manual to
+replace it.
+
+   Please spread the word about this issue.  Our community continues to
+lose manuals to proprietary publishing.  If we spread the word that
+free software needs free reference manuals and free tutorials, perhaps
+the next person who wants to contribute by writing documentation will
+realize, before it is too late, that only free manuals contribute to
+the free software community.
+
+   If you are writing documentation, please insist on publishing it
+under the GNU Free Documentation License or another free documentation
+license.  Remember that this decision requires your approval--you don't
+have to let the publisher decide.  Some commercial publishers will use
+a free license if you insist, but they will not propose the option; it
+is up to you to raise the issue and say firmly that this is what you
+want.  If the publisher you are dealing with refuses, please try other
+publishers.  If you're not sure whether a proposed license is free,
+write to <licensing@gnu.org>.
+
+   You can encourage commercial publishers to sell more free, copylefted
+manuals and tutorials by buying them, and particularly by buying copies
+from the publishers that paid for their writing or for major
+improvements.  Meanwhile, try to avoid buying non-free documentation at
+all.  Check the distribution terms of a manual before you buy it, and
+insist that whoever seeks your business must respect your freedom.
+Check the history of the book, and try reward the publishers that have
+paid or pay the authors to work on it.
+
+   The Free Software Foundation maintains a list of free documentation
+published by other publishers, at
+<http://www.fsf.org/doc/other-free-books.html>.
+

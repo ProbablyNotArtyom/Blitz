@@ -1,0 +1,99 @@
+/*
+ * Copyright 2015 Annapurna Labs Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms and conditions of the GNU General Public License,
+ * version 2, as published by the Free Software Foundation.
+ *
+ * Alternatively, redistribution and use in source and binary forms, with or
+ * without modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *   *   Redistributions of source code must retain the above copyright notice,
+ *       this list of conditions and the following disclaimer.
+ *
+ *   *   Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in
+ *       the documentation and/or other materials provided with the
+ *       distribution.
+ *
+ * This program is distributed in the hope it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ */
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include "skeleton64.dtsi"
+
+/ {
+	/* SOC compatibility */
+	compatible = "al,alpine";
+
+	/* CPU Configuration */
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		enable-method = "al,alpine-smp";
+
+		cpu@0 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <0>;
+			clock-frequency = <1700000000>;
+		};
+
+		cpu@1 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <1>;
+			clock-frequency = <1700000000>;
+		};
+
+		cpu@2 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <2>;
+			clock-frequency = <1700000000>;
+		};
+
+		cpu@3 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			reg = <3>;
+			clock-frequency = <1700000000>;
+		};
+	};
+
+	soc {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		compatible = "simple-bus";
+		interrupt-parent = <&gic>;
+		ranges;
+
+		arch-timer {
+			compatible = "arm,cortex-a15-timer",
+				     "arm,armv7-timer";
+			interrupts =
+				<GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+				<GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+				<GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+				<GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+			clock-frequency = <50000000>;
+		};
+
+		/* Interrupt Controller */
+		gic: gic@fb001000 {
+			compatible = "arm,cortex-a15-gic";
+			#interrupt-cells = <3>;
+			#size-cells = <0>;
+			#address-cells = <0>;
+			interrupt-controller;
+			reg = <0x0 0xfb001000 0x0 0x1000>,
+			      <0x0 0xfb002000 0x0 0x2000>,
+			      <0x0 0xfb004000 0x0 0x2000>,
+			      <0x0 0xfb006000 0x0 0x2000>;
+			interrupts =
+				<GIC_PPI 9 (GIC_CPU_MASK

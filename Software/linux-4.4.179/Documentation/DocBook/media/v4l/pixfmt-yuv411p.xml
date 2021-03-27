@@ -1,0 +1,172 @@
+.. _codingstyle:
+
+Linux kernel coding style
+=========================
+
+This is a short document describing the preferred coding style for the
+linux kernel.  Coding style is very personal, and I won't **force** my
+views on anybody, but this is what goes for anything that I have to be
+able to maintain, and I'd prefer it for most other things too.  Please
+at least consider the points made here.
+
+First off, I'd suggest printing out a copy of the GNU coding standards,
+and NOT read it.  Burn them, it's a great symbolic gesture.
+
+Anyway, here goes:
+
+
+1) Indentation
+--------------
+
+Tabs are 8 characters, and thus indentations are also 8 characters.
+There are heretic movements that try to make indentations 4 (or even 2!)
+characters deep, and that is akin to trying to define the value of PI to
+be 3.
+
+Rationale: The whole idea behind indentation is to clearly define where
+a block of control starts and ends.  Especially when you've been looking
+at your screen for 20 straight hours, you'll find it a lot easier to see
+how the indentation works if you have large indentations.
+
+Now, some people will claim that having 8-character indentations makes
+the code move too far to the right, and makes it hard to read on a
+80-character terminal screen.  The answer to that is that if you need
+more than 3 levels of indentation, you're screwed anyway, and should fix
+your program.
+
+In short, 8-char indents make things easier to read, and have the added
+benefit of warning you when you're nesting your functions too deep.
+Heed that warning.
+
+The preferred way to ease multiple indentation levels in a switch statement is
+to align the ``switch`` and its subordinate ``case`` labels in the same column
+instead of ``double-indenting`` the ``case`` labels.  E.g.:
+
+.. code-block:: c
+
+	switch (suffix) {
+	case 'G':
+	case 'g':
+		mem <<= 30;
+		break;
+	case 'M':
+	case 'm':
+		mem <<= 20;
+		break;
+	case 'K':
+	case 'k':
+		mem <<= 10;
+		/* fall through */
+	default:
+		break;
+	}
+
+Don't put multiple statements on a single line unless you have
+something to hide:
+
+.. code-block:: c
+
+	if (condition) do_this;
+	  do_something_everytime;
+
+Don't put multiple assignments on a single line either.  Kernel coding style
+is super simple.  Avoid tricky expressions.
+
+Outside of comments, documentation and except in Kconfig, spaces are never
+used for indentation, and the above example is deliberately broken.
+
+Get a decent editor and don't leave whitespace at the end of lines.
+
+
+2) Breaking long lines and strings
+----------------------------------
+
+Coding style is all about readability and maintainability using commonly
+available tools.
+
+The limit on the length of lines is 80 columns and this is a strongly
+preferred limit.
+
+Statements longer than 80 columns will be broken into sensible chunks, unless
+exceeding 80 columns significantly increases readability and does not hide
+information. Descendants are always substantially shorter than the parent and
+are placed substantially to the right. The same applies to function headers
+with a long argument list. However, never break user-visible strings such as
+printk messages, because that breaks the ability to grep for them.
+
+
+3) Placing Braces and Spaces
+----------------------------
+
+The other issue that always comes up in C styling is the placement of
+braces.  Unlike the indent size, there are few technical reasons to
+choose one placement strategy over the other, but the preferred way, as
+shown to us by the prophets Kernighan and Ritchie, is to put the opening
+brace last on the line, and put the closing brace first, thusly:
+
+.. code-block:: c
+
+	if (x is true) {
+		we do y
+	}
+
+This applies to all non-function statement blocks (if, switch, for,
+while, do).  E.g.:
+
+.. code-block:: c
+
+	switch (action) {
+	case KOBJ_ADD:
+		return "add";
+	case KOBJ_REMOVE:
+		return "remove";
+	case KOBJ_CHANGE:
+		return "change";
+	default:
+		return NULL;
+	}
+
+However, there is one special case, namely functions: they have the
+opening brace at the beginning of the next line, thus:
+
+.. code-block:: c
+
+	int function(int x)
+	{
+		body of function
+	}
+
+Heretic people all over the world have claimed that this inconsistency
+is ...  well ...  inconsistent, but all right-thinking people know that
+(a) K&R are **right** and (b) K&R are right.  Besides, functions are
+special anyway (you can't nest them in C).
+
+Note that the closing brace is empty on a line of its own, **except** in
+the cases where it is followed by a continuation of the same statement,
+ie a ``while`` in a do-statement or an ``else`` in an if-statement, like
+this:
+
+.. code-block:: c
+
+	do {
+		body of do-loop
+	} while (condition);
+
+and
+
+.. code-block:: c
+
+	if (x == y) {
+		..
+	} else if (x > y) {
+		...
+	} else {
+		....
+	}
+
+Rationale: K&R.
+
+Also, note that this brace-placement also minimizes the number of empty
+(or almost empty) lines, without any loss of readability.  Thus, as the
+supply of new-lines on your screen is not a renewable resource (think
+25-line terminal screens here), you have more empty lines to 

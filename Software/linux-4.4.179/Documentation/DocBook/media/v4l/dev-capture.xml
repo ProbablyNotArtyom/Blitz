@@ -1,0 +1,125 @@
+			  LIBNVDIMM: Non-Volatile Devices
+	      libnvdimm - kernel / libndctl - userspace helper library
+			   linux-nvdimm@lists.01.org
+				      v13
+
+
+	Glossary
+	Overview
+	    Supporting Documents
+	    Git Trees
+	LIBNVDIMM PMEM and BLK
+	Why BLK?
+	    PMEM vs BLK
+	        BLK-REGIONs, PMEM-REGIONs, Atomic Sectors, and DAX
+	Example NVDIMM Platform
+	LIBNVDIMM Kernel Device Model and LIBNDCTL Userspace API
+	    LIBNDCTL: Context
+	        libndctl: instantiate a new library context example
+	    LIBNVDIMM/LIBNDCTL: Bus
+	        libnvdimm: control class device in /sys/class
+	        libnvdimm: bus
+	        libndctl: bus enumeration example
+	    LIBNVDIMM/LIBNDCTL: DIMM (NMEM)
+	        libnvdimm: DIMM (NMEM)
+	        libndctl: DIMM enumeration example
+	    LIBNVDIMM/LIBNDCTL: Region
+	        libnvdimm: region
+	        libndctl: region enumeration example
+	        Why Not Encode the Region Type into the Region Name?
+	        How Do I Determine the Major Type of a Region?
+	    LIBNVDIMM/LIBNDCTL: Namespace
+	        libnvdimm: namespace
+	        libndctl: namespace enumeration example
+	        libndctl: namespace creation example
+	        Why the Term "namespace"?
+	    LIBNVDIMM/LIBNDCTL: Block Translation Table "btt"
+	        libnvdimm: btt layout
+	        libndctl: btt creation example
+	Summary LIBNDCTL Diagram
+
+
+Glossary
+--------
+
+PMEM: A system-physical-address range where writes are persistent.  A
+block device composed of PMEM is capable of DAX.  A PMEM address range
+may span an interleave of several DIMMs.
+
+BLK: A set of one or more programmable memory mapped apertures provided
+by a DIMM to access its media.  This indirection precludes the
+performance benefit of interleaving, but enables DIMM-bounded failure
+modes.
+
+DPA: DIMM Physical Address, is a DIMM-relative offset.  With one DIMM in
+the system there would be a 1:1 system-physical-address:DPA association.
+Once more DIMMs are added a memory controller interleave must be
+decoded to determine the DPA associated with a given
+system-physical-address.  BLK capacity always has a 1:1 relationship
+with a single-DIMM's DPA range.
+
+DAX: File system extensions to bypass the page cache and block layer to
+mmap persistent memory, from a PMEM block device, directly into a
+process address space.
+
+DSM: Device Specific Method: ACPI method to to control specific
+device - in this case the firmware.
+
+DCR: NVDIMM Control Region Structure defined in ACPI 6 Section 5.2.25.5.
+It defines a vendor-id, device-id, and interface format for a given DIMM.
+
+BTT: Block Translation Table: Persistent memory is byte addressable.
+Existing software may have an expectation that the power-fail-atomicity
+of writes is at least one sector, 512 bytes.  The BTT is an indirection
+table with atomic update semantics to front a PMEM/BLK block device
+driver and present arbitrary atomic sector sizes.
+
+LABEL: Metadata stored on a DIMM device that partitions and identifies
+(persistently names) storage between PMEM and BLK.  It also partitions
+BLK storage to host BTTs with different parameters per BLK-partition.
+Note that traditional partition tables, GPT/MBR, are layered on top of a
+BLK or PMEM device.
+
+
+Overview
+--------
+
+The LIBNVDIMM subsystem provides support for three types of NVDIMMs, namely,
+PMEM, BLK, and NVDIMM devices that can simultaneously support both PMEM
+and BLK mode access.  These three modes of operation are described by
+the "NVDIMM Firmware Interface Table" (NFIT) in ACPI 6.  While the LIBNVDIMM
+implementation is generic and supports pre-NFIT platforms, it was guided
+by the superset of capabilities need to support this ACPI 6 definition
+for NVDIMM resources.  The bulk of the kernel implementation is in place
+to handle the case where DPA accessible via PMEM is aliased with DPA
+accessible via BLK.  When that occurs a LABEL is needed to reserve DPA
+for exclusive access via one mode a time.
+
+Supporting Documents
+ACPI 6: http://www.uefi.org/sites/default/files/resources/ACPI_6.0.pdf
+NVDIMM Namespace: http://pmem.io/documents/NVDIMM_Namespace_Spec.pdf
+DSM Interface Example: http://pmem.io/documents/NVDIMM_DSM_Interface_Example.pdf
+Driver Writer's Guide: http://pmem.io/documents/NVDIMM_Driver_Writers_Guide.pdf
+
+Git Trees
+LIBNVDIMM: https://git.kernel.org/cgit/linux/kernel/git/djbw/nvdimm.git
+LIBNDCTL: https://github.com/pmem/ndctl.git
+PMEM: https://github.com/01org/prd
+
+
+LIBNVDIMM PMEM and BLK
+------------------
+
+Prior to the arrival of the NFIT, non-volatile memory was described to a
+system in various ad-hoc ways.  Usually only the bare minimum was
+provided, namely, a single system-physical-address range where writes
+are expected to be durable after a system power loss.  Now, the NFIT
+specification standardizes not only the description of PMEM, but also
+BLK and platform message-passing entry points for control and
+configuration.
+
+For each NVDIMM access method (PMEM, BLK), LIBNVDIMM provides a block
+device driver:
+
+    1. PMEM (nd_pmem.ko): Drives a system-physical-address range.  This
+    range is contiguous in system m

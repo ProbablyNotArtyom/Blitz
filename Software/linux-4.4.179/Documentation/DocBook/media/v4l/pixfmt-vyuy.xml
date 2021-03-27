@@ -1,0 +1,80 @@
+.. _development_advancedtopics:
+
+Advanced topics
+===============
+
+At this point, hopefully, you have a handle on how the development process
+works.  There is still more to learn, however!  This section will cover a
+number of topics which can be helpful for developers wanting to become a
+regular part of the Linux kernel development process.
+
+Managing patches with git
+-------------------------
+
+The use of distributed version control for the kernel began in early 2002,
+when Linus first started playing with the proprietary BitKeeper
+application.  While BitKeeper was controversial, the approach to software
+version management it embodied most certainly was not.  Distributed version
+control enabled an immediate acceleration of the kernel development
+project.  In current times, there are several free alternatives to
+BitKeeper.  For better or for worse, the kernel project has settled on git
+as its tool of choice.
+
+Managing patches with git can make life much easier for the developer,
+especially as the volume of those patches grows.  Git also has its rough
+edges and poses certain hazards; it is a young and powerful tool which is
+still being civilized by its developers.  This document will not attempt to
+teach the reader how to use git; that would be sufficient material for a
+long document in its own right.  Instead, the focus here will be on how git
+fits into the kernel development process in particular.  Developers who
+wish to come up to speed with git will find more information at:
+
+	http://git-scm.com/
+
+	http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
+
+and on various tutorials found on the web.
+
+The first order of business is to read the above sites and get a solid
+understanding of how git works before trying to use it to make patches
+available to others.  A git-using developer should be able to obtain a copy
+of the mainline repository, explore the revision history, commit changes to
+the tree, use branches, etc.  An understanding of git's tools for the
+rewriting of history (such as rebase) is also useful.  Git comes with its
+own terminology and concepts; a new user of git should know about refs,
+remote branches, the index, fast-forward merges, pushes and pulls, detached
+heads, etc.  It can all be a little intimidating at the outset, but the
+concepts are not that hard to grasp with a bit of study.
+
+Using git to generate patches for submission by email can be a good
+exercise while coming up to speed.
+
+When you are ready to start putting up git trees for others to look at, you
+will, of course, need a server that can be pulled from.  Setting up such a
+server with git-daemon is relatively straightforward if you have a system
+which is accessible to the Internet.  Otherwise, free, public hosting sites
+(Github, for example) are starting to appear on the net.  Established
+developers can get an account on kernel.org, but those are not easy to come
+by; see http://kernel.org/faq/ for more information.
+
+The normal git workflow involves the use of a lot of branches.  Each line
+of development can be separated into a separate "topic branch" and
+maintained independently.  Branches in git are cheap, there is no reason to
+not make free use of them.  And, in any case, you should not do your
+development in any branch which you intend to ask others to pull from.
+Publicly-available branches should be created with care; merge in patches
+from development branches when they are in complete form and ready to go -
+not before.
+
+Git provides some powerful tools which can allow you to rewrite your
+development history.  An inconvenient patch (one which breaks bisection,
+say, or which has some other sort of obvious bug) can be fixed in place or
+made to disappear from the history entirely.  A patch series can be
+rewritten as if it had been written on top of today's mainline, even though
+you have been working on it for months.  Changes can be transparently
+shifted from one branch to another.  And so on.  Judicious use of git's
+ability to revise history can help in the creation of clean patch sets with
+fewer problems.
+
+Excessive use of this capability can lead to other problems, though, beyond
+a simpl

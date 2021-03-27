@@ -1,0 +1,29 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <linux/module.h>
+#include <linux/moduleloader.h>
+#include <linux/kernel.h>
+#include <linux/elf.h>
+#include <linux/vmalloc.h>
+#include <linux/slab.h>
+#include <linux/fs.h>
+#include <linux/string.h>
+#include <asm/unwind.h>
+
+static inline void arc_write_me(unsigned short *addr, unsigned long value)
+{
+	*addr = (value & 0xffff0000) >> 16;
+	*(addr + 1) = (value & 0xffff);
+}
+
+/*
+ * This gets called before relocation loop in generic loader
+ * Make a note of the section index of unwinding section
+ */
+int module_frob_arch_sections(El

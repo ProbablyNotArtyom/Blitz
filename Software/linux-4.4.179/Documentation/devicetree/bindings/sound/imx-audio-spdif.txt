@@ -1,0 +1,48 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * kirkwood-pogo_e02.dts - Device tree file for Pogoplug E02
+ *
+ * Copyright (C) 2015 Christoph Junghans <ottxor@gentoo.org>
+ *
+ * based on information of dts files from
+ *  Arch Linux ARM by Oleg Rakhmanov <moonman.ca@gmail.com>
+ *  OpenWrt by Felix Kaechele <heffer@fedoraproject.org>
+ *
+ */
+
+/dts-v1/;
+
+#include "kirkwood.dtsi"
+#include "kirkwood-6281.dtsi"
+
+/ {
+	model = "Cloud Engines Pogoplug E02";
+	compatible = "cloudengines,pogoe02", "marvell,kirkwood-88f6281",
+		     "marvell,kirkwood";
+
+	memory {
+		device_type = "memory";
+		reg = <0x00000000 0x10000000>;
+	};
+
+	chosen {
+		bootargs = "console=ttyS0,115200n8";
+		stdout-path = &uart0;
+	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+
+		health {
+			label = "pogo_e02:green:health";
+			gpios = <&gpio1 16 GPIO_ACTIVE_LOW>;
+			default-state = "keep";
+		};
+		fault {
+			label = "pogo_e02:orange:fault";
+			gpios = <&gpio1 17 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	regulators {
+		compa

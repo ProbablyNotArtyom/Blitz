@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree file for OpenBlocks A7 board
+ *
+ * Copyright (C) 2013 Free Electrons
+ *
+ * Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+ *
+ */
+
+/dts-v1/;
+
+#include "kirkwood.dtsi"
+#include 

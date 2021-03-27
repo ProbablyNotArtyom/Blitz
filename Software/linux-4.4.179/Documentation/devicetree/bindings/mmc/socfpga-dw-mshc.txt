@@ -1,0 +1,42 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Copyright (C) 2016 Rafał Miłecki <rafal@milecki.pl>
+ */
+
+/dts-v1/;
+
+#include "bcm4709.dtsi"
+
+/ {
+	compatible = "tplink,archer-c9-v1", "brcm,bcm4709", "brcm,bcm4708";
+	model = "TP-LINK Archer C9 V1";
+
+	chosen {
+		bootargs = "console=ttyS0,115200 earlycon";
+	};
+
+	memory {
+		reg = <0x00000000 0x08000000>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		lan {
+			label = "bcm53xx:blue:lan";
+			gpios = <&chipcommon 1 GPIO_ACTIVE_HIGH>;
+		};
+
+		wps {
+			label = "bcm53xx:blue:wps";
+			gpios = <&chipcommon 2 GPIO_ACTIVE_HIGH>;
+		};
+
+		2ghz {
+			label = "bcm53xx:blue:2ghz";
+			gpios = <&chipcommon 4 GPIO_ACTIVE_HIGH>;
+		};
+
+		5ghz {
+			label = "bcm53xx:blue:5ghz";
+			gpios = <&chipcommon 5 GPIO_ACTIVE_HI

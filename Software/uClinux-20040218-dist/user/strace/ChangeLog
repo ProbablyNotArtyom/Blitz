@@ -1,0 +1,1347 @@
+2001-08-19   Wichert Akkerman <wakkerma@debian.org>
+
+  * signal.c: do not include asm/sigcontext.h on IA64 since it gets
+    the struct from bits/sigcontext.h already which signal.h includes.
+
+2001-08-03   Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/ioctlent.sh: change regexps so we catch sound ioctls as well in
+    Linux
+  * linux/Makefile.in: fix a few things so the ioctl list is generated
+    properly
+  * ioctl.c: remember to shift ioctl masks as well
+
+2001-08-03   Wichert Akkerman <wakkerma@debian.org>
+
+  * Linux/**/syscallent.h: synchronize section for fcntl and use sys_fcntl
+    for sys_fcntl as well
+
+2001-08-03   Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/hppa/syscallent.h: updated from Matthew Wilcox
+
+2001-08-03   Wichert Akkerman <wakkerma@debian.org>
+
+  * process.c: seems Linux/IA64 changed register names on us, switch to
+    using new names.
+
+2001-08-03   Wichert Akkerman <wakkerma@debian.org>
+
+  * strace.c: set CLOEXEC  flag for outputfile
+
+2001-08-03   Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/sparc/syscall.h, linux/sparc/syscallent.h: add some LFS calls
+
+2001-07-23  Wichert Akkerman <wakkerma@debian.org>
+
+  * configure.in: Support cross-compiling between architectures
+
+2001-07-13  Wichert Akkerman <wakkerma@debian.org>
+
+  * configure.in: add S390 to architecture list
+
+2001-07-10  John Hughes <john@Calva.COM>
+
+  * TODO, defs.h, io.h, net.c, strace.c, syscall.c, util.c: Merge fixes
+    from Richard Kettlewell <rkettlewell@zeus.com> which add I/O dumping
+    of args to readv/writev.  Also gets rid of redundant printiovec
+    routine from net.c (duplicate of tprint_iov in util.c).
+
+2001-07-02  Wichert Akkerman <wakkerma@debian.org>
+
+  * config.{guess,sub}: updated
+
+2001-05-15  John Hughes <john@Calva.COM>
+
+  * signal.c: pass a pointer to sigmask to printsigmask from printcontext,
+    it was just passing the sigmask (ucp->uc_sigmask).
+
+2001-05-15  John Hughes <john@Calva.COM>
+
+  * util.c: Don't run off the end of valid memory in umovestr when
+    USE_PROCFS.  Important for FREEBSD systems (which seem to have an
+    unmapped page just after the args/env area).
+
+2001-04-18  John Hughes <john@Calva.COM>
+
+  * configure.in: test for sys/nscsys.h, the non-stop clusters includes.
+  * process.c: handle rfork{1,all} and rexecve calls on non-stop clusters.
+  * syscall.c: treat rfork{1,all} and fork{1,all} as fork like calls.
+    Treat rexecve as an exec.
+  * system.c: decode arguments to ssisys call on nsc systems.
+  * svr4/dummy.h, svr4/syscall.h: now we handle rfork{1,all}, ssisys and
+    rexecve calls.
+
+2001-04-12  Wichert Akkerman <wakkerma@debian.org>
+
+  * process.c: fix cast for powerpc code
+  * linux/powerpc/syscallent.h: update syscall list
+  * README: fix address for the strace mailinglist
+  * signal.c: switch to using /proc/<pid>/status on Linux so we can get
+    the realtime signals as well
+
+2001-04-10  Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge patches from Maciej W. Rozycki:
+    + util.c: add code to print PC for MIPS
+    + linux/mips/syscallent.h: updated
+    + system.c: formating fixes for sys_sysmips
+    + configure.in: test for yet more headers
+    + stream.c: use configure-headertests instead of relying on OS hints
+
+2001-04-07  Wichert Akkerman <wakkerma@debian.org>
+
+  * NEWS: start 4.3.1 items
+  * version.c: updated to say 4.3.1 (was still 4.2, oops!)
+
+2001-04-07  Wichert Akkerman <wakkerma@debian.org>
+
+  * configure.in: test for asm/sysmips.h and linux/utsname.h
+  * linux/syscall.h: fix a typo for sys_sysmips
+  * system.c: include asm/sysmips.h and linux/utsname.h if they exist,
+    fix typo
+
+2001-03-31  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/mips/ioctlent.h: updated using new Linux ioctl setup
+
+2001-03-31  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/ia64/ioctlent.h: regenerated
+
+2001-03-31  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/{alpha,ia64,powerpc}/ioctlent.sh: removed, all archs use the
+    general Linux ioctlent.sh
+
+2001-03-31  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/ioctlent.sh: add dir variable for location of kernel headers
+
+2001-03-29  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/ia64/ioctlent.h: updated using new Linux ioctl setup
+
+2001-03-29  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/powerpc/ioctlent.h: updated using new Linux ioctl setup
+
+2001-03-29  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/hppa/ioctlent.h: updated using new Linux ioctl setup
+
+2001-03-29  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/alpha/ioctlent.h: updated using new Linux ioctl setup
+
+2001-03-28  Wichert Akkerman <wakkerma@debian.org>
+
+  * configure.in: use sparc* so we can compile on sparc64 as well
+  * process.c, syscall.c: work around double define of fpq, fq and fpu
+    structs on Linux/sparc, and use regs instead of pt_regs
+  * don't use asm/sigcontext.h on Linux/sparc
+
+2001-03-28  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/sparc/ioctlent.h: updated using new Linux ioctl setup
+
+2001-03-28  Wichert Akkerman <wakkerma@debian.org>
+
+  * strace.c: use __WALL as wait4 flag if it exists so we can properly
+    trace threaded programs
+
+2001-03-27  John Hughes <john@Calva.COM>
+
+  * aclocal.m4: add check for endianness of long long.
+  * acconfig.h: add #define for LITTLE_ENDIAN_LONG_LONG.
+  * configure.in: check for endianness of long long.
+  * defs.h: change LONG_LONG macro to work with either endianness of
+    long long.
+
+2001-03-27  John Hughes <john@Calva.COM>
+
+  * net.c: Make compilable by SCO UDK compiler (doesn't like empty
+    initialisation list for array).
+
+2001-03-27  John Hughes <john@Calva.COM>
+
+  * svr4/syscallent.h: ntp_adjtime entry was duplicated on Solaris
+    systems - bad merge of Harald Boehme's patch by me.
+
+2001-03-27  Wichert Akkerman <wakkerma@debian.org>
+
+  * lots of files: add Linux/hppa support
+
+2001-03-19  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/mips/syscallent.h: we can't have -1 nargs, change to 0
+  * linux/syscallent.h: not that syscalls 220 and 221 are used now
+  * config.guess: updated
+
+2001-03-17  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/ioclsort.c: new file
+  * linux/ioctlent.sh: complete rewrite to use a more sane approach to get
+    the ioctl list that doesn't involve attempting to #include all kernel
+    headers
+  * linux/.cvsignore: added ioctdefs.h and ioctls.h which are generated
+    by the new ioctlent.sh
+  * ioctl.c: only look at the number and type bits for linux, since
+    ioctlent.sh no longer supplies the others
+
+2001-03-08  John Hughes <john@Calva.COM>
+
+  * freebsd/syscalls.pl: On FreeBSD we must cope with COMPATibility syscalls,
+    pretend they have names ending with "?" so that -e trace=stat (for
+    example) will work.
+  * freebsd/i386/syscallent.h: add ? to compatability syscalls.
+  * freebsd/i386/syscall.h: consistency.
+
+2001-03-08  John Hughes <john@Calva.COM>
+
+  * acconfig.h: add new ST_xxx defines.
+  * aclocal.m4: macros to check for more fields in struct stat.
+  * configure.in: use new macros to check for fields in struct stat.
+  * file.c: use new defines to replace #ifdef FREEBSD by #if HAVE_ST_xxx.
+
+2001-03-08  John Hughes <john@Calva.COM>
+
+  * defs.h: rename wimpy get64 as powerful new LONG_LONG
+  * file.c: use LONG_LONG
+  * io.c: use LONG_LONG
+  * mem.c use LONG_LONG
+
+2001-03-08  John Hughes <john@Calva.COM>
+
+  * acconfig.h: new #defines HAVE_LONG_LONG_OFF_T and HAVE_LONG_LONG_RLIM_T.
+  * aclocal.m4: routines to check for long long off_t and rlim_t.
+  * configure.in: check for long long off_t and rlim_t.
+  * desc.c: if HAVE_LONG_LONG_OFF_T treat flock as flock64
+  * file.c: if HAVE_LONG_LONG_OFF_T treat stat,lstat,fstat and lseek as 64
+    bit versions.
+  * io.c: if HAVE_LONG_LONG_OFF_T use 64 bit versions of pread and pwrite.
+  * mem.c: if HAVE_LONG_LONG_OFF_T use 64 bit version of mmap
+  * resource.c: if HAVE_LONG_LONG_OFF_T use 64 bit versions of getrlimit
+    and setrlimit.
+  * freebsd/syscalls.print: don't explicitly use 64 bit versions of calls,
+    now done automaticaly for us.
+  * freebsd/i386/syscall.h: ditto.
+  * freebsd/i386/syscallent.h ditto.
+
+2001-03-07  John Hughes <john@Calva.COM>
+
+  * desc.c: On FreeBSD flock structure uses 64 bit offsets.
+  * file.c: On FreeBSD use stat64 and pals instead of stat.
+  * freebsd/syscalls.print: use stat64, lstat64 and fstat64.
+  * freebsd/i386/syscall.h: ditto.
+  * freebsd/i386/syscallent.h: ditto.
+
+2001-03-07  John Hughes <john@Calva.COM>
+
+  * file.c: merge missing part of Harald Böhme's solaris patches,
+    was only declaring sys_{stat64,lstat64,fstat64} on linux!
+
+2001-03-07  John Hughes <john@Calva.COM>
+
+  * svr4/dummy.h: fix multiple define warning on non LFS64 systems.
+  * svr4/syscallent.h: pread/pwrite are TF calls.
+
+2001-03-07  John Hughes <john@Calva.COM>
+
+  * defs.h: add ALIGN64 macro to cope with FreeBSD's strange insistence
+    on alignment for off_t (64 bit) arguments.  Also simplify get64 so
+    we don't need to know endianness of long long.
+  * file.c: FreeBSD now uses 64 bit versions of lseek, truncate,
+    ftruncate, allows reduction in numvber of horrid #if's
+  * io.c: FreeBSD now uses 64 bit versions of pread, pwrite.
+  * mem.c: FreeBSD now uses 64 bit version of mmap.
+  * freebsd/syscalls.print: use 64 bit versions of various syscalls.
+  * freebsd/i386/syscall.h: use 64 bit versions of various syscalls.
+  * freebsd/i386/syscallent.h: use 64 bit versions of various syscalls.
+
+2001-03-06  John Hughes <john@Calva.COM>
+
+  * file.c: Implement truncate64 and ftruncate64
+  * svr4/dummy.h: add dummies for truncate64 and ftruncate64 for non
+    LFS64 systems.
+  * svr4/syscall.h: add declarations for truncate64 and ftruncate64.
+
+2001-03-06  John Hughes <john@Calva.COM>
+
+  * freebsd/syscalls.pl: fix for FreeBSD 4.1 (new optional field in
+    syscall master file).
+
+2001-03-06  John Hughes <john@Calva.COM>
+
+  * syscall.c: fix for FreeBSD 4.1 (SYS_semconfig has disappeared).  Also
+    zap incorrect syscall subarg range check.
+
+2001-03-06  John Hughes <john@Calva.COM>
+
+  * configure.in, defs.h, desc.c, file.c, io.c, mem.c, net.c, resource.c,
+    signal.c, syscall.c, svr4/dummy.h, svr4/syscall.h, svr4/syscallent.h:
+    merge Harald Böhme's solaris patches (_LFS64_LARGEFILE and kernel aio
+    mostly).
+
+2001-03-06  John Hughes <john@Calva.COM>
+
+  * dummy.h: add unimplemented UW sycalls
+  * syscall.h: we can do settimeofday for UW, whopee!
+  * syscallent.h: fix unimplemented UW syscalls
+
+2001-03-06  John Hughes <john@Calva.COM>
+
+  * aclocal.m4: look for pr_syscall in pr_lwp if we HAVE_MP_PROCFS
+  * defs.h: add PR_SYSCALL to allow use of pr_lwp.pr_syscall if it exists.
+  * syscall.c: use PR_SYSCALL instead of pr_syscall, fix up UnixWare code
+    so it doesn't try to use pr_sysarg.
+
+2001-03-06  John Hughes <john@Calva.COM>
+
+  * aclocal.m4: on systems other than linux look for stat64 in sys/stat.h
+  * file.c: handle xstat version _STAT64_VER, aka stat64.
+
+2001-03-06  John Hughes <john@Calva.COM>
+
+  * net.c: make sure SOL_ options are defined before using.
+  * signal.c: declare sigset variable, only used on linux, inside #ifdef.
+
+2001-02-21  Wichert Akkerman <wakkerma@debian.org>
+
+  * net.c: fix format for printing Unix domain sockets
+
+2001-02-19  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/mips/syscallent.h: use new sys_sysmips
+  * system.c: add sys_sysmips decoding
+
+2001-02-16  Wichert Akkerman <wakkerma@debian.org>
+
+  * CREDITS: add Arkadiusz Miskiewicz <misiek@pld.org.pl> who
+    submitted the IP6 scope ID updates
+  * acconfig.h: add HAVE_SIN6_SCOPE_ID and HAVE_SIN6_SCOPE_ID_LINUX
+  * aclocal.m4: add AC_SIN6_SCOPE_ID to check if sin6_scope_id is
+    available
+  * configure.in: check for if_indextoname function and sin6_scope_id
+  * net.c: teach printsock about IP6 scope ids
+
+2001-02-16  Wichert Akkerman <wakkerma@debian.org>
+
+  * configure.in: test for netinet/tcp.h and netinet/udp.h existance
+  * net.c: include netinet/tcp.h and netinet/udp.h if they exist
+  * Makefile.in: use @mandir@ and @bindir@
+
+2000-11-26  Wichert Akkerman <wakkerma@debian.org>
+
+  *  net.c: fix formating error in sys_setsockopt
+  *  net.c: add list of socketlayers and use that for [gs]etsockopt
+
+2000-10-12  Wichert Akkerman <wakkerma@debian.org> 
+
+  * time.c: use sys/timex.h so things compile with 2.2 kernels
+  * stream.c: test if MSG_* constants are #defined
+
+2000-09-03  Wichert Akkerman <wakkerma@debian.org>
+
+  * process.c: perform bpt trick for clone as well so we can get the
+    pid of the child before it starts doing something
+  * file.c: rename dirent64 struct to kernel_dirent64 so things compile
+    again with newer libcs
+  * test/clone.c: improve our testcase a bit
+  * Merge another patch from Gäel Roualland with FreeBSD updates
+
+2000-09-01  Wichert Akkerman <wakkerma@debian.org>
+
+  * lots of files: merge patch from Gaël Roualland to add
+    support for FreeBSD.
+
+2000-08-09  Wichert Akkerman <wakkerma@debian.org>
+
+  * file.c: update to reflect that st_ino suddenly became a long long
+    in the in Linux 2.4.0-test6
+
+2000-08-09  Wichert Akkerman <wakkerma@debian.org>
+
+  * test/clone.c: minor fixup
+  * Another bunch of patches from John Hughes merged:
+  * signal.c:
+    + SVR4 printcontext(): sigset_t != sigset_t*
+    + getcontext returns a value, so print on exit of syscall
+    + add UC_FP to ucontext_flags for OS writers that can't spell
+    + sys_signal(): special case SIG_{ERR,DFL,IGN}
+    + decode_subcall(): only do subcall range checking when needed
+  * bunch of UnixWare updates
+  * aclocal.m4, acconfig.h, configure.in: add test for long long type
+
+2000-07-04  Wichert Akkerman <wakkerma@debian.org>
+
+  * net.c: add SOL_PACKET and SOL_RAW socket options, update
+    SOL_IP and SOL_TCP
+
+2000-06-23  Wichert Akkerman <wakkerma@debian.org>
+
+  * strace.c: close outf before we exec a child process
+
+2000-06-09  Ulrich Drepper  <drepper@redhat.com>
+
+  * configure.in: Don't link against libnsl on Linux, it's unnecessary.
+  * defs.h (struct tcb): Make auxstr member const.
+  * file.c (fsmagic): And many more magic numbers.
+  * util.c: Don't include <linux/ptrace.h> for glibc 2.1 and up.
+
+2000-04-26  Wichert Akkerman <wakkerma@debian.org>
+
+  * defs.h: balance #if/#endif again
+  * system.c: fix return statements in sys_capget()
+  * Merge updates from Topi Miettinen <Topi.Miettinen@nic.fi>:
+    + file.c: add F_[SG]ETSIG to fcntl flags
+    + strace.c: don't setre[gu]id if not needed
+    + system.c: handle sys_reboot for Linux
+    + term.c: add baudrate constants up to B4000000
+    + linux/**/syscallent.h: note that munlockall has no arguments
+
+2000-04-25  David Mosberger  <davidm@hpl.hp.com>
+
+  * CREDITS: fix email address
+  * process.c: handle PR_[GS]ET_UNALIGN and PR_[GS]ET_KEEPCAPS
+  * signal.c: honour offset of sigconfig in sigframe structure for
+    Linux/ia64
+  * linux/ia64/syscallent.h: Add perfmonctl, pivotroot, mincore, and
+    madvise syscalls.
+  * syscall.c (syscall_enter): With Kevin's latest ptrace patches,
+    AR_BSP points to the _end_ of the active register frame, so we need
+    to adjust bsp by moving it back by the size of the active frame
+    before using it.
+
+2000-04-24  Wichert Akkerman <wakkerma@debian.org>
+
+  * process.c: add sparc support to change_syscall
+
+2000-04-22  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/mips/syscallent.h: fix some typos
+
+2000-04-14  Wichert Akkerman <wakkerma@debian.org>
+
+  * linux/mips/syscallent.h: added names for SVR4, SYSV, BSD4.3 and POSIX
+    syscalls
+
+2000-04-13  Wichert Akkerman <wakkerma@debian.org>
+
+  * defs.h: Linux/MIPS uses syscalls up to >4k, so set MAX_QUALS to
+    4999
+
+2000-04-09  Wichert Akkerman <wakkerma@debian.org>
+
+  * README-linux: updated to note that strace might not compile
+    with development kernels
+  * bjm.c: sys_query_module: check if malloc succeeds
+  * system.c: sys_cap[gs]et(): check if malloc succeeds, only malloc once
+  * linux/syscallent.h: updated for 2.3.99pre3
+  * linux/alpha/syscallent.h: updated for 2.3.99pre3, add all osf syscalls
+    even though Linux doesn't implement them
+  * syscall.c: add global variables for MIPS registers as well
+  * syscall.c: move global variables to before get_scno since that uses them
+  * util.c: oops, misspelled defined
+  * process.c: fix ptrace calls in change_syscall
+  * mem.c: decode sys_madvise
+  * Merge patch from Topi Miettinen <Topi.Miettinen@nic.fi>
+    + add support for quotactl, fdatasync, mlock, mlockall, munlockall & acct
+    + small fix for RLIMIT_* and RUSAGE_BOTH
+    + enhace support for capget and capset
+
+2000-02-19 Wichert Akkerman <wakkerma@debian.org>
+
+  * test/vfork.c: new file to test vfork traces
+  * test/.cvsignore: new file
+  * defs.h: Up maximum number of traced processed to 64
+  * strace.c: Disable some debugging code from davidm 
+  * implement setarg for more architectures
+  * implement change_syscall
+
+1999-12-27  Morten Welinder  <terra@diku.dk>
+
+	* syscall.c (lookup_signal, lookup_desc): isdigit requires an
+ 	_unsigned_ char parameter.
+
+2000-02-14 Wichert Akkerman <wakkerma@debian.org>
+
+  * S390 updates
+
+2000-02-03 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge Linux/ia64 patches
+
+2000-01-02 Pavel Machek	     <pavel@ucw.cz>
+
+  * probe if sys/poll.h exists in configure + minor cleanups
+
+  * syscall.c: split trace_syscall into few pieces to make code readable
+
+2000-01-21 Wichert Akkerman  <wakkerma@debian.org>
+
+  * Release version 4.2 to get the current updates out and so
+    we can concentrate in finishing the clone support.
+
+2000-01-11 Wichert Akkerman  <wakkerma@debian.org>
+
+  * Add 1900 to tm_year in sprinttime
+
+1999-12-24  Wichert Akkerman  <wakkerma@debian.org>
+
+ * file.c: protect printstat64 with STAT64 instead of linux so we can
+   compile on Linux architectures that don't have it
+ * util.c: fix LOOP for ARM
+
+Fri Dec 24 18:05:00 EST 1999
+
+1999-12-23  Ulrich Drepper  <drepper@cygnus.com>
+
+ * file.c: Use ugly libc_stat trick also for stat64.
+   Implement sys_stat64, sys_fstat64, sys_lstat64, and printstat64.
+ * process.c (internal_clone): Fix a few typos and add definitions to make
+   it at least compile.
+ * linux/syscall.h: Declare sys_stat64, sys_lstat64, and sys_fstat64.
+ * linux/syscallent.h: Define table entries for sys_stat64, sys_lstat64,
+   and sys_fstat64.
+ * aclocal.m4: Define AC_STAT64.
+ * acconfig.h: Define HAVE_STAT64.
+ * configure.in: Add AC_STAT64.
+
+Thu Dec 23 15:01:37 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge patch from ftp://oss.software.ibm.com/linux390/ to add
+    support for Linux on the IBM S/390 architecture
+  * process.c: add internal_clone(), currently only shows the options
+  * syscall.c: use internal_clone to handle SYS_clone
+
+Mon Dec 20 00:27:50 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Rewrite mmap-handling to support mmap2 on Linux
+
+Tue Dec 14 11:35:16 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Note that Linux can handle sys_semop() as well
+
+Tue Nov 30 11:05:26 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Include linux/in6.h for glibc2.0 and older
+
+Mon Nov 29 16:33:04 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge patches from John Hughes to make configure support UnixWare
+
+Sat Nov 27 21:38:17 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Enhance sys_query_module
+
+Fri Nov 26 10:51:55 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Patches from John Hughes:
+    + cosmectic fix in sys_getpmsg
+    + allow net.c to compile on systems without AF_INET6
+    + Only use long_to_sigset on Linux systems
+    + UnixWare treats sigmask_t and sigmask_t* as the same thing
+    + Add pollhack
+    + Parse mount arguments for UnixWare
+    + ACL fixes for UnixWare
+
+Fri Nov 26 01:28:09 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Release 4.1 to get all the changes made out there
+
+Thu Nov 18 18:04:04 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge stracefork from Alexey Kuznetsov <kuznet@ms2.inr.ac.ru>
+    + Socket calls parsed better
+	+ bunch of alpha OSF syscalls added
+	+ Fix alpha 32/64 bit issues
+
+Mon Nov  1 20:52:08 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Move Linux kernelmodule-functions from system.c to bjm.c and
+    remove duplicate for sys_create_module
+  * Linux MIPS updates:
+    + Play with #ifdef's in net.c to get IPv6 right
+    + Use printargs for vm86-syscall
+
+Sun Oct 31 22:03:00 CET 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge Linux mips patch from Florian Lohoff <flo@rfc822.org>
+
+Mon Oct 11 00:36:25 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge patch from Keith Owens <kaos@ocs.com.au> to sys_query_module
+    and sys_delete_module correctly
+
+Wed Oct  6 02:00:33 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Update cvsbuild to give a better error if autoconf isn't installed
+  * Add test for linux/ptrace.h to configure
+  * Since we define GNU_SOURCE in the Makefile we don't need to define
+    USE_GNU in file.c anymore
+
+Fri Sep 10 04:35:16 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * #define USE_GNU before including file.c so we get some extra O_* flags
+
+Tue Aug 31 16:27:21 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Add missing } in IPv6 output
+
+Tue Aug 31 01:23:08 CEST 1999  Wichert Akkerman <wakkerma@debian.org>
+
+  * Update copyright for strace-graph to BSD to be consistent with
+    the rest of strace
+
+Mon Aug 30 00:53:57 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge patch from Daniel Jacobowitz: KERN_JAVA_* and KERN_SECURELVL aren't
+    defined for all kernelversions
+  * Add strace-graph, written by Richard Braakman <dark@xs4all.nl>
+
+Thu Aug 19 13:10:15 CEST 1999 Jakub Jelinek <jj@ultra.linux.cz>
+
+  * linux/sparc/syscall.h: Declare create_module/init_module.
+  * configure.in: Allow compilation in a different directory
+    than the source one.
+  * signal.c: Use asm/reg.h and struct regs instead of pt_regs
+    so that we don't depend on asm/ptrace.h which clashes with
+    glibc sys/ptrace.h.
+  * util.c: Likewise.
+  * syscall.c: Likewise.
+
+Wed Aug  4 18:01:50 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Syscall 94 on Linux alpha is sys_poll
+
+Sun Jul 25 14:38:33 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge in UnixWare patches from John Hughes <john@Calva.COM>
+
+Thu Jul 15 23:00:32 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge patch from Maciej W. Rozycki <macro@ds2.pg.gda.pl>:
+    + Correctly implement fix sys_createmodule (Linux)
+    + Add limited handlig of sys_initmodule (Linux)
+
+Tue Jul 13 17:07:50 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Add configure-test for sys/reg.h and use that
+  * Use sys/reg.h instead of asm/ptrace.h
+
+Sat Jul 10 01:46:10 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Remove hack in signal.c for arm architecture
+  * Add hack so we compile correctly on powerpc
+
+Fri Jul  9 02:28:16 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Add a corrected patch from Daniel Jacobowitz
+
+Thu Jul  8 16:00:04 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge patch from Daniel Jacobowitz to allow us to use the kernel types
+    for the stat structure
+
+Thu Jun 24 15:54:18 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Fix test for sys/reg include
+
+Tue Jun 22 17:26:33 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Fixed some Linux/powerpc sillyness, thanks to Daniel Jacobowitz
+  * Fixed some SunOS compile problems earlier that I forgot to include
+    here
+
+Mon Jun 14 12:44:25 CEST 1999
+
+  * Avoid leakint fd into child when forking, patch from
+    John Hughes <john@Calva.COM>
+
+Fri Jun 11 14:54:47 CEST 1999
+
+  * Applied IRIX64 patch from Thomas E. Dickey <dickey@clark.net>
+  * Applied Solaris and manpage updates from Guy Harris <guy@netapp.com>
+
+Wed Jun  9 14:48:49 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Brought syscall list for alpha up to date
+
+Wed Jun  2 18:30:12 CEST 1999 Jakub Jelinek <jj@ultra.linux.cz>
+
+  * system.c: sys_umount2 syscall support.
+  * linux/sparc/errnoent.h: Update sparc-linux errnos.
+  * linux/sparc/syscall.h: Update used sparc-linux syscalls.
+  * linux/sparc/syscallent.h: Match 2.2.9 system calls.
+  * file.c: sparc-linux asm/stat.h uses dev_t etc. types,
+    so it needs strace's own copy of the stat structure.
+  * util.c: Make it compile on sparc-linux.
+  * strace.c: Fix strace -f and -ff operation on sparc-linux.
+  * signal.c: rt_sigaction has different arguments on sparc*-linux
+    and alpha-linux.
+  * syscall.c: Recognize sparc64-linux binaries.
+
+Fri May 28 21:09:00 PST Ulrich Drepper <drepper@cygnus.com>
+
+  * configure.in: Fix typo (CFLAG -> CFLAGS).
+
+  * syscall.c: Don't include linux/ptrace.h explicitly for glibc.
+
+Thu May 27 13:59:27 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Add some sysctl support, patch from Ulrich Drepper
+
+Wed May 26 01:04:34 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Use kernel dirent structure for Linux
+
+Sun May  9 02:18:30 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Merge in patches from Andreas Schwab <schwab@issan.cs.uni-dortmund.de>
+    + some layout and other minor fixes
+    + add some m68k-specific things to linux/syscallent.h. Note that m68k
+      is similar enough to i386 to not need it's own subdirectory
+    + add support for sendfile and mremap syscalls for Linux
+  * Merge in patches from Sascha Schumann <sascha@schumann.2ns.de>
+    + ioctls.h vs sys/ioctl.h on Alpha platform
+    + pointer was casted to an int in stream.c
+    + strsignal() needs -D_GNU_SOURCE in CFLAGS
+    + several other casts changed
+    + correct ARM/POWERPC architecture defines in acconfig.h
+  * Merge in patches from Morten Welinder <terra@diku.dk>
+    + add some autoconf-tests for includefiles
+    + handle solaris version of sigcontext struct (actually I hacked this
+      up again, but the idea is his :)
+
+Sun Apr 18 22:32:42 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Update syscalls for linux alpha, patch from Bart Warmerdam
+    <bartw@debian.org>
+  * Update sparc code so it actually compiles
+
+Fri Apr 16 02:18:05 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Add support for old_*stat functions for Linux. Please note you need
+    to use reasonably recent kernel headers to compile strace now.
+  * Change references to LINUX into linux in file.c
+  * Fix include for LDT in mem.c
+
+Thu Apr 15 22:28:15 CEST 1999 Wichert Akkerman <wakkerma@debian.org>
+
+  * Change in strace maintainership, jrs passed the torch to me.
+  * Use autoconf 2.13
+  * Incorporate all changes already made in the Debian strace package:
+    + compiles with more Linux kernels
+    + added support for more Linux architectures
+    + add support for a lot of extra syscalls
+    + fix some problems with hanging children
+    + check stray syscall after execv
+    + decode capget and capset arguments
+    + add more constants to net.c
+    + detect ROSE networking
+    + add more protocol families to domains
+    + add IPIP protocol
+    + added MSG_PROXY and MSG_CTRUNC to msg_flags
+    + added SO_BSDCOMPAT and SO_REUSEPORT to sockoptions
+    + added IP, IPX and TCP-options
+    + added IP, IPX and TCP support to get-/setsockopt()
+    + added IPX support
+    + updated handling of signals
+
+Sun Oct 27 22:28:00 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* util.c (umovestr) [LINUX]: Handle Linux like SunOS4
+	instead of SVR4.  That is, read a few bytes at a time
+	to avoid overrunning the end of the stack.
+
+Fri May 31 01:48:49 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.1 is released.
+
+Thu May 23 01:04:43 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* aclocal.m4 (AC_DECL_SYS_ERRLIST): Try looking in stdio.h
+	as well since that's where glibc declares it.  Go figure.
+	* signal.c (sys_sigreturn) [ALPHA]: Use sigcontext
+	instead of sigcontext_struct since glibc v5+ apparently
+	plays games with the native OS namespace.
+	From David Mosberger-Tang <davidm@AZStarNet.com>.
+
+Mon May 20 23:17:14 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.14 is released.
+
+	* aclocal.m4 (AC_STRUCT_MSG_CONTROL): New macro.
+	* configure.in: Add call to AC_STRUCT_MSG_CONTROL.
+	* net.c (printmsghdr): Handle BSD 4.3 and 4.4 msghdr members
+ 	differently.
+	Reported by Henrik Storner <storner@osiris.ping.dk>.
+
+	* configure.in: (AC_CHECK_{HEADERS,FUNCS}): Add checks for
+ 	sys/filio.h and sys/stream.h and remove check for poll.
+	* desc.c (decode_select, sys_select, sys_oldselect) [LINUX]:
+ 	Handle old and new styles of argument passing for select on Linux.
+	* ioctl.c, stream.c: Conditionalize stream code on presence of
+	sys/stream.h instead of poll because glibc implements poll but
+	not the rest of the stream interface.
+	* signal.c [LINUX]: Standardize on the name sigcontext_struct.
+	(sys_sigprocmask) [ALPHA]: Handle OSF flavor which is more like
+	sigsetmask.
+	* term.c (term_ioctl): Use _VMIN, if present, for TC{G,S}ETA*.
+	* util.c (umoven, umovestr): Move data in long-sized chunks
+	at a time, instead of hard coding it to be 4.
+	From David Mosberger-Tang <davidm@AZStarNet.com>.
+
+Mon May 20 01:19:36 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.13 is released.
+
+	* configure.in (AC_CHECK_HEADERS): Add check for asm/sigcontext.h.
+	* signal.c [HAVE_ASM_SIGCONTEXT_H]: Conditionally include
+	asm/sigcontext.h to define sigcontext_struct and don't define it
+	locally if the header is present.
+
+	* syscall.c (nerrnos{0,2}): Correct size computation.
+
+	* Makefile.in: Remove dependencies and rules relating to files
+ 	normally found in the os directory.  Because of the new scheme we
+ 	don't know precisely where they come from.  Sigh.
+	* signalent.sh: Make it work for sunos4, linux, and svr4.
+	* {sunos4,linux{,/alpha},svr4}/Makefile.in: Make rules correspond
+ 	to traditional make syntax.  Add signalent.h to files which can
+ 	unconditionally be rebuilt.  Prevent signalent.h from being
+ 	unconditionally being rebuilt since it's customized.
+	* {sunos4,linux{,/alpha},svr4}/{ioctlent,errnoent,signalent}.h:
+ 	Use versions built by {ioctlent,errnoent,signaltent}.sh.
+  	* sunos4/ioctlent.sh: Work around sprintf troubles with SunOS
+ 	4.1.4 and gcc 2.7.2.
+
+Sun May 19 17:14:09 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* configure.in, Makefile.in: Add OSARCH concept to finish
+	build support for the alpha.
+	* Makefile.in, linux/Makefile.in: Rewrite clean, distclean,
+	and maintainer-clean rules.
+	* defs.h, ioctlsort.c: Make ioctl code member unsigned.
+	* ioctl.c, ioctlsort.c (compare): Perform explicit checking
+	for less, greater, and equal since subtraction on two's
+	complement numbers isn't an order relation (it isn't transitive)!
+	* linux/Makefile.in: Add rules for the signalent.h file.
+	* linux/alpha/Makefile.in: New file.
+
+Sun May 19 01:12:28 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.12 is released.
+
+	* linux{,alpha}/ioctlent.sh: Tweak for recent kernels.
+	From Michael E Chastain <mec@duracef.shout.net>.
+
+	* defs.h (SUPPORTED_PERSONALITES, DEFAULT_PERSONALITY): New.
+	* syscall.c (set_personality): New.
+	* strace.c (main): Call set_personality.
+ 	* defs.h, syscall.c, ioctl.c, signal.c: Make sysent, errnoent,
+ 	ioctlent, and signalent indirect pointers and redirect them
+	based on personality.
+	* {sunos4,svr4,linux{,/alpha}}/signalent.h: New files.
+	Suggested by Tom Dyas <tdyas@eden.rutgers.edu>.
+
+	* util.c (upeek): Handle case where ptrace returns a long
+	and sizeof(long) != sizeof(int).
+	From Richard Henderson <richard@twiddle.tamu.edu>
+
+Fri May 17 21:03:36 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.11 is released.
+
+	* many files: Fix more printf warnings for other platforms.
+
+	* ipc.c (sys_msgrcv) [LINUX]: Conditionalize definition of ipc_wrapper.
+
+	* linux/dummy.h: Handle missing library support for {send,recv}msg.
+	Reported by Thomas Bogendoerfer <tsbogend@bigbug.franken.de>.
+
+	* linux/syscall.h (sys_utimes): Fix a typo in the declaration.
+	From Thomas Bogendoerfer <tsbogend@bigbug.franken.de>.
+
+Fri May 17 00:50:06 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.10 is released.
+
+	* Makfile.in: Add os/arch to includes so that a given arch
+	(like alpha) can override the native arch (like i386).
+	* configure.in: Check for sendmsg.
+
+	* net.c: Make sendmsg and recvmsg dependent on an autoconf
+	test.  Reported by Michael E Chastain <mec@duracef.shout.net>.
+
+	* acconfig.h, configure.in: Detect the alpha.
+	* ioctl.c: Handle the alpha.
+	* defs.h: Make some members long for the alpha.  Define
+	some register nicknames.  Add support for WAITEXECVE.
+	* file.c [ALPHA]: Support the alpha for statfs.  Add
+	osf_statfs and osf_fstatfs for the alpha.  Make damn sure
+	major and minor results are suitable for passing to printf.
+	* signal.c, syscall.c: Support the alpha.
+	* process.c: Add alpha user offsets.
+	* most files: Use %l? for printf arguments since
+	most are now longs for the alpha.
+	* linux/alpha/{errnoent.h,ioctlent.{h,sh},syscallent.h}:
+	New for the alpha.
+	From Thomas Bogendoerfer <tsbogend@bigbug.franken.de>.
+
+Wed May 15 00:29:37 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.9 is released.
+
+	* config.in, config.sub, install-sh: Upgrade to autoconf 2.10.
+
+	* linux/dummy.h, linux/syscallent.h, linux/syscall.h: Add recent
+	Linux kernel version system calls.
+
+Wed Mar 13 01:03:38 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* ipc.c [SUNOS4]: Add SunOS support for decoding IPC calls.
+	* syscall.c [SUNOS4]: Compile decode_subcall on SunOS and
+	decode IPC calls using it.
+	* sunos4/dummy.h: Alias sys_semop to printargs.
+	* sunos4/syscall.h: Add new pseudo syscalls for IPC.
+	* sunos4/syscallent.h: Include new subcalls for IPC.
+	From Matthias Pfaller <leo@dachau.marco.de>.
+
+Tue Feb 13 22:08:25 1996  J. Richard Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.8 is released.
+
+	* time.c [LINUX]: Explicitly include linux/version.h.
+
+	* strace.c (main): Don't let them even *try* to
+	get strace to attach to itself since some systems
+	don't handle this case very gracefully.
+	Reported by David S. Miller <davem@caip.rutgers.edu>.
+
+	* Makefile.in (distclean): Fix it for subdirectories.
+
+	* sunos4/syscallent.h, svr4/syscallent.h: Fill in the new
+	sys_flags member for each defined system call.
+
+Fri Dec  8 01:17:28 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* defs.h (TRACE_*): New flags to describe what class
+	of system call each system call is.
+	(sysent): Add sys_flags member.
+	* syscall.c (sysent): Define (and later undef) abbreviations
+	for the system call class flags.
+	(lookup_class): New function to translate strings to
+	system call class flags.
+	(qualify): Handle new system call class mechanism.
+	* linux/syscallent.h: Fill in the new sys_flags member
+	for each defined system call.
+
+	* defs.h (print_sock): Remove redundant and non-K&R C
+	compatible prototype.  From Juergen Weigert
+	<jnweiger@immd4.informatik.uni-erlangen.de>.
+
+Thu Dec  7 01:17:40 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* linux/ioctlent.sh: Tweak to improve ioctl accuracy.
+	From Michael E Chastain <mec@duracef.shout.net>.
+
+	* system.c (includes) [LINUX]: Add linux/nfs.h for recent
+	kernels.  From Michael E Chastain <mec@duracef.shout.net>.
+
+Wed Dec  6 21:52:28 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* file.c (sprintfstype): Enclose string result in double
+	quotes.
+
+	* time.c (sys_adjtimex) [LINUX]: Conditionalize
+	constantly evolving timex structure.
+	From Aaron Ucko <UCKO@VAX1.ROCKHURST.EDU>.
+
+	* defs.h, syscall.c, strace.c: Rename syscall to
+	trace_syscall and change prototype and all callers
+	because of broken Linux shared libraries.
+	From Aaron Ucko <UCKO@VAX1.ROCKHURST.EDU>.
+
+	* Makefile.in (clean): Check for a file with test -f not
+	test -d.  From Aaron Ucko <UCKO@VAX1.ROCKHURST.EDU>.
+
+Tue Sep 26 02:32:31 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.7 is released.
+
+	* util.c (string_quote): Fix thinko which caused core
+	dumps for strings with quotes in them.
+	Reported by Marty Leisner <leisner@sdsp.mc.xerox.com>.
+
+	* linux/Makefile.in (errnoent.h rule): Grab all errno.h
+	files from /usr/include, not just the linux one.
+	From Michael E Chastain <mec@duracef.shout.net>.
+
+	* linux/errnoent.sh: Total rewrite to handle more ioctls with
+	fewer false positives on more kernel flavors.
+	From Michael E Chastain <mec@duracef.shout.net>.
+
+Mon Sep  4 01:29:22 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.6 is released.
+
+	* linux/dummy.h, linux/syscall.h, linux/syscallent.h: Add
+	sys_msync.
+	* mem.c (mctl_funcs, mctl_lockas, sys_mctl): Conditionalize
+	on MC_SYNC instead of HAVE_MCTL.
+	(mctl_sync): Conditionalize on MS_ASYNC instead of HAVE_MCTL.
+	(sys_msync): New function.
+
+Sat Sep  2 12:06:04 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* linux/dummy.h, linux/syscall.h, linux/syscallent.h: Add
+	sys_flock and sys_getdents.
+	* desc.c (flockcmds, sys_flock): Conditionalize on LOCK_SH
+	not SUNOS4.
+	* file.c (sys_getdents): Define unconditionally and handle
+	LINUX case.
+	* strace.c (main): Disallow username option unless both real
+	and effective uids are root.
+
+Wed Aug 30 01:29:58 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* strace.c (main): Ensure that run_uid and run_gid are
+	always set to something meaningful.
+	(main, newoutf) [!SVR4]: Swap real and effective uids while
+	opening any output files.
+	(main) [!SVR4]: Treat effective uid of root as a request
+	to handle suid binaries correctly using the real uid of
+	the invoking user.
+
+Sat Aug 19 00:06:08 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* Makefile.in: Add `|| true' to clean rule because
+	although GNU make 3.74 uses `sh -c' to invoke commands
+	every other make in the world uses `sh -ec'.
+
+	* syscall.c (syscall) [SVR4, MIPS]: The fifth and subsequent
+	arguments appear to be stored on the stack, not in the
+	registers following A3 (empirical result).
+
+	* defs.h: Add prototype for printsock.
+	* svr4/dummy.h: Remove generic handling of sys_mount.
+	* system.c [SVR4, MIPS]: Include several system headers to cleanly
+	get access to SGI mount information.
+	(mount_flags, nfs_flags) [SVR4, MIPS]: New objects.
+	(sys_mount) [SVR4, MIPS]: New function.
+	(sys_mount) [SVR4, !MIPS]: New function.
+
+Tue Jul  4 00:30:34 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.5 is released.
+
+	* desc.c, resource.c, strace.c, syscall.c, time.c: Cast tv_sec and
+ 	tv_usec members to long when using printf.
+
+	* ipc.c: Omit define of __KERNEL__.
+	({MSG,SEM,SHM}_{STAT,INFO}): Explicitly define those things we
+ 	want which __KERNEL__ used to provide.
+	(sys_msgrcv): Change reference to ipc_kludge structure to
+	look-alike ipc_wrapper to avoid dependence on __KERNEL__.
+
+	mem.c (mmap_flags) [MAP_{GROWSDOWN,DENYWRITE,EXECUTABLE}]: Add
+ 	Linux specific options.
+
+	syscall.c: Use SYS_ERRLIST_DECLARED instead of guessing.
+  	[E{RESTART{SYS,NO{INTR,HAND}},NOIOCTLCMD}]: Explicitly define
+ 	instead of depending of __KERNEL__.
+
+	term.c: Cast c_{i,o,c,l}flag to long when using printf.
+
+Tue Jun  6 00:27:48 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* aclocal.m4 (AC_DECL_SYS_ERRLIST, AC_DECL__SYS_SIGLIST): New.
+	* configure.in: Call AC_DECL_SYS_ERRLIST, AC_DECL_SYS_SIGLIST,
+	and AC_DECL__SYS_SIGLIST.
+	* acconfig.h (SYS_ERRLIST_DECLARED): New.
+	* strace.c (strerror): Use SYS_ERRLIST_DECLARED.
+	(strsignal): Use SYS_SIGLIST_DECLARED.
+
+	net.c (sys_socket): Omit inadvertent surplus comma when
+	protocol family isn't PF_INET.
+
+	util.c (dumpstr): Fix incorrect printing of one too many
+	characters when the length is not an even multiple of 16 bytes.
+	Reported by Juergen Weigert
+	<jnweiger@immd4.informatik.uni-erlangen.de>.
+
+Thu May  4 23:37:47 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* ioctl.c (compare): Change prototype to match POSIX qsort.
+	* signal.c (sigishandled) [SVR4]: Omit everything after return.
+	* strace.c (trace) [SVR4]: Break out of for loop instead of
+	returning when finished so final return statement is executed.
+	* syscall.c (internal_syscall): Add more SYS_wait* variations.
+	(syscall) [LINUX]: Correct typo which commented out the M68K
+	argument to ifdef.
+	* util.c (printstr): Cast unsigned char pointer argument
+	to char pointer in umovestr call.
+	(dumpstr): Likewise for umoven.
+
+Wed May  3 01:10:56 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.4 is released.
+
+	* signal.c (sys_sigblock): Move after the definition of
+	sys_sigsetmask that it calls to avoid an implicit declaration.
+	* stream.c (transport_user_options, transport_server_options):
+	Only needed if TI_BIND is defined.
+	* configure.in: Add -Wno-implicit to WARNFLAGS on SunOS 4.x.
+
+	* process.c (internal_fork) [SVR4]: Fix a typo that omitted
+	the tcp arguement from the call to exiting.  Add getrval2
+	check so no fork processing is done in the child.
+	(printwaitn): Initialize exited so that its value is defined
+	for all flows of execution.
+
+Tue May  2 22:39:42 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* linux/dummy.h: Add aliases for sysfs, personality, afs_syscall,
+	setfsuid, setfsgid, and _llseek syscalls.
+	* linux/syscall.h: Add prototypes for them.
+	* linux/syscallent.h: Add them to the syscall entries table.
+	* system.c (headers) [LINUX]: Include linux/unistd.h to get __NR_*
+	defines and conditionally include linux/personality.h if
+	__NR_personality is defined.
+	(personality_options) [LINUX]: New table.
+	(sys_personality) [LINUX]: New function.
+
+Tue May  2 00:20:39 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* strace.c (trace) [!SVR4]: Change forever loop to one predicated
+	on the number of traced processes so that we can have untraced
+	children (e.g. via popen).
+
+	* strace (main) [!SVR4]: Call fake_execve to get the actual
+	exec and its arguments into the trace.
+	(environ): Declare it.
+	* process.c (fake_execve): New function.
+	(headers): Include sys/syscall.h to get SYS_* defines.
+
+	* process.c (sys_execv, sys_execve): Surround argument annotations
+	with C comment delimiters.
+	(printargv, printargc): The arg vector is an array of char pointers
+	not ints.
+
+	* strace.c (printleader): Also check for multiple -p arguments
+	when deciding whether to print the pid field.
+
+	* strace.c (strerror) [!HAVE_STRERROR]: New function.
+	* defs.h (strerror, strsignal): Add these prototypes if we provide
+	the functions.
+	* configure.in (AC_CHECK_FUNCS): Add strerror.
+
+	* strace.c (main, proc_poller): Add SIGPIPE to the list of caught
+	and blocked signals.
+
+	* strace.c (main): Add username option.  Verify they are root before
+	letting them use it.  Look up the ids in the password file.  Set
+	them just before executing the program.
+	From Reuben Sumner <rasumner@undergrad.math.uwaterloo.ca>.
+
+Sat Apr 29 00:09:56 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.3 is released.
+
+	* system.c (mount_flags) [LINUX]: Omit duplicated MS_NOSUID entry.
+	From Reuben Sumner <rasumner@undergrad.math.uwaterloo.ca>.
+
+	* strace.c (outfname): Initialize to NULL.
+	(main): Defer output file processing until after arguments.
+	Allow either a pipe or a bang for command arguments.
+	Check if outfname is NULL instead of checking outf for stderr.
+	Reinitialize each startup TCB's outf to fix -p/-o ordering bug.
+	(droptcb): Reset close TCB's outf to NULL instead of stderr.
+	(tprintf): Avoid calling vfprintf if outf is NULL.
+
+	* strace.c (main): Use popen if -o argument begins with a pipe.
+	From Marty Leisner <leisner@sdsp.mc.xerox.com>.
+
+	* process.c (printstatus): Fix a typo where WIFSIGNALED was meant
+	but WIFSTOPPED was used.
+
+	* Makefile.in: Add an EXTRA_DEFS variable and use it in the .c.o
+	rule to prevent the comment from being untrue.
+
+Fri Apr 28 22:01:56 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* strace.c (sys_exit): Move follow fork code to internal_exit.
+	(sys_fork): Move follow fork code to internal_fork.
+	(sys_execv, sys_execve): Move follow fork code to internal_exec.
+	(sys_waitpid, sys_wait4): Move follow fork code to internal_wait.
+	(vforking): Remove this static variable and check scno in
+	internal_fork instead.
+	(internal_exit, internal_fork, internal_exec, internal_wait): New
+	functions.
+	* defs.h: Add prototypes for the new internal_* functions.
+	* syscall.c (syscall): Move syscall entering trace qualifier check
+	and reprint checking after context decoding and precede them with
+	a call to internal_syscall.  Precede syscall exiting trace
+	qualifier check with a call to internal_syscall.
+	(internal_syscall): New function.
+
+	* defs.h (struct tcb): Make scno signed.
+	* strace.c (syscall) Make u_error signed.
+	[LINUX, I386]: Avoid unsigned cast in eax check.
+	* syscall.c (sys_indir): Make i, scno, and nargs signed.
+	* desc.c (sys_select): Make cumlen unsigned
+
+Mon Apr 24 23:52:47 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* net.c (socktypes): Add SOCK_PACKET.
+
+Sun Apr  2 23:50:39 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* Makefile (clean): Check explicitly for a Makefile in subdirs
+	before running make in them.
+
+Sun Mar 26 12:37:21 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* strace.c [MIPS] (proc_open): Conditionalize run on MIPS.
+	[MIPS] (detach): Initialize error for MIPS case.
+	(trace): Initialize ioctl_result and ioctl_errno for overly helpful
+	compilers.
+	* syscall.c (decode_subcall): Move variable i into conditionals
+	that use use it.
+	* system.c (syssgi_options): Conditionalize SGI_RECVLMSG and
+	SGI_SET_FPDEBUG that SGI decided to drop.  I don't have the stomach
+	to change them all.
+	* term.c (term_ioctl): Force [c_[iocl]flags members to long before
+	printing since we don't know what the size of their type is.
+	* util.c [SVR4, MIPS] (umoven): Prevent MIPS from using pread even
+	if autoconf detects it since it seems to either not work or do
+	something else entirely on Irix 5.3.
+
+Sun Mar 26 00:01:11 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.2 is released.
+	* linux/dummy.h: Make sys_fchdir like sys_close instead of printargs
+	so that the file descriptor arg is decimal.
+
+Sat Mar 25 22:50:13 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* net.c [LINUX] (protocols): Explicitly define all IPPROTO_* entries
+	because on Linux they are enumerators.
+
+	* system.c [LINUX] (mount_flags): Handle renaming of MS_SYNC to
+	MS_SYNCHRONOUS.
+
+	* util.c (printxval): When there is no translation, print the actual
+	number first and the the default value as a C comment.
+
+	* net.c (sys_send, sys_sendto, sys_sendmsg, sys_getsockopt,
+	sys_setsockopt): Change first argument from unsigned to signed to
+	cater to the frequent practice of calling system calls with a file
+	descriptor of -1.
+	* mem.c (sys_mmap): Likewise.
+
+Sun Mar 19 13:53:52 1995  Rick Sladkey  <jrs@world.std.com>
+
+	* signal.c [LINUX] (signalent): Handle old and new values of SIGIO.
+
+Sun Dec 11 22:51:51 1994  Rick Sladkey  <jrs@world.std.com>
+
+	* version.c: Version 3.0.1 is released.
+	* Makefile.in, configure.in, aclocal.m4: Changes for autoconf 2.0.
+	* config.guess, config.guess: Update from the FSF.
+	* install-sh: New from the FSF.
+
+Mon Dec  5 20:51:29 1994  Rick Sladkey  <jrs@world.std.com>
+
+	* Makefile.in: Add m68k arch.
+	* acconfig.h (M68K): Add m68k define.
+	* configure.in: Add detection of arch m68k.
+	* process.c [M68K] (struct_user_offsets): Support m68k registers and
+	offsets.
+	* signal.c [M68K] (sigcontext_struct): Support m68k sigcontext
+	structure.
+	[M68K] (sys_sigreturn): Support m68k sigreturn handling.
+	* syscall.c [M68K] (syscall): Support m68k syscall number register
+	and errno in d0 instead of eax.
+	* util.c [M68K] (getpc, printcall, setbpt, clearbpt): Support m68k
+	program counter in PT_PC instead of EIP.
+	[M68K] (LOOP): Support m68k loop instruction.
+	From Andreas Schwab <schwab@issan.informatik.uni-dortmund.de>.
+
+	* mem.c [MAP_ANONYMOUS] (mmap_flags): Correct inadvertent reference
+	to MAP_FIXED instead of MAP_ANONYMOUS.
+	From Andreas Schwab <schwab@issan.informatik.uni-dortmund.de>.
+
+	* signal.c [LINUX] (signalent): Signal 30 is now SIGPWR.
+	From Andreas Schwab <schwab@issan.informatik.uni-dortmund.de>.
+
+Mon Dec  5 01:05:46 1994  Rick Sladkey  <jrs@world.std.com>
+
+	* defs.h (tprintf): Fix typo in non-gcc ansi prototype for tprintf.
+	Reported by Thanh Ma <tma@encore.com>.
+
+	* strace.c (cleanup): Send SIGCONT before SIGTERM because Linux
+	1.1.62 doesn't continue a traced child when the parent exits.
+	Reported by Matt Day <mday@artisoft.com>.
+
+	* system.c [LINUX]: Include netinet/in.h before arpa/inet.h.
+
+	* util.c (printstr): Fix longstanding bug in notating string
+	continuation.
+
+	* strace.c [SVR4] (proc_open): Specifically wait for the child the
+	child to go into the execve syscall to avoid spurious traces.
+	[LINUX] (detach): Conditionalize the status variable.
+
+Sun Dec  4 23:21:42 1994  Rick Sladkey  <jrs@world.std.com>
+
+	* Makefile.in: Add mips arch.
+	* acconfig.h (MIPS): Add mips define.
+	* configure.in: Add detection of opsys irix5 and arch mips.  Check
+	for prctl function.
+	Check for sys/sysconfig.h header.
+	* defs.h (MAX_ARGS): Bump maximum syscall arguments from 8 to 32.
+	* file.c [SVR4]: Include sys/cred.h.
+	(access_flags): Update access flags for SGI.
+	(sprinttime): Change type of sprinttime argument from unsigned
+	long to time_t.
+	* process.c [HAVE_PRCTL]: Include sys/prctl.h.
+	[HAVE_PRCTL] (prctl_options, sys_prctl): New for SGI.
+	(printsiginfo): Conditionally compile SI_TIMER and SI_MESGQ.
+	Cast si_band member to long before printing.
+	* signal.c (sigact_flags): Add _SA_BSDCALL for SGI.
+	(sigprocmaskcmds): Add SIG_SETMASK32 for SGI.
+	* strace.c [SVR4] [MIPS]:
+	(foobar): New dummy signal handler.
+	(main): Install a dummy signal handler in the child before pausing
+	to work around an SGI bug in PRSABORT.
+	(proc_open): Send a interrupt to the child instead of aborting the
+	syscall which doesn't work on Irix5.2.
+	* svr4/dummy.h: Add new unfinished SGI syscalls
+	(e.g. sys_sysmp, sys_sginap, etc.).  Handle some SGI syscalls like
+	existing calls (e.g. sys_ksigaction like sys_sigaction).
+	Printargs does the print thing for sys_sethostid.
+	* svr4/syscall.h: Declare all new SGI syscalls.
+	(SGI_KLUDGE): Define syscall table starting index to be 1 for SGI
+	and add it to all subcall entry points.
+	(SYS_pgrpsys_subcall, SYS_sigcall_subcall, SYS_context): Don't
+	decode as subcalls on MIPS. Instead, use the normal syscalls.
+	* svr4/syscallent.h [MIPS]: Lead syscall table with a dummy entry
+	since SGI syscall numbers are off by one.
+	[MIPS] (sys_pgrpsys): Rename to sys_setpgrp on SGI.
+	[MIPS] (sys_xenix): Rename to sys_syssgi on SGI.
+	[MIPS] (sys_sysmachine): Rename to sys_sysmips on SGI.
+	[MIPS]: Conditionalize SVR4 extension into SGI and Solaris classes.
+	* syscall.c (dumpio): Validate descriptor against MAX_QUALS.
+	[HAVE_PR_SYSCALL] (syscall): Conditionalize SYS_vfork.
+	[MIPS] (syscall): Add SGI section for decoding u_error and u_rval.
+	Add workaround for broken SGI pr_sysarg on syscall entry.
+	[SVR4] (syscall): Conditionalize subcall decoding for
+	SYS_ptrpsys_subcall, SYS_sigcall_subcall and SYS_context_subcall.
+	[SVR4] [MIPS] (getrval2): Handle SGI.
+	* syscallent.sh: Dork the sed line to be choosier about SYS_ lines.
+	* system.c [HAVE_SYSCONFIG_H]: Include sys/sysconfig.h.
+	[MIPS] (syssgi_options, sys_syssgi): New for SGI.

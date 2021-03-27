@@ -1,0 +1,29 @@
+The PPC KVM paravirtual interface
+=================================
+
+The basic execution principle by which KVM on PowerPC works is to run all kernel
+space code in PR=1 which is user space. This way we trap all privileged
+instructions and can emulate them accordingly.
+
+Unfortunately that is also the downfall. There are quite some privileged
+instructions that needlessly return us to the hypervisor even though they
+could be handled differently.
+
+This is what the PPC PV interface helps with. It takes privileged instructions
+and transforms them into unprivileged ones with some help from the hypervisor.
+This cuts down virtualization costs by about 50% on some of my benchmarks.
+
+The code for that interface can be found in arch/powerpc/kernel/kvm*
+
+Querying for existence
+======================
+
+To find out if we're running on KVM or not, we leverage the device tree. When
+Linux is running on KVM, a node /hypervisor exists. That node contains a
+compatible property with the value "linux,kvm".
+
+Once you determined you're running under a PV capable KVM, you can now use
+hypercalls as described below.
+
+KVM hypercalls
+===

@@ -1,0 +1,43 @@
+README file for the osst driver
+===============================
+(w) Kurt Garloff <garloff@suse.de> 12/2000
+
+This file describes the osst driver as of version 0.8.x/0.9.x, the released
+version of the osst driver.
+It is intended to help advanced users to understand the role of osst and to
+get them started using (and maybe debugging) it.
+It won't address issues like "How do I compile a kernel?" or "How do I load
+a module?", as these are too basic.
+Once the OnStream got merged into the official kernel, the distro makers
+will provide the OnStream support for those who are not familiar with
+hacking their kernels.
+
+
+Purpose
+-------
+The osst driver was developed, because the standard SCSI tape driver in
+Linux, st, does not support the OnStream SC-x0 SCSI tape. The st is not to
+blame for that, as the OnStream tape drives do not support the standard SCSI
+command set for Serial Access Storage Devices (SASDs), which basically
+corresponds to the QIC-157 spec.
+Nevertheless, the OnStream tapes are nice pieces of hardware and therefore
+the osst driver has been written to make these tape devs supported by Linux.
+The driver is free software. It's released under the GNU GPL and planned to
+be integrated into the mainstream kernel.
+
+
+Implementation
+--------------
+The osst is a new high-level SCSI driver, just like st, sr, sd and sg. It
+can be compiled into the kernel or loaded as a module.
+As it represents a new device, it got assigned a new device node: /dev/osstX
+are character devices with major no 206 and minor numbers like the /dev/stX
+devices. If those are not present, you may create them by calling
+Makedevs.sh as root (see below).
+The driver started being a copy of st and as such, the osst devices'
+behavior looks very much the same as st to the userspace applications.
+
+
+History
+-------
+In the first place, osst shared its identity very much wi

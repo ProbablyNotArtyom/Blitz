@@ -1,0 +1,12 @@
+
+ TODO
+~~~~~~
+Please pick something while reading :)
+
+- Convert interrupt handler to per-ep-thread-irq
+
+  As it turns out some DWC3-commands ~1ms to complete. Currently we spin
+  until the command completes which is bad.
+
+  Implementation idea:
+  - d

@@ -1,0 +1,10 @@
+enable_sriov		[DEVICE, GENERIC]
+			Configuration mode: Permanent
+
+ignore_ari		[DEVICE, GENERIC]
+			Configuration mode: Permanent
+
+msix_vec_per_pf_max	[DEVICE, GENERIC]
+			Configuration mode: Permanent
+
+msix_v

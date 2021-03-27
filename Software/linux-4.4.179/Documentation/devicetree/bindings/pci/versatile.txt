@@ -1,0 +1,46 @@
+/*
+ * Copyright 2013 Markus Pargmann <mpa@pengutronix.de>, Pengutronix
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+#ifndef __DTS_IMX27_PINFUNC_H
+#define __DTS_IMX27_PINFUNC_H
+
+/*
+ * The pin function ID is a tuple of
+ * <pin mux_id>
+ * mux_id consists of
+ * function + (direction << 2) + (gpio_oconf << 4) + (gpio_iconfa << 8) + (gpio_iconfb << 10)
+ *
+ * function:      0 - Primary function
+ *                1 - Alternate function
+ *                2 - GPIO
+ * direction:     0 - Input
+ *                1 - Output
+ * gpio_oconf:    0 - A_IN
+ *                1 - B_IN
+ *                2 - C_IN
+ *                3 - Data Register
+ * gpio_iconfa/b: 0 - GPIO_IN
+ *                1 - Interrupt Status Register
+ *                2 - 0
+ *                3 - 1
+ *
+ * 'pin' is an integer between 0 and 0xbf. imx27 has 6 ports with 32 configurable
+ * configurable pins each. 'pin' is PORT * 32 + PORT_PIN, PORT_PIN is the pin
+ * number on the specific port (between 0 and 31).
+ */
+
+#define MX27_PAD_USBH2_CLK__USBH2_CLK                      0x00 0x000
+#define MX27_PAD_USBH2_CLK__GPIO1_0                        0x00 0x032
+#define MX27_PAD_USBH2_DIR__USBH2_DIR                      0x01 0x000
+#define MX27_PAD_USBH2_DIR__GPIO1_1                        0x01 0x032
+#define MX27_PAD_USBH2_DATA7__USBH2_DATA7                  0x02 0x004
+#define MX27_PAD_USBH2_DATA7__GPIO1_2                      0x02 0x032
+#define MX27_PAD_USBH2_NXT__USBH2_NX

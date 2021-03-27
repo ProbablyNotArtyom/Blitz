@@ -1,0 +1,16 @@
+Kernel driver for omap HDQ/1-wire module.
+========================================
+
+Supported chips:
+================
+	HDQ/1-wire controller on the TI OMAP 2430/3430 platforms.
+
+A useful link about HDQ basics:
+===============================
+http://focus.ti.com/lit/an/slua408a/slua408a.pdf
+
+Description:
+============
+The HDQ/1-Wire module of TI OMAP2430/3430 platforms implement the hardware
+protocol of the master functions of the Benchmark HDQ and the Dallas
+Semiconductor 1-Wire protocols. T

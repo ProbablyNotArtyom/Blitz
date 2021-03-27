@@ -1,0 +1,18 @@
+ARM Virtual Generic Interrupt Controller v2 (VGIC)
+==================================================
+
+Device types supported:
+  KVM_DEV_TYPE_ARM_VGIC_V2     ARM Generic Interrupt Controller v2.0
+
+Only one VGIC instance may be instantiated through either this API or the
+legacy KVM_CREATE_IRQCHIP API.  The created VGIC will act as the VM interrupt
+controller, requiring emulated user-space devices to inject interrupts to the
+VGIC instead of directly to CPUs.
+
+GICv3 implementations with hardware compatibility support allow creating a
+guest GICv2 through this interface.  For information on creating a guest GICv3
+device and guest ITS devices, see arm-vgic-v3.txt.  It is not possible to
+create both a GICv3 and GICv2 device on the same VM.
+
+
+Gr

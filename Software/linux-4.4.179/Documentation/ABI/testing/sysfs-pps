@@ -1,0 +1,66 @@
+.. SPDX-License-Identifier: GPL-2.0+
+
+Linux* Base Driver for Intel(R) Ethernet Adaptive Virtual Function
+==================================================================
+
+Intel Ethernet Adaptive Virtual Function Linux driver.
+Copyright(c) 2013-2018 Intel Corporation.
+
+Contents
+========
+
+- Identifying Your Adapter
+- Additional Configurations
+- Known Issues/Troubleshooting
+- Support
+
+This file describes the iavf Linux* Base Driver. This driver was formerly
+called i40evf.
+
+The iavf driver supports the below mentioned virtual function devices and
+can only be activated on kernels running the i40e or newer Physical Function
+(PF) driver compiled with CONFIG_PCI_IOV.  The iavf driver requires
+CONFIG_PCI_MSI to be enabled.
+
+The guest OS loading the iavf driver must support MSI-X interrupts.
+
+Identifying Your Adapter
+========================
+The driver in this kernel is compatible with devices based on the following:
+ * Intel(R) XL710 X710 Virtual Function
+ * Intel(R) X722 Virtual Function
+ * Intel(R) XXV710 Virtual Function
+ * Intel(R) Ethernet Adaptive Virtual Function
+
+For the best performance, make sure the latest NVM/FW is installed on your
+device.
+
+For information on how to identify your adapter, and for the latest NVM/FW
+images and Intel network drivers, refer to the Intel Support website:
+http://www.intel.com/support
+
+
+Additional Features and Configurations
+======================================
+
+Viewing Link Messages
+---------------------
+Link messages will not be displayed to the console if the distribution is
+restricting system messages. In order to see network driver link messages on
+your console, set dmesg to eight by entering the following::
+
+  dmesg -n 8
+
+NOTE: This setting is not saved across reboots.
+
+ethtool
+-------
+The driver utilizes the ethtool interface for driver configuration and
+diagnostics, as well as displaying statistical information. The latest ethtool
+version is required for this functionality. Download it at:
+https://www.kernel.org/pub/software/network/ethtool/
+
+Setting VLAN Tag Stripping
+--------------------------
+If you have applications that require Virtual Functions (VFs) to receive
+packets with VLAN tags, you can disable VLAN 

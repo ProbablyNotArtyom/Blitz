@@ -1,0 +1,20 @@
+/*
+ * Device Tree Source for OMAP3 clock data
+ *
+ * Copyright (C) 2013 Texas Instruments, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+&prm_clocks {
+	virt_16_8m_ck: virt_16_8m_ck {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <16800000>;
+	};
+
+	osc_sys_ck: osc_sys_ck@d40 {
+		#clock-cells = <0>;
+		compatible = "ti,mux-clock";
+		clocks = <&virt_12m_ck>, <&virt_13m_ck>, <&virt_192

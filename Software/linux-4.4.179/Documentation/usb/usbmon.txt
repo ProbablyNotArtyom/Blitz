@@ -1,0 +1,570 @@
+/*
+ * TI DA850/OMAP-L138 EVM board
+ *
+ * Copyright (C) 2009 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * Derived from: arch/arm/mach-davinci/board-da830-evm.c
+ * Original Copyrights follow:
+ *
+ * 2007, 2009 (c) MontaVista Software, Inc. This file is licensed under
+ * the terms of the GNU General Public License version 2. This program
+ * is licensed "as is" without any warranty of any kind, whether express
+ * or implied.
+ */
+#include <linux/console.h>
+#include <linux/delay.h>
+#include <linux/gpio.h>
+#include <linux/gpio_keys.h>
+#include <linux/gpio/machine.h>
+#include <linux/init.h>
+#include <linux/kernel.h>
+#include <linux/leds.h>
+#include <linux/i2c.h>
+#include <linux/platform_data/at24.h>
+#include <linux/platform_data/pca953x.h>
+#include <linux/input.h>
+#include <linux/input/tps6507x-ts.h>
+#include <linux/mfd/tps6507x.h>
+#include <linux/mtd/mtd.h>
+#include <linux/mtd/rawnand.h>
+#include <linux/mtd/partitions.h>
+#include <linux/mtd/physmap.h>
+#include <linux/platform_device.h>
+#include <linux/platform_data/gpio-davinci.h>
+#include <linux/platform_data/mtd-davinci.h>
+#include <linux/platform_data/mtd-davinci-aemif.h>
+#include <linux/platform_data/ti-aemif.h>
+#include <linux/platform_data/spi-davinci.h>
+#include <linux/platform_data/uio_pruss.h>
+#include <linux/regulator/machine.h>
+#include <linux/regulator/tps6507x.h>
+#include <linux/regulator/fixed.h>
+#include <linux/spi/spi.h>
+#include <linux/spi/flash.h>
+
+#include <mach/common.h>
+#include "cp_intc.h"
+#include <mach/da8xx.h>
+#include <mach/mux.h>
+#include "sram.h"
+
+#include <asm/mach-types.h>
+#include <asm/mach/arch.h>
+#include <asm/system_info.h>
+
+#include <media/i2c/tvp514x.h>
+#include <media/i2c/adv7343.h>
+
+#define DA850_EVM_PHY_ID		"davinci_mdio-0:00"
+#define DA850_LCD_PWR_PIN		GPIO_TO_PIN(2, 8)
+#define DA850_LCD_BL_PIN		GPIO_TO_PIN(2, 15)
+
+#define DA850_MII_MDIO_CLKEN_PIN	GPIO_TO_PIN(2, 6)
+
+static struct mtd_partition da850evm_spiflash_part[] = {
+	[0] = {
+		.name = "UBL",
+		.offset = 0,
+		.size = SZ_64K,
+		.mask_flags = MTD_WRITEABLE,
+	},
+	[1] = {
+		.name = "U-Boot",
+		.offset = MTDPART_OFS_APPEND,
+		.size = SZ_512K,
+		.mask_flags = MTD_WRITEABLE,
+	},
+	[2] = {
+		.name = "U-Boot-Env",
+		.offset = MTDPART_OFS_APPEND,
+		.size = SZ_64K,
+		.mask_flags = MTD_WRITEABLE,
+	},
+	[3] = {
+		.name = "Kernel",
+		.offset = MTDPART_OFS_APPEND,
+		.size = SZ_2M + SZ_512K,
+		.mask_flags = 0,
+	},
+	[4] = {
+		.name = "Filesystem",
+		.offset = MTDPART_OFS_APPEND,
+		.size = SZ_4M,
+		.mask_flags = 0,
+	},
+	[5] = {
+		.name = "MAC-Address",
+		.offset = SZ_8M - SZ_64K,
+		.size = SZ_64K,
+		.mask_flags = MTD_WRITEABLE,
+	},
+};
+
+static struct flash_platform_data da850evm_spiflash_data = {
+	.name		= "m25p80",
+	.parts		= da850evm_spiflash_part,
+	.nr_parts	= ARRAY_SIZE(da850evm_spiflash_part),
+	.type		= "m25p64",
+};
+
+static struct davinci_spi_config da850evm_spiflash_cfg = {
+	.io_type	= SPI_IO_TYPE_DMA,
+	.c2tdelay	= 8,
+	.t2cdelay	= 8,
+};
+
+static struct spi_board_info da850evm_spi_info[] = {
+	{
+		.modalias		= "m25p80",
+		.platform_data		= &da850evm_spiflash_data,
+		.controller_data	= &da850evm_spiflash_cfg,
+		.mode			= SPI_MODE_0,
+		.max_speed_hz		= 30000000,
+		.bus_num		= 1,
+		.chip_select		= 0,
+	},
+};
+
+#ifdef CONFIG_MTD
+static void da850_evm_m25p80_notify_add(struct mtd_info *mtd)
+{
+	char *mac_addr = davinci_soc_info.emac_pdata->mac_addr;
+	size_t retlen;
+
+	if (!strcmp(mtd->name, "MAC-Address")) {
+		mtd_read(mtd, 0, ETH_ALEN, &retlen, mac_addr);
+		if (retlen == ETH_ALEN)
+			pr_info("Read MAC addr from SPI Flash: %pM\n",
+				mac_addr);
+	}
+}
+
+static struct mtd_notifier da850evm_spi_notifier = {
+	.add	= da850_evm_m25p80_notify_add,
+};
+
+static void da850_evm_setup_mac_addr(void)
+{
+	register_mtd_user(&da850evm_spi_notifier);
+}
+#else
+static void da850_evm_setup_mac_addr(void) { }
+#endif
+
+static struct mtd_partition da850_evm_norflash_partition[] = {
+	{
+		.name           = "bootloaders + env",
+		.offset         = 0,
+		.size           = SZ_512K,
+		.mask_flags     = MTD_WRITEABLE,
+	},
+	{
+		.name           = "kernel",
+		.offset         = MTDPART_OFS_APPEND,
+		.size           = SZ_2M,
+		.mask_flags     = 0,
+	},
+	{
+		.name           = "filesystem",
+		.offset         = MTDPART_OFS_APPEND,
+		.size           = MTDPART_SIZ_FULL,
+		.mask_flags     = 0,
+	},
+};
+
+static struct physmap_flash_data da850_evm_norflash_data = {
+	.width		= 2,
+	.parts		= da850_evm_norflash_partition,
+	.nr_parts	= ARRAY_SIZE(da850_evm_norflash_partition),
+};
+
+static struct resource da850_evm_norflash_resource[] = {
+	{
+		.start	= DA8XX_AEMIF_CS2_BASE,
+		.end	= DA8XX_AEMIF_CS2_BASE + SZ_32M - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+};
+
+/* DA850/OMAP-L138 EVM includes a 512 MByte large-page NAND flash
+ * (128K blocks). It may be used instead of the (default) SPI flash
+ * to boot, using TI's tools to install the secondary boot loader
+ * (UBL) and U-Boot.
+ */
+static struct mtd_partition da850_evm_nandflash_partition[] = {
+	{
+		.name		= "u-boot env",
+		.offset		= 0,
+		.size		= SZ_128K,
+		.mask_flags	= MTD_WRITEABLE,
+	 },
+	{
+		.name		= "UBL",
+		.offset		= MTDPART_OFS_APPEND,
+		.size		= SZ_128K,
+		.mask_flags	= MTD_WRITEABLE,
+	},
+	{
+		.name		= "u-boot",
+		.offset		= MTDPART_OFS_APPEND,
+		.size		= 4 * SZ_128K,
+		.mask_flags	= MTD_WRITEABLE,
+	},
+	{
+		.name		= "kernel",
+		.offset		= 0x200000,
+		.size		= SZ_2M,
+		.mask_flags	= 0,
+	},
+	{
+		.name		= "filesystem",
+		.offset		= MTDPART_OFS_APPEND,
+		.size		= MTDPART_SIZ_FULL,
+		.mask_flags	= 0,
+	},
+};
+
+static struct davinci_aemif_timing da850_evm_nandflash_timing = {
+	.wsetup		= 24,
+	.wstrobe	= 21,
+	.whold		= 14,
+	.rsetup		= 19,
+	.rstrobe	= 50,
+	.rhold		= 0,
+	.ta		= 20,
+};
+
+static struct davinci_nand_pdata da850_evm_nandflash_data = {
+	.core_chipsel	= 1,
+	.parts		= da850_evm_nandflash_partition,
+	.nr_parts	= ARRAY_SIZE(da850_evm_nandflash_partition),
+	.ecc_mode	= NAND_ECC_HW,
+	.ecc_bits	= 4,
+	.bbt_options	= NAND_BBT_USE_FLASH,
+	.timing		= &da850_evm_nandflash_timing,
+};
+
+static struct resource da850_evm_nandflash_resource[] = {
+	{
+		.start	= DA8XX_AEMIF_CS3_BASE,
+		.end	= DA8XX_AEMIF_CS3_BASE + SZ_512K + 2 * SZ_1K - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+	{
+		.start	= DA8XX_AEMIF_CTL_BASE,
+		.end	= DA8XX_AEMIF_CTL_BASE + SZ_32K - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+};
+
+static struct resource da850_evm_aemif_resource[] = {
+	{
+		.start	= DA8XX_AEMIF_CTL_BASE,
+		.end	= DA8XX_AEMIF_CTL_BASE + SZ_32K,
+		.flags	= IORESOURCE_MEM,
+	}
+};
+
+static struct aemif_abus_data da850_evm_aemif_abus_data[] = {
+	{
+		.cs	= 3,
+	}
+};
+
+static struct platform_device da850_evm_aemif_devices[] = {
+	{
+		.name		= "davinci_nand",
+		.id		= 1,
+		.dev		= {
+			.platform_data	= &da850_evm_nandflash_data,
+		},
+		.num_resources	= ARRAY_SIZE(da850_evm_nandflash_resource),
+		.resource	= da850_evm_nandflash_resource,
+	},
+	{
+		.name		= "physmap-flash",
+		.id		= 0,
+		.dev		= {
+			.platform_data  = &da850_evm_norflash_data,
+		},
+		.num_resources	= 1,
+		.resource	= da850_evm_norflash_resource,
+	}
+};
+
+static struct aemif_platform_data da850_evm_aemif_pdata = {
+	.cs_offset = 2,
+	.abus_data = da850_evm_aemif_abus_data,
+	.num_abus_data = ARRAY_SIZE(da850_evm_aemif_abus_data),
+	.sub_devices = da850_evm_aemif_devices,
+	.num_sub_devices = ARRAY_SIZE(da850_evm_aemif_devices),
+};
+
+static struct platform_device da850_evm_aemif_device = {
+	.name		= "ti-aemif",
+	.id		= -1,
+	.dev = {
+		.platform_data	= &da850_evm_aemif_pdata,
+	},
+	.resource	= da850_evm_aemif_resource,
+	.num_resources	= ARRAY_SIZE(da850_evm_aemif_resource),
+};
+
+static const short da850_evm_nand_pins[] = {
+	DA850_EMA_D_0, DA850_EMA_D_1, DA850_EMA_D_2, DA850_EMA_D_3,
+	DA850_EMA_D_4, DA850_EMA_D_5, DA850_EMA_D_6, DA850_EMA_D_7,
+	DA850_EMA_A_1, DA850_EMA_A_2, DA850_NEMA_CS_3, DA850_NEMA_CS_4,
+	DA850_NEMA_WE, DA850_NEMA_OE,
+	-1
+};
+
+static const short da850_evm_nor_pins[] = {
+	DA850_EMA_BA_1, DA850_EMA_CLK, DA850_EMA_WAIT_1, DA850_NEMA_CS_2,
+	DA850_NEMA_WE, DA850_NEMA_OE, DA850_EMA_D_0, DA850_EMA_D_1,
+	DA850_EMA_D_2, DA850_EMA_D_3, DA850_EMA_D_4, DA850_EMA_D_5,
+	DA850_EMA_D_6, DA850_EMA_D_7, DA850_EMA_D_8, DA850_EMA_D_9,
+	DA850_EMA_D_10, DA850_EMA_D_11, DA850_EMA_D_12, DA850_EMA_D_13,
+	DA850_EMA_D_14, DA850_EMA_D_15, DA850_EMA_A_0, DA850_EMA_A_1,
+	DA850_EMA_A_2, DA850_EMA_A_3, DA850_EMA_A_4, DA850_EMA_A_5,
+	DA850_EMA_A_6, DA850_EMA_A_7, DA850_EMA_A_8, DA850_EMA_A_9,
+	DA850_EMA_A_10, DA850_EMA_A_11, DA850_EMA_A_12, DA850_EMA_A_13,
+	DA850_EMA_A_14, DA850_EMA_A_15, DA850_EMA_A_16, DA850_EMA_A_17,
+	DA850_EMA_A_18, DA850_EMA_A_19, DA850_EMA_A_20, DA850_EMA_A_21,
+	DA850_EMA_A_22, DA850_EMA_A_23,
+	-1
+};
+
+#define HAS_MMC		IS_ENABLED(CONFIG_MMC_DAVINCI)
+
+static inline void da850_evm_setup_nor_nand(void)
+{
+	int ret = 0;
+
+	if (!HAS_MMC) {
+		ret = davinci_cfg_reg_list(da850_evm_nand_pins);
+		if (ret)
+			pr_warn("%s: NAND mux setup failed: %d\n",
+				__func__, ret);
+
+		ret = davinci_cfg_reg_list(da850_evm_nor_pins);
+		if (ret)
+			pr_warn("%s: NOR mux setup failed: %d\n",
+				__func__, ret);
+
+		ret = platform_device_register(&da850_evm_aemif_device);
+		if (ret)
+			pr_warn("%s: registering aemif failed: %d\n",
+				__func__, ret);
+	}
+}
+
+#ifdef CONFIG_DA850_UI_RMII
+static inline void da850_evm_setup_emac_rmii(int rmii_sel)
+{
+	struct davinci_soc_info *soc_info = &davinci_soc_info;
+
+	soc_info->emac_pdata->rmii_en = 1;
+	gpio_set_value_cansleep(rmii_sel, 0);
+}
+#else
+static inline void da850_evm_setup_emac_rmii(int rmii_sel) { }
+#endif
+
+
+#define DA850_KEYS_DEBOUNCE_MS	10
+/*
+ * At 200ms polling interval it is possible to miss an
+ * event by tapping very lightly on the push button but most
+ * pushes do result in an event; longer intervals require the
+ * user to hold the button whereas shorter intervals require
+ * more CPU time for polling.
+ */
+#define DA850_GPIO_KEYS_POLL_MS	200
+
+enum da850_evm_ui_exp_pins {
+	DA850_EVM_UI_EXP_SEL_C = 5,
+	DA850_EVM_UI_EXP_SEL_B,
+	DA850_EVM_UI_EXP_SEL_A,
+	DA850_EVM_UI_EXP_PB8,
+	DA850_EVM_UI_EXP_PB7,
+	DA850_EVM_UI_EXP_PB6,
+	DA850_EVM_UI_EXP_PB5,
+	DA850_EVM_UI_EXP_PB4,
+	DA850_EVM_UI_EXP_PB3,
+	DA850_EVM_UI_EXP_PB2,
+	DA850_EVM_UI_EXP_PB1,
+};
+
+static const char * const da850_evm_ui_exp[] = {
+	[DA850_EVM_UI_EXP_SEL_C]        = "sel_c",
+	[DA850_EVM_UI_EXP_SEL_B]        = "sel_b",
+	[DA850_EVM_UI_EXP_SEL_A]        = "sel_a",
+	[DA850_EVM_UI_EXP_PB8]          = "pb8",
+	[DA850_EVM_UI_EXP_PB7]          = "pb7",
+	[DA850_EVM_UI_EXP_PB6]          = "pb6",
+	[DA850_EVM_UI_EXP_PB5]          = "pb5",
+	[DA850_EVM_UI_EXP_PB4]          = "pb4",
+	[DA850_EVM_UI_EXP_PB3]          = "pb3",
+	[DA850_EVM_UI_EXP_PB2]          = "pb2",
+	[DA850_EVM_UI_EXP_PB1]          = "pb1",
+};
+
+#define DA850_N_UI_PB		8
+
+static struct gpio_keys_button da850_evm_ui_keys[] = {
+	[0 ... DA850_N_UI_PB - 1] = {
+		.type			= EV_KEY,
+		.active_low		= 1,
+		.wakeup			= 0,
+		.debounce_interval	= DA850_KEYS_DEBOUNCE_MS,
+		.code			= -1, /* assigned at runtime */
+		.gpio			= -1, /* assigned at runtime */
+		.desc			= NULL, /* assigned at runtime */
+	},
+};
+
+static struct gpio_keys_platform_data da850_evm_ui_keys_pdata = {
+	.buttons = da850_evm_ui_keys,
+	.nbuttons = ARRAY_SIZE(da850_evm_ui_keys),
+	.poll_interval = DA850_GPIO_KEYS_POLL_MS,
+};
+
+static struct platform_device da850_evm_ui_keys_device = {
+	.name = "gpio-keys-polled",
+	.id = 0,
+	.dev = {
+		.platform_data = &da850_evm_ui_keys_pdata
+	},
+};
+
+static void da850_evm_ui_keys_init(unsigned gpio)
+{
+	int i;
+	struct gpio_keys_button *button;
+
+	for (i = 0; i < DA850_N_UI_PB; i++) {
+		button = &da850_evm_ui_keys[i];
+		button->code = KEY_F8 - i;
+		button->desc = da850_evm_ui_exp[DA850_EVM_UI_EXP_PB8 + i];
+		button->gpio = gpio + DA850_EVM_UI_EXP_PB8 + i;
+	}
+}
+
+#ifdef CONFIG_DA850_UI_SD_VIDEO_PORT
+static inline void da850_evm_setup_video_port(int video_sel)
+{
+	gpio_set_value_cansleep(video_sel, 0);
+}
+#else
+static inline void da850_evm_setup_video_port(int video_sel) { }
+#endif
+
+static int da850_evm_ui_expander_setup(struct i2c_client *client, unsigned gpio,
+						unsigned ngpio, void *c)
+{
+	int sel_a, sel_b, sel_c, ret;
+
+	sel_a = gpio + DA850_EVM_UI_EXP_SEL_A;
+	sel_b = gpio + DA850_EVM_UI_EXP_SEL_B;
+	sel_c = gpio + DA850_EVM_UI_EXP_SEL_C;
+
+	ret = gpio_request(sel_a, da850_evm_ui_exp[DA850_EVM_UI_EXP_SEL_A]);
+	if (ret) {
+		pr_warn("Cannot open UI expander pin %d\n", sel_a);
+		goto exp_setup_sela_fail;
+	}
+
+	ret = gpio_request(sel_b, da850_evm_ui_exp[DA850_EVM_UI_EXP_SEL_B]);
+	if (ret) {
+		pr_warn("Cannot open UI expander pin %d\n", sel_b);
+		goto exp_setup_selb_fail;
+	}
+
+	ret = gpio_request(sel_c, da850_evm_ui_exp[DA850_EVM_UI_EXP_SEL_C]);
+	if (ret) {
+		pr_warn("Cannot open UI expander pin %d\n", sel_c);
+		goto exp_setup_selc_fail;
+	}
+
+	/* deselect all functionalities */
+	gpio_direction_output(sel_a, 1);
+	gpio_direction_output(sel_b, 1);
+	gpio_direction_output(sel_c, 1);
+
+	da850_evm_ui_keys_init(gpio);
+	ret = platform_device_register(&da850_evm_ui_keys_device);
+	if (ret) {
+		pr_warn("Could not register UI GPIO expander push-buttons");
+		goto exp_setup_keys_fail;
+	}
+
+	pr_info("DA850/OMAP-L138 EVM UI card detected\n");
+
+	da850_evm_setup_nor_nand();
+
+	da850_evm_setup_emac_rmii(sel_a);
+
+	da850_evm_setup_video_port(sel_c);
+
+	return 0;
+
+exp_setup_keys_fail:
+	gpio_free(sel_c);
+exp_setup_selc_fail:
+	gpio_free(sel_b);
+exp_setup_selb_fail:
+	gpio_free(sel_a);
+exp_setup_sela_fail:
+	return ret;
+}
+
+static int da850_evm_ui_expander_teardown(struct i2c_client *client,
+					unsigned gpio, unsigned ngpio, void *c)
+{
+	platform_device_unregister(&da850_evm_ui_keys_device);
+
+	/* deselect all functionalities */
+	gpio_set_value_cansleep(gpio + DA850_EVM_UI_EXP_SEL_C, 1);
+	gpio_set_value_cansleep(gpio + DA850_EVM_UI_EXP_SEL_B, 1);
+	gpio_set_value_cansleep(gpio + DA850_EVM_UI_EXP_SEL_A, 1);
+
+	gpio_free(gpio + DA850_EVM_UI_EXP_SEL_C);
+	gpio_free(gpio + DA850_EVM_UI_EXP_SEL_B);
+	gpio_free(gpio + DA850_EVM_UI_EXP_SEL_A);
+
+	return 0;
+}
+
+/* assign the baseboard expander's GPIOs after the UI board's */
+#define DA850_UI_EXPANDER_N_GPIOS ARRAY_SIZE(da850_evm_ui_exp)
+#define DA850_BB_EXPANDER_GPIO_BASE (DAVINCI_N_GPIO + DA850_UI_EXPANDER_N_GPIOS)
+
+enum da850_evm_bb_exp_pins {
+	DA850_EVM_BB_EXP_DEEP_SLEEP_EN = 0,
+	DA850_EVM_BB_EXP_SW_RST,
+	DA850_EVM_BB_EXP_TP_23,
+	DA850_EVM_BB_EXP_TP_22,
+	DA850_EVM_BB_EXP_TP_21,
+	DA850_EVM_BB_EXP_USER_PB1,
+	DA850_EVM_BB_EXP_USER_LED2,
+	DA850_EVM_BB_EXP_USER_LED1,
+	DA850_EVM_BB_EXP_USER_SW1,
+	DA850_EVM_BB_EXP_USER_SW2,
+	DA850_EVM_BB_EXP_USER_SW3,
+	DA850_EVM_BB_EXP_USER_SW4,
+	DA850_EVM_BB_EXP_USER_SW5,
+	DA850_EVM_BB_EXP_USER_SW6,
+	DA850_EVM_BB_EXP_USER_SW7,
+	DA850_EVM_BB_EXP_USER_SW8
+};
+
+static const char * const da850_evm_bb_exp[] = {
+	[DA850_EVM_BB_EXP_DEEP_SLEEP_EN]	= "deep_sleep_en",
+	[DA850_EVM_BB_EXP_SW_RST]		= "sw_rst",
+	[DA850_EVM_BB_EXP_TP_23]		= "tp_23",
+	[DA850_EVM_BB_EXP_TP_22]		= "tp_22",
+	[DA850_EVM_BB_EXP_TP_21]		= "tp_21",
+	[DA850_EVM_BB_EXP_USER_PB1]		= "user_pb1",
+	[DA850_EVM_BB_EXP_USER_LED2]		= "user_led2",
+	[DA850_EVM_BB_EXP_USER_LED1]		= "user_led1",
+	[DA850_EVM

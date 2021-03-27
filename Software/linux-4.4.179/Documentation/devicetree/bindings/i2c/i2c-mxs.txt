@@ -1,0 +1,20 @@
+/*
+ * Copyright (C) 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ * Copyright (C) 2002-2006 Novell, Inc.
+ *	Jan Beulich <jbeulich@novell.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * A simple API for unwinding kernel stacks.  This is used for
+ * debugging and error reporting purposes.  The kernel doesn't need
+ * full-blown stack unwinding with all the bells and whistles, so there
+ * is not much point in implementing the full Dwarf2 unwind API.
+ */
+
+#include <linux/sched.h>
+#include <linux/module.h>
+#include <linux/memblock.h>
+#include <linux/sort.h>
+#include <linux/slab.h

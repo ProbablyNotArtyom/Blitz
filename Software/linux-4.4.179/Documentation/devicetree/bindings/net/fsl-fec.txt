@@ -1,0 +1,76 @@
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include "dm816x.dtsi"
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	model = "DM8168 EVM";
+	compatible = "ti,dm8168-evm", "ti,dm8168", "ti,dm816";
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x40000000	/* 1 GB */
+		       0xc0000000 0x40000000>;	/* 1 GB */
+	};
+
+	/* FDC6331L controlled by SD_POW pin */
+	vmmcsd_fixed: fixedregulator0 {
+		compatible = "regulator-fixed";
+		regulator-name = "vmmcsd_fixed";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+	};
+
+	sata_refclk: fixedclock0 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <100000000>;
+	};
+};
+
+&dm816x_pinmux {
+	mcspi1_pins: pinmux_mcspi1_pins {
+		pinctrl-single,pins = <
+			DM816X_IOPAD(0x0a94, MUX_MODE0)			/* SPI_SCLK */
+			DM816X_IOPAD(0x0a98, MUX_MODE0)			/* SPI_SCS0 */
+			DM816X_IOPAD(0x0aa8, MUX_MODE0)			/* SPI_D0 */
+			DM816X_IOPAD(0x0aac, MUX_MODE0)			/* SPI_D1 */
+		>;
+	};
+
+	mmc_pins: pinmux_mmc_pins {
+		pinctrl-single,pins = <
+			DM816X_IOPAD(0x0a70, MUX_MODE0)			/* SD_POW */
+			DM816X_IOPAD(0x0a74, MUX_MODE0)			/* SD_CLK */
+			DM816X_IOPAD(0x0a78, MUX_MODE0)			/* SD_CMD */
+			DM816X_IOPAD(0x0a7C, MUX_MODE0)			/* SD_DAT0 */
+			DM816X_IOPAD(0x0a80, MUX_MODE0)			/* SD_DAT1 */
+			DM816X_IOPAD(0x0a84, MUX_MODE0)			/* SD_DAT2 */
+			DM816X_IOPAD(0x0a88, MUX_MODE0)			/* SD_DAT2 */
+			DM816X_IOPAD(0x0a8c, MUX_MODE2)			/* GP1[7] */
+			DM816X_IOPAD(0x0a90, MUX_MODE2)			/* GP1[8] */
+		>;
+	};
+
+	usb0_pins: pinmux_usb0_pins {
+		pinctrl-single,pins = <
+			DM816X_IOPAD(0x0d04, MUX_MODE0)			/* USB0_DRVVBUS */
+		>;
+	};
+
+	usb1_pins: pinmux_usb1_pins {
+		pinctrl-single,pins = <
+			DM816X_IOPAD(0x0d08, MUX_MODE0)			/* USB1_DRVVBUS */
+		>;
+	};
+
+	nandflash_pins: nandflash_pins {
+		pinctrl-single,pins = <
+			DM816X_IOPAD(0x0b38, PULL_UP | MUX_MODE0)		/* PINCTRL207 GPMC_CS0*/
+			DM816X_IOPAD(0x0b60, PULL_ENA | MUX_MODE0)		/* PINCTRL217 GPMC_ADV_ALE */
+			DM816X_IOPAD(0x0b54, PULL_UP 

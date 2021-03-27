@@ -1,0 +1,140 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ * Copyright 1995, Russell King.
+ * Various bits and pieces copyrights include:
+ *  Linus Torvalds (test_bit).
+ * Big endian support: Copyright 2001, Nicolas Pitre
+ *  reworked by rmk.
+ *
+ * bit 0 is the LSB of an "unsigned long" quantity.
+ *
+ * Please note that the code in this file should never be included
+ * from user space.  Many of these are not implemented in assembler
+ * since they would be too costly.  Also, they require privileged
+ * instructions (which are not available from user mode) to ensure
+ * that they are atomic.
+ */
+
+#ifndef __ASM_ARM_BITOPS_H
+#define __ASM_ARM_BITOPS_H
+
+#ifdef __KERNEL__
+
+#ifndef _LINUX_BITOPS_H
+#error only <linux/bitops.h> can be included directly
+#endif
+
+#include <linux/compiler.h>
+#include <linux/irqflags.h>
+#include <asm/barrier.h>
+
+/*
+ * These functions are the basis of our bit ops.
+ *
+ * First, the atomic bitops. These use native endian.
+ */
+static inline void ____atomic_set_bit(unsigned int bit, volatile unsigned long *p)
+{
+	unsigned long flags;
+	unsigned long mask = BIT_MASK(bit);
+
+	p += BIT_WORD(bit);
+
+	raw_local_irq_save(flags);
+	*p |= mask;
+	raw_local_irq_restore(flags);
+}
+
+static inline void ____atomic_clear_bit(unsigned int bit, volatile unsigned long *p)
+{
+	unsigned long flags;
+	unsigned long mask = BIT_MASK(bit);
+
+	p += BIT_WORD(bit);
+
+	raw_local_irq_save(flags);
+	*p &= ~mask;
+	raw_local_irq_restore(flags);
+}
+
+static inline void ____atomic_change_bit(unsigned int bit, volatile unsigned long *p)
+{
+	unsigned long flags;
+	unsigned long mask = BIT_MASK(bit);
+
+	p += BIT_WORD(bit);
+
+	raw_local_irq_save(flags);
+	*p ^= mask;
+	raw_local_irq_restore(flags);
+}
+
+static inline int
+____atomic_test_and_set_bit(unsigned int bit, volatile unsigned long *p)
+{
+	unsigned long flags;
+	unsigned int res;
+	unsigned long mask = BIT_MASK(bit);
+
+	p += BIT_WORD(bit);
+
+	raw_local_irq_save(flags);
+	res = *p;
+	*p = res | mask;
+	raw_local_irq_restore(flags);
+
+	return (res & mask) != 0;
+}
+
+static inline int
+____atomic_test_and_clear_bit(unsigned int bit, volatile unsigned long *p)
+{
+	unsigned long flags;
+	unsigned int res;
+	unsigned long mask = BIT_MASK(bit);
+
+	p += BIT_WORD(bit);
+
+	raw_local_irq_save(flags);
+	res = *p;
+	*p = res & ~mask;
+	raw_local_irq_restore(flags);
+
+	return (res & mask) != 0;
+}
+
+static inline int
+____atomic_test_and_change_bit(unsigned int bit, volatile unsigned long *p)
+{
+	unsigned long flags;
+	unsigned int res;
+	unsigned long mask = BIT_MASK(bit);
+
+	p += BIT_WORD(bit);
+
+	raw_local_irq_save(flags);
+	res = *p;
+	*p = res ^ mask;
+	raw_local_irq_restore(flags);
+
+	return (res & mask) != 0;
+}
+
+#include <asm-generic/bitops/non-atomic.h>
+
+/*
+ *  A note about Endian-ness.
+ *  -------------------------
+ *
+ * When the ARM is put into big endian mode via CR15, the processor
+ * merely swaps the order of bytes within words, thus:
+ *
+ *          ------------ physical data bus bits -----------
+ *          D31 ... D24  D23 ... D16  D15 ... D8  D7 ... D0
+ * little     byte 3       byte 2       byte 1      byte 0
+ * big        byte 0       byte 1       byte 2      byte 3
+ *
+ * This means that reading a 32-bit word at address 0 returns the same
+ * value irrespective of the endian mode bit.
+ *
+ * Peripheral devices should be connected with the dat

@@ -1,0 +1,29 @@
+/*
+ * Copyright 2013 Freescale Semiconductor, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ */
+
+#ifndef __DTS_IMX35_PINFUNC_H
+#define __DTS_IMX35_PINFUNC_H
+
+/*
+ * The pin function ID is a tuple of
+ * <mux_reg conf_reg input_reg mux_mode input_val>
+ */
+#define MX35_PAD_CAPTURE__GPT_CAPIN1				0x004 0x328 0x000 0x0 0x0
+#define MX35_PAD_CAPTURE__GPT_CMPOUT2				0x004 0x328 0x000 0x1 0x0
+#define MX35_PAD_CAPTURE__CSPI2_SS1				0x004 0x328 0x7f4 0x2 0x0
+#define MX35_PAD_CAPTURE__EPIT1_EPITO				0x004 0x328 0x000 0x3 0x0
+#define MX35_PAD_CAPTURE__CCM_CLK32K				0x004 0x328 0x7d0 0x4 0x0
+#define MX35_PAD_CAPTURE__GPIO1_4				0x004 0x328 0x850 0x5 0x0
+#define MX35_PAD_COMPARE__GPT_CMPOUT1				0x008 0x32c 0x000 0x0 0x0
+#define MX35_PAD_COMPARE__GPT_CAPIN2				0x008 0x32c 0x000 0x1 0x0
+#define MX35_PAD_COMPARE__GPT_CMPOUT3				0x008 0x32c 0x000 0x2 0x0
+#define MX35_PAD_COMPARE__EPIT2_EPITO				0x008 0x32c 0x000 0x3 0x0
+#define MX35_PAD_COMPARE__GPIO1_5				0x008 0x32c 0x854 0x5 0x0
+#define MX35_PAD_COMPARE__SDMA_EXTDMA_2				0x008 0x32c 0x000 0x7 0x0
+#define MX35_PAD_WDOG_RST__WDOG_WDOG_B				0x00c 0x330 0x000 0

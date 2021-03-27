@@ -1,0 +1,28 @@
+/*
+ * Copyright (C) 2014-15 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <linux/linkage.h>
+#include <asm/cache.h>
+
+/*
+ * The memset implementation below is optimized to use prefetchw and prealloc
+ * instruction in case of CPU with 64B L1 data cache line (L1_CACHE_SHIFT == 6)
+ * If you want to implement optimized memset for other possible L1 data cache
+ * line lengths (32B and 128B) you should rewrite code carefully checking
+ * we don't call any prefetchw/prealloc instruction for L1 cache lines which
+ * don't belongs to memset area.
+ */
+
+#if L1_CACHE_SHIFT == 6
+
+.macro PREALLOC_INSTR	reg, off
+	prealloc	[\reg, \off]
+.endm
+
+.macro PREFETCHW_INSTR	reg, off
+	prefetchw	[\reg, \off]

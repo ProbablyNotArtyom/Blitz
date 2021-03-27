@@ -1,0 +1,24 @@
+======================
+Kernel Self-Protection
+======================
+
+Kernel self-protection is the design and implementation of systems and
+structures within the Linux kernel to protect against security flaws in
+the kernel itself. This covers a wide range of issues, including removing
+entire classes of bugs, blocking security flaw exploitation methods,
+and actively detecting attack attempts. Not all topics are explored in
+this document, but it should serve as a reasonable starting point and
+answer any frequently asked questions. (Patches welcome, of course!)
+
+In the worst-case scenario, we assume an unprivileged local attacker
+has arbitrary read and write access to the kernel's memory. In many
+cases, bugs being exploited will not provide this level of access,
+but with systems in place that defend against the worst case we'll
+cover the more limited cases as well. A higher bar, and one that should
+still be kept in mind, is protecting the kernel against a _privileged_
+local attacker, since the root user has access to a vastly increased
+attack surface. (Especially when they have the ability to load arbitrary
+kernel modules.)
+
+The goals for successful self-protection systems would be that they
+are effective, on by default, require no opt-in by developers

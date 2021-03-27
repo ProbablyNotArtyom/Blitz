@@ -1,0 +1,40 @@
+/*
+ *  linux/arch/arm/kernel/signal.c
+ *
+ *  Copyright (C) 1995-2009 Russell King
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+#include <linux/errno.h>
+#include <linux/random.h>
+#include <linux/signal.h>
+#include <linux/personality.h>
+#include <linux/uaccess.h>
+#include <linux/tracehook.h>
+#include <linux/uprobes.h>
+#include <linux/syscalls.h>
+
+#include <asm/elf.h>
+#include <asm/cacheflush.h>
+#include <asm/traps.h>
+#include <asm/unistd.h>
+#include <asm/vfp.h>
+
+#include "signal.h"
+
+extern const unsigned long sigreturn_codes[17];
+
+static unsigned long signal_return_offset;
+
+#ifdef CONFIG_CRUNCH
+static int preserve_crunch_context(struct crunch_sigframe __user *frame)
+{
+	char kbuf[sizeof(*frame) + 8];
+	struct crunch_sigframe *kframe;
+
+	/* the crunch context must be 64 bit aligned */
+	kframe = (struct crunch_sigframe *)((unsigned long)(kbuf + 8) & ~7);
+	kframe->magic = CRUNCH_MAGIC;
+	

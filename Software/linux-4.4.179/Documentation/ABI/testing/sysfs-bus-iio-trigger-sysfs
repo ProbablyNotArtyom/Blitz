@@ -1,0 +1,80 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_SUBSCRIBE_EVENT:
+.. _VIDIOC_UNSUBSCRIBE_EVENT:
+
+******************************************************
+ioctl VIDIOC_SUBSCRIBE_EVENT, VIDIOC_UNSUBSCRIBE_EVENT
+******************************************************
+
+Name
+====
+
+VIDIOC_SUBSCRIBE_EVENT - VIDIOC_UNSUBSCRIBE_EVENT - Subscribe or unsubscribe event
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_SUBSCRIBE_EVENT, struct v4l2_event_subscription *argp )
+    :name: VIDIOC_SUBSCRIBE_EVENT
+
+.. c:function:: int ioctl( int fd, VIDIOC_UNSUBSCRIBE_EVENT, struct v4l2_event_subscription *argp )
+    :name: VIDIOC_UNSUBSCRIBE_EVENT
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_event_subscription`.
+
+
+Description
+===========
+
+Subscribe or unsubscribe V4L2 event. Subscribed events are dequeued by
+using the :ref:`VIDIOC_DQEVENT` ioctl.
+
+
+.. tabularcolumns:: |p{4.6cm}|p{4.4cm}|p{8.7cm}|
+
+.. c:type:: v4l2_event_subscription
+
+.. flat-table:: struct v4l2_event_subscription
+    :header-rows:  0
+    :stub-columns: 0
+    :widths:       1 1 2
+
+    * - __u32
+      - ``type``
+      - Type of the event, see :ref:`event-type`.
+
+	.. note::
+
+	   ``V4L2_EVENT_ALL`` can be used with
+	   :ref:`VIDIOC_UNSUBSCRIBE_EVENT <VIDIOC_SUBSCRIBE_EVENT>` for
+	   unsubscribing all events at once.
+    * - __u32
+      - ``id``
+      - ID of the event source. If there is no ID associated with the
+	event source, then set this to 0. Whether or not an event needs an
+	ID depends on the event type.
+    * - __u32
+      - ``flags``
+      - Event flags, see :ref:`event-flags`.
+    * - __u32
+      - ``reserved``\ [5]
+      - Reserved for future extensions. Drivers and applications must set
+	the array to zero.
+
+
+
+.. tabularcolumns:: |p{6.8cm}|p{2.2cm}|p{8.5cm}|
+
+.. _event-flags:
+
+.. flat-table:: Event Fla

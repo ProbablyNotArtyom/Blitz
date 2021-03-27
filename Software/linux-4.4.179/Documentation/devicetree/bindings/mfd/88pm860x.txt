@@ -1,0 +1,108 @@
+/*
+ * at91rm9200.dtsi - Device Tree Include file for AT91RM9200 family SoC
+ *
+ *  Copyright (C) 2011 Atmel,
+ *                2011 Nicolas Ferre <nicolas.ferre@atmel.com>,
+ *                2012 Joachim Eastwood <manabian@gmail.com>
+ *
+ * Based on at91sam9260.dtsi
+ *
+ * Licensed under GPLv2 or later.
+ */
+
+#include "skeleton.dtsi"
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/clock/at91.h>
+
+/ {
+	model = "Atmel AT91RM9200 family SoC";
+	compatible = "atmel,at91rm9200";
+	interrupt-parent = <&aic>;
+
+	aliases {
+		serial0 = &dbgu;
+		serial1 = &usart0;
+		serial2 = &usart1;
+		serial3 = &usart2;
+		serial4 = &usart3;
+		gpio0 = &pioA;
+		gpio1 = &pioB;
+		gpio2 = &pioC;
+		gpio3 = &pioD;
+		tcb0 = &tcb0;
+		tcb1 = &tcb1;
+		i2c0 = &i2c0;
+		ssc0 = &ssc0;
+		ssc1 = &ssc1;
+		ssc2 = &ssc2;
+	};
+	cpus {
+		#address-cells = <0>;
+		#size-cells = <0>;
+
+		cpu {
+			compatible = "arm,arm920t";
+			device_type = "cpu";
+		};
+	};
+
+	memory {
+		reg = <0x20000000 0x04000000>;
+	};
+
+	clocks {
+		slow_xtal: slow_xtal {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <0>;
+		};
+
+		main_xtal: main_xtal {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <0>;
+		};
+	};
+
+	sram: sram@200000 {
+		compatible = "mmio-sram";
+		reg = <0x00200000 0x4000>;
+	};
+
+	ahb {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		apb {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+
+			aic: interrupt-controller@fffff000 {
+				#interrupt-cells = <3>;
+				compatible = "atmel,at91rm9200-aic";
+				interrupt-controller;
+				reg = <0xfffff000 0x200>;
+				atmel,external-irqs = <25 26 27 28 29 30 31>;
+			};
+
+			ramc0: ramc@ffffff00 {
+				compatible = "atmel,at91rm9200-sdramc", "syscon";
+				reg = <0xffffff00 0x100>;
+			};
+
+			pmc: pmc@fffffc00 {
+				compatible = "atmel,at91rm9200-pmc", "syscon";
+				reg = <0xfffffc00 0x100>;
+				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+				interrupt-controller;
+				#address-cells = <1>;
+				#size-cells = <0>;
+				#interrupt-cells = <1>;
+
+				main_os

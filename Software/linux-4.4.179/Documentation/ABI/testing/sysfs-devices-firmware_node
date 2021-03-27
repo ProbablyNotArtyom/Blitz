@@ -1,0 +1,16 @@
+Intel(R) Management Engine (ME) Client bus API
+==============================================
+
+
+Rationale
+=========
+
+MEI misc character device is useful for dedicated applications to send and receive
+data to the many FW appliance found in Intel's ME from the user space.
+However for some of the ME functionalities it make sense to leverage existing software
+stack and expose them through existing kernel subsystems.
+
+In order to plug seamlessly into the kernel device driver model we add kernel virtual
+bus abstraction on top of the MEI driver. This allows implementing linux kernel drivers
+for the various MEI features as a stand alone entities found in their respective subsystem.
+Exi

@@ -1,0 +1,66 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * arch/alpha/boot/bootp.c
+ *
+ * Copyright (C) 1997 Jay Estabrook
+ *
+ * This file is used for creating a bootp file for the Linux/AXP kernel
+ *
+ * based significantly on the arch/alpha/boot/main.c of Linus Torvalds
+ */
+#include <linux/kernel.h>
+#include <linux/slab.h>
+#include <linux/string.h>
+#include <generated/utsrelease.h>
+#include <linux/mm.h>
+
+#include <asm/console.h>
+#include <asm/hwrpb.h>
+#include <asm/pgtable.h>
+#include <asm/io.h>
+
+#include <stdarg.h>
+
+#include "ksize.h"
+
+extern unsigned long switch_to_osf_pal(unsigned long nr,
+	struct pcb_struct * pcb_va, struct pcb_struct * pcb_pa,
+	unsigned long *vptb);
+
+extern void move_stack(unsigned long new_stack);
+
+struct hwrpb_struct *hwrpb = INIT_HWRPB;
+static struct pcb_struct pcb_va[1];
+
+/*
+ * Find a physical address of a virtual object..
+ *
+ * This is easy using the virtual page table address.
+ */
+
+static inline void *
+find_pa(unsigned long *vptb, void *ptr)
+{
+	unsigned long address = (unsigned long) ptr;
+	unsigned long result;
+
+	result = vptb[address >> 13];
+	result >>= 32;
+	result <<= 13;
+	result |= address & 0x1fff;
+	return (void *) result;
+}	
+
+/*
+ * This function moves into OSF/1 pal-code, and has a temporary
+ * PCB for that. The kernel proper should replace this PCB with
+ * the real one as soon as possible.
+ *
+ * The page table muckery in here depends on the fact that the boot
+ * code has the L1 page table identity-map itself in the second PTE
+ * in the L1 page table. Thus the L1-page is virtually addressable
+ * itself (through three levels) at virtual address 0x200802000.
+ */
+
+#define VPTB	((unsigned long *) 0x200000000)
+#define L1	((unsigned 

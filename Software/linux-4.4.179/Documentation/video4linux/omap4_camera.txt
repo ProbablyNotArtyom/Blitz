@@ -1,0 +1,77 @@
+/*
+ * DaVinci timer subsystem
+ *
+ * Author: Kevin Hilman, MontaVista Software, Inc. <source@mvista.com>
+ *
+ * 2007 (c) MontaVista Software, Inc. This file is licensed under
+ * the terms of the GNU General Public License version 2. This program
+ * is licensed "as is" without any warranty of any kind, whether express
+ * or implied.
+ */
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/types.h>
+#include <linux/interrupt.h>
+#include <linux/clocksource.h>
+#include <linux/clockchips.h>
+#include <linux/io.h>
+#include <linux/clk.h>
+#include <linux/err.h>
+#include <linux/of.h>
+#include <linux/platform_device.h>
+#include <linux/sched_clock.h>
+
+#include <asm/mach/irq.h>
+#include <asm/mach/time.h>
+
+#include <mach/cputype.h>
+#include <mach/hardware.h>
+#include <mach/time.h>
+
+static struct clock_event_device clockevent_davinci;
+static unsigned int davinci_clock_tick_rate;
+
+/*
+ * This driver configures the 2 64-bit count-up timers as 4 independent
+ * 32-bit count-up timers used as follows:
+ */
+
+enum {
+	TID_CLOCKEVENT,
+	TID_CLOCKSOURCE,
+};
+
+/* Timer register offsets */
+#define PID12			0x0
+#define TIM12			0x10
+#define TIM34			0x14
+#define PRD12			0x18
+#define PRD34			0x1c
+#define TCR			0x20
+#define TGCR			0x24
+#define WDTCR			0x28
+
+/* Offsets of the 8 compare registers */
+#define	CMP12_0			0x60
+#define	CMP12_1			0x64
+#define	CMP12_2			0x68
+#define	CMP12_3			0x6c
+#define	CMP12_4			0x70
+#define	CMP12_5			0x74
+#define	CMP12_6			0x78
+#define	CMP12_7			0x7c
+
+/* Timer register bitfields */
+#define TCR_ENAMODE_DISABLE          0x0
+#define TCR_ENAMODE_ONESHOT          0x1
+#define TCR_ENAMODE_PERIODIC         0x2
+#define TCR_ENAMODE_MASK             0x3
+
+#define TGCR_TIMMODE_SHIFT           2
+#define TGCR_TIMMODE_64BIT_GP        0x0
+#define TGCR_TIMMODE_32BIT_UNCHAINED 0x1
+#define TGCR_TIMMODE_64BIT_WDOG      0x2
+#define TGCR_TIMMODE_32BIT_CHAINED   0x3
+
+#define TGCR_TIM12RS_SHIFT           0
+#defi

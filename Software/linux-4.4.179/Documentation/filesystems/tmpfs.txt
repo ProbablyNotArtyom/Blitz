@@ -1,0 +1,368 @@
+/*
+ * DTS file for SPEAr1340 Evaluation Baord
+ *
+ * Copyright 2012 Viresh Kumar <vireshk@kernel.org>
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/dts-v1/;
+/include/ "spear1340.dtsi"
+
+/ {
+	model = "ST SPEAr1340 Evaluation Board";
+	compatible = "st,spear1340-evb", "st,spear1340";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	memory {
+		reg = <0 0x40000000>;
+	};
+
+	ahb {
+		pinmux@e0700000 {
+			pinctrl-names = "default";
+			pinctrl-0 = <&state_default>;
+
+			state_default: pinmux {
+				pads_as_gpio {
+					st,pins = "pads_as_gpio_grp";
+					st,function = "pads_as_gpio";
+				};
+				fsmc {
+					st,pins = "fsmc_8bit_grp";
+					st,function = "fsmc";
+				};
+				uart0 {
+					st,pins = "uart0_grp";
+					st,function = "uart0";
+				};
+				i2c0 {
+					st,pins = "i2c0_grp";
+					st,function = "i2c0";
+				};
+				i2c1 {
+					st,pins = "i2c1_grp";
+					st,function = "i2c1";
+				};
+				spdif-in {
+					st,pins = "spdif_in_grp";
+					st,function = "spdif_in";
+				};
+				spdif-out {
+					st,pins = "spdif_out_grp";
+					st,function = "spdif_out";
+				};
+				ssp0 {
+					st,pins = "ssp0_grp", "ssp0_cs1_grp", "ssp0_cs2_grp", "ssp0_cs3_grp";
+					st,function = "ssp0";
+				};
+				smi-pmx {
+					st,pins = "smi_grp";
+					st,function = "smi";
+				};
+				i2s {
+					st,pins = "i2s_in_grp", "i2s_out_grp";
+					st,function = "i2s";
+				};
+				gmac {
+					st,pins = "gmii_grp", "rgmii_grp";
+					st,function = "gmac";
+				};
+				cam0 {
+					st,pins = "cam0_grp";
+					st,function = "cam0";
+				};
+				cam1 {
+					st,pins = "cam1_grp";
+					st,function = "cam1";
+				};
+				cam2 {
+					st,pins = "cam2_grp";
+					st,function = "cam2";
+				};
+				cam3 {
+					st,pins = "cam3_grp";
+					st,function = "cam3";
+				};
+				cec0 {
+					st,pins = "cec0_grp";
+					st,function = "cec0";
+				};
+				cec1 {
+					st,pins = "cec1_grp";
+					st,function = "cec1";
+				};
+				sdhci {
+					st,pins = "sdhci_grp";
+					st,function = "sdhci";
+				};
+				clcd {
+					st,pins = "clcd_grp";
+					st,function = "clcd";
+				};
+				sata {
+					st,pins = "sata_grp";
+					st,function = "sata";
+				};
+				pcie {
+					st,pins = "pcie_grp";
+					st,function = "pcie";
+				};
+
+			};
+		};
+
+		ahci@b1000000 {
+			status = "okay";
+		};
+
+		miphy@eb800000 {
+			status = "okay";
+		};
+
+		dma@ea800000 {
+			status = "okay";
+		};
+
+		dma@eb000000 {
+			status = "okay";
+		};
+
+		fsmc: flash@b0000000 {
+			status = "okay";
+
+			partition@0 {
+				label = "xloader";
+				reg = <0x0 0x200000>;
+			};
+			partition@200000 {
+				label = "u-boot";
+				reg = <0x200000 0x200000>;
+			};
+			partition@400000 {
+				label = "environment";
+				reg = <0x400000 0x100000>;
+			};
+			partition@500000 {
+				label = "dtb";
+				reg = <0x500000 0x100000>;
+			};
+			partition@600000 {
+				label = "linux";
+				reg = <0x600000 0xC00000>;
+			};
+			partition@1200000 {
+				label = "rootfs";
+				reg = <0x1200000 0x0>;
+			};
+		};
+
+		gmac0: eth@e2000000 {
+			phy-mode = "rgmii";
+			status = "okay";
+		};
+
+		sdhci@b3000000 {
+			status = "okay";
+		};
+
+		smi: flash@ea000000 {
+			status = "okay";
+			clock-rate=<50000000>;
+
+			flash@e6000000 {
+				#address-cells = <1>;
+				#size-cells = <1>;
+				reg = <0xe6000000 0x800000>;
+				st,smi-fast-mode;
+
+				partition@0 {
+					label = "xloader";
+					reg = <0x0 0x10000>;
+				};
+				partition@10000 {
+					label = "u-boot";
+					reg = <0x10000 0x50000>;
+				};
+				partition@60000 {
+					label = "environment";
+					reg = <0x60000 0x10000>;
+				};
+				partition@70000 {
+					label = "dtb";
+					reg = <0x70000 0x10000>;
+				};
+				partition@80000 {
+					label = "linux";
+					reg = <0x80000 0x310000>;
+				};
+				partition@390000 {
+					label = "rootfs";
+					reg = <0x390000 0x0>;
+				};
+			};
+		};
+
+		ehci@e4800000 {
+			status = "okay";
+		};
+
+		gpio_keys {
+			compatible = "gpio-keys";
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			button@1 {
+				label = "wakeup";
+				linux,code = <0x100>;
+				gpios = <&gpio1 1 0x4>;
+				debounce-interval = <20>;
+				wakeup-source;
+			};
+		};
+
+		ehci@e5800000 {
+			status = "okay";
+		};
+
+		i2s0: i2s-play@b2400000 {
+			status = "okay";
+		};
+
+		i2s1: i2s-rec@b2000000 {
+			status = "okay";
+		};
+
+		incodec: dir-hifi {
+			compatible = "dummy,dir-hifi";
+			status = "okay";
+		};
+
+		ohci@e4000000 {
+			status = "okay";
+		};
+
+		ohci@e5000000 {
+			status = "okay";
+		};
+
+		outcodec: dit-hifi {
+			compatible = "dummy,dit-hifi";
+			status = "okay";
+		};
+
+		sound {
+			compatible = "spear,spear-evb";
+			audio-controllers = <&spdif0 &spdif1 &i2s0 &i2s1>;
+			audio-codecs = <&incodec &outcodec &sta529 &sta529>;
+			codec_dai_name = "dir-hifi", "dit-hifi", "sta529-audio", "sta529-audio";
+			stream_name = "spdif-cap", "spdif-play", "i2s-play", "i2s-cap";
+			dai_name = "spdifin-pcm", "spdifout-pcm", "i2s0-pcm", "i2s1-pcm";
+			nr_controllers = <4>;
+		        status = "okay";
+		};
+
+		spdif0: spdif-in@d0100000 {
+			status = "okay";
+		};
+
+		spdif1: spdif-out@d0000000 {
+			status = "okay";
+		};
+
+		apb {
+			adc@e0080000 {
+				status = "okay";
+			};
+
+			i2s-play@b2400000 {
+				status = "okay";
+			};
+
+			i2s-rec@b2000000 {
+				status = "okay";
+			};
+
+			gpio0: gpio@e0600000 {
+			       status = "okay";
+			};
+
+			gpio1: gpio@e0680000 {
+			       status = "okay";
+			};
+
+			gpio@e2800000 {
+			       status = "okay";
+			};
+
+			i2c0: i2c@e0280000 {
+			       status = "okay";
+
+				sta529: sta529@1a {
+					compatible = "st,sta529";
+					reg = <0x1a>;
+				};
+			};
+
+			i2c1: i2c@b4000000 {
+			       status = "okay";
+
+				eeprom0@56 {
+					compatible = "st,eeprom";
+					reg = <0x56>;
+				};
+
+				stmpe801@41 {
+					compatible = "st,stmpe801";
+					#address-cells = <1>;
+					#size-cells = <0>;
+					reg = <0x41>;
+					interrupts = <4 0x4>;
+					interrupt-parent = <&gpio0>;
+					irq-trigger = <0x2>;
+
+					stmpegpio: stmpe_gpio {
+						compatible = "st,stmpe-gpio";
+						gpio-controller;
+						#gpio-cells = <2>;
+					};
+				};
+			};
+
+			kbd@e0300000 {
+				linux,keymap = < 0x00000001
+						 0x00010002
+						 0x00020003
+						 0x00030004
+						 0x00040005
+						 0x00050006
+						 0x00060007
+						 0x00070008
+						 0x00080009
+						 0x0100000a
+						 0x0101000c
+						 0x0102000d
+						 0x0103000e
+						 0x0104000f
+						 0x01050010
+						 0x01060011
+						 0x01070012
+						 0x01080013
+						 0x02000014
+						 0x02010015
+						 0x02020016
+						 0x02030017
+						 0x02040018
+						 0x02050019
+						 0x0206001a
+						 0x0207001b
+						 0x0208001c
+						 0x0300001d
+						 0x0301001e
+						

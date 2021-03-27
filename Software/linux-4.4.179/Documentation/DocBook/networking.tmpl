@@ -1,0 +1,82 @@
+
+1. Introduction
+
+Linux distinguishes between administrative and operational state of an
+interface. Administrative state is the result of "ip link set dev
+<dev> up or down" and reflects whether the administrator wants to use
+the device for traffic.
+
+However, an interface is not usable just because the admin enabled it
+- ethernet requires to be plugged into the switch and, depending on
+a site's networking policy and configuration, an 802.1X authentication
+to be performed before user data can be transferred. Operational state
+shows the ability of an interface to transmit this user data.
+
+Thanks to 802.1X, userspace must be granted the possibility to
+influence operational state. To accommodate this, operational state is
+split into two parts: Two flags that can be set by the driver only, and
+a RFC2863 compatible state that is derived from these flags, a policy,
+and changeable from userspace under certain rules.
+
+
+2. Querying from userspace
+
+Both admin and operational state can be queried via the netlink
+operation RTM_GETLINK. It is also possible to subscribe to RTMGRP_LINK
+to be notified of updates. This is important for setting from userspace.
+
+These values contain interface state:
+
+ifinfomsg::if_flags & IFF_UP:
+ Interface is admin up
+ifinfomsg::if_flags & IFF_RUNNING:
+ Interface is in RFC2863 operational state UP or UNKNOWN. This is for
+ backward compatibility, routing daemons, dhcp clients can use this
+ flag to determine whether they should use the interface.
+ifinfomsg::if_flags & IFF_LOWER_UP:
+ Driver has signaled netif_carrier_on()
+ifinfomsg::if_flags & IFF_DORMANT:
+ Driver has signaled netif_dormant_on()
+
+TLV IFLA_OPERSTATE
+
+contains RFC2863 state of the interface in numeric representation:
+
+IF_OPER_UNKNOWN (0):
+ Interface is in unknown state, neither driver nor userspace has set
+ operational state. Interface must be considered for user data as
+ setting operational state has not been implemented in every driver.
+IF_OPER_NOTPRESENT (1):
+ Unused in current kernel (notpresent interfaces normally disappear),
+ just a numerical placeholder.
+IF_OPER_DOWN (2):
+ Interface is unable to transfer data on L1, f.e. ethernet is not
+ plugged or interface is ADMIN down.
+IF_OPER_LOWERLAYERDOWN (3):
+ Interfaces stacked on an interface that is IF_OPER_DOWN show this
+ state (f.e. VLAN).
+IF_OPER_TESTING (4):
+ Unused in current kernel.
+IF_OPER_DORMANT (5):
+ Interface is L1 up, but waiting for an external event, f.e. for a
+ protocol to establish. (802.1X)
+IF_OPER_UP (6):
+ Interface is operational up and can be used.
+
+This TLV can also be queried via sysfs.
+
+TLV IFLA_LINKMODE
+
+contains link policy. This is needed for userspace interaction
+described below.
+
+This TLV can also be queried via sysfs.
+
+
+3. Kernel driver API
+
+Kernel drivers have access to two flags that map to IFF_LOWER_UP and
+IFF_DORMANT. These flags can be set from everywhere, even from
+interrupts. It is guaranteed that only the driver has write access,
+however, if different layers of the driver manipulate the same flag,
+the 

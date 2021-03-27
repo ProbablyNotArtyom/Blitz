@@ -1,0 +1,185 @@
+/*
+ * Broadcom BCM63138 DSL SoCs SMP support code
+ *
+ * Copyright (C) 2015, Broadcom Corporation
+ *
+ * Licensed under the terms of the GPLv2
+ */
+
+#include <linux/delay.h>
+#include <linux/init.h>
+#include <linux/smp.h>
+#include <linux/io.h>
+#include <linux/of.h>
+#include <linux/of_address.h>
+
+#include <asm/cacheflush.h>
+#include <asm/smp_scu.h>
+#include <asm/smp_plat.h>
+#include <asm/vfp.h>
+
+#include "bcm63xx_smp.h"
+
+/* Size of mapped Cortex A9 SCU address space */
+#define CORTEX_A9_SCU_SIZE	0x58
+
+/*
+ * Enable the Cortex A9 Snoop Control Unit
+ *
+ * By the time this is called we already know there are multiple
+ * cores present.  We assume we're running on a Cortex A9 processor,
+ * so any trouble getting the base address register or getting the
+ * SCU base is a problem.
+ *
+ * Return 0 if successful or an error code otherwise.
+ */
+static int __init scu_a9_enable(void)
+{
+	unsigned long config_base;
+	void __iomem *scu_base;
+	unsigned int i, ncores;
+
+	if (!scu_a9_has_base()) {
+		pr_err("no configuration base address register!\n");
+		return -ENXIO;
+	}
+
+	/* Config base address register value is zero for uniprocessor */
+	config_base = scu_a9_get_base();
+	if (!config_base) {
+		pr_err("hardware reports only one core\n");
+		return -ENOENT;
+	}
+
+	scu_base = ioremap((phys_addr_t)config_base, CORTEX_A9_SCU_SIZE);
+	if (!scu_base) {
+		pr_err("failed to remap config base (%lu/%u) for SCU\n",
+			config_base, CORTEX_A9_SCU_SIZE);
+		return -ENOMEM;
+	}
+
+	scu_enable(scu_base);
+
+	ncores = scu_base ? scu_get_core_count(scu_base) : 1;
+
+	if (ncores > nr_cpu_ids) {
+		pr_warn("SMP: %u cores greater than maximum (%u), clipping\n",
+				ncores, nr_cpu_ids);
+		ncores = nr_cpu_ids;
+	}
+
+	/* The BCM63138 SoC has two Cortex-A9 CPUs, CPU0 features a complete
+	 * and fully functional VFP unit that can be used, but CPU1 does not.
+	 * Since we will not be able to trap kernel-mode NEON to force
+	 * migration to CPU0, just do not advertise VFP support at all.
+	 *
+	 * This will make vfp_init bail out and do not attempt to use VFP at
+	 * all, for kernel-mode NEON, we do not want to introduce any
+	 * conditionals in hot-paths, so we just restrict the system to UP.
+	 */
+#ifdef CONFIG_VFP
+	if (ncores > 1) {
+		pr_warn("SMP: secondary CPUs lack VFP unit, disabling VFP\n");
+		vfp_disable();
+
+#ifdef CONFIG_KERNEL_MODE_NEON
+		WARN(1, "SMP: kernel-mode NEON enabled, restricting to UP\n");
+		ncores = 1;
+#endif
+	}
+#endif
+
+	for (i = 0; i < ncores; i++)
+		set_cpu_possible(i, true);
+
+	iounmap(scu_base);	/* That's the last we'll need of this */
+
+	return 0;
+}
+
+static const struct of_device_id bcm63138_bootlut_ids[] = {
+	{ .compatible = "brcm,bcm63138-bootlut", },
+	{ /* sentinel */ },
+};
+
+#define BOOTLUT_RESET_VECT	0x20
+
+static int bcm63138_smp_boot_secondary(unsigned int cpu,
+				       struct task_struct *idle)
+{
+	void __iomem *bootlut_base;
+	struct device_node *dn;
+	int ret = 0;
+	u32 val;
+
+	dn = of_find_matching_node(NULL, bcm63138_bootlut_ids);
+	if (!dn) {
+		pr_err("SMP: unable to find bcm63138 boot LUT node\n");
+		return -ENODEV;
+	}
+
+	bootlut_base = of_iomap(dn, 0);
+	of_node_put(dn);
+
+	if (!bootlut_base) {
+		pr_err("SMP: unable to remap boot LUT base register\n");
+		return -ENOMEM;
+	}
+
+	/* Locate the secondary CPU node */
+	dn = of_get_cpu_node(cpu, NULL);
+	if (!dn) {
+		pr_err("SMP: failed to locate secondary CPU%d node\n", cpu);
+		ret = -ENODEV;
+		goto out;
+	}
+
+	/* Write the secondary init routine to the BootLUT reset vector */
+	val = __pa_symbol(secondary_startup);
+	writel_relaxed(val, bootlut_base + BOOTLUT_RESET_VECT);
+
+	/* Power up the core, will jump straight to its reset vector when we
+	 * return
+	 */
+	ret = bcm63xx_pmb_power_on_cpu(dn);
+	if (ret)
+		goto out;
+out:
+	iounmap(bootlut_base);
+
+	return ret;
+}
+
+static void __init bcm63138_smp_prepare_cpus(unsigned int max_cpus)
+{
+	int ret;
+
+	ret = scu_a9_enable();
+	if (ret) {
+		pr_warn("SMP: Cortex-A9 SCU setup failed\n");
+		return;
+	}
+}
+
+static const struct smp_operations bcm63138_smp_ops __initconst = {
+	.smp_prepare_cpus	= bcm63138_smp_prepare_cpus,
+	.smp_boot_secondary	= bcm63138_smp_boot_secondary,
+};
+
+CPU_METHOD_OF_DECLARE(bcm63138_smp, "brcm,bcm63138", &bcm63138_smp_ops);
+fájl megtartásaLetöltések kereséseA letöltött fájlok itt jelennek megBeállítások menüFolytatásA(z) $1 eltávolítása a listábólTörölve$1 - $2, $3$1, összesen: $2Letöltések mappa megnyitásaMűveletekLetöltötte: <a href="$1">$2</a>Letöltve inkognitó módbanNyomja meg a $1 billentyűparancsot a visszavonáshoz„$1” eltávolítva a listábólÖsszes törölve$2 ($1) letöltéseLetöltés, $1% van hátraLetöltés folyamatban, $1Sikertelen letöltés: $1Letöltés megszakítva: $1A letöltés befejeződött: $1>. A Shift+F6 billentyűparancs lenyomásával a letöltéssáv területére léphet.&Megjelenítés mappábanMegnyitás, amikor &kész&Megnyitás&Az ilyen típusú fájlokat mindig nyissa megMegnyitás a rendszer megtekintőjévelMegnyitás mindig a rendszer megtekintőjével&Szünet&Folytatás&Elvetés&Megőrzés&További információMegnyitás mindig az Adobe Readerben{NUM_DOWNLOAD,plural, =1{Letöltés folyamatban}other{Letöltések folyamatban}}Letöltés folytatásaMindenképp bezárja az inkognitómódot?KilépésTelepítés$1 telepítéseLétrehozza a parancsikont?LétrehozásTelepíti az alkalmazást?Gyorsparancs neveMegnyitás ablakkéntParancsikon létrehozása…A(z) $1 telepítése…$1 eltávolítása…Megtekintés az áruházbanFejlesztő webhelyeÁttekintésLicencekMéret:Verzió:Parancsikonok létrehozása…Hogyan szeretné elindítani ezt az alkalmazást?Számítás…<1 MBA(z) „$1” engedély visszavonásaAz alkalmazás nem igényel speciális engedélyeket.A bővítmény nem igényel különleges engedélyeket.{NUM_FILES,plural, =1{A számítógépen tárolt fájl elérése}other{A számítógépen tárolt # fájl elérése}}{NUM_DEVICES,plural, =1{Kommunikáció egy USB-eszközzel}other{Kommunikáció # USB-eszközzel}}Parancsikon létrehozása az alkalmazáshozParancsikonok hozzáadása a következő helyekhez:AsztalStart menüGyorsindító sávA program rögzítése a tálcán•  $1Továbbra is tiltsa le több fájl automatikus letöltésétA(z) $1 mindig letölthet több fájltEz a webhely automatikusan letöltött több fájltEz a webhely megpróbált automatikusan letölteni több fájltLetöltés letiltvaTöbb fájl automatikus letöltésének engedélyezése továbbra isMindig blokkolja több fájl automatikus letöltését itt: $1Cookie-k letiltvaCookie-k beállítvaEzen az oldalon le van tiltva a cookie-k mentése.Ez az oldal cookie-kat állít be.Cookie-k és egyéb webhelyadatok megjelenítése…Képek letiltvaA képek le vannak tiltva ezen az oldalon.Mindig engedélyezi, hogy a(z) $1 cookie-kat állítson be$1 mindig mutathasson képeketCookie-k tiltásának folytatásaCookie-k engedélyezése továbbra isMindig tiltsa le a cookie-kat ezen a webhelyen: $1Képek letiltásának fenntartásaAz előugró ablakok le vannak tiltva ezen az oldalon.Előugró ablakok letiltva:Itt mindig engedélyezve vannak az előugró ablakok és az átirányítások: $1Letiltás fenntartásaA(z) $1 mindig hozzáférhet a kamerához és mikrofonhozA(z) $1 mindig hozzáférhet az Ön mikrofonjáhozA(z) $1 mindig hozzáférhet az Ön kamerájáhozKérdezzen rá, ha a(z) $1 hozzá szeretne férni a kamerához és a mikrofonhozKérdezzen rá, ha a(z) $1 hozzá szeretne férni a mikrofonhozKérdezzen rá, ha a(z) $1 hozzá szeretne férni a kameráhozMindig tiltsa a kamerához és mikrofonhoz való hozzáféréstMikrofon elérésének állandó tiltásaMindig tiltsa a hozzáférést a kameráhozA kamerához és mikrofonhoz való hozzáférés tiltásának fenntartásaMikrofon-hozzáférés tiltásának fenntartásaKamera-hozzáférés tiltásának fenntartásaA(z) $1 továbbra is hozzáférhet az Ön kamerájához és mikrofonjáhozA(z) $1 továbbra is hozzáférhet az Ön mikrofonjáhozA(z) $1 továbbra is hozzáférhet az Ön kamerájáhozElőugró ablak letiltvaLetiltott beépülő modulJavaScript letiltvaA JavaScript le van tiltva ezen az oldalon.Mindig engedélyezze a JavaScriptet itt: $1A JavaScript letiltásának fenntartásaLe van tiltva a Flash ezen az oldalonLe van tiltva a Flash ezen az oldalon.A Flash futtatása ezen alkalommalA hang némítva van ezen az oldalonHangok folyamatos engedélyezése a következőn: $1Némítás megtartásaTárgyKiállítóSzolgáltatóSorozatszámA(z) „$1” hibakeresést hajt végre a böngészőnélA DevTools teljes hozzáférést kér a következőhöz: $1.
+Győződjön meg arról, hogy nem ad ki bizalmas adatokat.MegtagadásFolyamat leállításaFolyamat azonosítójaGDI azonosítókFELHASZNÁLÓI azonosítókFeladatNaCl hibakeresési portHálózatCPUKezdés idejeProcesszoridőMemóriamennyiségSwap memóriaProfilTétlen aktiválásokSúlyos hibákFájlleírókFolyamatprioritásKépek gyorsítótáraSzkript gyorsítótárCSS gyorsítótárGPU memóriájaSQLite memóriaJavaScript memóriaÉletben tartási számláló$1K$1K ($2K élő)AlacsonyNormál$1 (csúcs: $2)BöngészőBővítmény: $1Inkognitómód bővítmény: $1Alkalmazás: $1Inkognitómódú alkalmazás: $1Lap: $1Inkognitólap: $1Háttéralkalmazás: $1Háttéroldal: $1Beépülő modul: $1Beépülő modul közvetítője: $1Előmegjelenítés: $1Megjelenítő: $1Szolgáltatás-munkavégző: $1Ismeretlen beépülő modulSegédprogram: $1Natív kliensmodul: $1Natív kliens biztonságkezelőGPU-folyamatNyomtatás: $1Subframe: $1Inkognitó subframe: $1Chrome-fájlokkal kapcsolatos segédprogramokProfilimportálóWi-Fi hitelesítési adatok lekérőjeChrome OS rendszerképíróMédiafájl-ellenőrzőHatásmentes szolgáltatásTelepített téma: "$1"Újraindítás mostHa szeretné újra engedélyezni, el kell fogadnia az új engedélyeket:A Google rosszindulatúként jelölte meg a(z) „$1” bővítményt, és megakadályozta a telepítéstA(z) $1 bővítményt távolról adták hozzáA(z) $1 bővítmény le van tiltvaTöltse be újra az oldalt a bővítmény használatáhozEngedélyek megerősítéseHozzáadja a(z) „$1” bővítményt a következő felhasználónál: $2?Hozzáadja a következőt: "$1"?Eltávolítja a következőt: "$1"?A(z) „$1” el szeretné távolítani a következőt: „$2”."$1" legújabb verziója ki van kapcsolva, mert több jogosultság kell hozzá.A(z) „$1” további engedélyeket kért.Aktuális engedélyek a következőhöz: „$1”Engedélyezi a következőt: „$1”?Javítja a következőt: „$1”?A számítógépén lévő egyik program hozzáadott egy alkalmazást, amely megváltoztathatja a Chrome működését.
+
+
+$1A számítógépén lévő egyik program olyan bővítményt adott hozzá, amely megváltoztathatja a Chrome működését.
+
+$1A számítógépén lévő egyik program olyan témát adott hozzá, amely megváltoztathatja a Chrome működését.
+
+$1Bővítmény engedélyezéseAlkalmazás engedélyezéseTéma engedélyezéseEltávolítás a Chrome-bólMódosítások jóváhagyásaA(z) "$1" bővítmény hozzáadása megtörtént.A(z) „$1” bővítmény automatikusan letiltva.A(z) „$1” alkalmazás hozzáadva.A(z) „$1” alkalmazás automatikusan törölve.OK$1 kommunikálni szeretne a(z) „$2” alkalmazással.$1 kommunikálni szeretne a(z) „$2” bővítménnyel.Megteheti a következőket:Most már megteheti a következőket:A következőkre lehet képes:Nem rendelkezik speciális engedélyekkel.• $1($1){1,plural, =1{Egy felhasználó által értékelve; az átlagos értékelés: {0, number,0.0}.}other{# felhasználó által értékelve; az átlagos értékelés: {0, number,0.0}.}}Még egyetlen felhasználó sem értékelte.$1 felhasználóMegnyitás az Internetes áruházban{NUM_FILES,plural, =1{Állandó hozzáférése van egy fájlhoz.}other{Állandó hozzáférése van # fájlhoz.}}A számítógépén és az Ön által felkeresett webhelyeken lévő adatainak olvasása és módosításaAz Ön által felkeresett webhelyeken lévő valamennyi adatának olvasása és módosításaAz összes adat beolvasása a felkeresett webhelyekrőlMikrofon használataKamera használataMikrofon és kamera használataA rendszerrel párosított Bluetooth-eszközökkel kapcsolatos információk elérése és a közeli Bluetooth-eszközök felderítése.Üzenetek küldése és fogadása Bluetooth-eszközöknek, illetve Bluetooth-eszközöktől.Bluetooth-adapter állapotának és párosításának vezérléseHozzáférés a Bluetooth- és a soros eszközökhözKönyvjelzők olvasása és módosításaAz Ön által másolt és beillesztett adatok olvasásaAz Ön által másolt és beillesztett adatok olvasása és módosításaAz Ön által másolt és beillesztett adatok módosításaHozzáférés az oldal háttérben történő hibakereséséhezWeboldalak adott részeinek letiltásaTartalom letiltása minden felkeresett oldalonUSB-kapcsolaton vagy a helyi hálózaton keresztül csatlakoztatott szkennerek eléréseA számítógép gyártójának és típusának elolvasásaA felkeresett webhelyek ikonjainak olvasásaAz Ön tartózkodási helyének észleléseA böngészési előzmények olvasásaBöngészési előzmények elolvasása az összes bejelentkezett eszközénBöngészési előzmények olvasása és módosításaBöngészési előzmények olvasása és módosítása az összes bejelentkezett eszközénKezdőlap módosítása a következőre: $1Adatainak olvasása és módosítása itt: $1Adatok beolvasása a következő webhelyen: $1Adatainak olvasása és módosítása itt: $1 és $2Adatok beolvasása a következő webhelyeken: $1 és $2Adatainak olvasása és módosítása itt: $1, $2 és $3Adatok beolvasása a következő webhelyeken: $1, $2 és $3Adatainak olvasása és módosítása bizonyos webhelyekenAdatok beolvasása számos webhelyenminden $1 webhelyenMinden $1 webhelyenBárminek az olvasása és módosítása, amit Ön begépelKezelőfelület megjelenítése a bejelentkezési képernyőnAlkalmazások, bővítmények és témák kezeléseEszközök felfedezése helyi hálózatánA hálózati kapcsolatok hozzáférési listájaHálózati kapcsolatok beállításaHálózati kapcsolatok kezeléseA keresési beállítások módosítása a következőre: $1Hozzáférés a soros eszközökhözAdatok cseréje bármilyen eszközzel a helyi hálózaton vagy az internetenAdatok cseréje bármilyen eszközzel a következő domainben: $1Adatok cseréje bármilyen eszközzel a következő domainekben: $1Adatok cseréje a(z) $1 nevű eszközzelAdatok cseréje a(z) $1 nevű eszközökkelKezdőoldal módosítása a következőre: $1Tárolóeszközök azonosítása és kiadásaAz Ön által leggyakrabban felkeresett webhelyek listájának olvasásaAz összes szöveg felolvasása szintetizált beszéddel kimondvaU2F (Universal 2nd Factor) eszközökhöz való hozzáférésÉrtesítések megjelenítéseBármely $1 elérése USB-n keresztülAz alábbi USB-eszközök bármelyikének elérése$1 szolgáltatótól származó ismeretlen eszközökismeretlen szolgáltatótól származó eszközök$1 szolgáltatótól származó USB-eszközök eléréseIsmeretlen szolgáltatótól származó USB-eszközök eléréseA hálózati forgalom eléréseKommunikáció az együttműködő webhelyekkelA weboldalak cookie-khoz, JavaScripthez, beépülő modulokhoz, tartózkodási helyhez, mikrofonhoz, kamerához és egyéb funkciókhoz való hozzáférését vezérlő beállítások módosítása.Adatvédelemmel kapcsolatos beállítások módosításaA bejelentkezett eszközök listájának olvasásaA letöltések kezeléseLetöltött fájlok megnyitásaMegismerheti az Ön e-mail-címétHáttérkép módosításaAz alkalmazásban megnyitott mappák olvasásaAz alkalmazásban megnyitott fájlok és mappák írásaFényképek, zene és egyéb multimédiás anyagok elérése a számítógéprőlFotók, zeneszámok és egyéb médiatartalmak olvasása és módosítása a számítógéprőlFotók, zeneszámok és más médiatartalmak olvasása és törlése a számítógéprőlFotók, zeneszámok és más médiatartalmak olvasása, módosítása és törlése a számítógéprőlAdattárolás a Google Drive-fiókbanEgyedi azonosító olvasása ennél a számítógépnélKommunikáció az együttműködő natív alkalmazásokkalMás bővítmények viselkedésének megfigyelése, beleértve a felkeresett URL-eketKépernyőtartalom rögzítéseKisegítő beállítások módosításaA kisegítő lehetőségek beállításainak áttekintéseHozzáférhetőségi beállításainak olvasása és módosításaKlienstanúsítványok használataTanúsítvány megadása a hitelesítéshezA felhasználó és az eszköz beállításainak olvasása és módosításaAz automatikus kitöltés beállításainak olvasása és módosításaA mentett jelszavak beállításainak olvasása és módosításaEngedélyezőlistára tett felhasználók megtekintése és módosításaHang és videó küldése a helyi hálózaton lévő kijelzőkreÚj lap megnyitásakor látható oldal cseréjeMegpróbálta alacsonyabb verzióra váltani a bővítményt.Megpróbálta alacsonyabb verzióra váltani az alkalmazást.Nem sikerült áthelyezni a bővítménykönyvtárat a profilba.A telepítés nincs engedélyezveAz alkalmazásokat „$1” tartalomtípussal kell ellátniAz alkalmazásokat az általuk érintett gazdagépről kell kiszolgálniA várt azonosító „$1”, de a kapott azonosító „$2”Erről a webhelyről nem lehet alkalmazásokat, bővítményeket és felhasználói szkripteket hozzáadniA várt verzió „$1”, de a kapott verzió „$2”A bővítmény a(z) „$1” legalább „$2” verzióját igényli, ám csak a(z) „$3” verzió van telepítveA(z) „$1” bővítményt nem lehetett importálni, mivel az nem megosztott modulA(z) „$1” telepítése sikertelen, mivel azt a(z) „$2” nem engedélyezi.Ez csak a következő helyről adható hozzá: $1A „kiosk_only” jegyzékattribútummal rendelkező alkalmazást kioszk módban kell telepíteni a Chrome OS rendszerenNem sikerült hozzáadni a(z) „$1” alkalmazást, mert ütközik a következővel: „$2”.A(z) '$1' kép nem tölthető be a témához.Nem sikerült a(z) '$1' ikon betöltése az oldalművelethez.Nem sikerült a(z) '$1' ikon betöltése a böngészőművelethez.Ez az ikon akkor látható, ha a bővítmény tehet valamit az aktuális oldalon.Ez az ikon akkor látható, ha az adott bővítmény műveletet hajthat végre az aktuális oldalon. A bővítményt az ikonra kattintva, illetve a következő billentyűkódot megnyomva használhatja: $1.A bővítményt az ikonra kattintva használhatja.A bővítményt az ikonra kattintva, illetve a következő billentyűkódot megnyomva használhatja: $1.A kifejezés használatához írja be a következőt: "$1", ezután nyomja meg a TAB-ot, majd parancsát vagy keresését.Bővítményeit az Eszközök menü Bővítmények elemére kattintva kezelheti.Parancsikonok kezeléseHa az összes számítógépén szeretné elérni bővítményeit: $1.Ha az összes eszközén szeretné elérni bővítményeit, jelentkezzen be, és kapcsolja be a szinkronizálástHa az összes számítógépén szeretné elérni bővítményeit, kapcsolja be a szinkronizálást.Hozzáférés megerősítéseA kiválasztott mappa bizalmas fájlokat tartalmaz. Biztosan állandó olvasási hozzáférést szeretne adni a(z) „$1” alkalmazásnak a mappához?A kiválasztott mappa bizalmas fájlokat tartalmaz. Biztosan állandó írási hozzáférést szeretne adni a(z) „$1” alkalmazásnak a mappához?Hiba a bővítmény betöltésekorNem sikerült a bővítmény betöltése innen:Hozzáférést kér ehhez a webhelyhezHozzáfér ehhez a webhelyhezNem lehetséges a webhely adatainak olvasása és módosításaOlvashatja és módosíthatja a webhelyadatokatAmikor a bővítményre kattintItt: $1További információ a webhelyekhez való hozzáférésrőlA rendszergazda telepítetteGomb megtartása az eszköztáronMegjelenítés az eszköztáronRögzítésRögzítés megszüntetéseBővítmények kezeléseElőugró ablak vizsgálataAz alkalmazásokat és bővítményeket csak a kezelő ($1) módosíthatja.A szülő telepítette.A gondviselő telepítette.A bővítmény könyvtárának kiválasztása.Bővítmény aktiválásaVálassza ki a bővítmény gyökérkönyvtárát. A bővítmény frissítéséhez meg kell adni az ismét használandó privátkulcs-fájlt is.Válasszon ki privátkulcs-fájlt.Privát kulcsA bővítmény gyökérkönyvtárát kötelező megadni.A bővítmény gyökérkönyvtára érvénytelen.A privátkulcs-fájl érvénytelen.A rendszer a következő fájlokat hozta létre:
+        
+Bővítmény: $1
+Kulcsfájl: $2
+
+A kulcsfájlt tartsa biztonságos helyen. Szüksége lesz rá ahhoz, hogy új verziókat készítsen bővítményéből.Bővítmény létrehozva:
+
+$1HozzáadásBővítmény hozzáadásaAlkalmazás hozzáadásaTéma hozzáadásaVisszaélés bejelentéseVisszaélés bejelentése a következővel kapcsolatban: $1A(z) „$1” szeretné eltávolítani ezt a bővítményt.ÚjraengedélyezésEngedélyek elfogadásaFájlhozzáférés visszavonásaEszközhozzáférés visszavonásaFájl- és eszközhozzáférés visszavonásaBővítmény javításaAlkalmazás javításaRészletek megjelenítéseRészletek elrejtéseHozzáférés megtagadva.Bővítménnyel kapcsolatos hibaÚj bővítmény hozzáadva ($1)Új alkalmazás hozzáadva ($1)Új téma hozzáadva ($1)„$1” hozzáadvaA számítógépen lévő egyik program olyan alkalmazást adott hozzá, amely módosíthatja a Chrome működését.A számítógépen lévő egyik program olyan bővítményt adott hozzá, amely módosíthatja a Chrome működését.A számítógépen lévő egyik program olyan témát adott hozzá, amely módosíthatja a Chrome működését.Nem támogatott kiterjesztések kikapcsolvaés $1 továbbiA bővítmény nem a(z) $1 szolgáltatásból származik, és előfordulhat, hogy az Ön tudta nélkül lett telepítve.A fejlesztői módban futó bővítmények kikapcsolásaA fejlesztői módban futó bővítmények kárt okozhatnak számítógépén. Ha Ön nem fejlesztő, akkor a biztonság kedvéért kapcsolja ki a fejlesztői módban futó bővítményeket.Ezek a bővítmények hozzáférnek a jelenlegi webhely adataihozEzek a bővítmények hozzá szeretnének férni a jelenlegi webhely adataihozEzek a bővítmények nem férnek hozzá a jelenlegi webhely adataihozErre a kezdőoldalra számított?Erre a keresési oldalra számított?Erre az új lap oldalra számított?Internetkapcsolata felett más vette át az irányítástEz a bővítmény módosította, hogy melyik oldal jelenjen meg a cím- és keresősávban indított kereséskor.A(z) $1 bővítmény módosította, hogy melyik oldal jelenjen meg a cím- és keresősávban indított kereséskor.Ez a bővítmény azt módosította, hogy melyik oldal jelenjen meg a Kezdőlap gombra való kattintás esetén.A(z) $1 bővítmény módosította, hogy melyik oldal jelenjen meg a Kezdőlap gombra kattintáskor. Továbbá azt is szabályozza, hogy melyik oldal jelenik meg a cím- és keresősávban indított kereséskor. Továbbá azt is szabályozza, hogy melyik oldal jelenik meg a Kezdőlap gombra történő kattintáskor.  Továbbá azt is szabályozza, hogy melyik oldal jelenik meg a Kezdőlap gombra történő kattintáskor vagy a cím- és keresősávban indított kereséskor. Egy bővítmény módosította az új lap megnyitásakor megjelenített oldalt.A(z) $1 bővítmény átvette az irányítást proxybeállításai felett, ami azt jelenti, hogy a bővítmény minden internetes tevékenységét módosíthatja, feltörheti vagy lehallgathatja. Ha nem biztos benne, hogy miért történt a változás, akkor valószínűleg nem is akarja azt.A bővítmény átvette az irányítást proxybeállításai felett, ami azt jelenti, hogy a bővítmény minden internetes tevékenységét módosíthatja, feltörheti vagy lehallgathatja. Ha nem biztos benne, hogy miért történt a változás, akkor valószínűleg nem is akarja azt. Ha nem szándékosan végezte el ezeket a módosításokat, visszaállíthatja korábbi beállításait.Módosítások megtartásaA(z) $1 személyre szabása és beállításaiÖsszetevőkNincsenek összetevők telepítve.Nincsenek összetevők telepítveFrissítés kereséseÁllapotÁllapot ellenőrzése…ÚjEllenőrzésDiff letöltéseLetöltésLetöltöttDiff frissítése frissítéseFrissítveNaprakészFrissítési hibaA frissítő elindultA frissítő alvó módba kerültA rendszer frissítést találtA frissítés készen állÖsszetevő frissítveAz összetevőt nem frissítette a rendszerÖsszetevő letöltése folyamatban(Kikapcsolva)Bejelentkezés mintA jelszó mentése megtörténtJavasolt jelszó használataMentett jelszóSzeretné elmenteni a jelszót?Menti a felhasználónevet?Szeretné frissíteni a jelszót?Szeretné elmenteni a(z) $1 jelszavát?Szeretné frissíteni a(z) $1 jelszavát?A jelszavakat Google-fiókjába mentjük, hogy bármelyik eszközén használhassa őketJelszavak kezeléseHa az összes eszközén szeretné elérni könyvjelzőit, jelentkezzen be a Chrome-ba.Ha az összes eszközén szeretné elérni jelszavait, jelentkezzen be, és kapcsolja be a szinkronizálást.Ha az összes eszközén szeretné elérni jelszavait, kapcsolja be a szinkronizálást.Frissítve: $1 perccel ezelőttFrissítve: 1 órával ezelőttFrissítve: $1 órával ezelőttMost frissítveAz Egyszerűsített mód mostantól minden oldalon gyorsabb böngészést nyújt (HTTPS esetében is).WebRTC-naplókSzöveges WebRTC-naplók ($1)WebRTC-eseménynaplók ($1)WebRTC napló rögzítésének ideje: $1Helyi fájl:Nincs helyi naplófájl.Feltöltve ekkor: $1A feltöltés sikertelen ($1).Jelentésazonosító: $1Programhiba bejegyzéseFüggőben lévő naplófeltöltés.A napló feltöltése folyamatban van.A napló nincs feltöltve.Napló helyi azonosítója: $1.Nincsenek mostanában rögzített szöveges WebRTC-naplói.Nincsenek mostanában rögzített WebRTC-eseménynaplói.Beépülő modul frissítéseKattintson jobb gombbal a(z) $1 futtatásáhozA(z) $1 beépülő modult letiltotta a vállalati házirendA(z) $1 le van tiltvaA(z) $1 elavultA(z) $1 futtatásához az Ön engedélyére van szükségA(z) $1 plug-in letöltése…A(z) $1 letöltése sikertelen voltA(z) $1 frissítésének befejezését követően töltse be újra az oldalt a beépülő modul aktiválásáhozA(z) $1 le van tiltva.Kattintson a(z) $1 engedélyezéséhezHelyreállítja az oldalakat?használati statisztikákNem támogatott parancssori jelzőt használ: $1. Ennek a stabilitás és a biztonság látja kárát.Nem támogatott funkciókapcsolót használ: $1. Ennek a stabilitás és a biztonság látja kárát.A(z) $2 webhelyen található $1 bővítmény hozzá szeretne férni a számítógéphezSandbox-technológiát nem alkalmazó beépülő modul letiltvaSandbox-technológiát nem alkalmazó beépülő modul engedélyezveA rendszer megakadályozta egy nem sandbox-technológiát használó beépülő modul futását az oldalon.A rendszer engedélyezte egy nem sandbox-technológiát alkalmazó beépülő modul futását az oldalon.Mindig engedélyezze a nem sandbox-technológiát alkalmazó beépülő modulokat itt:$1Sandbox-technológiát nem alkalmazó beépülő modulok tiltásának fenntartásaNem sandbox-technológiát használó beépülő modulok engedélyezésének fenntartásaMindig tiltsa le a nem sandboxban lévő beépülő modulokat a következő webhelyen: $1Nem biztonságos tartalom letiltvaAz oldal nem hiteles forrásokból próbál szkripteket betölteni.Nem biztonságos szkriptek betöltéseA rendszerrőlRendszerdiagnosztikai adatokRészletek: $1Összes részletes nézete…Összes listanézete…Részletes nézet…Listanézet…Nem sikerült a fájl szintaktikai elemzése: $1Régi böngészők támogatásaMegnyitás másik böngészőben mostMegnyitás most a(z) $1 böngészőbenNem sikerült megnyitni a másik böngészőtA(z) $1 megnyitása nem sikerültMegnyitás másik böngészőben $1 másodperc múlvaMegnyitás a(z) $2 böngészőben $1 másodperc múlva…A(z) $1 $1-címet nem sikerült másik böngészőben megnyitni. Kérjük, forduljon a rendszergazdához.Nem sikerült a(z) $1 webhely megnyitása a(z) $2 böngészőben. Forduljon a rendszergazdához.A böngészőátirányítások esetén csak a http-, https- és fájlprotokollok támogatottak.Az oldal olyan Natív kliensalkalmazást használ, amely nem működik a számítógépén.Hiba történt a frissítések keresése közben: $1A frissítés ellenőrzésének elindítása sikertelen (hibakód: $1).A frissítő most fut. Frissítsen egy perc múlva, és ellenőrizze az állapotát.$1 (hibakód: $2).$1 be&illesztése és felkeresése„$1” be&illesztése és keresése&URL megjelenítéseNyomja meg a(z) $1 gombot a(z) $2 kereséshezNyomja meg a(z) $1 billentyűt a parancsok elküldéséhez a következőre: $2LapKeresés itt: $1Parancsok küldése a következőnek: $1Keressen, vagy írjon be internetcímetMiért jelent meg ez a javaslat?Javaslat eltávolításaEltávolítja a javaslatot?Az oldal törlődik az előzményekből és a(z) $1-tevékenységek közül.Keresés a Google-on*.jpeg, *.jpg, *.pngkijelölveÜnnepi embléma megosztásaFacebookTwitterLink másolásaÜnnepi embléma linkjeTestreszabásHáttérParancsikonokSzín és témaNincs háttérFeltöltés az eszközrőlParancsikonok elrejtéseNe jelenjenek meg parancsikonok ezen az oldalonSaját parancsikonokLeggyakrabban felkeresett webhelyekA rendszer az Ön által gyakran felkeresett webhelyek alapján javasol parancsikonokatA megjelenő parancsikonokat Ön választhatja kiAz oldal újratöltéseAz oldal újratöltése – további lehetőségek megtekintéséhez tartsa lenyomva.Oldal betöltésének leállításaAz oldalinformációk megtekintéseHitelkártya mentéseFizetési mód mentéseOldal lefordításaNagyítás/kicsinyítés: $1Az oldal nagyítását a(z) „$1” bővítmény hajtotta végreVálassza ki, hogy melyik alkalmazással szeretné megnyitni ezt a linketMegnyitás ezzel:Jegyezze meg a döntésemetAlkalmazás használataA Chrome használatának folytatása$1 (Inkognitómód)$1 (vendég)$1 (Frissítés érhető el)Teljes képernyőElválasztóVisszaállítás az alapértelmezett nagyítási szintreVálasz kisegítő lehetőségekkel kapcs

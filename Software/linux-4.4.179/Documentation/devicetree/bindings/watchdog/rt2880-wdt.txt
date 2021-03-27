@@ -1,0 +1,17 @@
+// SPDX-License-Identifier: GPL-2.0
+#include "qcom-apq8064-v2.0.dtsi"
+#include "qcom-apq8064-arrow-sd-600eval-pins.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/mfd/qcom-rpm.h>
+
+/ {
+	model = "Arrow Electronics, APQ8064 SD_600eval";
+	compatible = "arrow,sd_600eval", "qcom,apq8064";
+
+	aliases {
+		serial0 = &gsbi7_serial;
+		serial1 = &gsbi1_serial;
+		i2c0 = &gsbi2_i2c;
+		i2c1 = &gsbi3_i2c;
+		i2c2 = &gsbi4_i2c;
+	

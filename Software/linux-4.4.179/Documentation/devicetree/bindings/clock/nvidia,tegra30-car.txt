@@ -1,0 +1,49 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef _ALPHA_PGTABLE_H
+#define _ALPHA_PGTABLE_H
+
+#include <asm-generic/4level-fixup.h>
+
+/*
+ * This file contains the functions and defines necessary to modify and use
+ * the Alpha page table tree.
+ *
+ * This hopefully works with any standard Alpha page-size, as defined
+ * in <asm/page.h> (currently 8192).
+ */
+#include <linux/mmzone.h>
+
+#include <asm/page.h>
+#include <asm/processor.h>	/* For TASK_SIZE */
+#include <asm/machvec.h>
+#include <asm/setup.h>
+
+struct mm_struct;
+struct vm_area_struct;
+
+/* Certain architectures need to do special things when PTEs
+ * within a page table are directly modified.  Thus, the following
+ * hook is made available.
+ */
+#define set_pte(pteptr, pteval) ((*(pteptr)) = (pteval))
+#define set_pte_at(mm,addr,ptep,pteval) set_pte(ptep,pteval)
+
+/* PMD_SHIFT determines the size of the area a second-level page table can map */
+#define PMD_SHIFT	(PAGE_SHIFT + (PAGE_SHIFT-3))
+#define PMD_SIZE	(1UL << PMD_SHIFT)
+#define PMD_MASK	(~(PMD_SIZE-1))
+
+/* PGDIR_SHIFT determines what a third-level page table entry can map */
+#define PGDIR_SHIFT	(PAGE_SHIFT + 2*(PAGE_SHIFT-3))
+#define PGDIR_SIZE	(1UL << PGDIR_SHIFT)
+#define PGDIR_MASK	(~(PGDIR_SIZE-1))
+
+/*
+ * Entries per page directory level:  the Alpha is three-level, with
+ * all levels having a one-page page table.
+ */
+#define PTRS_PER_PTE	(1UL << (PAGE_SHIFT-3))
+#define PTRS_PER_PMD	(1UL << (PAGE_SHIFT-3))
+#define PTRS_PER_PGD	(1UL << (PAGE_SHIFT-3))
+#define USER_PTRS_PER_PGD	(TASK_SIZE / PGDIR_SIZE)
+#define FIRS

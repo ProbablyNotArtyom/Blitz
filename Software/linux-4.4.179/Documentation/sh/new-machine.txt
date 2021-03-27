@@ -1,0 +1,449 @@
+/*
+ *  linux/arch/arm/kernel/traps.c
+ *
+ *  Copyright (C) 1995-2009 Russell King
+ *  Fragments that appear the same as linux/arch/i386/kernel/traps.c (C) Linus Torvalds
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ *  'traps.c' handles hardware exceptions after we have saved some state in
+ *  'linux/arch/arm/lib/traps.S'.  Mostly a debugging aid, but will probably
+ *  kill the offending process.
+ */
+#include <linux/signal.h>
+#include <linux/personality.h>
+#include <linux/kallsyms.h>
+#include <linux/spinlock.h>
+#include <linux/uaccess.h>
+#include <linux/hardirq.h>
+#include <linux/kdebug.h>
+#include <linux/kprobes.h>
+#include <linux/module.h>
+#include <linux/kexec.h>
+#include <linux/bug.h>
+#include <linux/delay.h>
+#include <linux/init.h>
+#include <linux/sched/signal.h>
+#include <linux/sched/debug.h>
+#include <linux/sched/task_stack.h>
+#include <linux/irq.h>
+
+#include <linux/atomic.h>
+#include <asm/cacheflush.h>
+#include <asm/exception.h>
+#include <asm/unistd.h>
+#include <asm/traps.h>
+#include <asm/ptrace.h>
+#include <asm/unwind.h>
+#include <asm/tls.h>
+#include <asm/system_misc.h>
+#include <asm/opcodes.h>
+
+
+static const char *handler[]= {
+	"prefetch abort",
+	"data abort",
+	"address exception",
+	"interrupt",
+	"undefined instruction",
+};
+
+void *vectors_page;
+
+#ifdef CONFIG_DEBUG_USER
+unsigned int user_debug;
+
+static int __init user_debug_setup(char *str)
+{
+	get_option(&str, &user_debug);
+	return 1;
+}
+__setup("user_debug=", user_debug_setup);
+#endif
+
+static void dump_mem(const char *, const char *, unsigned long, unsigned long);
+
+void dump_backtrace_entry(unsigned long where, unsigned long from, unsigned long frame)
+{
+#ifdef CONFIG_KALLSYMS
+	printk("[<%08lx>] (%ps) from [<%08lx>] (%pS)\n", where, (void *)where, from, (void *)from);
+#else
+	printk("Function entered at [<%08lx>] from [<%08lx>]\n", where, from);
+#endif
+
+	if (in_entry_text(from))
+		dump_mem("", "Exception stack", frame + 4, frame + 4 + sizeof(struct pt_regs));
+}
+
+void dump_backtrace_stm(u32 *stack, u32 instruction)
+{
+	char str[80], *p;
+	unsigned int x;
+	int reg;
+
+	for (reg = 10, x = 0, p = str; reg >= 0; reg--) {
+		if (instruction & BIT(reg)) {
+			p += sprintf(p, " r%d:%08x", reg, *stack--);
+			if (++x == 6) {
+				x = 0;
+				p = str;
+				printk("%s\n", str);
+			}
+		}
+	}
+	if (p != str)
+		printk("%s\n", str);
+}
+
+#ifndef CONFIG_ARM_UNWIND
+/*
+ * Stack pointers should always be within the kernels view of
+ * physical memory.  If it is not there, then we can't dump
+ * out any information relating to the stack.
+ */
+static int verify_stack(unsigned long sp)
+{
+	if (sp < PAGE_OFFSET ||
+	    (sp > (unsigned long)high_memory && high_memory != NULL))
+		return -EFAULT;
+
+	return 0;
+}
+#endif
+
+/*
+ * Dump out the contents of some memory nicely...
+ */
+static void dump_mem(const char *lvl, const char *str, unsigned long bottom,
+		     unsigned long top)
+{
+	unsigned long first;
+	mm_segment_t fs;
+	int i;
+
+	/*
+	 * We need to switch to kernel mode so that we can use __get_user
+	 * to safely read from kernel space.  Note that we now dump the
+	 * code first, just in case the backtrace kills us.
+	 */
+	fs = get_fs();
+	set_fs(KERNEL_DS);
+
+	printk("%s%s(0x%08lx to 0x%08lx)\n", lvl, str, bottom, top);
+
+	for (first = bottom & ~31; first < top; first += 32) {
+		unsigned long p;
+		char str[sizeof(" 12345678") * 8 + 1];
+
+		memset(str, ' ', sizeof(str));
+		str[sizeof(str) - 1] = '\0';
+
+		for (p = first, i = 0; i < 8 && p < top; i++, p += 4) {
+			if (p >= bottom && p < top) {
+				unsigned long val;
+				if (__get_user(val, (unsigned long *)p) == 0)
+					sprintf(str + i * 9, " %08lx", val);
+				else
+					sprintf(str + i * 9, " ????????");
+			}
+		}
+		printk("%s%04lx:%s\n", lvl, first & 0xffff, str);
+	}
+
+	set_fs(fs);
+}
+
+static void __dump_instr(const char *lvl, struct pt_regs *regs)
+{
+	unsigned long addr = instruction_pointer(regs);
+	const int thumb = thumb_mode(regs);
+	const int width = thumb ? 4 : 8;
+	char str[sizeof("00000000 ") * 5 + 2 + 1], *p = str;
+	int i;
+
+	/*
+	 * Note that we now dump the code first, just in case the backtrace
+	 * kills us.
+	 */
+
+	for (i = -4; i < 1 + !!thumb; i++) {
+		unsigned int val, bad;
+
+		if (thumb)
+			bad = get_user(val, &((u16 *)addr)[i]);
+		else
+			bad = get_user(val, &((u32 *)addr)[i]);
+
+		if (!bad)
+			p += sprintf(p, i == 0 ? "(%0*x) " : "%0*x ",
+					width, val);
+		else {
+			p += sprintf(p, "bad PC value");
+			break;
+		}
+	}
+	printk("%sCode: %s\n", lvl, str);
+}
+
+static void dump_instr(const char *lvl, struct pt_regs *regs)
+{
+	mm_segment_t fs;
+
+	if (!user_mode(regs)) {
+		fs = get_fs();
+		set_fs(KERNEL_DS);
+		__dump_instr(lvl, regs);
+		set_fs(fs);
+	} else {
+		__dump_instr(lvl, regs);
+	}
+}
+
+#ifdef CONFIG_ARM_UNWIND
+static inline void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk)
+{
+	unwind_backtrace(regs, tsk);
+}
+#else
+static void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk)
+{
+	unsigned int fp, mode;
+	int ok = 1;
+
+	printk("Backtrace: ");
+
+	if (!tsk)
+		tsk = current;
+
+	if (regs) {
+		fp = frame_pointer(regs);
+		mode = processor_mode(regs);
+	} else if (tsk != current) {
+		fp = thread_saved_fp(tsk);
+		mode = 0x10;
+	} else {
+		asm("mov %0, fp" : "=r" (fp) : : "cc");
+		mode = 0x10;
+	}
+
+	if (!fp) {
+		pr_cont("no frame pointer");
+		ok = 0;
+	} else if (verify_stack(fp)) {
+		pr_cont("invalid frame pointer 0x%08x", fp);
+		ok = 0;
+	} else if (fp < (unsigned long)end_of_stack(tsk))
+		pr_cont("frame pointer underflow");
+	pr_cont("\n");
+
+	if (ok)
+		c_backtrace(fp, mode);
+}
+#endif
+
+void show_stack(struct task_struct *tsk, unsigned long *sp)
+{
+	dump_backtrace(NULL, tsk);
+	barrier();
+}
+
+#ifdef CONFIG_PREEMPT
+#define S_PREEMPT " PREEMPT"
+#else
+#define S_PREEMPT ""
+#endif
+#ifdef CONFIG_SMP
+#define S_SMP " SMP"
+#else
+#define S_SMP ""
+#endif
+#ifdef CONFIG_THUMB2_KERNEL
+#define S_ISA " THUMB2"
+#else
+#define S_ISA " ARM"
+#endif
+
+static int __die(const char *str, int err, struct pt_regs *regs)
+{
+	struct task_struct *tsk = current;
+	static int die_counter;
+	int ret;
+
+	pr_emerg("Internal error: %s: %x [#%d]" S_PREEMPT S_SMP S_ISA "\n",
+	         str, err, ++die_counter);
+
+	/* trap and error numbers are mostly meaningless on ARM */
+	ret = notify_die(DIE_OOPS, str, regs, err, tsk->thread.trap_no, SIGSEGV);
+	if (ret == NOTIFY_STOP)
+		return 1;
+
+	print_modules();
+	__show_regs(regs);
+	pr_emerg("Process %.*s (pid: %d, stack limit = 0x%p)\n",
+		 TASK_COMM_LEN, tsk->comm, task_pid_nr(tsk), end_of_stack(tsk));
+
+	if (!user_mode(regs) || in_interrupt()) {
+		dump_mem(KERN_EMERG, "Stack: ", regs->ARM_sp,
+			 THREAD_SIZE + (unsigned long)task_stack_page(tsk));
+		dump_backtrace(regs, tsk);
+		dump_instr(KERN_EMERG, regs);
+	}
+
+	return 0;
+}
+
+static arch_spinlock_t die_lock = __ARCH_SPIN_LOCK_UNLOCKED;
+static int die_owner = -1;
+static unsigned int die_nest_count;
+
+static unsigned long oops_begin(void)
+{
+	int cpu;
+	unsigned long flags;
+
+	oops_enter();
+
+	/* racy, but better than risking deadlock. */
+	raw_local_irq_save(flags);
+	cpu = smp_processor_id();
+	if (!arch_spin_trylock(&die_lock)) {
+		if (cpu == die_owner)
+			/* nested oops. should stop eventually */;
+		else
+			arch_spin_lock(&die_lock);
+	}
+	die_nest_count++;
+	die_owner = cpu;
+	console_verbose();
+	bust_spinlocks(1);
+	return flags;
+}
+
+static void oops_end(unsigned long flags, struct pt_regs *regs, int signr)
+{
+	if (regs && kexec_should_crash(current))
+		crash_kexec(regs);
+
+	bust_spinlocks(0);
+	die_owner = -1;
+	add_taint(TAINT_DIE, LOCKDEP_NOW_UNRELIABLE);
+	die_nest_count--;
+	if (!die_nest_count)
+		/* Nest count reaches zero, release the lock. */
+		arch_spin_unlock(&die_lock);
+	raw_local_irq_restore(flags);
+	oops_exit();
+
+	if (in_interrupt())
+		panic("Fatal exception in interrupt");
+	if (panic_on_oops)
+		panic("Fatal exception");
+	if (signr)
+		do_exit(signr);
+}
+
+/*
+ * This function is protected against re-entrancy.
+ */
+void die(const char *str, struct pt_regs *regs, int err)
+{
+	enum bug_trap_type bug_type = BUG_TRAP_TYPE_NONE;
+	unsigned long flags = oops_begin();
+	int sig = SIGSEGV;
+
+	if (!user_mode(regs))
+		bug_type = report_bug(regs->ARM_pc, regs);
+	if (bug_type != BUG_TRAP_TYPE_NONE)
+		str = "Oops - BUG";
+
+	if (__die(str, err, regs))
+		sig = 0;
+
+	oops_end(flags, regs, sig);
+}
+
+void arm_notify_die(const char *str, struct pt_regs *regs,
+		int signo, int si_code, void __user *addr,
+		unsigned long err, unsigned long trap)
+{
+	if (user_mode(regs)) {
+		current->thread.error_code = err;
+		current->thread.trap_no = trap;
+
+		force_sig_fault(signo, si_code, addr, current);
+	} else {
+		die(str, regs, err);
+	}
+}
+
+#ifdef CONFIG_GENERIC_BUG
+
+int is_valid_bugaddr(unsigned long pc)
+{
+#ifdef CONFIG_THUMB2_KERNEL
+	u16 bkpt;
+	u16 insn = __opcode_to_mem_thumb16(BUG_INSTR_VALUE);
+#else
+	u32 bkpt;
+	u32 insn = __opcode_to_mem_arm(BUG_INSTR_VALUE);
+#endif
+
+	if (probe_kernel_address((unsigned *)pc, bkpt))
+		return 0;
+
+	return bkpt == insn;
+}
+
+#endif
+
+static LIST_HEAD(undef_hook);
+static DEFINE_RAW_SPINLOCK(undef_lock);
+
+void register_undef_hook(struct undef_hook *hook)
+{
+	unsigned long flags;
+
+	raw_spin_lock_irqsave(&undef_lock, flags);
+	list_add(&hook->node, &undef_hook);
+	raw_spin_unlock_irqrestore(&undef_lock, flags);
+}
+
+void unregister_undef_hook(struct undef_hook *hook)
+{
+	unsigned long flags;
+
+	raw_spin_lock_irqsave(&undef_lock, flags);
+	list_del(&hook->node);
+	raw_spin_unlock_irqrestore(&undef_lock, flags);
+}
+
+static nokprobe_inline
+int call_undef_hook(struct pt_regs *regs, unsigned int instr)
+{
+	struct undef_hook *hook;
+	unsigned long flags;
+	int (*fn)(struct pt_regs *regs, unsigned int instr) = NULL;
+
+	raw_spin_lock_irqsave(&undef_lock, flags);
+	list_for_each_entry(hook, &undef_hook, node)
+		if ((instr & hook->instr_mask) == hook->instr_val &&
+		    (regs->ARM_cpsr & hook->cpsr_mask) == hook->cpsr_val)
+			fn = hook->fn;
+	raw_spin_unlock_irqrestore(&undef_lock, flags);
+
+	return fn ? fn(regs, instr) : 1;
+}
+
+asmlinkage void do_undefinstr(struct pt_regs *regs)
+{
+	unsigned int instr;
+	void __user *pc;
+
+	pc = (void __user *)instruction_pointer(regs);
+
+	if (processor_mode(regs) == SVC_MODE) {
+#ifdef CONFIG_THUMB2_KERNEL
+		if (thumb_mode(regs)) {
+			instr = __mem_to_opcode_thumb16(((u16 *)p

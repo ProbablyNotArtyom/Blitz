@@ -1,0 +1,35 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_AUDIO:
+
+************************************
+ioctl VIDIOC_G_AUDIO, VIDIOC_S_AUDIO
+************************************
+
+Name
+====
+
+VIDIOC_G_AUDIO - VIDIOC_S_AUDIO - Query or select the current audio input and its attributes
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_G_AUDIO, struct v4l2_audio *argp )
+    :name: VIDIOC_G_AUDIO
+
+.. c:function:: int ioctl( int fd, VIDIOC_S_AUDIO, const struct v4l2_audio *argp )
+    :name: VIDIOC_S_AUDIO
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_audio`.
+
+
+De

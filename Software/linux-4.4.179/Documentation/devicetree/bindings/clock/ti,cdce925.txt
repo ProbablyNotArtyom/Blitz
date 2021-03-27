@@ -1,0 +1,30 @@
+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+#ifndef _UAPI__ALPHA_COMPILER_H
+#define _UAPI__ALPHA_COMPILER_H
+
+/* 
+ * Herein are macros we use when describing various patterns we want to GCC.
+ * In all cases we can get better schedules out of the compiler if we hide
+ * as little as possible inside inline assembly.  However, we want to be
+ * able to know what we'll get out before giving up inline assembly.  Thus
+ * these tests and macros.
+ */
+
+#if __GNUC__ == 3 && __GNUC_MINOR__ >= 4 || __GNUC__ > 3
+# define __kernel_insbl(val, shift)	__builtin_alpha_insbl(val, shift)
+# define __kernel_inswl(val, shift)	__builtin_alpha_inswl(val, shift)
+# define __kernel_insql(val, shift)	__builtin_alpha_insql(val, shift)
+# define __kernel_inslh(val, shift)	__builtin_alpha_inslh(val, shift)
+# define __kernel_extbl(val, shift)	__builtin_alpha_extbl(val, shift)
+# define __kernel_extwl(val, shift)	__builtin_alpha_extwl(val, shift)
+# define __kernel_cmpbge(a, b)		__builtin_alpha_cmpbge(a, b)
+#else
+# define __kernel_insbl(val, shift)					\
+  ({ unsigned long __kir;						\
+     __asm__("insbl %2,%1,%0" : "=r"(__kir) : "rI"(shift), "r"(val));	\
+     __kir; })
+# define __kernel_inswl(val, shift)					\
+  ({ unsigned long __kir;						\
+     __asm__("inswl %2,%1,%0" : "=r"(__kir) : "rI"(shift), "r"(val));	\
+     __kir; })
+# 

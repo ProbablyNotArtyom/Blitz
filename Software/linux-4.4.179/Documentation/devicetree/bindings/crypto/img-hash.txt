@@ -1,0 +1,55 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/core_marvel.c
+ *
+ * Code common to all Marvel based systems.
+ */
+
+#define __EXTERN_INLINE inline
+#include <asm/io.h>
+#include <asm/core_marvel.h>
+#undef __EXTERN_INLINE
+
+#include <linux/types.h>
+#include <linux/pci.h>
+#include <linux/sched.h>
+#include <linux/init.h>
+#include <linux/vmalloc.h>
+#include <linux/mc146818rtc.h>
+#include <linux/rtc.h>
+#include <linux/module.h>
+#include <linux/memblock.h>
+
+#include <asm/ptrace.h>
+#include <asm/smp.h>
+#include <asm/gct.h>
+#include <asm/pgalloc.h>
+#include <asm/tlbflush.h>
+#include <asm/vga.h>
+
+#include "proto.h"
+#include "pci_impl.h"
+
+
+/*
+ * Debug helpers
+ */
+#define DEBUG_CONFIG 0
+
+#if DEBUG_CONFIG
+# define DBG_CFG(args) printk args
+#else
+# define DBG_CFG(args)
+#endif
+
+
+/*
+ * Private data
+ */
+static struct io7 *io7_head = NULL;
+
+
+/*
+ * Helper functions
+ */
+static unsigned long __attribute__ ((unused))

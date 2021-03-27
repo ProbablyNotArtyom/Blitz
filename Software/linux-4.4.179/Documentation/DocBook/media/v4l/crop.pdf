@@ -1,0 +1,139 @@
+BTT - Block Translation Table
+=============================
+
+
+1. Introduction
+---------------
+
+Persistent memory based storage is able to perform IO at byte (or more
+accurately, cache line) granularity. However, we often want to expose such
+storage as traditional block devices. The block drivers for persistent memory
+will do exactly this. However, they do not provide any atomicity guarantees.
+Traditional SSDs typically provide protection against torn sectors in hardware,
+using stored energy in capacitors to complete in-flight block writes, or perhaps
+in firmware. We don't have this luxury with persistent memory - if a write is in
+progress, and we experience a power failure, the block will contain a mix of old
+and new data. Applications may not be prepared to handle such a scenario.
+
+The Block Translation Table (BTT) provides atomic sector update semantics for
+persistent memory devices, so that applications that rely on sector writes not
+being torn can continue to do so. The BTT manifests itself as a stacked block
+device, and reserves a portion of the underlying storage for its metadata. At
+the heart of it, is an indirection table that re-maps all the blocks on the
+volume. It can be thought of as an extremely simple file system that only
+provides atomic sector updates.
+
+
+2. Static Layout
+----------------
+
+The underlying storage on which a BTT can be laid out is not limited in any way.
+The BTT, however, splits the available space into chunks of up to 512 GiB,
+called "Arenas".
+
+Each arena follows the same layout for its metadata, and all references in an
+arena are internal to it (with the exception of one field that points to the
+next arena). The following depicts the "On-disk" metadata layout:
+
+
+  Backing Store     +------->  Arena
++---------------+   |   +------------------+
+|               |   |   | Arena info block |
+|    Arena 0    +---+   |       4K         |
+|     512G      |       +------------------+
+|               |       |                  |
++---------------+       |                  |
+|               |       |                  |
+|    Arena 1    |       |   Data Blocks    |
+|     512G      |       |                  |
+|               |       |                  |
++---------------+       |                  |
+|       .       |       |                  |
+|       .       |       |                  |
+|       .       |       |                  |
+|               |       |                  |
+|               |       |                  |
++---------------+       +------------------+
+                        |                  |
+                        |     BTT Map      |
+                        |                  |
+                        |                  |
+                        +------------------+
+                        |                  |
+                        |     BTT Flog     |
+                        |                  |
+                        +------------------+
+                        | Info block copy  |
+                        |       4K         |
+                        +------------------+
+
+
+3. Theory of Operation
+----------------------
+
+
+a. The BTT Map
+--------------
+
+The map is a simple lookup/indirection table that maps an LBA to an internal
+block. Each map entry is 32 bits. The two most significant bits are special
+flags, and the remaining form the internal block number.
+
+Bit      Description
+31 - 30	: Error and Zero flags - Used in the following way:
+	 Bit		      Description
+	31 30
+	-----------------------------------------------------------------------
+	 00	Initial state. Reads return zeroes; Premap = Postmap
+	 01	Zero state: Reads return zeroes
+	 10	Error state: Reads fail; Writes clear 'E' bit
+	 11	Normal Block – has valid postmap
+
+
+29 - 0	: Mappings to internal 'postmap' blocks
+
+
+Some of the terminology that will be subsequently used:
+
+External LBA  : LBA as made visible to upper layers.
+ABA           : Arena Block Address - Block offset/number within an arena
+Premap ABA    : The block offset into an arena, which was decided upon by range
+		checking the External LBA
+Postmap ABA   : The block number in the "Data Blocks" area obtained after
+		indirection from the map
+nfree	      : The number of free blocks that are maintained at any given time.
+		This is the number of concurrent writes that can happen to the
+		arena.
+
+
+For example, after adding a BTT, we surface a disk of 1024G. We get a read for
+the external LBA at 768G. This falls into the second arena, and of the 512G
+worth of blocks that this arena contributes, this block is at 256G. Thus, the
+premap ABA is 256G. We now refer to the map, and find out the mapping for block
+'X' (256G) points to block 'Y', say '64'. Thus the postmap ABA is 64.
+
+
+b. The BTT Flog
+---------------
+
+The BTT provides sector atomicity by making every write an "allocating write",
+i.e. Every write goes to a "free" block. A running list of free blocks is
+maintained in the form of the BTT flog. 'Flog' is a combination of the words
+"free list" and "log". The flog contains 'nfree' entries, and an entry contains:
+
+lba     : The premap ABA that is being written to
+old_map : The old postmap ABA - after 'this' write completes, this will be a
+	  free block.
+new_map : The new postmap ABA. The map will up updated to reflect this
+	  lba->postmap_aba mapping, but we log it here in case we have to
+	  recover.
+seq	: Sequence number to mark which of the 2 sections of this flog entry is
+	  valid/newest. It cycles between 01->10->11->01 (binary) under normal
+	  operation, with 00 indicating an uninitialized state.
+lba'	: alternate lba entry
+old_map': alternate old postmap entry
+new_map': alternate new postmap entry
+seq'	: alternate sequence number.
+
+Each of the above fields is 32-bit, making one entry 32 bytes. Entries are also
+padded to 64 bytes to avoid cache line sharing or aliasing. Flog updates 

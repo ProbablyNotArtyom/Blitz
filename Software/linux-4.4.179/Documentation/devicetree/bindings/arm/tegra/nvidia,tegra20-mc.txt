@@ -1,0 +1,12 @@
+Overview
+========
+
+Page Table Isolation (pti, previously known as KAISER[1]) is a
+countermeasure against attacks on the shared user/kernel address
+space such as the "Meltdown" approach[2].
+
+To mitigate this class of attacks, we create an independent set of
+page tables for use only when running userspace applications.  When
+the kernel is entered via syscalls, interrupts or exceptions, the
+page tables are switched to the full "kernel" copy.  When the system
+switches back to user mode, the user copy is used again.

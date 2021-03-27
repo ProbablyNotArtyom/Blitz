@@ -1,0 +1,69 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for Marvell Armada 375 evaluation board
+ * (DB-88F6720)
+ *
+ *  Copyright (C) 2014 Marvell
+ *
+ * Gregory CLEMENT <gregory.clement@free-electrons.com>
+ * Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+ */
+
+/dts-v1/;
+#include <dt-bindings/gpio/gpio.h>
+#include "armada-375.dtsi"
+
+/ {
+	model = "Marvell Armada 375 Development Board";
+	compatible = "marvell,a375-db", "marvell,armada375";
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x00000000 0x40000000>; /* 1 GB */
+	};
+
+	soc {
+		ranges = <MBUS_ID(0xf0, 0x01) 0 0xf1000000 0x100000
+			  MBUS_ID(0x01, 0x1d) 0 0xfff00000 0x100000
+			  MBUS_ID(0x09, 0x09) 0 0xf1100000 0x10000
+			  MBUS_ID(0x09, 0x05) 0 0xf1110000 0x10000>;
+
+	};
+};
+&pciec {
+	status = "okay";
+};
+
+/*
+ * The two PCIe units are accessible through
+ * standard PCIe slots on the board.
+ */
+&pcie0 {
+	/* Port 0, Lane 0 */
+	status = "okay";
+};
+
+&pcie1 {
+	/* Port 1, Lane 0 */
+	status = "okay";
+};
+
+
+&spi0 {
+	pinctrl-0 = <&spi0_pins>;
+	pinctrl-names = "default";
+
+	/*
+	 * SPI conflicts with NAND, so we disable it here, and
+	 * select NAND as the enabled device by default.
+	 */
+
+	status = "disabled";
+
+	spi-flash@0 {
+		#address-cells = <1>;
+		#s

@@ -1,0 +1,54 @@
+/*
+ * Copyright (C) 2014-15 Synopsys, Inc. (www.synopsys.com)
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#ifndef __ASM_ARC_ENTRY_H
+#define __ASM_ARC_ENTRY_H
+
+#include <asm/unistd.h>		/* For NR_syscalls defination */
+#include <asm/arcregs.h>
+#include <asm/ptrace.h>
+#include <asm/processor.h>	/* For VMALLOC_START */
+#include <asm/mmu.h>
+
+#ifdef CONFIG_ISA_ARCOMPACT
+#include <asm/entry-compact.h>	/* ISA specific bits */
+#else
+#include <asm/entry-arcv2.h>
+#endif
+
+/* Note on the LD/ST addr modes with addr reg wback
+ *
+ * LD.a same as LD.aw
+ *
+ * LD.a    reg1, [reg2, x]  => Pre Incr
+ *      Eff Addr for load = [reg2 + x]
+ *
+ * LD.ab   reg1, [reg2, x]  => Post Incr
+ *      Eff Addr for load = [reg2]
+ */
+
+.macro PUSH reg
+	st.a	\reg, [sp, -4]
+.endm
+
+.macro PUSHAX aux
+	lr	r9, [\aux]
+	PUSH	r9
+.endm
+
+.macro POP reg
+	ld.ab	\reg, [sp, 4]
+.endm
+
+.macro POPAX aux
+	POP	r9
+	sr	r9, [\aux]
+.endm
+
+/*---------------------------------------------------------

@@ -1,0 +1,64 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_SUBDEV_G_CROP:
+
+************************************************
+ioctl VIDIOC_SUBDEV_G_CROP, VIDIOC_SUBDEV_S_CROP
+************************************************
+
+Name
+====
+
+VIDIOC_SUBDEV_G_CROP - VIDIOC_SUBDEV_S_CROP - Get or set the crop rectangle on a subdev pad
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_SUBDEV_G_CROP, struct v4l2_subdev_crop *argp )
+    :name: VIDIOC_SUBDEV_G_CROP
+
+.. c:function:: int ioctl( int fd, VIDIOC_SUBDEV_S_CROP, const struct v4l2_subdev_crop *argp )
+    :name: VIDIOC_SUBDEV_S_CROP
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_subdev_crop`.
+
+
+Description
+===========
+
+.. note::
+
+    This is an :ref:`obsolete` interface and may be removed
+    in the future. It is superseded by
+    :ref:`the selection API <VIDIOC_SUBDEV_G_SELECTION>`.
+
+To retrieve the current crop rectangle applications set the ``pad``
+field of a struct :c:type:`v4l2_subdev_crop` to the
+desired pad number as reported by the media API and the ``which`` field
+to ``V4L2_SUBDEV_FORMAT_ACTIVE``. They then call the
+``VIDIOC_SUBDEV_G_CROP`` ioctl with a pointer to this structure. The
+driver fills the members of the ``rect`` field or returns ``EINVAL`` error
+code if the input arguments are invalid, or if cropping is not supported
+on the given pad.
+
+To change the current crop rectangle applications set both the ``pad``
+and ``which`` fields and all members of the ``rect`` field. They then
+call the ``VIDIOC_SUBDEV_S_CROP`` ioctl with a pointer to this
+structure. The driver verifies the requested crop rectangle, adjusts it
+based on the hardware capabilities and configures the device. Upon
+return the struct :c:type:`v4l2_subdev_crop`
+contains the current format as would be returned by a
+``VIDIOC_SUBDEV_G_CROP`` call.
+
+Applications can query the device capabilities by setting the ``which``
+to ``V4L2_SUBDEV_FORMAT_TRY``. When set, 'try' crop rectangles are not
+applied to the device b

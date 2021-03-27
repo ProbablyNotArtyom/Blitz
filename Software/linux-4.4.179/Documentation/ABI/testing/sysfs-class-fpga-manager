@@ -1,0 +1,38 @@
+.. include:: <isonum.txt>
+
+Qualcomm Camera Subsystem driver
+================================
+
+Introduction
+------------
+
+This file documents the Qualcomm Camera Subsystem driver located under
+drivers/media/platform/qcom/camss.
+
+The current version of the driver supports the Camera Subsystem found on
+Qualcomm MSM8916/APQ8016 and MSM8996/APQ8096 processors.
+
+The driver implements V4L2, Media controller and V4L2 subdev interfaces.
+Camera sensor using V4L2 subdev interface in the kernel is supported.
+
+The driver is implemented using as a reference the Qualcomm Camera Subsystem
+driver for Android as found in Code Aurora [#f1]_ [#f2]_.
+
+
+Qualcomm Camera Subsystem hardware
+----------------------------------
+
+The Camera Subsystem hardware found on 8x16 / 8x96 processors and supported by
+the driver consists of:
+
+- 2 / 3 CSIPHY modules. They handle the Physical layer of the CSI2 receivers.
+  A separate camera sensor can be connected to each of the CSIPHY module;
+- 2 / 4 CSID (CSI Decoder) modules. They handle the Protocol and Application
+  layer of the CSI2 receivers. A CSID can decode data stream from any of the
+  CSIPHY. Each CSID also contains a TG (Test Generator) block which can generate
+  artificial input data for test purposes;
+- ISPIF (ISP Interface) module. Handles the routing of the data streams from
+  the CSIDs to the inputs of the VFE;
+- 1 / 2 VFE (Video Front End) module(s). Contain a pipeline of image processing
+  hardware blocks. The VFE has different input interfaces. The PIX (Pixel) input
+  interface feeds the input data to the ima

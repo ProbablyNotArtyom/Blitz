@@ -1,0 +1,74 @@
+Linux wireless regulatory documentation
+---------------------------------------
+
+This document gives a brief review over how the Linux wireless
+regulatory infrastructure works.
+
+More up to date information can be obtained at the project's web page:
+
+http://wireless.kernel.org/en/developers/Regulatory
+
+Keeping regulatory domains in userspace
+---------------------------------------
+
+Due to the dynamic nature of regulatory domains we keep them
+in userspace and provide a framework for userspace to upload
+to the kernel one regulatory domain to be used as the central
+core regulatory domain all wireless devices should adhere to.
+
+How to get regulatory domains to the kernel
+-------------------------------------------
+
+When the regulatory domain is first set up, the kernel will request a
+database file (regulatory.db) containing all the regulatory rules. It
+will then use that database when it needs to look up the rules for a
+given country.
+
+How to get regulatory domains to the kernel (old CRDA solution)
+---------------------------------------------------------------
+
+Userspace gets a regulatory domain in the kernel by having
+a userspace agent build it and send it via nl80211. Only
+expected regulatory domains will be respected by the kernel.
+
+A currently available userspace agent which can accomplish this
+is CRDA - central regulatory domain agent. Its documented here:
+
+http://wireless.kernel.org/en/developers/Regulatory/CRDA
+
+Essentially the kernel will send a udev event when it knows
+it needs a new regulatory domain. A udev rule can be put in place
+to trigger crda to send the respective regulatory domain for a
+specific ISO/IEC 3166 alpha2.
+
+Below is an example udev rule which can be used:
+
+# Example file, should be put in /etc/udev/rules.d/regulatory.rules
+KERNEL=="regulatory*", ACTION=="change", SUBSYSTEM=="platform", RUN+="/sbin/crda"
+
+The alpha2 is passed as an environment variable under the variable COUNTRY.
+
+Who asks for regulatory domains?
+--------------------------------
+
+* Users
+
+Users can use iw:
+
+http://wireless.kernel.org/en/users/Documentation/iw
+
+An example:
+
+  # set regulatory domain to "Costa Rica"
+  iw reg set CR
+
+This will request the kernel to set the regulatory domain to
+the specificied alpha2. The kernel in turn will then ask userspace
+to provide a regulatory domain for the alpha2 specified by the user
+by sending a uevent.
+
+* Wireless subsystems for Country Information elements
+
+The kernel will send a uevent to inform userspace a new
+regulatory domain is required. More on this to be added
+as its integration is

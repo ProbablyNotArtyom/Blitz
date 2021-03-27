@@ -1,0 +1,456 @@
+Documentation/timepegs.txt
+http://www.uow.edu.au/~andrewm/linux/
+
+Andrew Morton <andrewm@uow.edu.au>
+25 March 2000
+
+
+Quick start
+===========
+
+1: Grab the timepeg patch and the 'tpt' tool from the above URL. 
+   Build tpt and install it somewhere.
+
+2: Apply the patch it to your kernel.
+
+3: Run 'make menuconfig' or whatever.
+
+4: Enable timepegs under 'Kernel Hacking'
+
+5: make clean && make dep && make bzImage && make modules
+
+6: Decide what timing within the kernel you need to test.  For
+   example, let's see how long alloc_skb() takes:
+
+#include <asm/timepeg.h>
+foo()
+{
+	struct sk_buff *skb;
+
+	TIMEPEG("call alloc_skb");
+	skb = alloc_skb(1000, GFP_ATOMIC);
+	TIMEPEG("alloc_skb finished");
+}
+
+7: Compile this up, run the kernel and type:
+
+        tpt
+
+You will see output like:
+
+
+           Destination  Count     Average       Min           Max
+
+call alloc_skb ->
+    alloc_skb finished  4            8.01      7.04          9.36
+
+alloc_skb finished ->
+  call alloc_skb        4      409,940.74  2,883.09  1,388,510.40
+
+
+
+Which tells you that alloc_skb takes 8 microseconds.  Of course it gets
+more complicated than this...
+
+
+Overview
+========
+
+Timepegs provide a means of precisely measuring elapsed time within the
+kernel.  They use the Pentuim 'rdtsc' instruction for this.  They
+_may_ work on the Alpha - the code is there but untested.
+
+Example: suppose the programmer wishes to know how long it takes to get
+from sys_sento() right down into the network device driver he would
+use:
+
+In socket.c:
+
+#include <asm/timepeg.h>
+
+...
+
+asmlinkage long sys_sendto(int fd, void * buff, size_t len, unsigned flags,
+               struct sockaddr *addr, int addr_len)
+{
+	    struct socket *sock;
+	    char address[MAX_SOCK_ADDR];
+	    int err;
+	    struct msghdr msg;
+	    struct iovec iov;
+	
+	TIMEPEG("sys_sendto");
+	...
+
+and in the device driver:
+
+#include <asm/timepeg.h>
+
+static int net_send_packet(struct sk_buff *skb, struct net_device *dev)
+{
+	TIMEPEG("net_send_packet");
+	...
+
+
+Build this kernel, run some net traffic and then use the command
+
+	tpt
+
+to display the average, minimum, and maximum latency between these two
+timepegs.
+
+
+More details
+============
+
+If there are more than two timepegs in the entire kernel then things
+get more complicated because each timepeg can have an arbitrary number
+of predecessors (most-recently-encountered timepegs).
+
+For example:
+
+	final()
+	{
+		TIMEPEG("final");
+	}
+
+	middle_1()
+	{
+		TIMEPEG("middle_1");
+		final();
+	}
+
+	middle_2()
+	{
+		TIMEPEG("middle_2");
+		final();
+	)
+
+	first(int cond)
+	{
+		TIMEPEG("first");
+		if (cond)
+			middle_1();
+		else
+			middle_2();
+	}
+
+Generates the following timepeg graph:
+
+                   final
+                   /   \
+             w1   /     \  w2
+                 /       \
+                /         \
+            middle_1    middle_2
+                \         /
+                 \       /
+             w3   \     /  w4
+                   \   /
+                   first
+
+Where the nodes are timepeg-encounters and the weights on the edges are
+the minimum, maximum and average time to transit between the respective
+timepegs.
+
+The kernel's timepeg driver maintains a data structure which precisely
+models this graph.  It is a directed graph where each node represents a
+timepeg and each edge is the min, max and average transit time from the
+most previous timepeg ON THIS CPU!
+
+Timepeg transit times are accumulated on a per-CPU basis because it
+probably doesn't make a lot of sense to measure cross-CPU intervals.
+
+The timepeg graph may be read from the kernel at any time via the
+/proc/timepeg virtual file.
+
+When /proc/timepeg is open all timepeg instrumentation accumulation is
+suspended - this ensures that the read is consistent.
+
+When the read of /proc/timepeg completes all the kernel timepeg
+instrumentation is reset to zero values.  This allows you to rerun a
+scenario.
+
+There is a user-space application called 'tpt' (available from
+http://www.uow.edu.au/~andrewm/linux/) which may be used to display the
+/proc/timepeg information in a more understandable form.  It reverses
+the direction of all the edges (so they are displayed in time-order)
+and converts the raw 'rdtsc' information into microseconds (10 nSec
+resolution).
+
+Here is a sample output from 'tpt':
+
+
+                  Callee  Count     Average       Min           Max
+
+sock_sendmsg ->
+      dev_queue_xmit_nit  54      24,877.74     30.44    311,667.07
+            sock_sendmsg  42         377.93    338.23        667.07
+
+dev_queue_xmit_nit ->
+  cs89x0_net_send_packet  589         17.43       .75        169.78
+      dev_queue_xmit_nit  38          14.97      3.96         27.92
+
+cs89x0_net_send_packet ->
+  cs89x0_net_send_packet  211        796.56     96.28      1,617.11
+      dev_queue_xmit_nit  535     34,124.08     12.50  3,997,946.66
+            sock_sendmsg  54     821,295.57  1,114.60  6,414,591.98
+
+
+This shows that the latency between sock_sendmsg() and
+dev_queue_xmit_nit() is a minimum of 30.44 microseconds.
+
+It is possible to accumulate these results to obtain the time interval
+between timepegs which have one or more intervening timepegs (tpt could
+do this, but doesn't).  But be aware that the graph may have several
+paths from the first to the last.  You need to know what's going on in
+there.
+
+If tpt is invoked with the '-s' argument it produces an output format
+which is compatible with sort(1).  Use something like:
+
+	tpt -s | sort -nr +5
+
+Directed timepegs
+=================
+
+Normally a timepeg uses the time since the most-recently-hit timepeg on
+this CPU.  But suppose we want to know the time interval between two
+places (A and E) in the code which have a lot of intervening timepegs
+(B, C and D).  We would have to accumulate the timepeg information
+across all possible paths through these five nodes - calculate the min
+and max, calculate the average by weighting each node by the number of
+traversals.
+
+[ Actually, even this doesn't work, because the call graph could be:
+
+     A   X
+      \ /
+       B
+       |
+       C
+       |
+       D
+      / \
+     E   Y
+
+and we can't separate the X->Y path from the A->E path ]
+
+A 'directed timepeg' is one which accumulates the transit time from a
+particular nominated other timepeg, rather than from the
+most-recently-encountered timepeg.
+
+A directed timepeg is used in a similar manner to a normal timepeg:
+
+	DTIMEPEG("this_timepeg_id", "other_timepeg_id");
+
+Example:
+
+#include <asm/timepeg.h>
+
+E()
+{
+	TIMEPEG("E_tp");
+}
+
+D()
+{
+	TIMEPEG("D_tp");
+	E();
+}
+
+C()
+{
+	TIMEPEG("C_tp");
+	D();
+}
+
+B()
+{
+	TIMEPEG("B_tp");
+	C();
+}
+
+A()
+{
+	TIMEPEG("A_tp");
+	B();
+	DTIMEPEG("A_exit_tp", "A_tp");
+}
+
+The final DTIMEPEG() invokation will cause the 'A_exit_tp' timepeg to
+measure the time taken to travel from 'A_tp' to itself.
+
+The output of tpt would look like:
+
+A_tp ->
+   B_tp        1    11        1.56     1.56      1.56
+   A_exit_tp   1    40        4.44     4.44      4.44
+
+Telling us that it took 1.56 uSecs to get from A_tp to B_tp and that it
+took 4.44 uSecs to get from A_tp to A_exit_tp.
+
+Be aware that while normal timepegs compensate for the time spent
+within themselves, directed timepegs do not.  (They could, but that's
+not there yet).  In this example the time for the A_tp->A_exit_tp
+includes all the time spent calculating the intervening timepeg values.
+
+On my 400MHz Celeron a timepeg takes 2.33 microseconds.  See the
+'measure_2' and 'measure_4' timepegs in timepeg.c for how this was
+measured.
+
+
+Start and stop timepegs
+=======================
+
+[ New in 2.3.99-pre3-1 ]
+
+Normal timepegs and directed timepegs may be considered to do two
+things:
+
+1: They record the elapsed time since the more recent timepeg and
+
+2: They act as a starting time for the next timepeg.
+
+This is sometimes not the desired behaviour.  For example, the code:
+
+foo()
+{
+	TIMEPEG("tp1");
+	...
+	TIMEPEG("tp2");
+}
+
+will record two arcs (provided foo() is executed more than once).  One
+arc is tp1->tp2 and the other is tp2->tp1.  The latter is probably not
+interesting.
+
+Plus I found that the default (entry + exit) behaviour of timepegs got
+in the way for the intlat (interrupt latency) measurement work.  In
+this case I needed timepegs which act as starting points but not as
+stopping points and vice-versa.
+
+So 'stop' and 'start' timepegs may be used thusly:
+
+foo()
+{
+	TIMEPEG_MODE("tp1", TPH_MODE_START);
+	...
+	TIMEPEG_MODE("tp2", TPH_MODE_STOP);
+}
+
+Now, only one arc will be recorded.
+
+Another application:
+
+foo()
+{
+	TIMEPEG_MODE("tp1", TPH_MODE_START);
+	...
+	TIMEPEG_MODE("tp2", TPH_MODE_STOP);
+	...
+	TIMEPEG_MODE("tp3", TPH_MODE_STOP);
+	...
+	TIMEPEG_MODE("tp4", TPH_MODE_STOP);
+}
+
+In this case, the timepegs tp2, tp3 and tp4 will _each_ record the time
+since tp1, not the time since their most immediate predecessor.
+
+
+Usage details
+=============
+
+- Do not simply fill your code with timepegs and expect to be able to
+  decipher the output.  There is a lot going on in the kernel and you
+  will probably be swamped by the result.  Three or four timepegs are
+  probably a practical limit, but more would be reasonable if the call
+  chain is straightforward.
+
+- Of course interrupts make timepegs harder to understand.  They
+  cause more time variance and they also complicate the graph by
+  interposing interrupt-based timepeg nodes in places where you
+  wouldn't expect them.  This is usually OK as long as you understand
+  what your code is doing!
+
+  I guess it would be possible to eliminate interrupt noise from the
+  timepeg statistics by appropriate interception of the interrupt
+  front-end.  The need for this work will have to be demonstrated :)
+
+- Do NOT expect timepegs to work as you expect when they are used in
+  inline functions in header files:
+
+foo.h:
+
+    extern inline fast_func()
+    {
+        TIMEPEG("fast_func");
+        ...
+    }
+
+bar.c:
+    #include "foo.h"
+
+    f1()
+    {
+        fast_func();
+    }
+
+zot.c:
+
+    f2()
+    {
+        fast_func();
+    }
+
+In this example, the storage for the 'fast_func' timepeg will be
+created as static storage in both 'bar.o' and 'zot.o'.  They both have
+the same name and the downstream timepeg processing tools will blow up
+in mysterious ways.
+
+If the inline function is private to a particular translation unit then
+it is fine: even if the inline function is expanded several times, its
+static storage is commoned up.
+
+- When the system is booted, timepeg accounting is disabled.  The
+  first time /proc/timepeg is read from, this acts as a trigger to turn
+  on timepeg accounting.
+
+
+Implementation details
+======================
+
+- The timepg patch aims to be unintrusive.  Basically three new files
+  and a three-liner in arch/i386/kernel/config.in.  The files are:
+
+  arch/i386/kernel/timepeg.c
+  include/asm-i386/timepeg.h
+  Documentation/timepeg.txt
+
+- The timepeg code cannot be put in a library (.a) because it may be
+  used by kernel modules exclusively.
+
+- You may leave invokations of the TIMEPEG() and DTIMEPEG() macro in
+  your code - they evaluate to nothing if CONFIG_TIMEPEGS is not
+  enabled.
+
+- If a kernel module uses timepegs and it is removed, reading
+  /proc/timepeg will crash your machine.  Sorry.  One thing you can do
+  is to disable the periodic 'rmmod' which some systems run - on
+  RedHat-like systems, edit /etc/cron.d/kmod.
+
+- The tpt application is very cheesy, but does the job.
+
+- The tpt application uses the output of the local machine's
+  /proc/cpuinfo to determine your procesor frequency.  If 'tpt' is not
+  running on the machine under test, use its '-m' option to set the CPU
+  frequency (in MHz).
+
+- The TIMEPEG macros make a sterling effort to not perturb the thing
+  which is being measured - they read the processor's timestamp
+  registers at the earliest and latest possible opportunities and
+  compensate for the time in between.  But even with this, the timings
+  which the timepegs tell you may be greater than with uninstrumented
+  code because the timepeg code itself will compete for your caches.
+
+

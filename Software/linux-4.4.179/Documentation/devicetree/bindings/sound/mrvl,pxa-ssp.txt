@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * kirkwood-sheevaplug-common.dtsi - Common parts for Sheevaplugs
+ *
+ * Copyright (C) 2013 Simon Baatz <gmbnomis@gmail.com>
+ */
+
+#include "kirkwood.dtsi"
+#include "kirkwood-6281.dtsi"
+
+/ {
+	memory {
+		device_type = "memory";
+		reg = <0x00000000 0x20000000>;
+	};
+
+	chosen {
+		bootargs = "console=ttyS0,115200n8 earlyprintk";
+		stdout-path = &uart0;
+	};
+
+	ocp@f1000000 {
+		pinctrl: pin-controller@10000 {
+
+			pmx_usb_power_enable: pmx-usb-power-ena

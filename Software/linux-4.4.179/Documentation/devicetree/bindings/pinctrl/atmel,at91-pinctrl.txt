@@ -1,0 +1,182 @@
+/*
+ * Copyright 2013 Greg Ungerer <gerg@uclinux.org>
+ * Copyright 2011 Freescale Semiconductor, Inc.
+ * Copyright 2011 Linaro Ltd.
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+#include "imx50-pinfunc.h"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/clock/imx5-clock.h>
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	/*
+	 * The decompressor and also some bootloaders rely on a
+	 * pre-existing /chosen node to be available to insert the
+	 * command line and merge other ATAGS info.
+	 * Also for U-Boot there must be a pre-existing /memory node.
+	 */
+	chosen {};
+	memory { device_type = "memory"; };
+
+	aliases {
+		ethernet0 = &fec;
+		gpio0 = &gpio1;
+		gpio1 = &gpio2;
+		gpio2 = &gpio3;
+		gpio3 = &gpio4;
+		gpio4 = &gpio5;
+		gpio5 = &gpio6;
+		serial0 = &uart1;
+		serial1 = &uart2;
+		serial2 = &uart3;
+		serial3 = &uart4;
+		serial4 = &uart5;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a8";
+			reg = <0x0>;
+		};
+	};
+
+	tzic: tz-interrupt-controller@fffc000 {
+		compatible = "fsl,imx50-tzic", "fsl,imx53-tzic", "fsl,tzic";
+		interrupt-controller;
+		#interrupt-cells = <1>;
+		reg = <0x0fffc000 0x4000>;
+	};
+
+	clocks {
+		ckil {
+			compatible = "fsl,imx-ckil", "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <32768>;
+		};
+
+		ckih1 {
+			compatible = "fsl,imx-ckih1", "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <22579200>;
+		};
+
+		ckih2 {
+			compatible = "fsl,imx-ckih2", "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <0>;
+		};
+
+		osc {
+			compatible = "fsl,imx-osc", "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <24000000>;
+		};
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		interrupt-parent = <&tzic>;
+		ranges;
+
+		aips@50000000 { /* AIPS1 */
+			compatible = "fsl,aips-bus", "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0x50000000 0x10000000>;
+			ranges;
+
+			spba@50000000 {
+				compatible = "fsl,spba-bus", "simple-bus";
+				#address-cells = <1>;
+				#size-cells = <1>;
+				reg = <0x50000000 0x40000>;
+				ranges;
+
+				esdhc1: esdhc@50004000 {
+					compatible = "fsl,imx50-esdhc", "fsl,imx53-esdhc";
+					reg = <0x50004000 0x4000>;
+					interrupts = <1>;
+					clocks = <&clks IMX5_CLK_ESDHC1_IPG_GATE>,
+						 <&clks IMX5_CLK_DUMMY>,
+						 <&clks IMX5_CLK_ESDHC1_PER_GATE>;
+					clock-names = "ipg", "ahb", "per";
+					bus-width = <4>;
+					status = "disabled";
+				};
+
+				esdhc2: esdhc@50008000 {
+					compatible = "fsl,imx50-esdhc", "fsl,imx53-esdhc";
+					reg = <0x50008000 0x4000>;
+					interrupts = <2>;
+					clocks = <&clks IMX5_CLK_ESDHC2_IPG_GATE>,
+						 <&clks IMX5_CLK_DUMMY>,
+						 <&clks IMX5_CLK_ESDHC2_PER_GATE>;
+					clock-names = "ipg", "ahb", "per";
+					bus-width = <4>;
+					status = "disabled";
+				};
+
+				uart3: serial@5000c000 {
+					compatible = "fsl,imx50-uart", "fsl,imx21-uart";
+					reg = <0x5000c000 0x4000>;
+					interrupts = <33>;
+					clocks = <&clks IMX5_CLK_UART3_IPG_GATE>,
+						 <&clks IMX5_CLK_UART3_PER_GATE>;
+					clock-names = "ipg", "per";
+					status = "disabled";
+				};
+
+				ecspi1: spi@50010000 {
+					#address-cells = <1>;
+					#size-cells = <0>;
+					compatible = "fsl,imx50-ecspi", "fsl,imx51-ecspi";
+					reg = <0x50010000 0x4000>;
+					interrupts = <36>;
+					clocks = <&clks IMX5_CLK_ECSPI1_IPG_GATE>,
+						 <&clks IMX5_CLK_ECSPI1_PER_GATE>;
+					clock-names = "ipg", "per";
+					status = "disabled";
+				};
+
+				ssi2: ssi@50014000 {
+					#sound-dai-cells = <0>;
+					compatible = "fsl,imx50-ssi",
+							"fsl,imx51-ssi",
+							"fsl,imx21-ssi";
+					reg = <0x50014000 0x4000>;
+					interrupts = <30>;
+					clocks = <&clks IMX5_CLK_SSI2_IPG_GATE>;
+					dmas = <&sdma 24 1 0>,
+					       <&sdma 25 1 0>;
+					dma-names = "rx", "tx";
+					fsl,fifo-depth = <15>;
+					status = "disabled";
+				};
+
+				esdhc3: esdhc@50020000 {
+					compatible = "fsl,imx50-esdhc", "fsl,imx53-esdhc";
+					reg = <0x50020000 0x4000>;
+					interrupts = <3>;
+					clocks = <&clks IMX5_CLK_ESDHC3_IPG_GATE>,
+						 <&clks IMX5_CLK_DUMMY>,
+						 <&clks IMX5_CLK_ESDHC3_PER_GATE>;
+					clock-names = "ipg", "ahb", "per";
+					bus-width = <4>;
+					status = "disabled";
+				};
+
+				esdhc4: esdhc@500

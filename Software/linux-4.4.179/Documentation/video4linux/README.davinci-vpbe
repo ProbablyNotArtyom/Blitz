@@ -1,0 +1,167 @@
+/*
+ * DA8XX/OMAP L1XX platform device data
+ *
+ * Copyright (c) 2007-2009, MontaVista Software, Inc. <source@mvista.com>
+ * Derived from code that was:
+ *	Copyright (C) 2006 Komal Shah <komal_shah802003@yahoo.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ */
+#include <linux/ahci_platform.h>
+#include <linux/clk-provider.h>
+#include <linux/clk.h>
+#include <linux/clkdev.h>
+#include <linux/dma-contiguous.h>
+#include <linux/dmaengine.h>
+#include <linux/init.h>
+#include <linux/platform_device.h>
+#include <linux/reboot.h>
+#include <linux/serial_8250.h>
+
+#include <mach/common.h>
+#include <mach/cputype.h>
+#include <mach/da8xx.h>
+#include <mach/time.h>
+
+#include "asp.h"
+#include "cpuidle.h"
+#include "sram.h"
+
+#define DA8XX_TPCC_BASE			0x01c00000
+#define DA8XX_TPTC0_BASE		0x01c08000
+#define DA8XX_TPTC1_BASE		0x01c08400
+#define DA8XX_WDOG_BASE			0x01c21000 /* DA8XX_TIMER64P1_BASE */
+#define DA8XX_I2C0_BASE			0x01c22000
+#define DA8XX_RTC_BASE			0x01c23000
+#define DA8XX_PRUSS_MEM_BASE		0x01c30000
+#define DA8XX_MMCSD0_BASE		0x01c40000
+#define DA8XX_SPI0_BASE			0x01c41000
+#define DA830_SPI1_BASE			0x01e12000
+#define DA8XX_LCD_CNTRL_BASE		0x01e13000
+#define DA850_SATA_BASE			0x01e18000
+#define DA850_MMCSD1_BASE		0x01e1b000
+#define DA8XX_EMAC_CPPI_PORT_BASE	0x01e20000
+#define DA8XX_EMAC_CPGMACSS_BASE	0x01e22000
+#define DA8XX_EMAC_CPGMAC_BASE		0x01e23000
+#define DA8XX_EMAC_MDIO_BASE		0x01e24000
+#define DA8XX_I2C1_BASE			0x01e28000
+#define DA850_TPCC1_BASE		0x01e30000
+#define DA850_TPTC2_BASE		0x01e38000
+#define DA850_SPI1_BASE			0x01f0e000
+#define DA8XX_DDR2_CTL_BASE		0xb0000000
+
+#define DA8XX_EMAC_CTRL_REG_OFFSET	0x3000
+#define DA8XX_EMAC_MOD_REG_OFFSET	0x2000
+#define DA8XX_EMAC_RAM_OFFSET		0x0000
+#define DA8XX_EMAC_CTRL_RAM_SIZE	SZ_8K
+
+void __iomem *da8xx_syscfg0_base;
+void __iomem *da8xx_syscfg1_base;
+
+static struct plat_serial8250_port da8xx_serial0_pdata[] = {
+	{
+		.mapbase	= DA8XX_UART0_BASE,
+		.irq		= IRQ_DA8XX_UARTINT0,
+		.flags		= UPF_BOOT_AUTOCONF | UPF_SKIP_TEST |
+					UPF_IOREMAP,
+		.iotype		= UPIO_MEM,
+		.regshift	= 2,
+	},
+	{
+		.flags	= 0,
+	}
+};
+static struct plat_serial8250_port da8xx_serial1_pdata[] = {
+	{
+		.mapbase	= DA8XX_UART1_BASE,
+		.irq		= IRQ_DA8XX_UARTINT1,
+		.flags		= UPF_BOOT_AUTOCONF | UPF_SKIP_TEST |
+					UPF_IOREMAP,
+		.iotype		= UPIO_MEM,
+		.regshift	= 2,
+	},
+	{
+		.flags	= 0,
+	}
+};
+static struct plat_serial8250_port da8xx_serial2_pdata[] = {
+	{
+		.mapbase	= DA8XX_UART2_BASE,
+		.irq		= IRQ_DA8XX_UARTINT2,
+		.flags		= UPF_BOOT_AUTOCONF | UPF_SKIP_TEST |
+					UPF_IOREMAP,
+		.iotype		= UPIO_MEM,
+		.regshift	= 2,
+	},
+	{
+		.flags	= 0,
+	}
+};
+
+struct platform_device da8xx_serial_device[] = {
+	{
+		.name	= "serial8250",
+		.id	= PLAT8250_DEV_PLATFORM,
+		.dev	= {
+			.platform_data	= da8xx_serial0_pdata,
+		}
+	},
+	{
+		.name	= "serial8250",
+		.id	= PLAT8250_DEV_PLATFORM1,
+		.dev	= {
+			.platform_data	= da8xx_serial1_pdata,
+		}
+	},
+	{
+		.name	= "serial8250",
+		.id	= PLAT8250_DEV_PLATFORM2,
+		.dev	= {
+			.platform_data	= da8xx_serial2_pdata,
+		}
+	},
+	{
+	}
+};
+
+static s8 da8xx_queue_priority_mapping[][2] = {
+	/* {event queue no, Priority} */
+	{0, 3},
+	{1, 7},
+	{-1, -1}
+};
+
+static s8 da850_queue_priority_mapping[][2] = {
+	/* {event queue no, Priority} */
+	{0, 3},
+	{-1, -1}
+};
+
+static struct edma_soc_info da8xx_edma0_pdata = {
+	.queue_priority_mapping	= da8xx_queue_priority_mapping,
+	.default_queue		= EVENTQ_1,
+};
+
+static struct edma_soc_info da850_edma1_pdata = {
+	.queue_priority_mapping	= da850_queue_priority_mapping,
+	.default_queue		= EVENTQ_0,
+};
+
+static struct resource da8xx_edma0_resources[] = {
+	{
+		.name	= "edma3_cc",
+		.start	= DA8XX_TPCC_BASE,
+		.end	= DA8XX_TPCC_BASE + SZ_32K - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+	{
+		.name	= "edma3_tc0",
+		.start	= DA8XX_TPTC0_BASE,
+		.end	= DA8XX_TPTC0_BASE + SZ_1K - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+	{
+		

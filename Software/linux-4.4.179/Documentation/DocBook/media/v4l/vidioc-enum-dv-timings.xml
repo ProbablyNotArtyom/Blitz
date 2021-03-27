@@ -1,0 +1,121 @@
+
+		  Debugging on Linux for s/390 & z/Architecture
+				       by
+	  Denis Joseph Barrow (djbarrow@de.ibm.com,barrow_dj@yahoo.com)
+    Copyright (C) 2000-2001 IBM Deutschland Entwicklung GmbH, IBM Corporation
+			Best viewed with fixed width fonts
+
+Overview of Document:
+=====================
+This document is intended to give a good overview of how to debug Linux for
+s/390 and z/Architecture. It is not intended as a complete reference and not a
+tutorial on the fundamentals of C & assembly. It doesn't go into
+390 IO in any detail. It is intended to complement the documents in the
+reference section below & any other worthwhile references you get.
+
+It is intended like the Enterprise Systems Architecture/390 Reference Summary
+to be printed out & used as a quick cheat sheet self help style reference when
+problems occur.
+
+Contents
+========
+Register Set
+Address Spaces on Intel Linux
+Address Spaces on Linux for s/390 & z/Architecture
+The Linux for s/390 & z/Architecture Kernel Task Structure
+Register Usage & Stackframes on Linux for s/390 & z/Architecture
+A sample program with comments
+Compiling programs for debugging on Linux for s/390 & z/Architecture
+Debugging under VM
+s/390 & z/Architecture IO Overview
+Debugging IO on s/390 & z/Architecture under VM
+GDB on s/390 & z/Architecture
+Stack chaining in gdb by hand
+Examining core dumps
+ldd
+Debugging modules
+The proc file system
+SysRq
+References
+Special Thanks
+
+Register Set
+============
+The current architectures have the following registers.
+ 
+16 General propose registers, 32 bit on s/390 and 64 bit on z/Architecture,
+r0-r15 (or gpr0-gpr15), used for arithmetic and addressing.
+
+16 Control registers, 32 bit on s/390 and 64 bit on z/Architecture, cr0-cr15,
+kernel usage only, used for memory management, interrupt control, debugging
+control etc.
+
+16 Access registers (ar0-ar15), 32 bit on both s/390 and z/Architecture,
+normally not used by normal programs but potentially could be used as
+temporary storage. These registers have a 1:1 association with general
+purpose registers and are designed to be used in the so-called access
+register mode to select different address spaces.
+Access register 0 (and access register 1 on z/Architecture, which needs a
+64 bit pointer) is currently used by the pthread library as a pointer to
+the current running threads private area.
+
+16 64 bit floating point registers (fp0-fp15 ) IEEE & HFP floating 
+point format compliant on G5 upwards & a Floating point control reg (FPC) 
+4  64 bit registers (fp0,fp2,fp4 & fp6) HFP only on older machines.
+Note:
+Linux (currently) always uses IEEE & emulates G5 IEEE format on older machines,
+( provided the kernel is configured for this ).
+
+
+The PSW is the most important register on the machine it
+is 64 bit on s/390 & 128 bit on z/Architecture & serves the roles of 
+a program counter (pc), condition code register,memory space designator.
+In IBM standard notation I am counting bit 0 as the MSB.
+It has several advantages over a normal program counter
+in that you can change address translation & program counter 
+in a single instruction. To change address translation,
+e.g. switching address translation off requires that you
+have a logical=physical mapping for the address you are
+currently running at.
+
+      Bit           Value
+s/390 z/Architecture
+0       0     Reserved ( must be 0 ) otherwise specification exception occurs.
+
+1       1     Program Event Recording 1 PER enabled, 
+	      PER is used to facilitate debugging e.g. single stepping.
+
+2-4    2-4    Reserved ( must be 0 ). 
+
+5       5     Dynamic address translation 1=DAT on.
+
+6       6     Input/Output interrupt Mask
+
+7	7     External interrupt Mask used primarily for interprocessor
+	      signalling and clock interrupts.
+
+8-11  8-11    PSW Key used for complex memory protection mechanism
+	      (not used under linux)
+
+12      12    1 on s/390 0 on z/Architecture
+
+13      13    Machine Check Mask 1=enable machine check interrupts
+
+14	14    Wait State. Set this to 1 to stop the processor except for
+	      interrupts and give  time to other LPARS. Used in CPU idle in
+	      the kernel to increase overall usage of processor resources.
+
+15      15    Problem state ( if set to 1 certain instructions are disabled )
+	      all linux user programs run with this bit 1 
+	      ( useful info for debugging under VM ).
+
+16-17 16-17   Address Space Control
+
+	      00 Primary Space Mode:
+	      The register CR1 contains the primary address-space control ele-
+	      ment (PASCE), which points to the primary space region/segment
+	      table origin.
+
+	      01 Access register mode
+
+	      10 Second

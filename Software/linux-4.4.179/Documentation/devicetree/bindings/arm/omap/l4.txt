@@ -1,0 +1,27 @@
+This file provides information on the module parameters of many of
+the Linux watchdog drivers.  Watchdog driver parameter specs should
+be listed here unless the driver has its own driver-specific information
+file.
+
+
+See Documentation/admin-guide/kernel-parameters.rst for information on
+providing kernel parameters for builtin drivers versus loadable
+modules.
+
+
+-------------------------------------------------
+acquirewdt:
+wdt_stop: Acquire WDT 'stop' io port (default 0x43)
+wdt_start: Acquire WDT 'start' io port (default 0x443)
+nowayout: Watchdog cannot be stopped once started
+	(default=kernel config parameter)
+-------------------------------------------------
+advantechwdt:
+wdt_stop: Advantech WDT 'stop' io port (default 0x443)
+wdt_start: Advantech WDT 'start' io port (default 0x443)
+timeout: Watchdog timeout in seconds. 1<= timeout <=63, default=60.
+nowayout: Watchdog cannot be stopped once started
+	(default=kernel config parameter)
+-------------------------------------------------
+alim1535_wdt:
+timeout: Watchd

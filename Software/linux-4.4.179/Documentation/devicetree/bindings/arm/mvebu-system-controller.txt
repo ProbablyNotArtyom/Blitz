@@ -1,0 +1,23 @@
+#! /bin/bash
+#
+
+set -e
+
+progname=$(basename $0)
+function help
+{
+    cat <<EOF
+Usage: $progname COMMAND DEVICEs [ARGS]
+
+Command for manipulating the pairing/authentication credentials of a
+Wireless USB device that supports wired-mode Cable-Based-Association.
+
+Works in conjunction with the wusb-cba.ko driver from http://linuxuwb.org.
+
+
+DEVICE
+
+ sysfs path to the device to authenticate; for example, both this
+ guys are the same:
+
+ /sys/devices/pci0000:00/0000:00:1d.7/usb1/1-4/1-4.4/1-4.4:1.1

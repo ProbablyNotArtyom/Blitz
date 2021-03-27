@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Copyright (C) 2017 Rafał Miłecki <rafal@milecki.pl>
+ */
+
+/dts-v1/;
+
+#include "bcm47081.dtsi"
+
+/ {
+	compatible = "tplink,archer-c5-v2", "brcm,bcm47081", "brcm,bcm4708";
+	model = "TP-LINK Archer C5 V2";
+
+	chosen {
+		bootargs = "earlycon";
+	};
+
+	memory {
+		reg = <0x00000000 0

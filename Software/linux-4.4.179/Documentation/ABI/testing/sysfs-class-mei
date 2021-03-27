@@ -1,0 +1,25 @@
+.. include:: <isonum.txt>
+
+The Silicon Labs Si470x FM Radio Receivers driver
+=================================================
+
+Copyright |copy| 2009 Tobias Lorenz <tobias.lorenz@gmx.net>
+
+
+Information from Silicon Labs
+-----------------------------
+
+Silicon Laboratories is the manufacturer of the radio ICs, that nowadays are the
+most often used radio receivers in cell phones. Usually they are connected with
+I2C. But SiLabs also provides a reference design, which integrates this IC,
+together with a small microcontroller C8051F321, to form a USB radio.
+Part of this reference design is also a radio application in binary and source
+code. The software also contains an automatic firmware upgrade to the most
+current version. Information on these can be downloaded here:
+http://www.silabs.com/usbradio
+
+
+Supported ICs
+-------------
+
+The following ICs have a very similar register set, so that they ar

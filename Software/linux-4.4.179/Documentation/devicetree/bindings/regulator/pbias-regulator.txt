@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Copyright 2013 Freescale Semiconductor, Inc.
+ *
+ * Author: Fabio Estevam <fabio.estevam@freescale.com>
+ */
+
+/ {
+	aliases {
+		backlight = &backlight;
+		panelchan = &panelchan;
+		panel7 = &panel7;
+		touchscreenp7 = &touchscreenp7;
+	};
+
+	chosen {
+		stdout-path = &uart2;
+	};
+
+	backlight: backlight {
+		compatible = "gpio-backlight";
+		gpios = <&gpio1 4 0>;
+		default-on;
+		status = "disabled";
+	};
+
+	gpio-poweroff {
+		compatible = "gpio-poweroff";
+		gpios = <&gpio2 4 0>;
+		pinctrl-0 = <&pinctrl_power_off>;
+		pinctrl-names = "default";
+	};
+
+	memory@10000000 {
+		reg = <0x10000000 0x40000000>;
+	};
+
+	panel7: panel7 {
+		/*
+		 * in reality it is a -20t (parallel) model,
+		 * but with LVDS bridge chip attached,
+		 * so it is equivalent to -19t model in drive
+		 * characteristics
+		 */
+		compatible = "urt,umsh-8596md-19t";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_panel>;
+		power-supply = <&reg_panel>;
+		backlight = <&backlight>;
+		status = "disabled";
+
+		port {
+			panel_in: endpoint {
+				r

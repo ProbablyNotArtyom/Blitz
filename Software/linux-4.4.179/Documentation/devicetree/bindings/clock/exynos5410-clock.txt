@@ -1,0 +1,39 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_APECS__H__
+#define __ALPHA_APECS__H__
+
+#include <linux/types.h>
+#include <asm/compiler.h>
+
+/*
+ * APECS is the internal name for the 2107x chipset which provides
+ * memory controller and PCI access for the 21064 chip based systems.
+ *
+ * This file is based on:
+ *
+ * DECchip 21071-AA and DECchip 21072-AA Core Logic Chipsets
+ * Data Sheet
+ *
+ * EC-N0648-72
+ *
+ *
+ * david.rusling@reo.mts.dec.com Initial Version.
+ *
+ */
+
+/*
+   An AVANTI *might* be an XL, and an XL has only 27 bits of ISA address
+   that get passed through the PCI<->ISA bridge chip. So we've gotta use
+   both windows to max out the physical memory we can DMA to. Sigh...
+
+   If we try a window at 0 for 1GB as a work-around, we run into conflicts
+   with ISA/PCI bus memory which can't be relocated, like VGA aperture and
+   BIOS ROMs. So we must put the windows high enough to avoid these areas.
+
+   We put window 1 at BUS 64Mb for 64Mb, mapping physical 0 to 64Mb-1,
+   and window 2 at BUS 1Gb for 1Gb, mapping physical 0 to 1Gb-1.
+   Yes, this does map 0 to 64Mb-1 twice, but only window 1 will actually
+   be used for that range (via virt_to_bus()).
+
+   Note that we actually fudge the window 1 maximum as 48Mb instead of 64Mb,
+   to keep virt_to_bus() from returning an addres

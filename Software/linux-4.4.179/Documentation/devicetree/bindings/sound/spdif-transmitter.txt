@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Copyright (c) 2015 MediaTek Inc.
+ * Author: Mars.C <mars.cheng@mediatek.com>
+ *
+ */
+
+/dts-v1/;
+#include "mt6580.dtsi"
+
+/ {
+	model = "MediaTek MT6580 evalua

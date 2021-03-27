@@ -1,0 +1,184 @@
+/*
+ * AXS101/AXS103 Software Development Platform
+ *
+ * Copyright (C) 2013-15 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ */
+
+#include <linux/of_fdt.h>
+#include <linux/of_platform.h>
+#include <linux/libfdt.h>
+
+#include <asm/asm-offsets.h>
+#include <asm/io.h>
+#include <asm/mach_desc.h>
+#include <soc/arc/mcip.h>
+
+#define AXS_MB_CGU		0xE0010000
+#define AXS_MB_CREG		0xE0011000
+
+#define CREG_MB_IRQ_MUX		(AXS_MB_CREG + 0x214)
+#define CREG_MB_SW_RESET	(AXS_MB_CREG + 0x220)
+#define CREG_MB_VER		(AXS_MB_CREG + 0x230)
+#define CREG_MB_CONFIG		(AXS_MB_CREG + 0x234)
+
+#define AXC001_CREG		0xF0001000
+#define AXC001_GPIO_INTC	0xF0003000
+
+static void __init axs10x_enable_gpio_intc_wire(void)
+{
+	/*
+	 * Peripherals on CPU Card and Mother Board are wired to cpu intc via
+	 * intermediate DW APB GPIO blocks (mainly for debouncing)
+	 *
+	 *         ---------------------
+	 *        |  snps,arc700-intc |
+	 *        ---------------------
+	 *          | #7          | #15
+	 * -------------------   -------------------
+	 * | snps,dw-apb-gpio |  | snps,dw-apb-gpio |
+	 * -------------------   -------------------
+	 *        | #12                     |
+	 *        |                 [ Debug UART on cpu card ]
+	 *        |
+	 * ------------------------
+	 * | snps,dw-apb-intc (MB)|
+	 * ------------------------
+	 *  |      |       |      |
+	 * [eth] [uart]        [... other perip on Main Board]
+	 *
+	 * Current implementation of "irq-dw-apb-ictl" driver doesn't work well
+	 * with stacked INTCs. In particular problem happens if its master INTC
+	 * not yet instantiated. See discussion here -
+	 * https://lkml.org/lkml/2015/3/4/755
+	 *
+	 * So setup the first gpio block as a passive pass thru and hide it from
+	 * DT hardware topology - connect MB intc directly to cpu intc
+	 * The GPIO "wire" needs to be init nevertheless (here)
+	 *
+	 * One side adv is that peripheral interrupt handling avoids one nested
+	 * intc ISR hop
+	 */
+#define GPIO_INTEN		(AXC001_GPIO_INTC + 0x30)
+#define GPIO_INTMASK		(AXC001_GPIO_INTC + 0x34)
+#define GPIO_INTTYPE_LEVEL	(AXC001_GPIO_INTC + 0x38)
+#define GPIO_INT_POLARITY	(AXC001_GPIO_INTC + 0x3c)
+#define MB_TO_GPIO_IRQ		12
+
+	iowrite32(~(1 << MB_TO_GPIO_IRQ), (void __iomem *) GPIO_INTMASK);
+	iowrite32(0, (void __iomem *) GPIO_INTTYPE_LEVEL);
+	iowrite32(~0, (void __iomem *) GPIO_INT_POLARITY);
+	iowrite32(1 << MB_TO_GPIO_IRQ, (void __iomem *) GPIO_INTEN);
+}
+
+static void __init axs10x_print_board_ver(unsigned int creg, const char *str)
+{
+	union ver {
+		struct {
+#ifdef CONFIG_CPU_BIG_ENDIAN
+			unsigned int pad:11, y:12, m:4, d:5;
+#else
+			unsigned int d:5, m:4, y:12, pad:11;
+#endif
+		};
+		unsigned int val;
+	} board;
+
+	board.val = ioread32((void __iomem *)creg);
+	pr_info("AXS: %s FPGA Date: %u-%u-%u\n", str, board.d, board.m,
+		board.y);
+}
+
+static void __init axs10x_early_init(void)
+{
+	int mb_rev;
+	char mb[32];
+
+	/* Determine motherboard version */
+	if (ioread32((void __iomem *) CREG_MB_CONFIG) & (1 << 28))
+		mb_rev = 3;	/* HT-3 (rev3.0) */
+	else
+		mb_rev = 2;	/* HT-2 (rev2.0) */
+
+	axs10x_enable_gpio_intc_wire();
+
+	scnprintf(mb, 32, "MainBoard v%d", mb_rev);
+	axs10x_print_board_ver(CREG_MB_VER, mb);
+}
+
+#ifdef CONFIG_AXS101
+
+#define CREG_CPU_ADDR_770	(AXC001_CREG + 0x20)
+#define CREG_CPU_ADDR_TUNN	(AXC001_CREG + 0x60)
+#define CREG_CPU_ADDR_770_UPD	(AXC001_CREG + 0x34)
+#define CREG_CPU_ADDR_TUNN_UPD	(AXC001_CREG + 0x74)
+
+#define CREG_CPU_ARC770_IRQ_MUX	(AXC001_CREG + 0x114)
+#define CREG_CPU_GPIO_UART_MUX	(AXC001_CREG + 0x120)
+
+/*
+ * Set up System Memory Map for ARC cpu / peripherals controllers
+ *
+ * Each AXI master has a 4GB memory map specified as 16 apertures of 256MB, each
+ * of which maps to a corresponding 256MB aperture in Target slave memory map.
+ *
+ * e.g. ARC cpu AXI Master's aperture 8 (0x8000_0000) is mapped to aperture 0
+ * (0x0000_0000) of DDR Port 0 (slave #1)
+ *
+ * Access from cpu to MB controllers such as GMAC is setup using AXI Tunnel:
+ * which has master/slaves on both ends.
+ * e.g. aperture 14 (0xE000_0000) of ARC cpu is mapped to aperture 14
+ * (0xE000_0000) of CPU Card AXI Tunnel slave (slave #3) which is mapped to
+ * MB AXI Tunnel Master, which also has a mem map setup
+ *
+ * In the reverse direction, MB AXI Masters (e.g. GMAC) mem map is setup
+ * to map to MB AXI Tunnel slave which connects to CPU Card AXI Tunnel Master
+ */
+struct aperture {
+	unsigned int slave_sel:4, slave_off:4, pad:24;
+};
+
+/* CPU Card target slaves */
+#define AXC001_SLV_NONE			0
+#define AXC001_SLV_DDR_PORT0		1
+#define AXC001_SLV_SRAM			2
+#define AXC001_SLV_AXI_TUNNEL		3
+#define AXC001_SLV_AXI2APB		6
+#define AXC001_SLV_DDR_PORT1		7
+
+/* MB AXI Target slaves */
+#define AXS_MB_SLV_NONE			0
+#define AXS_MB_SLV_AXI_TUNNEL_CPU	1
+#define AXS_MB_SLV_AXI_TUNNEL_HAPS	2
+#define AXS_MB_SLV_SRAM			3
+#define AXS_MB_SLV_CONTROL		4
+
+/* MB AXI masters */
+#define AXS_MB_MST_TUNNEL_CPU		0
+#define AXS_MB_MST_USB_OHCI		10
+
+/*
+ * memmap for ARC core on CPU Card
+ */
+static const struct aperture axc001_memmap[16] = {
+	{AXC001_SLV_AXI_TUNNEL,		0x0},
+	{AXC001_SLV_AXI_TUNNEL,		0x1},
+	{AXC001_SLV_SRAM,		0x0}, /* 0x2000_0000: Local SRAM */
+	{AXC001_SLV_NONE,		0x0},
+	{AXC001_SLV_NONE,		0x0},
+	{AXC001_SLV_NONE,		0x0},
+	{AXC001_SLV_NONE,		0x0},
+	{AXC001_SLV_NONE,		0x0},
+	{AXC001_SLV_DDR_PORT0,		0x0}, /* 0x8000_0000: DDR   0..256M */
+	{AXC001_SLV_DDR_PORT0,		0x1}, /* 0x9000_0000: DDR 256..512M */
+	{AXC001_SLV_DDR_PORT0,		0x2},
+	{AXC001_SLV_DD

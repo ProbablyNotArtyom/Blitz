@@ -1,0 +1,63 @@
+Documentation for userland software suspend interface
+	(C) 2006 Rafael J. Wysocki <rjw@sisk.pl>
+
+First, the warnings at the beginning of swsusp.txt still apply.
+
+Second, you should read the FAQ in swsusp.txt _now_ if you have not
+done it already.
+
+Now, to use the userland interface for software suspend you need special
+utilities that will read/write the system memory snapshot from/to the
+kernel.  Such utilities are available, for example, from
+<http://suspend.sourceforge.net>.  You may want to have a look at them if you
+are going to develop your own suspend/resume utilities.
+
+The interface consists of a character device providing the open(),
+release(), read(), and write() operations as well as several ioctl()
+commands defined in include/linux/suspend_ioctls.h .  The major and minor
+numbers of the device are, respectively, 10 and 231, and they can
+be read from /sys/class/misc/snapshot/dev.
+
+The device can be open either for reading or for writing.  If open for
+reading, it is considered to be in the suspend mode.  Otherwise it is
+assumed to be in the resume mode.  The device cannot be open for simultaneous
+reading and writing.  It is also impossible to have the device open more than
+once at a time.
+
+Even opening the device has side effects. Data structures are
+allocated, and PM_HIBERNATION_PREPARE / PM_RESTORE_PREPARE chains are
+called.
+
+The ioctl() commands recognized by the device are:
+
+SNAPSHOT_FREEZE - freeze user space processes (the current process is
+	not frozen); this is required for SNAPSHOT_CREATE_IMAGE
+	and SNAPSHOT_ATOMIC_RESTORE to succeed
+
+SNAPSHOT_UNFREEZE - thaw user space processes frozen by SNAPSHOT_FREEZE
+
+SNAPSHOT_CREATE_IMAGE - create a snapshot of the system memory; the
+	last argument of ioctl() should be a pointer to an int variable,
+	the value of which will indicate whether the call returned after
+	creating the snapshot (1) or after restoring the system memory state
+	from it (0) (after resume the system finds itself finishing the
+	SNAPSHOT_CREATE_IMAGE ioctl() again); after the snapshot
+	has been created the read() operation can be used to transfer
+	it out of the kernel
+
+SNAPSHOT_ATOMIC_RESTORE - restore the system memory state from the
+	uploaded snapshot image; before calling it you should transfer
+	the system memory snapshot back to the kernel using the write()
+	operation; this call will not succeed if the snapshot
+	image is not available to the kernel
+
+SNAPSHOT_FREE - free memory allocated for the snapshot image
+
+SNAPSHOT_PREF_IMAGE_SIZE - set the preferred maximum size of the image
+	(the kernel will do its best to ensure the image size will not exceed
+	this number, but if it turns out to be impossible, the kernel will
+	create the smallest image possible)
+
+SNAPSHOT_GET_IMAGE_SIZE - return the actual size of the hibernation image
+
+SNAPSHOT_AVA

@@ -1,0 +1,21 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_PRIORITY:
+
+******************************************
+ioctl VIDIOC_G_PRIORITY, VIDIOC_S_PRIORITY
+******************************************
+
+Name
+====
+
+VIDIOC_G_PRIORITY - VIDIOC_S_PRIORITY - Query or request the access priority associated with a file descriptor
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_G_PRIORITY, enum v4l2_priority *argp )
+    :name: VIDIOC_G_PRIORITY
+
+.. c:function:: in

@@ -1,0 +1,67 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree file for D-Link DNS-327L
+ *
+ * Copyright (C) 2015, Andrew Andrianov <andrew@ncrmnt.org>
+ */
+
+/* Remaining unsolved:
+ * There's still some unknown device on i2c address 0x13
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/gpio/gpio.h>
+#include "armada-370.dtsi"
+
+/ {
+	model = "D-Link DNS-327L";
+	compatible = "dlink,dns327l",
+		"marvell,armada370",
+		"marvell,armada-370-xp";
+
+	chosen {
+		stdout-path = &uart0;
+	};
+
+	memory@0 {
+		device_type = "memory";
+		reg = <0x00000000 0x20000000>; /* 512 MiB */
+	};
+
+	soc {
+		ranges = <MBUS_ID(0xf0, 0x01) 0 0xd0000000 0x100000
+			MBUS_ID(0x01, 0xe0) 0 0xfff00000 0x100000
+			MBUS_ID(0x09, 0x01) 0 0xf1100000 0x10000>;
+
+		internal-regs {
+			sata@a0000 {
+				nr-ports = <2>;
+				status = "okay";
+			};
+
+			usb@50000 {
+				status = "okay";
+			};
+		};
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+		pinctrl-0 = <
+			&backup_button_pin
+			&power_button_pin
+			&reset_button_pin>;
+		pinctrl-names = "default";
+
+		power-button {
+			label = "Power Button";
+			linux,code = <KEY_POWER>;
+			gpios = <&gpio2 1 GPIO_ACTIVE_LOW>;
+		};
+
+		backup-button {
+			label = "Backup Button";
+			linux,code = <KEY_COPY>;
+			gpios =

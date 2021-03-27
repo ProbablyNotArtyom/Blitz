@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: GPL-2.0
+#include <linux/init.h>
+#include <linux/slab.h>
+#include <linux/mm_types.h>
+
+#include <asm/bugs.h>
+#include <asm/cacheflush.h>
+#include <asm/idmap.h>
+#include <asm/pgalloc.h>
+#include <asm/pgtable.h>
+#include <asm/memory.h>
+#include <asm/smp_plat.h>
+#include <asm/suspend.h>
+#include <asm/tlbflush.h>
+
+extern int __cpu_suspend(unsigned long, int (*)(unsigned long), u32 cpuid);
+extern void cpu_resume_mmu(void);
+
+#ifdef CO

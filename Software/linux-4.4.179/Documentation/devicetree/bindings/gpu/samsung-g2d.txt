@@ -1,0 +1,36 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * Vineetg: Oct 2009
+ *  No need for ARC specific thread_info allocator (kmalloc/free). This is
+ *  anyways one page allocation, thus slab alloc can be short-circuited and
+ *  the generic version (get_free_page) would be loads better.
+ *
+ * Sameer Dhavale: Codito Technologies 2004
+ */
+
+#ifndef _ASM_THREAD_INFO_H
+#define _ASM_THREAD_INFO_H
+
+#include <asm/page.h>
+
+#ifdef CONFIG_16KSTACKS
+#define THREAD_SIZE_ORDER 1
+#else
+#define THREAD_SIZE_ORDER 0
+#endif
+
+#define THREAD_SIZE     (PAGE_SIZE << THREAD_SIZE_ORDER)
+#define THREAD_SHIFT	(PAGE_SHIFT << THREAD_SIZE_ORDER)
+
+#ifndef __ASSEMBLY__
+
+#include <linux/thread_info.h>
+#include <asm/segment.h>
+
+/*
+ * low level task data that entry.S needs i

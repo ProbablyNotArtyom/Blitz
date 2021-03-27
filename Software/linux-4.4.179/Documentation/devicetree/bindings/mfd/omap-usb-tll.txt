@@ -1,0 +1,23 @@
+/*
+ * at91sam9x5_isi.dtsi - Device Tree Include file for AT91SAM9x5 SoC with an
+ * Image Sensor Interface.
+ *
+ * Copyright (C) 2013 Boris BREZILLON <b.brezillon@overkiz.com>
+ *
+ * Licensed under GPLv2.
+ */
+
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	ahb {
+		apb {
+			pinctrl@fffff400 {
+				isi {
+					pinctrl_isi_data_0_7: isi-0-data-0-7 {
+						atmel,pins =
+							<AT91_PIOC 0 AT91_PERIPH_B AT91_PINCTRL_NONE	/* ISI_D0, conflicts with LCDDAT0 */
+							AT91_PIOC 1 AT91_PERIPH_B AT91_PINCTRL_NONE	/* ISI_D1, conflicts with LCDDAT1 */
+							AT91_PIOC 2 AT91_PERIPH_B AT91_PINCTRL_NONE	/* ISI_D2, conflicts with LCDDAT2 */
+							AT91_PIOC 3 AT91_PERIPH_B AT91_PINCTRL_NONE	/* ISI_D3, confli

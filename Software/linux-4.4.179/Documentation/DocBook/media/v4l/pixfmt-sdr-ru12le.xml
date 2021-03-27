@@ -1,0 +1,50 @@
+	   Freescale QUICC Engine Firmware Uploading
+	   -----------------------------------------
+
+(c) 2007 Timur Tabi <timur at freescale.com>,
+    Freescale Semiconductor
+
+Table of Contents
+=================
+
+  I - Software License for Firmware
+
+  II - Microcode Availability
+
+  III - Description and Terminology
+
+  IV - Microcode Programming Details
+
+  V - Firmware Structure Layout
+
+  VI - Sample Code for Creating Firmware Files
+
+Revision Information
+====================
+
+November 30, 2007: Rev 1.0 - Initial version
+
+I - Software License for Firmware
+=================================
+
+Each firmware file comes with its own software license.  For information on
+the particular license, please see the license text that is distributed with
+the firmware.
+
+II - Microcode Availability
+===========================
+
+Firmware files are distributed through various channels.  Some are available on
+http://opensource.freescale.com.  For other firmware files, please contact
+your Freescale representative or your operating system vendor.
+
+III - Description and Terminology
+================================
+
+In this document, the term 'microcode' refers to the sequence of 32-bit
+integers that compose the actual QE microcode.
+
+The term 'firmware' refers to a binary blob that contains the microcode as
+well as other data that
+
+	1) d

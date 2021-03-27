@@ -1,0 +1,49 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * misc.c
+ * 
+ * This is a collection of several routines from gzip-1.0.3 
+ * adapted for Linux.
+ *
+ * malloc by Hannu Savolainen 1993 and Matthias Urlichs 1994
+ *
+ * Modified for ARM Linux by Russell King
+ *
+ * Nicolas Pitre <nico@visuaide.com>  1999/04/14 :
+ *  For this code to run directly from Flash, all constant variables must
+ *  be marked with 'const' and all other variables initialized at run-time 
+ *  only.  This way all non constant variables will end up in the bss segment,
+ *  which should point to addresses in RAM and cleared to 0 on start.
+ *  This allows for a much quicker boot time.
+ *
+ * Modified for Alpha, from the ARM version, by Jay Estabrook 2003.
+ */
+
+#include <linux/kernel.h>
+#include <linux/slab.h>
+
+#include <linux/uaccess.h>
+
+#define memzero(s,n)	memset ((s),0,(n))
+#define puts		srm_printk
+extern long srm_printk(const char *, ...)
+     __attribute__ ((format (printf, 1, 2)));
+
+/*
+ * gzip delarations
+ */
+#define OF(args)  args
+#define STATIC static
+
+typedef unsigned char  uch;
+typedef unsigned short ush;
+typedef unsigned long  ulg;
+
+#define WSIZE 0x8000		/* Window size must be at least 32k, */
+				/* and a power of two */
+
+static uch *inbuf;		/* input buffer */
+static uch *window;		/* Sliding window buffer */
+
+static unsigned insize;		/* valid bytes in inbuf */
+static unsigned inptr;		/* index of next byte to be processed

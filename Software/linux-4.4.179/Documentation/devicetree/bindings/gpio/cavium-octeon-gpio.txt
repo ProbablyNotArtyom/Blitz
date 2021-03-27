@@ -1,0 +1,39 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#ifndef _ASM_ARC_ARCREGS_H
+#define _ASM_ARC_ARCREGS_H
+
+/* Build Configuration Registers */
+#define ARC_REG_AUX_DCCM	0x18	/* DCCM Base Addr ARCv2 */
+#define ARC_REG_ERP_CTRL	0x3F	/* ARCv2 Error protection control */
+#define ARC_REG_DCCM_BASE_BUILD	0x61	/* DCCM Base Addr ARCompact */
+#define ARC_REG_CRC_BCR		0x62
+#define ARC_REG_VECBASE_BCR	0x68
+#define ARC_REG_PERIBASE_BCR	0x69
+#define ARC_REG_FP_BCR		0x6B	/* ARCompact: Single-Precision FPU */
+#define ARC_REG_DPFP_BCR	0x6C	/* ARCompact: Dbl Precision FPU */
+#define ARC_REG_ERP_BUILD	0xc7	/* ARCv2 Error protection Build: ECC/Parity */
+#define ARC_REG_FP_V2_BCR	0xc8	/* ARCv2 FPU */
+#define ARC_REG_SLC_BCR		0xce
+#define ARC_REG_DCCM_BUILD	0x74	/* DCCM size (common) */
+#define ARC_REG_AP_BCR		0x76
+#define ARC_REG_ICCM_BUILD	0x78	/* ICCM size (common) */
+#define ARC_REG_XY_MEM_BCR	0x79
+#define ARC_REG_MAC_BCR		0x7a
+#define ARC_REG_MUL_BCR		0x7b
+#define ARC_REG_SWAP_BCR	0x7c
+#define ARC_REG_NORM_BCR	0x7d
+#define ARC_REG_MIXMAX_BCR	0x7e
+#define ARC_REG_BARREL_BCR	0x7f
+#define ARC_REG_D_UNCACH_BCR	0x6A
+#define ARC_REG_BPU_BCR		0xc0
+#define ARC_REG_ISA_CFG_BCR	0xc1
+#define ARC_REG_LPB_BUILD	0xE9	/* ARCv2 Loop Buffer Build */
+#define ARC_REG_RTT_BCR		0xF2
+#define ARC_REG

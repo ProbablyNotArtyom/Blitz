@@ -1,0 +1,16 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ASM_ARM_CACHETYPE_H
+#define __ASM_ARM_CACHETYPE_H
+
+#define CACHEID_VIVT			(1 << 0)
+#define CACHEID_VIPT_NONALIASING	(1 << 1)
+#define CACHEID_VIPT_ALIASING		(1 << 2)
+#define CACHEID_VIPT			(CACHEID_VIPT_ALIASING|CACHEID_VIPT_NONALIASING)
+#define CACHEID_ASID_TAGGED		(1 << 3)
+#define CACHEID_VIPT_I_ALIASING		(1 << 4)
+#define CACHEID_PIPT			(1 << 5)
+
+extern unsigned int cacheid;
+
+#define cache_is_vivt()			cacheid_is(CACHEID_VIVT)
+#define cache_is_vipt()			cac

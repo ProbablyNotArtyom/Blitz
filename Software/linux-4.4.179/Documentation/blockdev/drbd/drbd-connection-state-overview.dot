@@ -1,0 +1,68 @@
+===========
+Dynamic PCM
+===========
+
+Description
+===========
+
+Dynamic PCM allows an ALSA PCM device to digitally route its PCM audio to
+various digital endpoints during the PCM stream runtime. e.g. PCM0 can route
+digital audio to I2S DAI0, I2S DAI1 or PDM DAI2. This is useful for on SoC DSP
+drivers that expose several ALSA PCMs and can route to multiple DAIs.
+
+The DPCM runtime routing is determined by the ALSA mixer settings in the same
+way as the analog signal is routed in an ASoC codec driver. DPCM uses a DAPM
+graph representing the DSP internal audio paths and uses the mixer settings to
+determine the patch used by each ALSA PCM.
+
+DPCM re-uses all the existing component codec, platform and DAI drivers without
+any modifications.
+
+
+Phone Audio System with SoC based DSP
+-------------------------------------
+
+Consider the following phone audio subsystem. This will be used in this
+document for all examples :-
+::
+
+  | Front End PCMs    |  SoC DSP  | Back End DAIs | Audio devices |
+  
+                      *************
+  PCM0 <------------> *           * <----DAI0-----> Codec Headset
+                      *           *
+  PCM1 <------------> *           * <----DAI1-----> Codec Speakers
+                      *   DSP     *
+  PCM2 <------------> *           * <----DAI2-----> MODEM
+                      *           *
+  PCM3 <------------> *           * <----DAI3-----> BT
+                      *           *
+                      *           * <----DAI4-----> DMIC
+                      *           *
+                      *           * <----DAI5-----> FM
+                      *************
+
+This diagram shows a simple smart phone audio subsystem. It supports Bluetooth,
+FM digital radio, Speakers, Headset Jack, digital microphones and cellular
+modem. This sound card exposes 4 DSP front end (FE) ALSA PCM devices and
+supports 6 back end (BE) DAIs. Each FE PCM can digitally route audio data to any
+of the BE DAIs. The FE PCM devices can also route audio to more than 1 BE DAI.
+
+
+
+Example - DPCM Switching playback from DAI0 to DAI1
+---------------------------------------------------
+
+Audio is being played to the Headset. After a while the user removes the headset
+and audio continues playing on the speakers.
+
+Playback on PCM0 to Headset would look like :-
+::
+
+                      *************
+  PCM0 <============> *           * <====DAI0=====> Codec Headset
+                      *           *
+  PCM1 <------------> *           * <----DAI1-----> Codec Speakers
+                      *   DSP     *
+  PCM2 <------------> *           * <----DAI2-----> MODEM
+        

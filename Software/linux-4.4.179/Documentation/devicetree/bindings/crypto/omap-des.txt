@@ -1,0 +1,54 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/core_titan.c
+ *
+ * Code common to all TITAN core logic chips.
+ */
+
+#define __EXTERN_INLINE inline
+#include <asm/io.h>
+#include <asm/core_titan.h>
+#undef __EXTERN_INLINE
+
+#include <linux/module.h>
+#include <linux/types.h>
+#include <linux/pci.h>
+#include <linux/sched.h>
+#include <linux/init.h>
+#include <linux/vmalloc.h>
+#include <linux/memblock.h>
+
+#include <asm/ptrace.h>
+#include <asm/smp.h>
+#include <asm/pgalloc.h>
+#include <asm/tlbflush.h>
+#include <asm/vga.h>
+
+#include "proto.h"
+#include "pci_impl.h"
+
+/* Save Titan configuration data as the console had it set up.  */
+
+struct
+{
+	unsigned long wsba[4];
+	unsigned long wsm[4];
+	unsigned long tba[4];
+} saved_config[4] __attribute__((common));
+
+/*
+ * Is PChip 1 present? No need to query it more than once.
+ */
+static int titan_pchip1_present;
+
+/*
+ * BIOS32-style PCI interface:
+ */
+
+#define DEBUG_CONFIG 0
+
+#if DEBUG_CONFIG
+# define DBG_CFG(args)	printk args
+#else
+# define DBG_CFG(args)
+#

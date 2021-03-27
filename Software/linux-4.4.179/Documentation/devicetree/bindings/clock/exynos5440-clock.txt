@@ -1,0 +1,25 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_LCA__H__
+#define __ALPHA_LCA__H__
+
+#include <asm/compiler.h>
+#include <asm/mce.h>
+
+/*
+ * Low Cost Alpha (LCA) definitions (these apply to 21066 and 21068,
+ * for example).
+ *
+ * This file is based on:
+ *
+ *	DECchip 21066 and DECchip 21068 Alpha AXP Microprocessors
+ *	Hardware Reference Manual; Digital Equipment Corp.; May 1994;
+ *	Maynard, MA; Order Number: EC-N2681-71.
+ */
+
+/*
+ * NOTE: The LCA uses a Host Address Extension (HAE) register to access
+ *	 PCI addresses that are beyond the first 27 bits of address
+ *	 space.  Updating the HAE requires an external cycle (and
+ *	 a memory barrier), which tends to be slow.  Instead of updating
+ *	 it on each sparse memory access, we keep the current HAE value
+ *	 cached in variable cache_hae.

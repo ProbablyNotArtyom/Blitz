@@ -1,0 +1,23 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <asm-generic/vmlinux.lds.h>
+#include <asm/cache.h>
+#include <asm/page.h>
+#include <asm/thread_info.h>
+
+OUTPUT_ARCH(arc)
+ENTRY(res_service)
+
+#ifdef CONFIG_CPU_BIG_ENDIAN
+jiffies = jiffies_64 + 4;
+#else
+jiffies = jiffies_64;
+#endif
+
+SECTI

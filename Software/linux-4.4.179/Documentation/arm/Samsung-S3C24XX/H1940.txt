@@ -1,0 +1,24 @@
+The Linux SYM-2 driver documentation file
+
+Written by Gerard Roudier <groudier@free.fr>
+21 Rue Carnot
+95170 DEUIL LA BARRE - FRANCE
+
+Updated by Matthew Wilcox <matthew@wil.cx>
+
+2004-10-09
+===============================================================================
+
+1.  Introduction
+2.  Supported chips and SCSI features
+3.  Advantages of this driver for newer chips.
+      3.1 Optimized SCSI SCRIPTS
+      3.2 New features appeared with the SYM53C896
+4.  Memory mapped I/O versus normal I/O
+5.  Tagged command queueing
+6.  Parity checking
+7.  Profiling information
+8.  Control commands
+      8.1  Set minimum synchronous period
+      8.2  Set wide size
+      8.3  Set maximum number of concurrent tagged comma

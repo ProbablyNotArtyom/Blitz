@@ -1,0 +1,26 @@
+
+	Timekeeping Virtualization for X86-Based Architectures
+
+	Zachary Amsden <zamsden@redhat.com>
+	Copyright (c) 2010, Red Hat.  All rights reserved.
+
+1) Overview
+2) Timing Devices
+3) TSC Hardware
+4) Virtualization Problems
+
+=========================================================================
+
+1) Overview
+
+One of the most complicated parts of the X86 platform, and specifically,
+the virtualization of this platform is the plethora of timing devices available
+and the complexity of emulating those devices.  In addition, virtualization of
+time introduces a new set of challenges because it introduces a multiplexed
+division of time beyond the control of the guest CPU.
+
+First, we will describe the various timekeeping hardware available, then
+present some of the problems which arise and solutions available, giving
+specific recommendations for certain classes of KVM guests.
+
+The purpose of this document is to collect data and

@@ -1,0 +1,121 @@
+                                 Hey Emacs, this is -*- outline -*- mode
+
+This is the to-do list for Wget.  There is no timetable of when we plan to
+implement these features -- this is just a list of things it'd be nice to see in
+Wget.  Patches to implement any of these items would be gladly accepted.  The
+items are not listed in any particular order (except that recently-added items
+may tend towards the top).  Not all of these represent user-visible
+changes.
+
+* Take a look at
+  <http://info.webcrawler.com/mak/projects/robots/norobots-rfc.html>
+  and support the new directives.
+
+* Generalize --html-extension to something like --mime-extensions and have it
+  look at mime.types/mimecap file for preferred extension.  Non-HTML files with
+  filenames changed this way would be re-downloaded each time despite -N unless
+  .orig files were saved for them.  Since .orig would contain the same data as
+  non-.orig, the latter could be just a link to the former.  Another possibility
+  would be to implement a per-directory database called something like
+  .wget_url_mapping containing URLs and their corresponding filenames.
+
+* When spanning hosts, there's no way to say that you are only interested in
+  files in a certain directory on _one_ of the hosts (-I and -X apply to all).
+  Perhaps -I and -X should take an optional hostname before the directory?
+
+* Add an option to not encode special characters like ' ' and '~' when saving
+  local files.  Would be good to have a mode that encodes all special characters
+  (as now), one that encodes none (as above), and one that only encodes a
+  character if it was encoded in the original URL (e.g. %20 but not %7E).
+
+* --retr-symlinks should cause wget to traverse links to directories too.
+
+* Make wget return non-zero status in more situations, like incorrect HTTP auth.
+
+* Timestamps are sometimes not copied over on files retrieved by FTP.
+
+* Make -K compare X.orig to X and move the former on top of the latter if 
+  they're the same, rather than leaving identical .orig files laying around.
+
+* Allow mirroring of FTP URLs where logging in puts you somewhere else besides 
+  '/'. 
+
+* If CGI output is saved to a file, e.g. cow.cgi?param, -k needs to change the
+  '?' to a "%3F" in links to that file to avoid passing part of the filename as
+  a parameter.
+
+* Make `-k' convert <base href=...> too.
+
+* Make `-k' check for files that were downloaded in the past and convert links 
+  to them in newly-downloaded documents.
+
+* -k should convert relative references to absolute if not downloaded.
+
+* -k should convert "hostless absolute" URLs, like <A HREF="/index.html">.
+  However, Brian McMahon <bm@iucr.org> wants the old incorrect behavior to still
+  be available as an option, as he depends on it to allow mirrors of his site to
+  send CGI queries to his original site, but still get graphics off of the
+  mirror site.  Perhaps this would be better dealt with by adding an option to
+  tell -k not to convert certain URL patterns?
+
+* Add option to clobber existing file names (no `.N' suffixes).
+
+* Introduce a concept of "boolean" options.  For instance, every
+  boolean option `--foo' would have a `--no-foo' equivalent for
+  turning it off.  Get rid of `--foo=no' stuff.  Short options would
+  be handled as `-x' vs. `-nx'.
+
+* Implement "thermometer" display (not all that hard; use an
+  alternative show_progress() if the output goes to a terminal.)
+
+* Add option to only list wildcard matches without doing the download.
+
+* Add case-insensitivity as an option.
+
+* Handle MIME types correctly.  There should be an option to (not)
+  retrieve files based on MIME types, e.g. `--accept-types=image/*'.
+
+* Implement "persistent" retrieving.  In "persistent" mode Wget should
+  treat most of the errors as transient.
+
+* Allow time-stamping by arbitrary date.
+
+* Fix Unix directory parser to allow for spaces in file names.
+
+* Allow size limit to files (perhaps with an option to download oversize files 
+  up through the limit or not at all, to get more functionality than [u]limit.
+
+* Recognize HTML comments correctly.  Add more options for handling
+  bogus HTML found all over the 'net.
+
+* Implement breadth-first retrieval.
+
+* Download to .in* when mirroring.
+
+* Add an option to delete or move no-longer-existent files when mirroring.
+
+* Implement a switch to avoid downloading multiple files (e.g. x and x.gz).
+
+* Implement uploading (--upload URL?) in FTP and HTTP.
+
+* Rewrite FTP code to allow for easy addition of new commands.  It
+  should probably be coded as a simple DFA engine.
+
+* Recognize more FTP servers (VMS).
+
+* Make HTTP timestamping use If-Modified-Since facility.
+
+* Implement better spider options.
+
+* Add more protocols (e.g. gopher and news), implementing them in a
+  modular fashion.
+
+* Implement a concept of "packages" a la mirror.
+
+* Implement correct RFC1808 URL parsing.
+
+* Implement HTTP cookies.
+
+* Implement more HTTP/1.1 bells and whistles (ETag, Content-MD5 etc.)
+
+* Support SSL encryption through SSLeay or OpenSSL.

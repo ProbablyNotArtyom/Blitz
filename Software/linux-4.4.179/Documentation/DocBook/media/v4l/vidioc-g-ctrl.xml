@@ -1,0 +1,109 @@
+			  Deadline Task Scheduling
+			  ------------------------
+
+CONTENTS
+========
+
+ 0. WARNING
+ 1. Overview
+ 2. Scheduling algorithm
+   2.1 Main algorithm
+   2.2 Bandwidth reclaiming
+ 3. Scheduling Real-Time Tasks
+   3.1 Definitions
+   3.2 Schedulability Analysis for Uniprocessor Systems
+   3.3 Schedulability Analysis for Multiprocessor Systems
+   3.4 Relationship with SCHED_DEADLINE Parameters
+ 4. Bandwidth management
+   4.1 System-wide settings
+   4.2 Task interface
+   4.3 Default behavior
+   4.4 Behavior of sched_yield()
+ 5. Tasks CPU affinity
+   5.1 SCHED_DEADLINE and cpusets HOWTO
+ 6. Future plans
+ A. Test suite
+ B. Minimal main()
+
+
+0. WARNING
+==========
+
+ Fiddling with these settings can result in an unpredictable or even unstable
+ system behavior. As for -rt (group) scheduling, it is assumed that root users
+ know what they're doing.
+
+
+1. Overview
+===========
+
+ The SCHED_DEADLINE policy contained inside the sched_dl scheduling class is
+ basically an implementation of the Earliest Deadline First (EDF) scheduling
+ algorithm, augmented with a mechanism (called Constant Bandwidth Server, CBS)
+ that makes it possible to isolate the behavior of tasks between each other.
+
+
+2. Scheduling algorithm
+==================
+
+2.1 Main algorithm
+------------------
+
+ SCHED_DEADLINE [18] uses three parameters, named "runtime", "period", and
+ "deadline", to schedule tasks. A SCHED_DEADLINE task should receive
+ "runtime" microseconds of execution time every "period" microseconds, and
+ these "runtime" microseconds are available within "deadline" microseconds
+ from the beginning of the period.  In order to implement this behavior,
+ every time the task wakes up, the scheduler computes a "scheduling deadline"
+ consistent with the guarantee (using the CBS[2,3] algorithm). Tasks are then
+ scheduled using EDF[1] on these scheduling deadlines (the task with the
+ earliest scheduling deadline is selected for execution). Notice that the
+ task actually receives "runtime" time units within "deadline" if a proper
+ "admission control" strategy (see Section "4. Bandwidth management") is used
+ (clearly, if the system is overloaded this guarantee cannot be respected).
+
+ Summing up, the CBS[2,3] algorithm assigns scheduling deadlines to tasks so
+ that each task runs for at most its runtime every period, avoiding any
+ interference between different tasks (bandwidth isolation), while the EDF[1]
+ algorithm selects the task with the earliest scheduling deadline as the one
+ to be executed next. Thanks to this feature, tasks that do not strictly comply
+ with the "traditional" real-time task model (see Section 3) can effectively
+ use the new policy.
+
+ In more details, the CBS algorithm assigns scheduling deadlines to
+ tasks in the following way:
+
+  - Each SCHED_DEADLINE task is characterized by the "runtime",
+    "deadline", and "period" parameters;
+
+  - The state of the task is described by a "scheduling deadline", and
+    a "remaining runtime". These two parameters are initially set to 0;
+
+  - When a SCHED_DEADLINE task wakes up (becomes ready for execution),
+    the scheduler checks if
+
+                 remaining runtime                  runtime
+        ----------------------------------    >    ---------
+        scheduling deadline - current time           period
+
+    then, if the scheduling deadline is smaller than the current time, or
+    this condition is verified, the scheduling deadline and the
+    remaining runtime are re-initialized as
+
+         scheduling deadline = current time + deadline
+         remaining runtime = runtime
+
+    otherwise, the scheduling deadline and the remaining runtime are
+    left unchanged;
+
+  - When a SCHED_DEADLINE task executes for an amount of time t, its
+    remaining runtime is decreased as
+
+         remaining runtime = remaining runtime - t
+
+    (technically, the runtime is decreased at every tick, or when the
+    task is descheduled / preempted);
+
+  - When the remaining runtime becomes less or equal than 0, the task is
+    said to be "throttled" (also known as "depleted" in real-time literature)
+    and cannot be scheduled until its schedu

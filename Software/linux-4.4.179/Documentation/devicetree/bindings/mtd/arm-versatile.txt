@@ -1,0 +1,16 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Copyright 2018 Luxul Inc.
+ */
+
+/dts-v1/;
+
+#include "bcm47094.dtsi"
+#include "bcm5301x-nand-cs0-bch8.dtsi"
+
+/ {
+	compatible = "luxul,xwr-3150-v1", "brcm,bcm47094", "brcm,bcm4708";
+	model = "Luxul XWR-3150 V1";
+
+	chosen {
+		boo

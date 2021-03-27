@@ -1,0 +1,237 @@
+// SPDX-License-Identifier: GPL-2.0
+#include <dt-bindings/clock/tegra30-car.h>
+#include <dt-bindings/gpio/tegra-gpio.h>
+#include <dt-bindings/memory/tegra30-mc.h>
+#include <dt-bindings/pinctrl/pinctrl-tegra.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+/ {
+	compatible = "nvidia,tegra30";
+	interrupt-parent = <&lic>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x0>;
+	};
+
+	pcie@3000 {
+		compatible = "nvidia,tegra30-pcie";
+		device_type = "pci";
+		reg = <0x00003000 0x00000800   /* PADS registers */
+		       0x00003800 0x00000200   /* AFI registers */
+		       0x10000000 0x10000000>; /* configuration space */
+		reg-names = "pads", "afi", "cs";
+		interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH   /* controller interrupt */
+			      GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>; /* MSI interrupt */
+		interrupt-names = "intr", "msi";
+
+		#interrupt-cells = <1>;
+		interrupt-map-mask = <0 0 0 0>;
+		interrupt-map = <0 0 0 0 &intc GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
+
+		bus-range = <0x00 0xff>;
+		#address-cells = <3>;
+		#size-cells = <2>;
+
+		ranges = <0x82000000 0 0x00000000 0x00000000 0 0x00001000   /* port 0 configuration space */
+			  0x82000000 0 0x00001000 0x00001000 0 0x00001000   /* port 1 configuration space */
+			  0x82000000 0 0x00004000 0x00004000 0 0x00001000   /* port 2 configuration space */
+			  0x81000000 0 0          0x02000000 0 0x00010000   /* downstream I/O */
+			  0x82000000 0 0x20000000 0x20000000 0 0x08000000   /* non-prefetchable memory */
+			  0xc2000000 0 0x28000000 0x28000000 0 0x18000000>; /* prefetchable memory */
+
+		clocks = <&tegra_car TEGRA30_CLK_PCIE>,
+			 <&tegra_car TEGRA30_CLK_AFI>,
+			 <&tegra_car TEGRA30_CLK_PLL_E>,
+			 <&tegra_car TEGRA30_CLK_CML0>;
+		clock-names = "pex", "afi", "pll_e", "cml";
+		resets = <&tegra_car 70>,
+			 <&tegra_car 72>,
+			 <&tegra_car 74>;
+		reset-names = "pex", "afi", "pcie_x";
+		status = "disabled";
+
+		pci@1,0 {
+			device_type = "pci";
+			assigned-addresses = <0x82000800 0 0x00000000 0 0x1000>;
+			reg = <0x000800 0 0 0 0>;
+			bus-range = <0x00 0xff>;
+			status = "disabled";
+
+			#address-cells = <3>;
+			#size-cells = <2>;
+			ranges;
+
+			nvidia,num-lanes = <2>;
+		};
+
+		pci@2,0 {
+			device_type = "pci";
+			assigned-addresses = <0x82001000 0 0x00001000 0 0x1000>;
+			reg = <0x001000 0 0 0 0>;
+			bus-range = <0x00 0xff>;
+			status = "disabled";
+
+			#address-cells = <3>;
+			#size-cells = <2>;
+			ranges;
+
+			nvidia,num-lanes = <2>;
+		};
+
+		pci@3,0 {
+			device_type = "pci";
+			assigned-addresses = <0x82001800 0 0x00004000 0 0x1000>;
+			reg = <0x001800 0 0 0 0>;
+			bus-range = <0x00 0xff>;
+			status = "disabled";
+
+			#address-cells = <3>;
+			#size-cells = <2>;
+			ranges;
+
+			nvidia,num-lanes = <2>;
+		};
+	};
+
+	iram@40000000 {
+		compatible = "mmio-sram";
+		reg = <0x40000000 0x40000>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges = <0 0x40000000 0x40000>;
+
+		vde_pool: vde@400 {
+			reg = <0x400 0x3fc00>;
+			pool;
+		};
+	};
+
+	host1x@50000000 {
+		compatible = "nvidia,tegra30-host1x", "simple-bus";
+		reg = <0x50000000 0x00024000>;
+		interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>, /* syncpt */
+			     <GIC_SPI 67 IRQ_TYPE_LEVEL_HIGH>; /* general */
+		clocks = <&tegra_car TEGRA30_CLK_HOST1X>;
+		resets = <&tegra_car 28>;
+		reset-names = "host1x";
+		iommus = <&mc TEGRA_SWGROUP_HC>;
+
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		ranges = <0x54000000 0x54000000 0x04000000>;
+
+		mpe@54040000 {
+			compatible = "nvidia,tegra30-mpe";
+			reg = <0x54040000 0x00040000>;
+			interrupts = <GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&tegra_car TEGRA30_CLK_MPE>;
+			resets = <&tegra_car 60>;
+			reset-names = "mpe";
+
+			iommus = <&mc TEGRA_SWGROUP_MPE>;
+		};
+
+		vi@54080000 {
+			compatible = "nvidia,tegra30-vi";
+			reg = <0x54080000 0x00040000>;
+			interrupts = <GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&tegra_car TEGRA30_CLK_VI>;
+			resets = <&tegra_car 20>;
+			reset-names = "vi";
+
+			iommus = <&mc TEGRA_SWGROUP_VI>;
+		};
+
+		epp@540c0000 {
+			compatible = "nvidia,tegra30-epp";
+			reg = <0x540c0000 0x00040000>;
+			interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&tegra_car TEGRA30_CLK_EPP>;
+			resets = <&tegra_car 19>;
+			reset-names = "epp";
+
+			iommus = <&mc TEGRA_SWGROUP_EPP>;
+		};
+
+		isp@54100000 {
+			compatible = "nvidia,tegra30-isp";
+			reg = <0x54100000 0x00040000>;
+			interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&tegra_car TEGRA30_CLK_ISP>;
+			resets = <&tegra_car 23>;
+			reset-names = "isp";
+
+			iommus = <&mc TEGRA_SWGROUP_ISP>;
+		};
+
+		gr2d@54140000 {
+			compatible = "nvidia,tegra30-gr2d";
+			reg = <0x54140000 0x00040000>;
+			interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&tegra_car TEGRA30_CLK_GR2D>;
+			resets = <&tegra_car 21>;
+			reset-names = "2d";
+
+			iommus = <&mc TEGRA_SWGROUP_G2>;
+		};
+
+		gr3d@54180000 {
+			compatible = "nvidia,tegra30-gr3d";
+			reg = <0x54180000 0x00040000>;
+			clocks = <&tegra_car TEGRA30_CLK_GR3D
+				  &tegra_car TEGRA30_CLK_GR3D2>;
+			clock-names = "3d", "3d2";
+			resets = <&tegra_car 24>,
+				 <&tegra_car 98>;
+			reset-names = "3d", "3d2";
+
+			iommus = <&mc TEGRA_SWGROUP_NV>,
+				 <&mc TEGRA_SWGROUP_NV2>;
+		};
+
+		dc@54200000 {
+			compatible = "nvidia,tegra30-dc", "nvidia,tegra20-dc";
+			reg = <0x54200000 0x00040000>;
+			interrupts = <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&tegra_car TEGRA30_CLK_DISP1>,
+				 <&tegra_car TEGRA30_CLK_PLL_P>;
+			clock-names = "dc", "parent";
+			resets = <&tegra_car 27>;
+			reset-names = "dc";
+
+			iommus = <&mc TEGRA_SWGROUP_DC>;
+
+			nvidia,head = <0>;
+
+			rgb {
+				status = "disabled";
+			};
+		};
+
+		dc@54240000 {
+			compatible = "nvidia,tegra30-dc";
+			reg = <0x54240000 0x00040000>;
+			interrupts = <GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&tegra_car TEGRA30_CLK_DISP2>,
+				 <&tegra_car TEGRA30_CLK_PLL_P>;
+			clock-names = "dc", "parent";
+			resets = <&tegra_car 26>;
+			reset-names = "dc";
+
+			iommus = <&mc TEGRA_SWGROUP_DCB>;
+
+			nvidia,head = <1>;
+
+			rgb {
+				status = "disabled";
+			};
+		};
+
+		hdmi@54280000 {
+			compatible = "nvidia,tegra30-hdmi";
+			reg = <0x54280000 0x00040000>;
+			interrupts = <GI

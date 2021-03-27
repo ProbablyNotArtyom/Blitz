@@ -1,0 +1,65 @@
+.. include:: <isonum.txt>
+
+DPAA2 DPIO (Data Path I/O) Overview
+===================================
+
+:Copyright: |copy| 2016-2018 NXP
+
+This document provides an overview of the Freescale DPAA2 DPIO
+drivers
+
+Introduction
+============
+
+A DPAA2 DPIO (Data Path I/O) is a hardware object that provides
+interfaces to enqueue and dequeue frames to/from network interfaces
+and other accelerators.  A DPIO also provides hardware buffer
+pool management for network interfaces.
+
+This document provides an overview the Linux DPIO driver, its
+subcomponents, and its APIs.
+
+See Documentation/networking/dpaa2/overview.rst for a general overview of DPAA2
+and the general DPAA2 driver architecture in Linux.
+
+Driver Overview
+---------------
+
+The DPIO driver is bound to DPIO objects discovered on the fsl-mc bus and
+provides services that:
+  A) allow other drivers, such as the Ethernet driver, to enqueue and dequeue
+     frames for their respective objects
+  B) allow drivers to register callbacks for data availability notifications
+     when data becomes available on a queue or channel
+  C) allow drivers to manage hardware buffer pools
+
+The Linux DPIO driver consists of 3 primary components--
+   DPIO object driver-- fsl-mc driver that manages the DPIO object
+
+   DPIO service-- provides APIs to other Linux drivers for services
+
+   QBman portal interface-- sends portal commands, gets responses
+::
+
+          fsl-mc          other
+           bus           drivers
+            |               |
+        +---+----+   +------+-----+
+        |DPIO obj|   |DPIO service|
+        | driver |---|  (DPIO)    |
+        +--------+   +------+-----+
+                            |
+                     +------+-----+
+                     |    QBman   |
+                     | portal i/f |
+                     +------------+
+                            |
+                         hardware
+
+
+The diagram below shows how the DPIO driver components fit with the other
+DPAA2 Linux driver components::
+                                                   +------------+
+                                                   | OS Network |
+                                                   |   Stack    |
+                 +------------+                    +--------

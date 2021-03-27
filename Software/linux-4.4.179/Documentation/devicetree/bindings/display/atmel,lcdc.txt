@@ -1,0 +1,106 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/err_marvel.c
+ *
+ *	Copyright (C) 2001 Jeff Wiedemeier (Compaq Computer Corporation)
+ *
+ */
+
+#include <linux/init.h>
+#include <linux/pci.h>
+#include <linux/sched.h>
+
+#include <asm/io.h>
+#include <asm/console.h>
+#include <asm/core_marvel.h>
+#include <asm/hwrpb.h>
+#include <asm/smp.h>
+#include <asm/err_common.h>
+#include <asm/err_ev7.h>
+
+#include "err_impl.h"
+#include "proto.h"
+
+static void
+marvel_print_680_frame(struct ev7_lf_subpackets *lf_subpackets)
+{
+#ifdef CONFIG_VERBOSE_MCHECK
+	struct ev7_pal_environmental_subpacket *env;
+	struct { int type; char *name; } ev_packets[] = {
+		{ EL_TYPE__PAL__ENV__AMBIENT_TEMPERATURE,
+		  "Ambient Temperature" },
+		{ EL_TYPE__PAL__ENV__AIRMOVER_FAN,
+		  "AirMover / Fan" },
+		{ EL_TYPE__PAL__ENV__VOLTAGE,
+		  "Voltage" },
+		{ EL_TYPE__PAL__ENV__INTRUSION,
+		  "Intrusion" },
+		{ EL_TYPE__PAL__ENV__POWER_SUPPLY,
+		  "Power Supply" },
+		{ EL_TYPE__PAL__ENV__LAN,
+		  "LAN" },
+		{ EL_TYPE__PAL__ENV__HOT_PLUG,
+		  "Hot Plug" },
+		{ 0, NULL }
+	};
+	int i;
+
+	for (i = 0; ev_packets[i].type != 0; i++) {
+		env = lf_subpackets->env[ev7_lf_env_index(ev_packets[i].type)];
+		if (!env)
+			continue;
+
+		printk("%s**%s event (cabinet %d, drawer %d)\n",
+		       err_print_prefix,
+		       ev_packets[i].name,
+		       env->cabinet,
+		       env->drawer);
+		printk("%s   Module Type: 0x%x - Unit ID 0x%x - "
+		       "Condition 0x%x\n",
+		       err_print_prefix,
+		       env->module_type,
+		       env->unit_id,
+		       env->condition);
+	}
+#endif /* CONFIG_VERBOSE_MCHECK */
+}
+
+static int
+marvel_process_680_frame(struct ev7_lf_subpackets *lf_subpackets, int print)
+{
+	int status = MCHK_DISPOSITION_UNKNOWN_ERROR;
+	int i;
+
+	for (i = ev7_lf_env_index(EL_TYPE__PAL__ENV__AMBIENT_TEMPERATURE);
+	     i <= ev7_lf_env_index(EL_TYPE__PAL__ENV__HOT_PLUG);
+	     i++) {
+		if (lf_subpackets->env[i])
+			status = MCHK_DISPOSITION_REPORT;
+	}
+
+	if (print)
+		marvel_print_680_frame(lf_subpackets);
+
+	return status;
+}
+
+#ifdef CONFIG_VERBOSE_MCHECK
+
+static void
+marvel_print_err_cyc(u64 err_cyc)
+{
+	static char *packet_desc[] = {
+		"No Error",
+		"UNKNOWN",
+		"1 cycle (1 or 2 flit packet)",
+		"2 cycles (3 flit packet)",
+		"9 cycles (18 flit packet)",
+		"10 cycles (19 flit packet)",
+		"UNKNOWN",
+		"UNKNOWN",
+		"UNKNOWN"
+	};
+
+#define IO7__ERR_CYC__ODD_FLT	(1UL <<  0)
+#define IO7__ERR_CYC__EVN_FLT	(1UL <<  1)
+#define IO7__ERR_CYC__PACKET

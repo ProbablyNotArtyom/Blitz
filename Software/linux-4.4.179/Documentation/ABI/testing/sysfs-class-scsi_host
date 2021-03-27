@@ -1,0 +1,39 @@
+Kernel driver bh1770glc
+=======================
+
+Supported chips:
+ROHM BH1770GLC
+OSRAM SFH7770
+
+Data sheet:
+Not freely available
+
+Author:
+Samu Onkalo <samu.p.onkalo@nokia.com>
+
+Description
+-----------
+BH1770GLC and SFH7770 are combined ambient light and proximity sensors.
+ALS and proximity parts operates on their own, but they shares common I2C
+interface and interrupt logic. In principle they can run on their own,
+but ALS side results are used to estimate reliability of the proximity sensor.
+
+ALS produces 16 bit lux values. The chip contains interrupt logic to produce
+low and high threshold interrupts.
+
+Proximity part contains IR-led driver up to 3 IR leds. The chip measures
+amount of reflected IR light and produces proximity result. Resolution is
+8 bit. Driver supports only one channel. Driver uses ALS results to estimate
+reliability of the proximity results. Thus ALS is always running while
+proximity detection is needed.
+
+Driver uses threshold interrupts to avoid need for polling the values.
+Proximity low interrupt doesn't exists in the chip. This is simulated
+by using a delayed work. As long as there is proximity threshold above
+interrupts the delayed work is pushed forward. So, when proximity level goes
+below the threshold value, there is no interrupt and the delayed work will
+finally run. This is handled as no proximity indication.
+
+Chip state is controlled via runtime pm framework when enabled in config.
+
+Calibscale factor is used to hide differences between the chips. B

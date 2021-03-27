@@ -1,0 +1,36 @@
+The bttv driver
+===============
+
+Release notes for bttv
+----------------------
+
+You'll need at least these config options for bttv:
+
+.. code-block:: none
+
+	CONFIG_I2C=m
+	CONFIG_I2C_ALGOBIT=m
+	CONFIG_VIDEO_DEV=m
+
+The latest bttv version is available from http://bytesex.org/bttv/
+
+
+Make bttv work with your card
+-----------------------------
+
+Just try "modprobe bttv" and see if that works.
+
+If it doesn't bttv likely could not autodetect your card and needs some
+insmod options.  The most important insmod option for bttv is "card=n"
+to select the correct card type.  If you get video but no sound you've
+very likely specified the wrong (or no) card type.  A list of supported
+cards is in CARDLIST.bttv
+
+If bttv takes very long to load (happens sometimes with the cheap
+cards which have no tuner), try adding this to your modules.conf:
+
+.. code-block:: none
+
+	options i2c-algo-bit bit_test=1
+
+For the WinTV/PVR you need one

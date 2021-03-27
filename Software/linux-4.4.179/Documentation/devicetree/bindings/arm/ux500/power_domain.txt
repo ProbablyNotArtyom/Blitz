@@ -1,0 +1,24 @@
+== Overview ==
+
+Original x86-64 was limited by 4-level paing to 256 TiB of virtual address
+space and 64 TiB of physical address space. We are already bumping into
+this limit: some vendors offers servers with 64 TiB of memory today.
+
+To overcome the limitation upcoming hardware will introduce support for
+5-level paging. It is a straight-forward extension of the current page
+table structure adding one more layer of translation.
+
+It bumps the limits to 128 PiB of virtual address space and 4 PiB of
+physical address space. This "ought to be enough for anybody" ©.
+
+QEMU 2.9 and later support 5-level paging.
+
+Virtual memory layout for 5-level paging is described in
+Documentation/x86/x86_64/mm.txt
+
+== Enabling 5-level paging ==
+
+CONFIG_X86_5LEVEL=y enables the feature.
+
+Kernel with CONFIG_X86_5LEVEL=y still able to boot on 4-level hardware.
+In this case additional pag

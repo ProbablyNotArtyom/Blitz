@@ -1,0 +1,77 @@
+.. _clangformat:
+
+clang-format
+============
+
+``clang-format`` is a tool to format C/C++/... code according to
+a set of rules and heuristics. Like most tools, it is not perfect
+nor covers every single case, but it is good enough to be helpful.
+
+``clang-format`` can be used for several purposes:
+
+  - Quickly reformat a block of code to the kernel style. Specially useful
+    when moving code around and aligning/sorting. See clangformatreformat_.
+
+  - Spot style mistakes, typos and possible improvements in files
+    you maintain, patches you review, diffs, etc. See clangformatreview_.
+
+  - Help you follow the coding style rules, specially useful for those
+    new to kernel development or working at the same time in several
+    projects with different coding styles.
+
+Its configuration file is ``.clang-format`` in the root of the kernel tree.
+The rules contained there try to approximate the most common kernel
+coding style. They also try to follow :ref:`Documentation/process/coding-style.rst <codingstyle>`
+as much as possible. Since not all the kernel follows the same style,
+it is possible that you may want to tweak the defaults for a particular
+subsystem or folder. To do so, you can override the defaults by writing
+another ``.clang-format`` file in a subfolder.
+
+The tool itself has already been included in the repositories of popular
+Linux distributions for a long time. Search for ``clang-format`` in
+your repositories. Otherwise, you can either download pre-built
+LLVM/clang binaries or build the source code from:
+
+    http://releases.llvm.org/download.html
+
+See more information about the tool at:
+
+    https://clang.llvm.org/docs/ClangFormat.html
+
+    https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+
+
+.. _clangformatreview:
+
+Review files and patches for coding style
+-----------------------------------------
+
+By running the tool in its inline mode, you can review full subsystems,
+folders or individual files for code style mistakes, typos or improvements.
+
+To do so, you can run something like::
+
+    # Make sure your working directory is clean!
+    clang-format -i kernel/*.[ch]
+
+And then take a look at the git diff.
+
+Counting the lines of such a diff is also useful for improving/tweaking
+the style options in the configuration file; as well as testing new
+``clang-format`` features/versions.
+
+``clang-format`` also supports reading unified diffs, so you can review
+patches and git diffs easily. See the documentation at:
+
+    https://clang.llvm.org/docs/ClangFormat.html#script-for-patch-reformatting
+
+To avoid ``clang-format`` formatting some portion of a file, you can do::
+
+    int formatted_code;
+    // clang-format off
+        void    unformatted_code  ;
+    // clang-format on
+    void formatted_code_again;
+
+While it might be tempting to use this to keep a file always in sync with
+``clang-format``, specially if you are writing new files o

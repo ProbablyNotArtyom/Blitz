@@ -1,0 +1,31 @@
+Kernel driver nouveau
+===================
+
+Supported chips:
+* NV43+
+
+Authors: Martin Peres (mupuf) <martin.peres@free.fr>
+
+Description
+---------
+
+This driver allows to read the GPU core temperature, drive the GPU fan and
+set temperature alarms.
+
+Currently, due to the absence of in-kernel API to access HWMON drivers, Nouveau
+cannot access any of the i2c external monitoring chips it may find. If you
+have one of those, temperature and/or fan management through Nouveau's HWMON
+interface is likely not to work. This document may then not cover your situation
+entirely.
+
+Temperature management
+--------------------
+
+Temperature is exposed under as a read-only HWMON attribute temp1_input.
+
+In order to protect the GPU from overheating, Nouveau supports 4 configurable
+temperature thresholds:
+
+ * Fan_boost: Fan speed is set to 100% when reaching this temperature;
+ * Downclock: The GPU will be downclocked to reduce its power dissipation;
+ * Critical: 

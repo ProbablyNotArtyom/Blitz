@@ -1,0 +1,62 @@
+		PPP Generic Driver and Channel Interface
+		----------------------------------------
+
+			    Paul Mackerras
+			   paulus@samba.org
+			      7 Feb 2002
+
+The generic PPP driver in linux-2.4 provides an implementation of the
+functionality which is of use in any PPP implementation, including:
+
+* the network interface unit (ppp0 etc.)
+* the interface to the networking code
+* PPP multilink: splitting datagrams between multiple links, and
+  ordering and combining received fragments
+* the interface to pppd, via a /dev/ppp character device
+* packet compression and decompression
+* TCP/IP header compression and decompression
+* detecting network traffic for demand dialling and for idle timeouts
+* simple packet filtering
+
+For sending and receiving PPP frames, the generic PPP driver calls on
+the services of PPP `channels'.  A PPP channel encapsulates a
+mechanism for transporting PPP frames from one machine to another.  A
+PPP channel implementation can be arbitrarily complex internally but
+has a very simple interface with the generic PPP code: it merely has
+to be able to send PPP frames, receive PPP frames, and optionally
+handle ioctl requests.  Currently there are PPP channel
+implementations for asynchronous serial ports, synchronous serial
+ports, and for PPP over ethernet.
+
+This architecture makes it possible to implement PPP multilink in a
+natural and straightforward way, by allowing more than one channel to
+be linked to each ppp network interface unit.  The generic layer is
+responsible for splitting datagrams on transmit and recombining them
+on receive.
+
+
+PPP channel API
+---------------
+
+See include/linux/ppp_channel.h for the declaration of the types and
+functions used to communicate between the generic PPP layer and PPP
+channels.
+
+Each channel has to provide two functions to the generic PPP layer,
+via the ppp_channel.ops pointer:
+
+* start_xmit() is called by the generic layer when it has a frame to
+  send.  The channel has the option of rejecting the frame for
+  flow-control reasons.  In this case, start_xmit() should return 0
+  and the channel should call the ppp_output_wakeup() function at a
+  later time when it can accept frames again, and the generic layer
+  will then attempt to retransmit the rejected frame(s).  If the frame
+  is accepted, the start_xmit() function should return 1.
+
+* ioctl() provides an interface which can be used by a user-space
+  program to control aspects of the channel's behaviour.  This
+  procedure will be called when a user-space program does an ioctl
+  system call on an instance of /dev/ppp which is bound to the
+  channel.  (Usually it would only be pppd which would do this.)
+
+The generic PPP layer pro

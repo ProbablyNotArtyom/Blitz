@@ -1,0 +1,27 @@
+.. _split_page_table_lock:
+
+=====================
+Split page table lock
+=====================
+
+Originally, mm->page_table_lock spinlock protected all page tables of the
+mm_struct. But this approach leads to poor page fault scalability of
+multi-threaded applications due high contention on the lock. To improve
+scalability, split page table lock was introduced.
+
+With split page table lock we have separate per-table lock to serialize
+access to the table. At the moment we use split lock for PTE and PMD
+tables. Access to higher level tables protected by mm->page_table_lock.
+
+There are helpers to lock/unlock a table and other accessor functions:
+
+ - pte_offset_map_lock()
+	maps pte and takes PTE table lock, returns pointer to the taken
+	lock;
+ - pte_unmap_unlock()
+	unlocks and unmaps PTE table;
+ - pte_alloc_map_lock()
+	allocates PTE table if needed and take the lock, returns pointer
+	to taken lock or NULL if allocation failed;
+ - pte_lockptr()
+	r

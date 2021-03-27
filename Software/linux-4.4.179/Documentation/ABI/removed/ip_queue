@@ -1,0 +1,17 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _V4L2-PIX-FMT-Y16:
+
+*************************
+V4L2_PIX_FMT_Y16 ('Y16 ')
+*************************
+
+
+Grey-scale image
+
+
+Description
+===========
+
+This is a grey-scale image with a depth of 16 bits per pixel. The least
+significant byte is stored at lower memory addresses (

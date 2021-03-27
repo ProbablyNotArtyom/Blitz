@@ -1,0 +1,45 @@
+USBvision cards list
+====================
+
+.. tabularcolumns:: |p{1.4cm}|p{11.1cm}|p{4.2cm}|
+
+.. flat-table::
+   :header-rows: 1
+   :widths: 2 19 18
+   :stub-columns: 0
+
+   * - Card number
+     - Card name
+     - USB IDs
+
+   * - 0
+     - Xanboo
+     - 0a6f:0400
+
+   * - 1
+     - Belkin USB VideoBus II Adapter
+     - 050d:0106
+
+   * - 2
+     - Belkin Components USB VideoBus
+     - 050d:0207
+
+   * - 3
+     - Belkin USB VideoBus II
+     - 050d:0208
+
+   * - 4
+     - echoFX InterView Lite
+     - 0571:0002
+
+   * - 5
+     - USBGear USBG-V1 resp. HAMA USB
+     - 0573:0003
+
+   * - 6
+     - D-Link V100
+     - 0573:0400
+
+   * - 7
+     - X10 USB Camera
+   

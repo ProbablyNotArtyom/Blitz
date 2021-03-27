@@ -1,0 +1,56 @@
+Generic HDLC layer
+Krzysztof Halasa <khc@pm.waw.pl>
+
+
+Generic HDLC layer currently supports:
+1. Frame Relay (ANSI, CCITT, Cisco and no LMI)
+   - Normal (routed) and Ethernet-bridged (Ethernet device emulation)
+     interfaces can share a single PVC.
+   - ARP support (no InARP support in the kernel - there is an
+     experimental InARP user-space daemon available on:
+     http://www.kernel.org/pub/linux/utils/net/hdlc/).
+2. raw HDLC - either IP (IPv4) interface or Ethernet device emulation
+3. Cisco HDLC
+4. PPP
+5. X.25 (uses X.25 routines).
+
+Generic HDLC is a protocol driver only - it needs a low-level driver
+for your particular hardware.
+
+Ethernet device emulation (using HDLC or Frame-Relay PVC) is compatible
+with IEEE 802.1Q (VLANs) and 802.1D (Ethernet bridging).
+
+
+Make sure the hdlc.o and the hardware driver are loaded. It should
+create a number of "hdlc" (hdlc0 etc) network devices, one for each
+WAN port. You'll need the "sethdlc" utility, get it from:
+	http://www.kernel.org/pub/linux/utils/net/hdlc/
+
+Compile sethdlc.c utility:
+	gcc -O2 -Wall -o sethdlc sethdlc.c
+Make sure you're using a correct version of sethdlc for your kernel.
+
+Use sethdlc to set physical interface, clock rate, HDLC mode used,
+and add any required PVCs if using Frame Relay.
+Usually you want something like:
+
+	sethdlc hdlc0 clock int rate 128000
+	sethdlc hdlc0 cisco interval 10 timeout 25
+or
+	sethdlc hdlc0 rs232 clock ext
+	sethdlc hdlc0 fr lmi ansi
+	sethdlc hdlc0 create 99
+	ifconfig hdlc0 up
+	ifconfig pvc0 localIP pointopoint remoteIP
+
+In Frame Relay mode, ifconfig master hdlc device up (without assigning
+any IP address to it) before using pvc devices.
+
+
+Setting interface:
+
+* v35 | rs232 | x21 | t1 | e1 - sets physical interface for a given port
+                                if the card has software-selectable interfaces
+  loopback - activate hardware loopback (for testing only)
+* clock ext - both RX clock and TX clock external
+* clock int - both RX clock and TX cloc

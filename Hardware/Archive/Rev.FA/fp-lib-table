@@ -1,6 +1,0 @@
-(fp_lib_table
-  (lib (name BBlitz)(type KiCad)(uri /home/artyom/Desktop/Projects/BBlitz/Hardware/BBlitz.pretty)(options "")(descr ""))
-  (lib (name Blitz)(type KiCad)(uri /home/artyom/Desktop/Projects/Blitz/Hardware/Rev.B/Blitz.pretty)(options "")(descr ""))
-  (lib (name Azure)(type KiCad)(uri "/home/artyom/Desktop/Projects/Azure SBC/Azure.pretty")(options "")(descr ""))
-  (lib (name rescue-backup)(type KiCad)(uri /home/artyom/Desktop/Projects/Blitz/Hardware/Rev.B/rescue-backup)(options "")(descr ""))
-)

@@ -1,0 +1,69 @@
+/*
+ * Device Tree Source for OMAP34XX/OMAP36XX clock data
+ *
+ * Copyright (C) 2013 Texas Instruments, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+&cm_clocks {
+	security_l4_ick2: security_l4_ick2 {
+		#clock-cells = <0>;
+		compatible = "fixed-factor-clock";
+		clocks = <&l4_ick>;
+		clock-mult = <1>;
+		clock-div = <1>;
+	};
+
+	aes1_ick: aes1_ick@a14 {
+		#clock-cells = <0>;
+		compatible = "ti,omap3-interface-clock";
+		clocks = <&security_l4_ick2>;
+		ti,bit-shift = <3>;
+		reg = <0x0a14>;
+	};
+
+	rng_ick: rng_ick@a14 {
+		#clock-cells = <0>;
+		compatible = "ti,omap3-interface-clock";
+		clocks = <&security_l4_ick2>;
+		reg = <0x0a14>;
+		ti,bit-shift = <2>;
+	};
+
+	sha11_ick: sha11_ick@a14 {
+		#clock-cells = <0>;
+		compatible = "ti,omap3-interface-clock";
+		clocks = <&security_l4_ick2>;
+		reg = <0x0a14>;
+		ti,bit-shift = <1>;
+	};
+
+	des1_ick: des1_ick@a14 {
+		#clock-cells = <0>;
+		compatible = "ti,omap3-interface-clock";
+		clocks = <&security_l4_ick2>;
+		reg = <0x0a14>;
+		ti,bit-shift = <0>;
+	};
+
+	cam_mclk: cam_mclk@f00 {
+		#clock-cells = <0>;
+		compatible = "ti,gate-clock";
+		clocks = <&dpll4_m5x2_ck>;
+		ti,bit-shift = <0>;
+		reg = <0x0f00>;
+		ti,set-rate-parent;
+	};
+
+	cam_ick: cam_ick@f10 {
+		#clock-cells = <0>;
+		compatible = "ti,omap3-no-wait-interface-clock";
+		clocks = <&l4_ick>;
+		reg = <0x0f10>;
+		ti,bit-shift = <0>;
+	};
+
+	csi2_96m_fck: csi2_96m_fck@f00 {
+	

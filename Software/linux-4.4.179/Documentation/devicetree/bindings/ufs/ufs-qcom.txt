@@ -1,0 +1,98 @@
+/*
+ * Copyright (C) 2014 Florian Vaussard, EPFL Mobots group
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include "omap4-duovero.dtsi"
+
+#include <dt-bindings/input/input.h>
+
+/ {
+	model = "OMAP4430 Gumstix Duovero on Parlor";
+	compatible = "gumstix,omap4-duovero-parlor", "gumstix,omap4-duovero", "ti,omap4430", "ti,omap4";
+
+	aliases {
+		display0 = &hdmi0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led0 {
+			label = "duovero:blue:led0";
+			gpios = <&gpio4 26 GPIO_ACTIVE_HIGH>;	/* gpio_122 */
+			linux,default-trigger = "heartbeat";
+		};
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		button0 {
+			label = "button0";
+			linux,code = <BTN_0>;
+			gpios = <&gpio4 25 GPIO_ACTIVE_LOW>;	/* gpio_121 */
+			/* Value above 7.95ms for no GPIO hardware debounce */
+			debounce-interval = <10>;
+			wakeup-source;
+		};
+	};
+
+	hdmi0: connector {
+		compatible = "hdmi-connector";
+		label = "hdmi";
+
+		type = "d";
+
+		hpd-gpios = <&gpio2 31 GPIO_ACTIVE_HIGH>;	/* gpio_63 */
+
+		port {
+			hdmi_connector_in: endpoint {
+				remote-endpoint = <&hdmi_out>;
+			};
+		};
+	};
+};
+
+&omap4_pmx_core {
+	pinctrl-0 = <
+			&led_pins
+			&button_pins
+			&smsc_pins
+	>;
+
+	led_pins: pinmux_led_pins {
+		pinctrl-single,pins = <
+			OMAP4_IOPAD(0x116, PIN_OUTPUT | MUX_MODE3)		/* abe_dmic_din3.gpio_122 */
+		>;
+	};
+
+	button_pins: pinmux_button_pins {
+		pinctrl-single,pins = <
+			OMAP4_IOPAD(0x114, PIN_INPUT_PULLUP | MUX_MODE3)	/* abe_dmic_din2.gpio_121 */
+		>;
+	};
+
+	i2c2_pins: pinmux_i2c2_pins {
+		pinctrl-single,pins = <
+			OMAP4_IOPAD(0x126, PIN_INPUT_PULLUP | MUX_MODE0)	/* i2c2_scl */
+			OMAP4_IOPAD(0x128, PIN_INPUT_PULLUP | MUX_MODE0)	/* i2c2_sda */
+		>;
+	};
+
+	i2c3_pins: pinmux_i2c3_pins {
+		pinctrl-single,pins = <
+			OMAP4_IOPAD(0x12a, PIN_INPUT_PULLUP | MUX_MODE0)	/* i2c3_scl */
+			OMAP4_IOPAD(0x12c, PIN_INPUT_PULLUP | MUX_MODE0)	/* i2c3_sda */
+		>;
+	};
+
+	smsc_pins: pinmux_smsc_pins {
+		pinctrl-single,pins = <
+			OMAP4_IOPAD(0x068, PIN_INPUT | MUX_MODE3)		/* gpmc_a20.gpio_44: IRQ */
+			OMAP4_IOPAD(0x06a, PIN_INPUT_PULLUP | MUX_MODE3)	/* gpmc_a21.gpio_45: nReset */
+			OMA

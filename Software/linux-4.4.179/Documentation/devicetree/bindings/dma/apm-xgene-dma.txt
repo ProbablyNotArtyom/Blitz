@@ -1,0 +1,54 @@
+/**
+ * @file arch/alpha/oprofile/common.c
+ *
+ * @remark Copyright 2002 OProfile authors
+ * @remark Read the file COPYING
+ *
+ * @author Richard Henderson <rth@twiddle.net>
+ */
+
+#include <linux/oprofile.h>
+#include <linux/init.h>
+#include <linux/smp.h>
+#include <linux/errno.h>
+#include <asm/ptrace.h>
+#include <asm/special_insns.h>
+
+#include "op_impl.h"
+
+extern struct op_axp_model op_model_ev4 __attribute__((weak));
+extern struct op_axp_model op_model_ev5 __attribute__((weak));
+extern struct op_axp_model op_model_pca56 __attribute__((weak));
+extern struct op_axp_model op_model_ev6 __attribute__((weak));
+extern struct op_axp_model op_model_ev67 __attribute__((weak));
+
+static struct op_axp_model *model;
+
+extern void (*perf_irq)(unsigned long, struct pt_regs *);
+static void (*save_perf_irq)(unsigned long, struct pt_regs *);
+
+static struct op_counter_config ctr[20];
+static struct op_system_config sys;
+static struct op_register_config reg;
+
+/* Called from do_entInt to handle the performance monitor interrupt.  */
+
+static void
+op_handle_interrupt(unsigned long which, struct pt_regs *regs)
+{
+	model->handle_interrupt(which, regs, ctr);
+
+	/* If the user has selected an interrupt frequency that is
+	   not exactly the width of the counter, write a new value
+	   into the counter such that it'll overflow after N more
+	   events.  */
+	if ((reg.need_reset >> which) & 1)
+		model->reset_ctr(&reg, which);
+}
+ 
+static int
+op_axp_setup(void)
+{
+	unsigned long i, e;
+
+	/* Install our interrupt handler into the exis

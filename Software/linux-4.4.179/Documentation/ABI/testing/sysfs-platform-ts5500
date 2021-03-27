@@ -1,0 +1,38 @@
+The Linux kernel GTP tunneling module
+======================================================================
+Documentation by Harald Welte <laforge@gnumonks.org> and
+                 Andreas Schultz <aschultz@tpip.net>
+
+In 'drivers/net/gtp.c' you are finding a kernel-level implementation
+of a GTP tunnel endpoint.
+
+== What is GTP ==
+
+GTP is the Generic Tunnel Protocol, which is a 3GPP protocol used for
+tunneling User-IP payload between a mobile station (phone, modem)
+and the interconnection between an external packet data network (such
+as the internet).
+
+So when you start a 'data connection' from your mobile phone, the
+phone will use the control plane to signal for the establishment of
+such a tunnel between that external data network and the phone.  The
+tunnel endpoints thus reside on the phone and in the gateway.  All
+intermediate nodes just transport the encapsulated packet.
+
+The phone itself does not implement GTP but uses some other
+technology-dependent protocol stack for transmitting the user IP
+payload, such as LLC/SNDCP/RLC/MAC.
+
+At some network element inside the cellular operator infrastructure
+(SGSN in case of GPRS/EGPRS or classic UMTS, hNodeB in case of a 3G
+femtocell, eNodeB in case of 4G/LTE), the cellular protocol stacking
+is translated into GTP *without breaking the end-to-end tunnel*.  So
+intermediate nodes just perform some specific relay function.
+
+At some point the GTP packet ends up on the so-called GGSN (GSM/UMTS)
+or P-GW (LTE), which terminates the tunnel, decapsulates the packet
+and forwards it onto an external packet data network.  This can be
+public internet, but can also be any private IP network (or even
+theoretically some non-IP network like X.25).
+
+You can find the protocol specification in 3GPP TS 29.060, av

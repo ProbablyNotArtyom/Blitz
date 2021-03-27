@@ -1,0 +1,23 @@
+/*
+ * Embedded Artist LPC4357 Developer's Kit
+ *
+ * Copyright 2015 Joachim Eastwood <manabian@gmail.com>
+ *
+ * This code is released using a dual license strategy: BSD/GPL
+ * You can choose the licence that better fits your requirements.
+ *
+ * Released under the terms of 3-clause BSD License
+ * Released under the terms of GNU General Public License Version 2.0
+ *
+ */
+/dts-v1/;
+
+#include "lpc18xx.dtsi"
+#include "lpc4357.dtsi"
+
+#include "dt-bindings/input/input.h"
+#include "dt-bindings/gpio/gpio.h"
+
+/ {
+	model = "Embedded Artists' LPC4357 Developer's Kit";
+	compatible = "ea,lpc4357-developers-kit", "nxp,lpc4357", "nxp,lp

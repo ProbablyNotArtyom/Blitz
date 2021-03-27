@@ -1,0 +1,108 @@
+Changes in 4.4
+==============
+* Fix Linux/ia64 support, looks like someone renamed a few things on us
+* Fix the ioctl setup for Linux, turned out it did not really work.
+  Improve the ioctl extracter as well so we decode some more ones.
+
+Changes in 4.3.1
+================
+* compile fixes for Linux/mips
+
+Changes in 4.3
+==============
+* Linux ia64 and hppa ports added
+* The usual Linux syscall updates (includes 32bit uid/gid support),
+* Linux ioctl list updated
+* Support IPv6 scope ids
+* FreeBSD/i386 port added
+* UnixWare and Solaris updates
+* Better support for tracing multithreaded processes in Linux
+
+Changes in 4.2
+==============
+* Compiles on glibc2.0 systems again
+* Linux/S390 port added
+* The usual Linux syscall updates 
+* we can follow fork on arm now
+
+Changes in 4.1
+================
+* Linux/MIPS port added
+* Lots of Linux updates again
+* Improved IPv6 support
+* Add strace-graph
+
+Changes in 4.0.1
+================
+* Minor bugfixes
+* Compiles on glibc2.0 systems again
+
+Changes in 4.0
+==============
+* Get stat structure properly on Linux 64bit archs
+* Personalities work again
+* Compile correctly on SunOS again
+* IRIX64 updates
+* Solaris updates
+
+Changes in 3.99.1
+=================
+* Linux (ultra)sparc fixes
+* Linux alpha fixes
+* Minor cleanups
+
+Changes in 3.99
+===============
+* New maintainer
+* add support for more Linux architectures (powerpc, sparc, arm)
+* support lots more Linux syscalls
+* fix signal handling
+* add IPX and IPIP support
+* check stray syscall after execv
+* fix hanging children
+
+Changes in version 3.1
+======================
+
+* Irix5 is supported
+* Linux 68k is supported
+* Linux alpha is supported
+* configure is upgraded to autoconf 2.x
+* using -f in combination with -e now works correctly
+* output can be piped to a program
+* tracing setuid programs works better
+* it is now reasonable to install strace setuid to root in some circumstances
+* new useful tracing names like file and process to trace whole
+  classes of system calls, e.g. -efile traces all system calls that
+  take a file name as an argument
+* IPC calls on SunOS 4.1.x are decoded
+* Linux program memory is reliably dereferenced
+* Linux decodes at least the name of all syscalls as of pre2.0.4
+* various cosmetic changes and bug fixes
+
+Changes from versions 2.x to version 3.0
+========================================
+
+* filename arguments are neither abbreviated nor stringified
+* string arguments are now true C strings using octal instead of hex by default
+* preprocessor constants are never shortened (e.g. was RDONLY => now O_RDONLY)
+* by default the output for multiple processes now goes into one file
+* all structures, vectors, bitsets, etc. use consistent output formats
+* the -c option now means count calls, -i does what the old -c used to do
+
+New Features in version 3.0
+===========================
+
+* non-ascii strings can be optionally printed entirely in hex
+* the output format is readable when mutiple processes are generating output
+* exit values are printed in an alignment column
+* is is possible to suppress messages about attaching and detaching
+* various tracing features can be enabled on a per syscall/signal/desc basis
+* selective tracing of syscalls
+* selective printing of syscall structures
+* selective abbreviation of long structures on a per syscall basis
+* selective printing of raw syscall arguments and results
+* selective tracing of signals
+* selective dumping of all I/O read from file descriptors
+* selective dumping of all I/O written to file descriptors
+* optional counting of time, calls, and errors for each syscall

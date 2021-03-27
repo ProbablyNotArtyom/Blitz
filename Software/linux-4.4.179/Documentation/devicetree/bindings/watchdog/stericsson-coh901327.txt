@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: GPL-2.0
+
+&tlmm_pinmux {
+	sdc4_gpios: sdc4-gpios {
+		pios {
+			pins = "gpio63", "gpio64", "gpio65", "gpio66", "gpio67", "gpio68";
+			function = "sdc4";
+		};
+	};
+
+	sdcc1_pins: sdcc1-pin-active {
+		clk {
+			pins = "sdc1_clk";
+			drive-strengh = <16>;
+			bias-disable;
+		};
+
+		cmd {
+			pins = "sdc1_cmd";
+			drive-strengh = <10>;
+			bias-pull-up;
+		};
+
+		data {
+			pins = "sdc1_data";
+			drive-strengh = <10>;
+			bias-pull-up;
+		};
+	};
+
+	sdcc3_pins: sdcc3-pin-acti

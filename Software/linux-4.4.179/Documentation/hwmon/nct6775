@@ -1,0 +1,288 @@
+/*
+ * Copyright 2014 Chen-Yu Tsai
+ *
+ * Chen-Yu Tsai <wens@csie.org>
+ *
+ * This file is dual-licensed: you can use it either under the terms
+ * of the GPL or the X11 license, at your option. Note that this dual
+ * licensing only applies to this file, and not this project as a
+ * whole.
+ *
+ *  a) This file is free software; you can redistribute it and/or
+ *     modify it under the terms of the GNU General Public License as
+ *     published by the Free Software Foundation; either version 2 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This file is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ * Or, alternatively,
+ *
+ *  b) Permission is hereby granted, free of charge, to any person
+ *     obtaining a copy of this software and associated documentation
+ *     files (the "Software"), to deal in the Software without
+ *     restriction, including without limitation the rights to use,
+ *     copy, modify, merge, publish, distribute, sublicense, and/or
+ *     sell copies of the Software, and to permit persons to whom the
+ *     Software is furnished to do so, subject to the following
+ *     conditions:
+ *
+ *     The above copyright notice and this permission notice shall be
+ *     included in all copies or substantial portions of the Software.
+ *
+ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ *     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ *     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ *     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ *     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ *     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ *     OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+#include <dt-bindings/clock/sun9i-a80-ccu.h>
+#include <dt-bindings/clock/sun9i-a80-de.h>
+#include <dt-bindings/clock/sun9i-a80-usb.h>
+#include <dt-bindings/reset/sun9i-a80-ccu.h>
+#include <dt-bindings/reset/sun9i-a80-de.h>
+#include <dt-bindings/reset/sun9i-a80-usb.h>
+
+/ {
+	#address-cells = <2>;
+	#size-cells = <2>;
+	interrupt-parent = <&gic>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu0: cpu@0 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			cci-control-port = <&cci_control0>;
+			clock-frequency = <12000000>;
+			enable-method = "allwinner,sun9i-a80-smp";
+			reg = <0x0>;
+		};
+
+		cpu1: cpu@1 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			cci-control-port = <&cci_control0>;
+			clock-frequency = <12000000>;
+			enable-method = "allwinner,sun9i-a80-smp";
+			reg = <0x1>;
+		};
+
+		cpu2: cpu@2 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			cci-control-port = <&cci_control0>;
+			clock-frequency = <12000000>;
+			enable-method = "allwinner,sun9i-a80-smp";
+			reg = <0x2>;
+		};
+
+		cpu3: cpu@3 {
+			compatible = "arm,cortex-a7";
+			device_type = "cpu";
+			cci-control-port = <&cci_control0>;
+			clock-frequency = <12000000>;
+			enable-method = "allwinner,sun9i-a80-smp";
+			reg = <0x3>;
+		};
+
+		cpu4: cpu@100 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			cci-control-port = <&cci_control1>;
+			clock-frequency = <18000000>;
+			enable-method = "allwinner,sun9i-a80-smp";
+			reg = <0x100>;
+		};
+
+		cpu5: cpu@101 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			cci-control-port = <&cci_control1>;
+			clock-frequency = <18000000>;
+			enable-method = "allwinner,sun9i-a80-smp";
+			reg = <0x101>;
+		};
+
+		cpu6: cpu@102 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			cci-control-port = <&cci_control1>;
+			clock-frequency = <18000000>;
+			enable-method = "allwinner,sun9i-a80-smp";
+			reg = <0x102>;
+		};
+
+		cpu7: cpu@103 {
+			compatible = "arm,cortex-a15";
+			device_type = "cpu";
+			cci-control-port = <&cci_control1>;
+			clock-frequency = <18000000>;
+			enable-method = "allwinner,sun9i-a80-smp";
+			reg = <0x103>;
+		};
+	};
+
+	timer {
+		compatible = "arm,armv7-timer";
+		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+		clock-frequency = <24000000>;
+		arm,cpu-registers-not-fw-configured;
+	};
+
+	clocks {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		/*
+		 * map 64 bit address range down to 32 bits,
+		 * as the peripherals are all under 512MB.
+		 */
+		ranges = <0 0 0 0x20000000>;
+
+		/*
+		 * This clock is actually configurable from the PRCM address
+		 * space. The external 24M oscillator can be turned off, and
+		 * the clock switched to an internal 16M RC oscillator. Under
+		 * normal operation there's no reason to do this, and the
+		 * default is to use the external good one, so just model this
+		 * as a fixed clock. Also it is not entirely clear if the
+		 * osc24M mux in the PRCM affects the entire clock tree, which
+		 * would also throw all the PLL clock rates off, or just the
+		 * downstream clocks in the PRCM.
+		 */
+		osc24M: clk-24M {
+			#clock-cells = <0>;
+			compatible = "fixed-clock";
+			clock-frequency = <24000000>;
+			clock-output-names = "osc24M";
+		};
+
+		/*
+		 * The 32k clock is from an external source, normally the
+		 * AC100 codec/RTC chip. This serves as a placeholder for
+		 * board dts files to specify the source.
+		 */
+		osc32k: clk-32k {
+			#clock-cells = <0>;
+			compatible = "fixed-factor-clock";
+			clock-div = <1>;
+			clock-mult = <1>;
+			clock-output-names = "osc32k";
+		};
+
+		cpus_clk: clk@8001410 {
+			compatible = "allwinner,sun9i-a80-cpus-clk";
+			reg = <0x08001410 0x4>;
+			#clock-cells = <0>;
+			clocks = <&osc32k>, <&osc24M>,
+				 <&ccu CLK_PLL_PERIPH0>,
+				 <&ccu CLK_PLL_AUDIO>;
+			clock-output-names = "cpus";
+		};
+
+		ahbs: clk-ahbs {
+			compatible = "fixed-factor-clock";
+			#clock-cells = <0>;
+			clock-div = <1>;
+			clock-mult = <1>;
+			clocks = <&cpus_clk>;
+			clock-output-names = "ahbs";
+		};
+
+		apbs: clk@800141c {
+			compatible = "allwinner,sun8i-a23-apb0-clk";
+			reg = <0x0800141c 0x4>;
+			#clock-cells = <0>;
+			clocks = <&ahbs>;
+			clock-output-names = "apbs";
+		};
+
+		apbs_gates: clk@8001428 {
+			compatible = "allwinner,sun9i-a80-apbs-gates-clk";
+			reg = <0x08001428 0x4>;
+			#clock-cells = <1>;
+			clocks = <&apbs>;
+			clock-indices = <0>, <1>,
+					<2>, <3>,
+					<4>, <5>,
+					<6>, <7>,
+					<12>, <13>,
+					<16>, <17>,
+					<18>, <20>;
+			clock-output-names = "apbs_pio", "apbs_ir",
+					"apbs_timer", "apbs_rsb",
+					"apbs_uart", "apbs_1wire",
+					"apbs_i2c0", "apbs_i2c1",
+					"apbs_ps2_0", "apbs_ps2_1",
+					"apbs_dma", "apbs_i2s0",
+					"apbs_i2s1", "apbs_twd";
+		};
+
+		r_1wire_clk: clk@8001450 {
+			reg = <0x08001450 0x4>;
+			#clock-cells = <0>;
+			compatible = "allwinner,sun4i-a10-mod0-clk";
+			clocks = <&osc32k>, <&osc24M>;
+			clock-output-names = "r_1wire";
+		};
+
+		r_ir_clk: clk@8001454 {
+			reg = <0x08001454 0x4>;
+			#clock-cells = <0>;
+			compatible = "allwinner,sun4i-a10-mod0-clk";
+			clocks = <&osc32k>, <&osc24M>;
+			clock-output-names = "r_ir";
+		};
+	};
+
+	de: display-engine {
+		compatible = "allwinner,sun9i-a80-display-engine";
+		allwinner,pipelines = <&fe0>, <&fe1>;
+		status = "disabled";
+	};
+
+	soc {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		/*
+		 * map 64 bit address range down to 32 bits,
+		 * as the peripherals are all under 512MB.
+		 */
+		ranges = <0 0 0 0x20000000>;
+
+		sram_b: sram@20000 {
+			/* 256 KiB secure SRAM at 0x20000 */
+			compatible = "mmio-sram";
+			reg = <0x00020000 0x40000>;
+
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0 0x00020000 0x40000>;
+
+			smp-sram@1000 {
+				/*
+				 * This is checked by BROM to determine if
+				 * cpu0 should jump to SMP entry vector
+				 */
+				compatible = "allwinner,sun9i-a80-smp-sram";
+				reg = <0x1000 0x8>;
+			};
+		};
+
+		ehci0: usb@a00000 {
+			compatible = "allwinner,sun9i-a80-ehci", "generic-ehci";
+			re

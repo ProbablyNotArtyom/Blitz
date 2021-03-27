@@ -1,0 +1,20 @@
+                        ISO7816 SERIAL COMMUNICATIONS
+
+1. INTRODUCTION
+
+  ISO/IEC7816 is a series of standards specifying integrated circuit cards (ICC)
+  also known as smart cards.
+
+2. HARDWARE-RELATED CONSIDERATIONS
+
+  Some CPUs/UARTs (e.g., Microchip AT91) contain a built-in mode capable of
+  handling communication with a smart card.
+
+  For these microcontrollers, the Linux driver should be made capable of
+  working in both modes, and proper ioctls (see later) should be made
+  available at user-level to allow switching from one mode to the other, and
+  vice versa.
+
+3. DATA STRUCTURES ALREADY AVAILABLE IN THE KERNEL
+
+  The Linux kernel provides the serial_iso7816 structure (see [1]) to handl

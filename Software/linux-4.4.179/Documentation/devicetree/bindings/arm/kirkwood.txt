@@ -1,0 +1,26 @@
+USB 7-Segment Numeric Display
+Manufactured by Delcom Engineering
+
+Device Information
+------------------
+USB VENDOR_ID	0x0fc5
+USB PRODUCT_ID	0x1227
+Both the 6 character and 8 character displays have PRODUCT_ID,
+and according to Delcom Engineering no queryable information
+can be obtained from the device to tell them apart.
+
+Device Modes
+------------
+By default, the driver assumes the display is only 6 characters
+The mode for 6 characters is:
+	MSB 0x06; LSB 0x3f
+For the 8 character display:
+	MSB 0x08; LSB 0xff
+The device can accept "text" either in raw, hex, or ascii textmode.
+raw controls each segment manually,
+hex expects a value between 0-15 per character,
+ascii expects a value between '0'-'9' and 'A'-'F'.
+The default is ascii.
+
+Device Operation
+----------------

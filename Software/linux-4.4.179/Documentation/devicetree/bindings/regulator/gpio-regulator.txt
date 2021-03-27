@@ -1,0 +1,49 @@
+/*
+ * Copyright 2013 Christian Hemp, Phytec Messtechnik GmbH
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+#include <dt-bindings/sound/fsl-imx-audmux.h>
+
+/ {
+	chosen {
+		stdout-path = &uart4;
+	};
+
+	regulators {
+		sound_1v8: regulator@2 {
+			compatible = "regulator-fixed";
+			reg = <2>;
+			regulator-name = "i2s-audio-1v8";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+		};
+
+		sound_3v3: regulator@3 {
+			compatible = "regulator-fixed";
+			reg = <3>;
+			regulator-name = "i2s-audio-3v3";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+		};
+	};
+
+	tlv320_mclk: oscillator {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <19200000>;
+		clock-output-names = "tlv320-mclk";
+	};
+
+	sound {
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "OnboardTLV320AIC3007";
+		simple-audio-card,format = "i2s";
+		simple-audio-card,bitclock-master = <&dailink_master>;
+		simple-audio-card,frame-master = <&dai

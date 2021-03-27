@@ -1,0 +1,21 @@
+/*
+ *  Copyright (C) 2013-2014 Linaro Ltd.
+ *  Author: Haojian Zhuang <haojian.zhuang@linaro.org>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License version 2 as
+ *  publishhed by the Free Software Foundation.
+ */
+
+/dts-v1/;
+
+#include "hip04.dtsi"
+
+/ {
+	/* memory bus is 64-bit */
+	#address-cells = <2>;
+	#size-cells = <2>;
+	model = "Hisilicon D01 Development Board";
+	compatible = "hisilicon,hip04-d01";
+
+	memory@0,10000

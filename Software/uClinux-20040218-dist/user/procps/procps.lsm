@@ -1,0 +1,16 @@
+Begin3
+Title: procps
+Version: 2.0.7
+Entered-date: 14JUL00
+Description: Procps is a library which parses the textual /proc filesystem
+	and a suite of utilites which use the library.
+Keywords: procps /proc libproc
+	ps uptime tload free w top vmstat watch skill snice kill pgrep pkill
+Author: Michael K. Johnson, Charles Blake, Albert Cahalan, many others.
+Maintained-by: Michael K. Johnson <procps-bugs@redhat.com>
+Primary-site: people.redhat.com /johnsonm/procps/
+	185kB procps-2.0.6.tar.gz
+Alternate-site: metalab.unc.edu /pub/Linux/system/status/ps
+	185kB procps-2.0.6.tar.gz
+Copying-policy: mixed
+End

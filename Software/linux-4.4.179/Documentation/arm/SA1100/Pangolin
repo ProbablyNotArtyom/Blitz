@@ -1,0 +1,22 @@
+
+README for the SCSI media changer driver
+========================================
+
+This is a driver for SCSI Medium Changer devices, which are listed
+with "Type: Medium Changer" in /proc/scsi/scsi.
+
+This is for *real* Jukeboxes.  It is *not* supported to work with
+common small CD-ROM changers, neither one-lun-per-slot SCSI changers
+nor IDE drives.
+
+Userland tools available from here:
+	http://linux.bytesex.org/misc/changer.html
+
+
+General Information
+-------------------
+
+First some words about how changers work: A changer has 2 (possibly
+more) SCSI ID's. One for the changer device which controls the robot,
+and one for the device which actually reads and writes the data. The
+later may be anything, a M

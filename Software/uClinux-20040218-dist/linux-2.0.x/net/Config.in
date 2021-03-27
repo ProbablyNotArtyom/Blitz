@@ -1,0 +1,31 @@
+#
+# Network configuration
+#
+mainmenu_option next_comment
+comment 'Networking options'
+bool 'Network firewalls' CONFIG_FIREWALL
+bool 'Network aliasing'  CONFIG_NET_ALIAS
+bool 'TCP/IP networking' CONFIG_INET
+if [ "$CONFIG_INET" = "y" ]; then
+   source net/ipv4/Config.in
+fi
+comment ' '
+tristate 'The IPX protocol' CONFIG_IPX
+tristate 'Appletalk DDP' CONFIG_ATALK
+tristate 'Amateur Radio AX.25 Level 2' CONFIG_AX25
+if [ "$CONFIG_AX25" != "n" ]; then
+   dep_tristate '  Amateur Radio NET/ROM' CONFIG_NETROM $CONFIG_AX25
+   dep_tristate '  Amateur Radio X.25 PLP (Rose)' CONFIG_ROSE $CONFIG_AX25
+fi
+if [ "$CONFIG_EXPERIMENTAL" = "y" ]; then
+   bool 'Bridging (EXPERIMENTAL)' CONFIG_BRIDGE
+fi
+bool 'Kernel/User network link driver' CONFIG_NETLINK
+if [ "$CONFIG_NETLINK" = "y" ]; then
+   bool '  Routing messages' CONFIG_RTNETLINK
+fi
+tristate 'IP Security Protocol (FreeS/WAN IPSEC)' CONFIG_IPSEC
+if [ "$CONFIG_IPSEC" != "n" ]; then
+   source ../freeswan/klips/net/ipsec/Config.in
+fi
+endmenu

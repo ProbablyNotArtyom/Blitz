@@ -1,0 +1,128 @@
+/*
+ * NXP LPC32xx SoC
+ *
+ * Copyright 2012 Roland Stigge <stigge@antcom.de>
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+#include "skeleton.dtsi"
+
+#include <dt-bindings/clock/lpc32xx-clock.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/ {
+	compatible = "nxp,lpc3220";
+	interrupt-parent = <&mic>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			compatible = "arm,arm926ej-s";
+			device_type = "cpu";
+			reg = <0x0>;
+		};
+	};
+
+	clocks {
+		xtal_32k: xtal_32k {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <32768>;
+			clock-output-names = "xtal_32k";
+		};
+
+		xtal: xtal {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <13000000>;
+			clock-output-names = "xtal";
+		};
+	};
+
+	ahb {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		ranges = <0x00000000 0x00000000 0x10000000>,
+			 <0x20000000 0x20000000 0x30000000>,
+			 <0xe0000000 0xe0000000 0x04000000>;
+
+		iram: sram@8000000 {
+			compatible = "mmio-sram";
+			reg = <0x08000000 0x20000>;
+
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0x00000000 0x08000000 0x20000>;
+		};
+
+		/*
+		 * Enable either SLC or MLC
+		 */
+		slc: flash@20020000 {
+			compatible = "nxp,lpc3220-slc";
+			reg = <0x20020000 0x1000>;
+			clocks = <&clk LPC32XX_CLK_SLC>;
+			status = "disabled";
+		};
+
+		mlc: flash@200a8000 {
+			compatible = "nxp,lpc3220-mlc";
+			reg = <0x200a8000 0x11000>;
+			interrupts = <11 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk LPC32XX_CLK_MLC>;
+			status = "disabled";
+		};
+
+		dma: dma@31000000 {
+			compatible = "arm,pl080", "arm,primecell";
+			reg = <0x31000000 0x1000>;
+			interrupts = <28 IRQ_TYPE_LEVEL_HIGH>;
+			clocks = <&clk LPC32XX_CLK_DMA>;
+			clock-names = "apb_pclk";
+		};
+
+		usb {
+			#address-cells = <1>;
+			#size-cells = <1>;
+			compatible = "simple-bus";
+			ranges = <0x0 0x31020000 0x00001000>;
+
+			/*
+			 * Enable either ohci or usbd (gadget)!
+			 */
+			ohci: ohci@0 {
+				compatible = "nxp,ohci-nxp", "usb-ohci";
+				reg = <0x0 0x300>;
+				interrupt-parent = <&sic1>;
+				interrupts = <27 IRQ_TYPE_LEVEL_HIGH>;
+				clocks = <&usbclk LPC32XX_USB_CLK_HOST>;
+				status = "disabled";
+			};
+
+			usbd: usbd@0 {
+				compatible = "nxp,lpc3220-udc";
+				reg = <0x0 0x300>;
+				interrupt-parent = <&sic1>;
+				interrupts = <29 IRQ_TYPE_LEVEL_HIGH>,
+					     <30 IRQ_TYPE_LEVEL_HIGH>,
+					     <28 IRQ_TYPE_LEVEL_HIGH>,
+					     <26 IRQ_TYPE_LEVEL_LOW>;
+				clocks = <&usbclk LPC32XX_USB_CLK_DEVICE>;
+				status = "disabled";
+			};
+
+			i2cusb: i2c@300 {
+				compatible = "nxp,pnx-i2c";
+				reg = <0x300 0x100>;
+				interrupt-parent = <&sic1>;
+				interrupts = <31 IRQ_TYPE_LEVEL_HIGH>;
+				clocks = <&usbclk LPC32XX_USB_CLK_I

@@ -1,0 +1,351 @@
+Excerpt from UltraSPARC Virtual Machine Specification
+Compiled from version 3.0.20+15
+Publication date 2017-09-25 08:21
+Copyright © 2008, 2015 Oracle and/or its affiliates. All rights reserved.
+Extracted via "pdftotext -f 547 -l 572 -layout sun4v_20170925.pdf"
+Authors:
+	 Charles Kunzman
+	 Sam Glidden
+	 Mark Cianchetti
+
+
+Chapter 36. Coprocessor services
+        The following APIs provide access via the Hypervisor to hardware assisted data processing functionality.
+        These APIs may only be provided by certain platforms, and may not be available to all virtual machines
+        even on supported platforms. Restrictions on the use of these APIs may be imposed in order to support
+        live-migration and other system management activities.
+
+36.1. Data Analytics Accelerator
+        The Data Analytics Accelerator (DAX) functionality is a collection of hardware coprocessors that provide
+        high speed processoring of database-centric operations. The coprocessors may support one or more of
+        the following data query operations: search, extraction, compression, decompression, and translation. The
+        functionality offered may vary by virtual machine implementation.
+
+        The DAX is a virtual device to sun4v guests, with supported data operations indicated by the virtual device
+        compatibilty property. Functionality is accessed through the submission of Command Control Blocks
+        (CCBs) via the ccb_submit API function. The operations are processed asynchronously, with the status
+        of the submitted operations reported through a Completion Area linked to each CCB. Each CCB has a
+        separate Completion Area and, unless execution order is specifically restricted through the use of serial-
+        conditional flags, the execution order of submitted CCBs is arbitrary. Likewise, the time to completion
+        for a given CCB is never guaranteed.
+
+        Guest software may implement a software timeout on CCB operations, and if the timeout is exceeded, the
+        operation may be cancelled or killed via the ccb_kill API function. It is recommended for guest software
+        to implement a software timeout to account for certain RAS errors which may result in lost CCBs. It is
+        recommended such implementation use the ccb_info API function to check the status of a CCB prior to
+        killing it in order to determine if the CCB is still in queue, or may have been lost due to a RAS error.
+
+        There is no fixed limit on the number of outstanding CCBs guest software may have queued in the virtual
+        machine, however, internal resource limitations within the virtual machine can cause CCB submissions
+        to be temporarily rejected with EWOULDBLOCK. In such cases, guests should continue to attempt
+        submissions until they succeed; waiting for an outstanding CCB to complete is not necessary, and would
+        not be a guarantee that a future submission would succeed.
+
+        The availablility of DAX coprocessor command service is indicated by the presence of the DAX virtual
+        device node in the guest MD (Section 8.24.17, “Database Analytics Accelerators (DAX) virtual-device
+        node”).
+
+36.1.1. DAX Compatibility Property
+        The query functionality may vary based on the compatibility property of the virtual device:
+
+36.1.1.1. "ORCL,sun4v-dax" Device Compatibility
+        Available CCB commands:
+
+        • No-op/Sync
+
+        • Extract
+
+        • Scan Value
+
+        • Inverted Scan Value
+
+        • Scan Range
+
+
+                                                     509
+                                             Coprocessor services
+
+
+        • Inverted Scan Range
+
+        • Translate
+
+        • Inverted Translate
+
+        • Select
+
+        See Section 36.2.1, “Query CCB Command Formats” for the corresponding CCB input and output formats.
+
+        Only version 0 CCBs are available.
+
+36.1.1.2. "ORCL,sun4v-dax-fc" Device Compatibility
+        "ORCL,sun4v-dax-fc" is compatible with the "ORCL,sun4v-dax" interface, and includes additional CCB
+        bit fields and controls.
+
+36.1.1.3. "ORCL,sun4v-dax2" Device Compatibility
+        Available CCB commands:
+
+        • No-op/Sync
+
+        • Extract
+
+        • Scan Value
+
+        • Inverted Scan Value
+
+        • Scan Range
+
+        • Inverted Scan Range
+
+        • Translate
+
+        • Inverted Translate
+
+        • Select
+
+        See Section 36.2.1, “Query CCB Command Formats” for the corresponding CCB input and output formats.
+
+        Version 0 and 1 CCBs are available. Only version 0 CCBs may use Huffman encoded data, whereas only
+        version 1 CCBs may use OZIP.
+
+36.1.2. DAX Virtual Device Interrupts
+        The DAX virtual device has multiple interrupts associated with it which may be used by the guest if
+        desired. The number of device interrupts available to the guest is indicated in the virtual device node of the
+        guest MD (Section 8.24.17, “Database Analytics Accelerators (DAX) virtual-device node”). If the device
+        node indicates N interrupts available, the guest may use any value from 0 to N - 1 (inclusive) in a CCB
+        interrupt number field. Using values outside this range will result in the CCB being rejected for an invalid
+        field value.
+
+        The interrupts may be bound and managed using the standard sun4v device interrupts API (Chapter 16,
+        Device interrupt services). Sysino interrupts are not available for DAX devices.
+
+36.2. Coprocessor Control Block (CCB)
+        CCBs are either 64 or 128 bytes long, depending on the operation type. The exact contents of the CCB
+        are command specific, but all CCBs contain at least one memory buffer address. All memory locations
+
+
+                                                      510
+                                    Coprocessor services
+
+
+referenced by a CCB must be pinned in memory until the CCB either completes execution or is killed
+via the ccb_kill API call. Changes in virtual address mappings occurring after CCB submission are not
+guaranteed to be visible, and as such all virtual address updates need to be synchronized with CCB
+execution.
+
+All CCBs begin with a common 32-bit header.
+
+Table 36.1. CCB Header Format
+Bits          Field Description
+[31:28]       CCB version. For API version 2.0: set to 1 if CCB uses OZIP encoding; set to 0 if the CCB
+              uses Huffman encoding; otherwise either 0 or 1. For API version 1.0: always set to 0.
+[27]          When API version 2.0 is negotiated, this is the Pipeline Flag [512]. It is reserved in
+              API version 1.0
+[26]          Long CCB flag [512]
+[25]          Conditional synchronization flag [512]
+[24]          Serial synchronization flag
+[23:16]       CCB operation code:
+               0x00        No Operation (No-op) or Sync
+               0x01        Extract
+               0x02        Scan Value
+               0x12        Inverted Scan Value
+               0x03        Scan Range
+               0x13        Inverted Scan Range
+               0x04        Translate
+               0x14        Inverted Translate
+               0x05        Select
+[15:13]       Reserved
+[12:11]       Table address type
+               0b'00       No address
+               0b'01       Alternate context virtual address
+               0b'10       Real address
+               0b'11       Primary context virtual address
+[10:8]        Output/Destination address type
+               0b'000      No address
+               0b'001      Alternate context virtual address
+               0b'010      Real address
+               0b'011      Primary context virtual address
+               0b'100      Reserved
+               0b'101      Reserved
+               0b'110      Reserved
+               0b'111      Reserved
+[7:5]         Secondary source address type
+
+
+                                            511
+                                    Coprocessor services
+
+
+Bits           Field Description
+                0b'000       No address
+                0b'001       Alternate context virtual address
+                0b'010       Real address
+                0b'011       Primary context virtual address
+                0b'100       Reserved
+                0b'101       Reserved
+                0b'110       Reserved
+                0b'111       Reserved
+[4:2]          Primary source address type
+                0b'000       No address
+                0b'001       Alternate context virtual address
+                0b'010       Real address
+                0b'011       Primary context virtual address
+                0b'100       Reserved
+                0b'101       Reserved
+                0b'110       Reserved
+                0b'111       Reserved
+[1:0]          Completion area address type
+                0b'00        No address
+                0b'01        Alternate context virtual address
+                0b'10        Real address
+                0b'11        Primary context virtual address
+
+The Long CCB flag indicates whether the submitted CCB is 64 or 128 bytes long; value is 0 for 64 bytes
+and 1 for 128 bytes.
+
+The Serial and Conditional flags allow simple relative ordering between CCBs. Any CCB with the Serial
+flag set will execute sequentially relative to any previous CCB that is also marked as Serial in the same
+CCB submission. CCBs without the Serial flag set execute independently, even if they are between CCBs
+with the Serial flag set. CCBs marked solely with the Serial flag will execute upon the completion of the
+previous Serial CCB, regardless of the completion status of that CCB. The Conditional flag allows CCBs
+to conditionally execute based on the successful execution of the closest CCB marked with the Serial flag.
+A CCB may only be conditional on exactly one CCB, however, a CCB may be marked both Conditional
+and Serial to allow execution chaining. The flags do NOT allow fan-out chaining, where multiple CCBs
+execute in parallel based on the completion of another CCB.
+
+The Pipeline flag is an optimization that directs the output of one CCB (the "source" CCB) directly to
+the input of the next CCB (the "target" CCB). The target CCB thus does not need to read the input from
+memory. The Pipeline flag is advisory and may be dropped.
+
+Both the Pipeline and Serial bits must be set in the source CCB. The Conditional bit must be set in the
+target CCB. Exactly one CCB must be made conditional on the source CCB; either 0 or 2 target CCBs
+is invalid. However, Pipelines can be extended beyond two CCBs: the sequence would start with a CCB
+with both the Pipeline and Serial bits set, proceed through CCBs with the Pipeline, Serial, and Conditional
+bits set, and terminate at a CCB that has the Conditional bit set, but not the Pipeline bit.
+
+
+                                             512
+                                               Coprocessor services
+
+
+          The input of the target CCB must start within 64 bytes of the output of the source CCB or the pipeline flag
+          will be ignored. All CCBs in a pipeline must be submitted in the same call to ccb_submit.
+
+          The various address type fields indicate how the various address values used in the CCB should be
+          interpreted by the virtual machine. Not all of the types specified are used by every CCB format. Types
+          which are not applicable to the given CCB command should be indicated as type 0 (No address). Virtual
+          addresses used in the CCB must have translation entries present in either the TLB or a configured TSB
+          for the submitting virtual processor. Virtual addresses which cannot be translated by the virtual machine
+          will result in the CCB submission being rejected, with the causal virtual address indicated. The CCB
+          may be resubmitted after inserting the translation, or the address may be translated by guest software and
+          resubmitted using the real address translation.
+
+36.2.1. Query CCB Command Formats
+36.2.1.1. Supported Data Formats, Elements Sizes and Offsets
+          Data for query commands may be encoded in multiple possible formats. The data query commands use a
+          common set of values to indicate the encoding formats of the data being processed. Some encoding formats
+          require multiple data streams for processing, requiring the specification of both primary data formats (the
+          encoded data) and secondary data streams (meta-data for the encoded data).
+
+36.2.1.1.1. Primary Input Format
+
+          The primary input format code is a 4-bit field when it is used. There are 10 primary input formats available.
+          The packed formats are not endian neutral. Code values not listed below are reserved.
+
+          Code        Format                              Description
+          0x0         Fixed width byte packed             Up to 16 bytes
+          0x1         Fixed width bit packed              Up to 15 bits (CCB version 0) or 23 bits (CCB version
+                                                          1); bits are read most significant bit to least significant bit
+                                                          within a byte
+          0x2         Variable width byte packed          Data stream of lengths must be provided as a secondary
+                                                          input
+          0x4         Fixed width byte packed with run Up to 16 bytes; data stream of run lengths must be
+                      length encoding                  provided as a secondary input
+          0x5         Fixed width bit packed with run Up to 15 bits (CCB version 0) or 23 bits (CCB version
+                      length encoding                 1); bits are read most significant bit to least significant bit
+                                                      within a byte; data stream of run lengths must be provided
+                                                      as a secondary input
+          0x8         Fixed width byte packed with Up to 16 bytes before the encoding; compressed stream
+                      Huffman (CCB version 0) or bits are read most significant bit to least significant bit
+                      OZIP (CCB version 1) encoding within a byte; pointer to the encoding table must be
+                                                    provided
+          0x9         Fixed width bit packed with Up to 15 bits (CCB version 0) or 23 bits (CCB version
+                      Huffman (CCB version 0) or 1); compressed stream bits are read most significant bit to
+                      OZIP (CCB version 1) encoding least significant bit within a byte; pointer to the encoding
+                                                    table must be provided
+          0xA         Variable width byte packed with Up to 16 bytes before the encoding; compressed stream
+                      Huffman (CCB version 0) or bits are read most significant bit to least significant bit
+                      OZIP (CCB version 1) encoding within a byte; data stream of lengths must be provided as
+                                                      a secondary input; pointer to the encoding table must be
+                                                      provided
+
+
+                                                        513
+                                               Coprocessor services
+
+
+          Code        Format                              Description
+          0xC         Fixed width byte packed with        Up to 16 bytes before the encoding; compressed stream
+                      run length encoding, followed by    bits are read most significant bit to least significant bit
+                      Huffman (CCB version 0) or          within a byte; data stream of run lengths must be provided
+                      OZIP (CCB version 1) encoding       as a secondary input; pointer to the encoding table must
+                                                          be provided
+          0xD         Fixed width bit packed with         Up to 15 bits (CCB version 0) or 23 bits(CCB version 1)
+                      run length encoding, followed by    before the encoding; compressed stream bits are read most
+                      Huffman (CCB version 0) or          significant bit to least significant bit within a byte; data
+                      OZIP (CCB version 1) encoding       stream of run lengths must be provided as a secondary
+                                                          input; pointer to the encoding table must be provided
+
+          If OZIP encoding is used, there must be no reserved bytes in the table.
+
+36.2.1.1.2. Primary Input Element Size
+
+          For primary input data streams with fixed size elements, the element size must be indicated in the CCB
+          command. The size is encoded as the number of bits or bytes, minus one. The valid value range for this
+          field depends on the input format selected, as listed in the table above.
+
+36.2.1.1.3. Secondary Input Format
+
+          For primary input data streams which require a secondary input stream, the secondary input stream is
+          always encoded in a fixed width, bit-packed format. The bits are read from most significant bit to least
+          significant bit within a byte. There are two encoding options for the secondary input stream data elements,
+          depending on whether the value of 0 is needed:
+
+          Secondary           Input Description
+          Format Code
+          0                          Element is stored as value minus 1 (0 evalutes to 1, 1 evalutes
+                                     to 2, etc)
+          1                          Element is stored as value
+
+36.2.1.1.4. Secondary Input Element Size
+
+          Secondary input element size is encoded as a two bit field:
+
+          Secondary Input Size Description
+          Code
+          0x0                        1 bit
+          0x1                        2 bits
+          0x2                        4 bits
+          0x3                        8 bits
+
+36.2.1.1.5. Input Element Offsets
+
+          Bit-wise input data streams may have any alignment within the base addressed byte. The offset, specified
+          from most significant bit to least significant bit, is provided as a fixed 3 bit field for each input type. A
+          value of 0 indicates that the first input element begins at the most significant bit in the first byte, and a
+          value of 7 indicates it begins with the least significant bit.
+
+          This field should be zero for any byte-wise primary input data streams.
+
+
+                                                        514
+                                              Coprocessor services
+
+
+36.2.1.1.6. Output Format
+
+          Query commands support multiple sizes and encodings for output data streams. There are four possible
+          output encodings, and up to four supported element sizes per encoding. Not all output encodings are
+          supported for every command. The format is indicated by a 4-bit field in the CCB:
+
+           

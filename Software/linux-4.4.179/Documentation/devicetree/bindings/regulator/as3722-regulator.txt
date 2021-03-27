@@ -1,0 +1,130 @@
+// SPDX-License-Identifier: GPL-2.0 OR X11
+/*
+ * Copyright 2015 Boundary Devices, Inc.
+ */
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+/ {
+	chosen {
+		stdout-path = &uart2;
+	};
+
+	memory@10000000 {
+		reg = <0x10000000 0x20000000>;
+	};
+
+	regulators {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		reg_2p5v: regulator@0 {
+			compatible = "regulator-fixed";
+			reg = <0>;
+			regulator-name = "2P5V";
+			regulator-min-microvolt = <2500000>;
+			regulator-max-microvolt = <2500000>;
+			regulator-always-on;
+		};
+
+		reg_3p3v: regulator@1 {
+			compatible = "regulator-fixed";
+			reg = <1>;
+			regulator-name = "3P3V";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			regulator-always-on;
+		};
+
+		reg_usb_otg_vbus: regulator@2 {
+			compatible = "regulator-fixed";
+			reg = <2>;
+			regulator-name = "usb_otg_vbus";
+			regulator-min-microvolt = <5000000>;
+			regulator-max-microvolt = <5000000>;
+			gpio = <&gpio3 22 GPIO_ACTIVE_HIGH>;
+			enable-active-high;
+		};
+
+		reg_wlan_vmmc: regulator@3 {
+			compatible = "regulator-fixed";
+			reg = <3>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_wlan_vmmc>;
+			regulator-name = "reg_wlan_vmmc";
+			regulator-min-microvolt = <1800000>;
+			regulator-max-microvolt = <1800000>;
+			gpio = <&gpio6 7 GPIO_ACTIVE_HIGH>;
+			startup-delay-us = <70000>;
+			enable-active-high;
+		};
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_gpio_keys>;
+
+		home {
+			label = "Home";
+			gpios = <&gpio7 13 IRQ_TYPE_LEVEL_LOW>;
+			linux,code = <102>;
+		};
+
+		back {
+			label = "Back";
+			gpios = <&gpio4 5 IRQ_TYPE_LEVEL_LOW>;
+			linux,code = <158>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_leds>;
+
+		j14-pin1 {
+			gpios = <&gpio1 2 GPIO_ACTIVE_LOW>;
+			retain-state-suspended;
+			default-state = "off";
+		};
+
+		j14-pin3 {
+			gpios = <&gpio1 3 GPIO_ACTIVE_LOW>;
+			retain-state-suspended;
+			default-state = "off";
+		};
+
+		j14-pins8-9 {
+			gpios = <&gpio3 29 GPIO_ACTIVE_LOW>;
+			retain-state-suspended;
+			default-state = "off";
+		};
+
+		j46-pin2 {
+			gpios = <&gpio1 7 GPIO_ACTIVE_LOW>;
+			retain-state-suspended;
+			default-state = "off";
+		};
+
+		j46-pin3 {
+			gpios = <&gpio1 8 GPIO_ACTIVE_LOW>;
+			retain-state-suspended;
+			default-state = "off";
+		};
+	};
+
+	backlight-lcd {
+		compatible = "pwm-backlight";
+		pwms = <&pwm1 0 5000000>;
+		brightness-levels = <0 4 8 16 32 64 128 255>;
+		default-brightness-level = <7>;
+		power-supply = <&reg_3p3v>;
+		status = "okay";
+	};
+
+	backlight_lvds0: backlight-lvds0 {
+		compatible = "pwm-backlight";
+		pwms = <&pwm4 0 5000000>;
+		brightness-levels = <0 4 8 16 32 64 128 255>;

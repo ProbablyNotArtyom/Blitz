@@ -1,0 +1,92 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:570: checking host system type
+configure:591: checking target system type
+configure:609: checking build system type
+configure:635: checking for gcc
+configure:712: checking whether the C compiler (gcc  ) works
+configure:726: gcc -o conftest    conftest.c  1>&5
+configure:746: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:751: checking whether we are using GNU C
+configure:760: gcc -E conftest.c
+configure:775: checking whether gcc accepts -g
+configure:806: checking gcc version
+configure:824: checking how to link static binaries
+configure:855: checking for __progname
+configure:868: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:891: checking how to run the C preprocessor
+configure:912: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:955: checking for fcntl.h
+configure:965: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:955: checking for memory.h
+configure:965: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:955: checking for paths.h
+configure:965: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:992: checking whether time.h and sys/time.h may both be included
+configure:1006: gcc -c -g -O2  conftest.c 1>&5
+configure:1031: checking for dirent.h that defines DIR
+configure:1044: gcc -c -g -O2  conftest.c 1>&5
+configure:1069: checking for opendir in -ldir
+configure:1088: gcc -o conftest -g -O2   conftest.c -ldir   1>&5
+ld: cannot open -ldir: No such file or directory
+configure: failed program was:
+#line 1077 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char opendir();
+
+int main() {
+opendir()
+; return 0; }
+configure:1154: checking for gethostbyname
+configure:1182: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1367: checking for socket
+configure:1395: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1496: checking for crypt
+configure:1524: gcc -o conftest -g -O2   conftest.c  1>&5
+/tmp/cca031381.o: In function `main':
+/home/gerg/new-wave/user/thttpd/configure:1518: undefined reference to `crypt'
+configure: failed program was:
+#line 1501 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char crypt(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char crypt();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_crypt) || defined (__stub___crypt)
+choke me
+#else
+crypt();
+#endif
+
+; return 0; }
+configure:1542: checking for crypt in -lcrypt
+configure:1561: gcc -o conftest -g -O2   conftest.c -lcrypt   1>&5
+configure:1591: checking for hstrerror
+configure:1619: gcc -o conftest -g -O2   conftest.c -lcrypt  1>&5
+configure:1682: checking for strerror
+configure:1710: gcc -o conftest -g -O2   conftest.c -lcrypt  1>&5
+configure:1739: checking for waitpid
+configure:1767: gcc -o conftest -g -O2   conftest.c -lcrypt  1>&5
+configure:1739: checking for snprintf
+configure:1767: gcc -o conftest -g -O2   conftest.c -lcrypt  1>&5
+configure:1795: checking for unistd.h
+configure:1805: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1834: checking for getpagesize
+configure:1862: gcc -o conftest -g -O2   conftest.c -lcrypt  1>&5
+configure:1887: checking for working mmap
+configure:2035: gcc -o conftest -g -O2   conftest.c -lcrypt  1>&5
+configure:2059: checking whether make sets ${MAKE}
+configure:2096: checking for a BSD compatible install

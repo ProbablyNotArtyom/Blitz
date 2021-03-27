@@ -1,0 +1,112 @@
+Linux for S/390 and zSeries
+
+Common Device Support (CDS)
+Device Driver I/O Support Routines
+
+Authors : Ingo Adlung
+	  Cornelia Huck
+
+Copyright, IBM Corp. 1999-2002
+
+Introduction
+
+This document describes the common device support routines for Linux/390.
+Different than other hardware architectures, ESA/390 has defined a unified
+I/O access method. This gives relief to the device drivers as they don't
+have to deal with different bus types, polling versus interrupt
+processing, shared versus non-shared interrupt processing, DMA versus port
+I/O (PIO), and other hardware features more. However, this implies that
+either every single device driver needs to implement the hardware I/O
+attachment functionality itself, or the operating system provides for a
+unified method to access the hardware, providing all the functionality that
+every single device driver would have to provide itself.
+
+The document does not intend to explain the ESA/390 hardware architecture in
+every detail.This information can be obtained from the ESA/390 Principles of
+Operation manual (IBM Form. No. SA22-7201).
+
+In order to build common device support for ESA/390 I/O interfaces, a
+functional layer was introduced that provides generic I/O access methods to
+the hardware. 
+
+The common device support layer comprises the I/O support routines defined 
+below. Some of them implement common Linux device driver interfaces, while 
+some of them are ESA/390 platform specific.
+
+Note:
+In order to write a driver for S/390, you also need to look into the interface
+described in Documentation/s390/driver-model.txt.
+
+Note for porting drivers from 2.4:
+The major changes are:
+* The functions use a ccw_device instead of an irq (subchannel).
+* All drivers must define a ccw_driver (see driver-model.txt) and the associated
+  functions.
+* request_irq() and free_irq() are no longer done by the driver.
+* The oper_handler is (kindof) replaced by the probe() and set_online() functions
+  of the ccw_driver.
+* The not_oper_handler is (kindof) replaced by the remove() and set_offline()
+  functions of the ccw_driver.
+* The channel device layer is gone.
+* The interrupt handlers must be adapted to use a ccw_device as argument.
+  Moreover, they don't return a devstat, but an irb.
+* Before initiating an io, the options must be set via ccw_device_set_options().
+* Instead of calling read_dev_chars()/read_conf_data(), the driver issues
+  the channel program and handles the interrupt itself.
+
+ccw_device_get_ciw()
+   get commands from extended sense data.
+
+ccw_device_start()	
+ccw_device_start_timeout()
+ccw_device_start_key()
+ccw_device_start_key_timeout()
+   initiate an I/O request.
+
+ccw_device_resume()
+   resume channel program execution.
+
+ccw_device_halt()	
+   terminate the current I/O request processed on the device.
+
+do_IRQ()	
+   generic interrupt routine. This function is called by the interrupt entry
+   routine whenever an I/O interrupt is presented to the system. The do_IRQ()
+   routine determines the interrupt status and calls the device specific
+   interrupt handler according to the rules (flags) defined during I/O request
+   initiation with do_IO().
+
+The next chapters describe the functions other than do_IRQ() in more details.
+The do_IRQ() interface is not described, as it is called from the Linux/390
+first level interrupt handler only and does not comprise a device driver
+callable interface. Instead, the functional description of do_IO() also
+describes the input to the device specific interrupt handler.
+
+Note: All explanations apply also to the 64 bit architecture s390x.
+
+
+Common Device Support (CDS) for Linux/390 Device Drivers
+
+General Information
+
+The following chapters describe the I/O related interface routines the
+Linux/390 common device support (CDS) provides to allow for device specific
+driver implementations on the IBM ESA/390 hardware platform. Those interfaces
+intend to provide the functionality required by every device driver
+implementation to allow to drive a specific hardware device on the ESA/390
+platform. Some of the interface routines are specific to Linux/390 and some
+of them can be found on other Linux platforms implementations too.
+Miscellaneous function prototypes, data declarations, and macro definitions
+can be found in the architecture specific C header file
+linux/arch/s390/include/asm/irq.h.
+
+Overview of CDS interface concepts
+
+Different to other hardware platforms, the ESA/390 architecture doesn't define
+interrupt lines managed by a specific interrupt controller and bus systems
+that may or may not allow for shared interrupts, DMA processing, etc.. Instead,
+the ESA/390 architecture has implemented a so called channel subsystem, that
+provides a unified view of the devices physically attached to the systems.
+Though the ESA/390 hardware platform knows about a huge variety of different
+peripheral attachments like disk devices (aka. DASDs), tapes, communication
+controllers, etc. they can all be accessed by a well defined

@@ -1,0 +1,77 @@
+/*
+ *  Copyright (C) 2012 Marvell Technology Group Ltd.
+ *  Author: Haojian Zhuang <haojian.zhuang@marvell.com>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License version 2 as
+ *  publishhed by the Free Software Foundation.
+ */
+
+#include "skeleton.dtsi"
+#include <dt-bindings/clock/marvell,mmp2.h>
+
+/ {
+	aliases {
+		serial0 = &uart1;
+		serial1 = &uart2;
+		serial2 = &uart3;
+		serial3 = &uart4;
+		i2c0 = &twsi1;
+		i2c1 = &twsi2;
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		interrupt-parent = <&intc>;
+		ranges;
+
+		L2: l2-cache {
+			compatible = "marvell,tauros2-cache";
+			marvell,tauros2-cache-features = <0x3>;
+		};
+
+		axi@d4200000 {	/* AXI */
+			compatible = "mrvl,axi-bus", "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0xd4200000 0x00200000>;
+			ranges;
+
+			intc: interrupt-controller@d4282000 {
+				compatible = "mrvl,mmp2-intc";
+				interrupt-controller;
+				#interrupt-cells = <1>;
+				reg = <0xd4282000 0x1000>;
+				mrvl,intc-nr-irqs = <64>;
+			};
+
+			intcmux4: interrupt-controller@d4282150 {
+				compatible = "mrvl,mmp2-mux-intc";
+				interrupts = <4>;
+				interrupt-controller;
+				#interrupt-cells = <1>;
+				reg = <0x150 0x4>, <0x168 0x4>;
+				reg-names = "mux status", "mux mask";
+				mrvl,intc-nr-irqs = <2>;
+			};
+
+			intcmux5: interrupt-controller@d4282154 {
+				compatible = "mrvl,mmp2-mux-intc";
+				interrupts = <5>;
+				interrupt-controller;
+				#interrupt-cells = <1>;
+				reg = <0x154 0x4>, <0x16c 0x4>;
+				reg-names = "mux status", "mux mask";
+				mrvl,intc-nr-irqs = <2>;
+				mrvl,clr-mfp-irq = <1>;
+			};
+
+			intcmux9: interrupt-controller@d4282180 {
+				compatible = "mrvl,mmp2-mux-intc";
+				interrupts = <9>;
+				interrupt-controller;
+				#interrupt-cells = <1>;
+				reg = <0x180 0x4>, <0x17c 0x4>;
+				reg

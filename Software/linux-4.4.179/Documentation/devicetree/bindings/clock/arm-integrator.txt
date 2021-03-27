@@ -1,0 +1,38 @@
+// SPDX-License-Identifier: GPL-2.0
+/* This utility makes a bootblock suitable for the SRM console/miniloader */
+
+/* Usage:
+ *	mkbb <device> <lxboot>
+ *
+ * Where <device> is the name of the device to install the bootblock on,
+ * and <lxboot> is the name of a bootblock to merge in.  This bootblock
+ * contains the offset and size of the bootloader.  It must be exactly
+ * 512 bytes long.
+ */
+
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+/* Minimal definition of disklabel, so we don't have to include
+ * asm/disklabel.h (confuses make)
+ */
+#ifndef MAXPARTITIONS
+#define MAXPARTITIONS   8                       /* max. # of partitions */
+#endif
+
+#ifndef u8
+#define u8 unsigned char
+#endif
+
+#ifndef u16
+#define u16 unsigned short
+#endif
+
+#ifndef u32
+#define u32 unsigned int
+#endif
+
+struct disklabel {
+    u32	

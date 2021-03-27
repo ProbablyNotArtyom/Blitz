@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Device Tree include file for SolidRun Clearfog 88F6828 based boards
+ *
+ *  Copyright (C) 2015 Russell King
+ */
+
+#include "armada-388.dtsi"
+#include "armada-38x-solidrun-microsom.dtsi"
+
+/ {
+	aliases {
+		/* So that mvebu u-boot can update the MAC addresses */
+		ethernet1 = &eth0;
+		ethernet2 = &eth1;
+		ethernet3 = &eth2;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	reg_3p3v: regulator-3p3v {
+		compatible = "regulator-fixed";
+		regulator-name = "3P3V";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+	};
+
+	soc {
+		internal-regs {
+			sata@a8000 {
+				/* pinctrl? */
+				status = "okay";
+			};
+
+			sata@e0000 {
+				/* pinctrl? */
+				status = "okay";
+			};
+
+			sdhci@d80

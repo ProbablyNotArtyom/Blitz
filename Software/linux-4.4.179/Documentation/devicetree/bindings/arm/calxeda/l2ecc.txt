@@ -1,0 +1,10 @@
+.. _mmu_notifier:
+
+When do you need to notify inside page table lock ?
+===================================================
+
+When clearing a pte/pmd we are given a choice to notify the event through
+(notify version of \*_clear_flush call mmu_notifier_invalidate_range) under
+the page table lock. But that notification is not necessary in all cases.
+
+For secondary TLB (non CPU TLB) li

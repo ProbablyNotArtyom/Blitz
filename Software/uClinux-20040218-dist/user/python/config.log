@@ -1,0 +1,832 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:625: checking MACHDEP
+configure:685: checking for --without-gcc
+configure:741: checking for --with-cxx=<compiler>
+configure:785: checking for gcc
+configure:898: checking whether the C compiler (gcc  ) works
+configure:914: gcc -o conftest    conftest.c  1>&5
+configure:940: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:945: checking whether we are using GNU C
+configure:954: gcc -E conftest.c
+configure:973: checking whether gcc accepts -g
+configure:1006: checking for --with-suffix
+configure:1051: checking LINKCC
+configure:1071: checking LDLIBRARY
+configure:1104: checking for ranlib
+configure:1137: checking for ar
+configure:1216: checking how to run the C preprocessor
+configure:1237: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1296: checking for AIX
+configure:1321: checking for minix/config.h
+configure:1331: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1327: minix/config.h: No such file or directory
+configure: failed program was:
+#line 1326 "configure"
+#include "confdefs.h"
+#include <minix/config.h>
+configure:1370: checking whether gcc accepts -OPT:Olimit=0
+configure:1384: gcc -OPT:Olimit=0 -o conftest -g -O2   conftest.c  1>&5
+cc1: Invalid option `-OPT:Olimit=0'
+configure: failed program was:
+#line 1380 "configure"
+#include "confdefs.h"
+int main() { return 0; }
+configure:1407: checking whether gcc accepts -Olimit 1500
+configure:1421: gcc -Olimit 1500 -o conftest -g -O2   conftest.c  1>&5
+gcc: 1500: No such file or directory
+cc1: Invalid option `-Olimit'
+configure: failed program was:
+#line 1417 "configure"
+#include "confdefs.h"
+int main() { return 0; }
+configure:1445: checking for ANSI C header files
+configure:1458: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1525: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1557: checking for dlfcn.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for fcntl.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for limits.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for locale.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for ncurses.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for poll.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for pthread.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for signal.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for stdarg.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for stddef.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for stdlib.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for thread.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1563: thread.h: No such file or directory
+configure: failed program was:
+#line 1562 "configure"
+#include "confdefs.h"
+#include <thread.h>
+configure:1557: checking for unistd.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for utime.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/audioio.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1563: sys/audioio.h: No such file or directory
+configure: failed program was:
+#line 1562 "configure"
+#include "confdefs.h"
+#include <sys/audioio.h>
+configure:1557: checking for sys/file.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/lock.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1563: sys/lock.h: No such file or directory
+configure: failed program was:
+#line 1562 "configure"
+#include "confdefs.h"
+#include <sys/lock.h>
+configure:1557: checking for db_185.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for db.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/param.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/select.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/socket.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/time.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/times.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/un.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/utsname.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for sys/wait.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for pty.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for libutil.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1563: libutil.h: No such file or directory
+configure: failed program was:
+#line 1562 "configure"
+#include "confdefs.h"
+#include <libutil.h>
+configure:1557: checking for ndbm.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1563: ndbm.h: No such file or directory
+configure: failed program was:
+#line 1562 "configure"
+#include "confdefs.h"
+#include <ndbm.h>
+configure:1557: checking for db1/ndbm.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1557: checking for gdbm/ndbm.h
+configure:1567: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1598: checking for dirent.h that defines DIR
+configure:1611: gcc -c -g -O2  conftest.c 1>&5
+configure:1636: checking for opendir in -ldir
+configure:1655: gcc -o conftest -g -O2   conftest.c -ldir   1>&5
+/usr/bin/ld: cannot find -ldir
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 1644 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char opendir();
+
+int main() {
+opendir()
+; return 0; }
+configure:1722: checking for clock_t in time.h
+configure:1752: checking for mode_t
+configure:1785: checking for off_t
+configure:1818: checking for pid_t
+configure:1851: checking return type of signal handlers
+configure:1873: gcc -c -g -O2  conftest.c 1>&5
+configure:1892: checking for size_t
+configure:1925: checking for uid_t in sys/types.h
+configure:1961: checking size of int
+configure:1980: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2000: checking size of long
+configure:2019: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2039: checking size of void *
+configure:2058: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2078: checking size of char
+configure:2097: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2117: checking size of short
+configure:2136: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2156: checking size of float
+configure:2175: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2195: checking size of double
+configure:2214: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2234: checking size of fpos_t
+configure:2253: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2274: checking for long long support
+configure:2284: gcc -c -g -O2  conftest.c 1>&5
+configure:2298: checking size of long long
+configure:2317: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2339: checking for uintptr_t support
+configure:2349: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:2345: `uintptr_t' undeclared (first use in this function)
+configure:2345: (Each undeclared identifier is reported only once
+configure:2345: for each function it appears in.)
+configure:2345: parse error before `x'
+configure:2345: `x' undeclared (first use in this function)
+configure:2345: parse error before `0'
+configure: failed program was:
+#line 2342 "configure"
+#include "confdefs.h"
+
+int main() {
+uintptr_t x; x = (uintptr_t)0;
+; return 0; }
+configure:2405: checking size of off_t
+configure:2425: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2447: checking whether to enable large file support
+configure:2462: checking size of time_t
+configure:2482: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2506: checking for pthread_t
+configure:2516: gcc -c -g -O2  conftest.c 1>&5
+configure:2528: checking size of pthread_t
+configure:2548: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:2586: checking for --with-next-framework
+configure:2603: checking for --with-dyld
+configure:2629: checking SO
+configure:2643: checking LDSHARED
+configure:2699: checking CCSHARED
+configure:2723: checking LINKFORSHARED
+configure:2760: checking for dlopen in -ldl
+configure:2779: gcc -o conftest -g -O2   conftest.c -ldl   1>&5
+configure:2807: checking for shl_load in -ldld
+configure:2826: gcc -o conftest -g -O2   conftest.c -ldld  -ldl  1>&5
+/usr/bin/ld: cannot find -ldld
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 2815 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char shl_load();
+
+int main() {
+shl_load()
+; return 0; }
+configure:2856: checking for --with-pydebug
+configure:2909: checking for t_open in -lnsl
+configure:2928: gcc -o conftest -g -O2   conftest.c -lnsl  -ldl  1>&5
+/tmp/ccLRKtEo.o: In function `main':
+/home/jamma/Python-2.0/configure:2924: undefined reference to `t_open'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 2917 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char t_open();
+
+int main() {
+t_open()
+; return 0; }
+configure:2949: checking for socket in -lsocket
+configure:2968: gcc -o conftest -g -O2   conftest.c -lsocket -ldl  -ldl  1>&5
+/usr/bin/ld: cannot find -lsocket
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 2957 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char socket();
+
+int main() {
+socket()
+; return 0; }
+configure:3036: checking for --with-libs
+configure:3053: checking for --with-dec-threads
+configure:3070: checking for --with-threads
+configure:3108: checking for mach/cthreads.h
+configure:3118: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:3114: mach/cthreads.h: No such file or directory
+configure: failed program was:
+#line 3113 "configure"
+#include "confdefs.h"
+#include <mach/cthreads.h>
+configure:3147: checking for --with-pth
+configure:3167: checking for pthread_create in -lpthread
+configure:3186: gcc -o conftest -g -O2   conftest.c -lpthread  -ldl  1>&5
+configure:3526: checking for usconfig in -lmpc
+configure:3545: gcc -o conftest -g -O2   conftest.c -lmpc  -lpthread -ldl  1>&5
+/usr/bin/ld: cannot find -lmpc
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 3534 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char usconfig();
+
+int main() {
+usconfig()
+; return 0; }
+configure:3572: checking for thr_create in -lthread
+configure:3591: gcc -o conftest -g -O2   conftest.c -lthread  -lpthread -ldl  1>&5
+/usr/bin/ld: cannot find -lthread
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 3580 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char thr_create();
+
+int main() {
+thr_create()
+; return 0; }
+configure:3632: checking for --with-cycle-gc
+configure:3659: checking for --with-libdb
+configure:3702: checking for dbopen
+configure:3730: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+/tmp/ccYTqXjI.o: In function `main':
+/home/jamma/Python-2.0/configure:3724: undefined reference to `dbopen'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 3707 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char dbopen(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char dbopen();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_dbopen) || defined (__stub___dbopen)
+choke me
+#else
+dbopen();
+#endif
+
+; return 0; }
+configure:3754: checking for --with-wctype-functions
+configure:3776: checking for --with-sgi-dl
+configure:3800: checking for --with-dl-dld
+configure:3829: checking for dlopen
+configure:3857: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3886: checking DYNLOADFILE
+configure:3927: checking for alarm
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for chown
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for clock
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for confstr
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for ctermid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for ctermid_r
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+/tmp/ccPRNEU5.o: In function `main':
+/home/jamma/Python-2.0/configure:3949: undefined reference to `ctermid_r'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 3932 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char ctermid_r(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char ctermid_r();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_ctermid_r) || defined (__stub___ctermid_r)
+choke me
+#else
+ctermid_r();
+#endif
+
+; return 0; }
+configure:3927: checking for execv
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for flock
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for fork
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for fsync
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for fdatasync
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for fpathconf
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for ftime
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for ftruncate
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for getgroups
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for getlogin
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for getpeername
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for getpid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for getpwent
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for getwd
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+/tmp/ccUgCyeQ.o: In function `main':
+/home/jamma/Python-2.0/configure:3949: the `getwd' function is dangerous and should not be used.
+configure:3927: checking for kill
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for link
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for lstat
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for mkfifo
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for mktime
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for mremap
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for nice
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for pathconf
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for pause
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for plock
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+/tmp/cc9B3zHS.o: In function `main':
+/home/jamma/Python-2.0/configure:3949: undefined reference to `plock'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 3932 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char plock(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char plock();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_plock) || defined (__stub___plock)
+choke me
+#else
+plock();
+#endif
+
+; return 0; }
+configure:3927: checking for poll
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for pthread_init
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+/tmp/ccKFrouz.o: In function `main':
+/home/jamma/Python-2.0/configure:3949: undefined reference to `pthread_init'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 3932 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char pthread_init(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char pthread_init();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_pthread_init) || defined (__stub___pthread_init)
+choke me
+#else
+pthread_init();
+#endif
+
+; return 0; }
+configure:3927: checking for putenv
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for readlink
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for select
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for setegid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for seteuid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for setgid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for setlocale
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for setregid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for setreuid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for setsid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for setpgid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for setuid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for setvbuf
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for sigaction
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for siginterrupt
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for sigrelse
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for strftime
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for strptime
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for symlink
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for sysconf
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for tcgetpgrp
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for tcsetpgrp
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for tempnam
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for timegm
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for times
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for tmpfile
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for tmpnam
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for tmpnam_r
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for truncate
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for uname
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for waitpid
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+configure:3927: checking for _getpty
+configure:3955: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+/tmp/ccoZIyZM.o: In function `main':
+/home/jamma/Python-2.0/configure:3949: undefined reference to `_getpty'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 3932 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char _getpty(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char _getpty();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub__getpty) || defined (__stub____getpty)
+choke me
+#else
+_getpty();
+#endif
+
+; return 0; }
+configure:3985: checking for openpty
+configure:4013: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  1>&5
+/tmp/ccyzxjB5.o: In function `main':
+/home/jamma/Python-2.0/configure:4007: undefined reference to `openpty'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 3990 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char openpty(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char openpty();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_openpty) || defined (__stub___openpty)
+choke me
+#else
+openpty();
+#endif
+
+; return 0; }
+configure:4035: checking for openpty in -lutil
+configure:4054: gcc -o conftest -g -O2   conftest.c -lutil  -lpthread -ldl  1>&5
+configure:4083: checking for forkpty
+configure:4111: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4183: checking for fseek64
+configure:4211: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+/tmp/ccYaAuQ5.o: In function `main':
+/home/jamma/Python-2.0/configure:4205: undefined reference to `fseek64'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 4188 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char fseek64(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char fseek64();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_fseek64) || defined (__stub___fseek64)
+choke me
+#else
+fseek64();
+#endif
+
+; return 0; }
+configure:4183: checking for fseeko
+configure:4211: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4183: checking for fstatvfs
+configure:4211: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4183: checking for ftell64
+configure:4211: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+/tmp/ccFFhOZC.o: In function `main':
+/home/jamma/Python-2.0/configure:4205: undefined reference to `ftell64'
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 4188 "configure"
+#include "confdefs.h"
+/* System header to define __stub macros and hopefully few prototypes,
+    which can conflict with char ftell64(); below.  */
+#include <assert.h>
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char ftell64();
+
+int main() {
+
+/* The GNU C library defines this for functions which it implements
+    to always fail with ENOSYS.  Some functions are actually named
+    something starting with __ and the normal name is an alias.  */
+#if defined (__stub_ftell64) || defined (__stub___ftell64)
+choke me
+#else
+ftell64();
+#endif
+
+; return 0; }
+configure:4183: checking for ftello
+configure:4211: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4183: checking for statvfs
+configure:4211: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4239: checking for dup2
+configure:4267: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4239: checking for getcwd
+configure:4267: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4239: checking for strdup
+configure:4267: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4239: checking for strerror
+configure:4267: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4239: checking for memmove
+configure:4267: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4296: checking for getpgrp
+configure:4324: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4350: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:4346: too many arguments to function `getpgrp'
+configure: failed program was:
+#line 4343 "configure"
+#include "confdefs.h"
+#include <unistd.h>
+int main() {
+getpgrp(0);
+; return 0; }
+configure:4369: checking for setpgrp
+configure:4397: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4423: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:4419: too many arguments to function `setpgrp'
+configure: failed program was:
+#line 4416 "configure"
+#include "confdefs.h"
+#include <unistd.h>
+int main() {
+setpgrp(0,0);
+; return 0; }
+configure:4442: checking for gettimeofday
+configure:4470: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:4496: gcc -c -g -O2  conftest.c 1>&5
+configure:4516: checking whether time.h and sys/time.h may both be included
+configure:4530: gcc -c -g -O2  conftest.c 1>&5
+configure:4551: checking whether struct tm is in sys/time.h or time.h
+configure:4564: gcc -c -g -O2  conftest.c 1>&5
+configure:4585: checking for tm_zone in struct tm
+configure:4598: gcc -c -g -O2  conftest.c 1>&5
+configure:4656: checking for time.h that defines altzone
+configure:4668: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:4664: `altzone' undeclared (first use in this function)
+configure:4664: (Each undeclared identifier is reported only once
+configure:4664: for each function it appears in.)
+configure: failed program was:
+#line 4661 "configure"
+#include "confdefs.h"
+#include <time.h>
+int main() {
+return altzone;
+; return 0; }
+configure:4690: checking whether sys/select.h and sys/time.h may both be included
+configure:4703: gcc -c -g -O2  conftest.c 1>&5
+configure:4719: checking whether char is unsigned
+configure:4782: checking for working const
+configure:4836: gcc -c -g -O2  conftest.c 1>&5
+configure:4857: checking for inline
+configure:4871: gcc -c -g -O2  conftest.c 1>&5
+configure:4899: checking for working volatile
+configure:4908: gcc -c -g -O2  conftest.c 1>&5
+configure:4925: checking for working signed char
+configure:4934: gcc -c -g -O2  conftest.c 1>&5
+configure:4951: checking for prototypes
+configure:4960: gcc -c -g -O2  conftest.c 1>&5
+configure:4975: checking for variable length prototypes and stdarg.h
+configure:4994: gcc -c -g -O2  conftest.c 1>&5
+configure:5010: checking for bad exec* prototypes
+configure:5019: gcc -c -g -O2  conftest.c 1>&5
+configure:5036: checking for bad static forward
+configure:5057: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:5076: checking whether va_list is an array
+configure:5091: gcc -c -g -O2  conftest.c 1>&5
+configure:5107: checking for gethostbyname_r
+configure:5135: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:5155: checking gethostbyname_r with 6 args
+configure:5176: gcc -c -g -O2     conftest.c 1>&5
+configure:5354: checking for __fpu_control
+configure:5382: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:5452: checking for --with-fpectl
+configure:5478: checking for --with-libm=STRING
+configure:5499: checking for --with-libc=STRING
+configure:5523: checking for hypot
+configure:5551: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil -lm 1>&5
+configure:5581: checking for genuine getopt
+configure:5601: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure: failed program was:
+#line 5589 "configure"
+#include "confdefs.h"
+#include <stdio.h>
+extern int optind, opterr, getopt();
+extern char* optarg;
+int main() {
+	char* av[] = { "testprog", "parameter", "-fFlag", NULL };
+	opterr = 0;
+	if (getopt(3, av, "f:") == 'f') { exit(1); }
+	exit(0);
+}
+configure:5619: checking what malloc(0) returns
+configure:5646: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure: failed program was:
+#line 5627 "configure"
+#include "confdefs.h"
+#include <stdio.h>
+#ifdef HAVE_STDLIB
+#include <stdlib.h>
+#else
+char *malloc(), *realloc();
+int *free();
+#endif
+main() {
+	char *p;
+	p = malloc(0);
+	if (p == NULL) exit(1);
+	p = realloc(p, 0);
+	if (p == NULL) exit(1);
+	free(p);
+	exit(0);
+}
+configure:5672: checking for wchar.h
+configure:5682: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:5712: checking for usable wchar_t
+configure:5731: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure: failed program was:
+#line 5717 "configure"
+#include "confdefs.h"
+
+#include "wchar.h"
+#include "wctype.h"
+main() {
+ wchar_t s;
+ if (sizeof(s) == 2)
+  exit(0);
+ else
+  exit(1);
+}
+
+configure:5750: checking whether byte ordering is bigendian
+configure:5768: gcc -c -g -O2  conftest.c 1>&5
+configure:5783: gcc -c -g -O2  conftest.c 1>&5
+configure: In function `main':
+configure:5778: `not' undeclared (first use in this function)
+configure:5778: (Each undeclared identifier is reported only once
+configure:5778: for each function it appears in.)
+configure:5778: parse error before `big'
+configure: failed program was:
+#line 5772 "configure"
+#include "confdefs.h"
+#include <sys/types.h>
+#include <sys/param.h>
+int main() {
+
+#if BYTE_ORDER != BIG_ENDIAN
+ not big endian
+#endif
+; return 0; }
+configure:5843: checking whether right shift extends the sign bit
+configure:5861: gcc -o conftest -g -O2   conftest.c -lpthread -ldl  -lutil 1>&5
+configure:5893: checking for socklen_t

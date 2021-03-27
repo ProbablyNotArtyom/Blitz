@@ -1,0 +1,283 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (C) 2018 BTicino
+ * Copyright (C) 2018 Amarula Solutions B.V.
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include "imx6dl.dtsi"
+
+/ {
+	model = "BTicino i.MX6DL Mamoj board";
+	compatible = "bticino,imx6dl-mamoj", "fsl,imx6dl";
+
+	backlight_lcd: backlight-lcd {
+		compatible = "pwm-backlight";
+		pwms = <&pwm3 0 25000>; /* 25000ns -> 40kHz */
+		brightness-levels = <0 4 8 16 32 64 128 160 192 224 255>;
+		default-brightness-level = <7>;
+	};
+
+	display: disp0 {
+		compatible = "fsl,imx-parallel-display";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		interface-pix-fmt = "rgb24";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_ipu1_lcdif>;
+		status = "okay";
+
+		port@0 {
+			reg = <0>;
+
+			lcd_display_in: endpoint {
+				remote-endpoint = <&ipu1_di0_disp0>;
+			};
+		};
+
+		port@1 {
+			reg = <1>;
+
+			lcd_display_out: endpoint {
+				remote-endpoint = <&lcd_panel_in>;
+			};
+		};
+	};
+
+	panel-lcd {
+		compatible = "rocktech,rk070er9427";
+		backlight = <&backlight_lcd>;
+		power-supply = <&reg_lcd_lr>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_ipu1_lcdif_pwr>;
+
+		port {
+			lcd_panel_in: endpoint {
+				remote-endpoint = <&lcd_display_out>;
+			};
+		};
+	};
+
+	reg_lcd_3v3: regulator-lcd-dvdd {
+		compatible = "regulator-fixed";
+		regulator-name = "lcd-dvdd";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpio3 1 0>;
+		enable-active-high;
+		startup-delay-us = <21000>;
+	};
+
+	reg_lcd_power: regulator-lcd-power {
+		compatible = "regulator-fixed";
+		regulator-name = "lcd-enable";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpio3 6 0>;
+		enable-active-high;
+		vin-supply = <&reg_lcd_3v3>;
+	};
+
+	reg_lcd_vgl: regulator-lcd-vgl {
+		compatible = "regulator-fixed";
+		regulator-name = "lcd-vgl";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpio2 20 GPIO_ACTIVE_HIGH>;
+		startup-delay-us = <6000>;
+		enable-active-high;
+		vin-supply = <&reg_lcd_power>;
+	};
+
+	reg_lcd_vgh: regulator-lcd-vgh {
+		compatible = "regulator-fixed";
+		regulator-name = "lcd-vgh";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpio3 31 GPIO_ACTIVE_HIGH>;
+		startup-delay-us = <6000>;
+		enable-active-high;
+		vin-supply = <&reg_lcd_avdd>;
+	};
+
+	reg_lcd_vcom: regulator-lcd-vcom {
+		compatible = "regulator-fixed";
+		regulator-name = "lcd-vcom";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpio4 14 GPIO_ACTIVE_HIGH>;
+		startup-delay-us = <11000>;
+		enable-active-high;
+		vin-supply = <&reg_lcd_vgh>;
+	};
+
+	reg_lcd_lr: regulator-lcd-lr {
+		compatible = "regulator-fixed";
+		regulator-name = "lcd-lr";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpio = <&gpio4 15 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+		vin-supply = <&reg_lcd_vcom>;
+	};
+
+	reg_lcd_avdd: regulator-lcd-avdd {
+		compatible = "regulator-fixed";
+		regulator-name = "lcd-avdd";
+		regulator-min-microvolt = <10280000>;
+		regulator-max-microvolt = <10280000>;
+		gpio = <&gpio2 13 GPIO_ACTIVE_HIGH>;
+		startup-delay-us = <6000>;
+		enable-active-high;
+		vin-supply = <&reg_lcd_vgl>;
+	};
+
+	reg_usb_host: regulator-usb-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usbhost-vbus";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_usbhost>;
+		regulator-min-microvolt = <50000000>;
+		regulator-max-microvolt = <50000000>;
+		gpio = <&gpio6 6 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
+
+	reg_wl18xx_vmmc:  regulator-wl18xx-vmcc {
+		compatible = "regulator-fixed";
+		regulator-name = "vwl1807";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_wlan>;
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+		gpio = <&gpio6 21 GPIO_ACTIVE_HIGH>;
+		startup-delay-us = <70000>;
+		enable-active-high;
+	};
+};
+
+&fec {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_enet>;
+	phy-mode = "mii";
+	status = "okay";
+};
+
+&i2c3 {
+	clock-frequency = <400000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c3>;
+	status = "okay";
+};
+
+&i2c4 {
+	clock-frequency = <100000>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_i2c4>;
+	status = "okay";
+
+	pfuze100: pmic@8 {
+		compatible = "fsl,pfuze100";
+		reg = <0x08>;
+
+		regulators {
+			/* CPU vdd_arm core */
+			sw1a_reg: sw1ab {
+				regulator-min-microvolt = <300000>;
+				regulator-max-microvolt = <1875000>;
+				regulator-boot-on;
+				regulator-always-on;
+				regulator-ramp-delay = <6250>;
+			};
+
+			/* SOC vdd_soc */
+			sw1c_reg: sw1c {
+				regulator-min-microvolt = <300000>;
+				regulator-max-microvolt = <1875000>;
+				regulator-boot-on;
+				regulator-always-on;
+				regulator-ramp-delay = <6250>;
+			};
+
+			/* I/O power GEN_3V3 */
+			sw2_reg: sw2 {
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			/* DDR memory */
+			sw3a_reg: sw3a {
+				regulator-min-microvolt = <400000>;
+				regulator-max-microvolt = <1975000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			/* DDR memory */
+			sw3b_reg: sw3b {
+				regulator-min-microvolt = <400000>;
+				regulator-max-microvolt = <1975000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			/* not used */
+			sw4_reg: sw4 {
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3300000>;
+			};
+
+			/* not used */
+			swbst_reg: swbst {
+				regulator-min-microvolt = <5000000>;
+				regulator-max-microvolt = <5150000>;
+			};
+
+			/* PMIC vsnvs. EX boot mode */
+			snvs_reg: vsnvs {
+				regulator-min-microvolt = <1000000>;
+				regulator-max-microvolt = <3000000>;
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			vref_reg: vrefddr {
+				regulator-boot-on;
+				regulator-always-on;
+			};
+
+			/* not used */
+			vgen1_reg: vgen1 {
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <1550000>;
+			};
+
+			/* not used */
+			vgen2_reg: vgen2 {
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <1550000>;
+			};
+
+			/* not used */
+			vgen3_reg: vgen3 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+			};
+
+			/* 1v8 general power */
+			vgen4_reg: vgen4 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+			};
+
+			/* 2v8 general power IMX6 */
+			vgen5_reg: vgen5 {
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+			

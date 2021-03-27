@@ -1,0 +1,97 @@
+// SPDX-License-Identifier: GPL-2.0+
+//
+// Copyright 2012 Sascha Hauer, Pengutronix
+
+/dts-v1/;
+#include "imx27.dtsi"
+
+/ {
+	model = "Freescale i.MX27 Product Development Kit";
+	compatible = "fsl,imx27-pdk", "fsl,imx27";
+
+	memory@a0000000 {
+		reg = <0xa0000000 0x08000000>;
+	};
+
+	usbphy {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		usbphy0: usbphy@0 {
+			compatible = "usb-nop-xceiv";
+			reg = <0>;
+			clocks = <&clks IMX27_CLK_DUMMY>;
+			clock-names = "main_clk";
+			#phy-cells = <0>;
+		};
+	};
+};
+
+&cspi2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_cspi2>;
+	cs-gpios = <&gpio4 21 GPIO_ACTIVE_HIGH>;
+	status = "okay";
+
+	pmic: mc13783@0 {
+		compatible = "fsl,mc13783";
+		reg = <0>;
+		spi-cs-high;
+		spi-max-frequency = <1000000>;
+		interrupt-parent = <&gpio3>;
+		interrupts = <14 IRQ_TYPE_LEVEL_HIGH>;
+
+		regulators {
+			vgen_reg: vgen {
+				regulator-min-microvolt = <1500000>;
+				regulator-max-microvolt = <1500000>;
+				regulator-always-on;
+				regulator-boot-on;
+			};
+
+			vmmc1_reg: vmmc1 {
+				regulator-min-microvolt = <1600000>;
+				regulator-max-microvolt = <3000000>;
+			};
+
+			gpo1_reg: gpo1 {
+				regulator-always-on;
+				regulator-boot-on;
+			};
+
+			gpo3_reg: gpo3 {
+				regulator-always-on;
+				regulator-boot-on;
+			};
+		};
+	};
+};
+
+&fec {
+	phy-mode = "mii";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_fec>;
+	status = "okay";
+};
+
+&kpp {
+	linux,keymap = <
+		MATRIX_KEY(0, 0, KEY_UP)
+		MATRIX_KEY(0, 1, KEY_DOWN)
+		MATRIX_KEY(1, 0, KEY_RIGHT)
+		MATRIX_KEY(1, 1, KEY_LEFT)
+		MATRIX_KEY(1, 2, KEY_ENTER)
+		MATRIX_KEY(2, 0, KEY_F6)
+		MATRIX_KEY(2, 1, KEY_F8)
+		MATRIX_KEY(2, 2, KEY_F9)
+		MATRIX_KEY(2, 3, KEY_F10)
+	>;
+	status = "okay";
+};
+
+&nfc {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_nand>;
+	nand-ecc-mode = "hw";
+	nand-on-flash-b

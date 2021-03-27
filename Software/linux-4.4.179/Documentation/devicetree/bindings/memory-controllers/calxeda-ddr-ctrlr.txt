@@ -1,0 +1,10 @@
+/*
+ * at91-sama5d2_xplained.dts - Device Tree file for SAMA5D2 Xplained board
+ *
+ *  Copyright (C) 2015 Atmel,
+ *                2015 Nicolas Ferre <nicolas.ferre@atmel.com>
+ *
+ * This file is dual-licensed: you can use it either under the terms
+ * of the GPL or the X11 license, at your option. Note that this dual
+ * licensing only applies to this file, and not this project as a
+ * whole

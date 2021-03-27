@@ -1,0 +1,8 @@
+* Overview
+
+  Mass Storage Gadget (or MSG) acts as a USB Mass Storage device,
+  appearing to the host as a disk or a CD-ROM drive.  It supports
+  multiple logical units (LUNs).  Backing storage for each LUN is
+  provided by a regular file or a block device, access can be limited
+  to read-only, and gadget can indicate that it is removable and/or
+  CD-ROM 

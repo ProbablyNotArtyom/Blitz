@@ -1,0 +1,57 @@
+// SPDX-License-Identifier: GPL-2.0+
+//
+// Copyright 2012 Freescale Semiconductor, Inc.
+
+#include <dt-bindings/gpio/gpio.h>
+#include "imx28-pinfunc.h"
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	interrupt-parent = <&icoll>;
+	/*
+	 * The decompressor and also some bootloaders rely on a
+	 * pre-existing /chosen node to be available to insert the
+	 * command line and merge other ATAGS info.
+	 * Also for U-Boot there must be a pre-existing /memory node.
+	 */
+	chosen {};
+	memory { device_type = "memory"; };
+
+	aliases {
+		ethernet0 = &mac0;
+		ethernet1 = &mac1;
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+		gpio2 = &gpio2;
+		gpio3 = &gpio3;
+		gpio4 = &gpio4;
+		saif0 = &saif0;
+		saif1 = &saif1;
+		serial0 = &auart0;
+		serial1 = &auart1;
+		serial2 = &auart2;
+		serial3 = &auart3;
+		serial4 = &auart4;
+		spi0 = &ssp1;
+		spi1 = &ssp2;
+		usbphy0 = &usbphy0;
+		usbphy1 = &usbphy1;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			compatible = "arm,arm926ej-s";
+			device_type = "cpu";
+			reg = <0>;
+		};
+	};
+
+	apb@80000000 {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;

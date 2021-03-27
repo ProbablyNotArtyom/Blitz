@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Andrew Lunn <andrew@lunn.ch>
+ * Ben Peddell <klightspeed@killerwolves.net>
+ *
+ */
+
+/dts-v1/;
+
+#include "kirkwood.dtsi"
+#include "kirkwood-6282.dtsi"
+#include "kirkwood-synology.dtsi"
+
+/ {
+	model = "Synology RS212";
+	compatible = "synology,rs212", "marvell,kirkwood";
+
+	memory {
+		device_type = "memor

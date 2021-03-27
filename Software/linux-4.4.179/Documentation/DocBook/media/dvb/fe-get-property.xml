@@ -1,0 +1,82 @@
+This is a subset of the documentation. To use this driver you MUST have the
+full package from:
+
+Internet:
+=========
+
+1. ftp://ftp.ccac.rwth-aachen.de/pub/jr/z8530drv-utils_3.0-3.tar.gz
+
+2. ftp://ftp.pspt.fi/pub/ham/linux/ax25/z8530drv-utils_3.0-3.tar.gz
+
+Please note that the information in this document may be hopelessly outdated.
+A new version of the documentation, along with links to other important
+Linux Kernel AX.25 documentation and programs, is available on
+http://yaina.de/jreuter
+
+-----------------------------------------------------------------------------
+
+
+	 SCC.C - Linux driver for Z8530 based HDLC cards for AX.25      
+
+   ********************************************************************
+
+        (c) 1993,2000 by Joerg Reuter DL1BKE <jreuter@yaina.de>
+
+        portions (c) 1993 Guido ten Dolle PE1NNZ
+
+        for the complete copyright notice see >> Copying.Z8530DRV <<
+
+   ******************************************************************** 
+
+
+1. Initialization of the driver
+===============================
+
+To use the driver, 3 steps must be performed:
+
+     1. if compiled as module: loading the module
+     2. Setup of hardware, MODEM and KISS parameters with sccinit
+     3. Attach each channel to the Linux kernel AX.25 with "ifconfig"
+
+Unlike the versions below 2.4 this driver is a real network device
+driver. If you want to run xNOS instead of our fine kernel AX.25
+use a 2.x version (available from above sites) or read the
+AX.25-HOWTO on how to emulate a KISS TNC on network device drivers.
+
+
+1.1 Loading the module
+======================
+
+(If you're going to compile the driver as a part of the kernel image,
+ skip this chapter and continue with 1.2)
+
+Before you can use a module, you'll have to load it with
+
+	insmod scc.o
+
+please read 'man insmod' that comes with module-init-tools.
+
+You should include the insmod in one of the /etc/rc.d/rc.* files,
+and don't forget to insert a call of sccinit after that. It
+will read your /etc/z8530drv.conf.
+
+1.2. /etc/z8530drv.conf
+=======================
+
+To setup all parameters you must run /sbin/sccinit from one
+of your rc.*-files. This has to be done BEFORE you can
+"ifconfig" an interface. Sccinit reads the file /etc/z8530drv.conf
+and sets the hardware, MODEM and KISS parameters. A sample file is
+delivered with this package. Change it to your needs.
+
+The file itself consists of two main sections.
+
+1.2.1 configuration of hardware parameters
+==========================================
+
+The hardware setup section defines the following parameters for each
+Z8530:
+
+chip    1
+data_a  0x300                   # data port A
+c

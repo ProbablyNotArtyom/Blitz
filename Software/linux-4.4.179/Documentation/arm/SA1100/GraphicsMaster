@@ -1,0 +1,55 @@
+The Linux NCR53C8XX/SYM53C8XX drivers README file
+
+Written by Gerard Roudier <groudier@free.fr>
+21 Rue Carnot
+95170 DEUIL LA BARRE - FRANCE
+
+29 May 1999
+===============================================================================
+
+1.  Introduction
+2.  Supported chips and SCSI features
+3.  Advantages of the enhanced 896 driver
+      3.1 Optimized SCSI SCRIPTS
+      3.2 New features of the SYM53C896 (64 bit PCI dual LVD SCSI controller)
+4.  Memory mapped I/O versus normal I/O
+5.  Tagged command queueing
+6.  Parity checking
+7.  Profiling information
+8.  Control commands
+      8.1  Set minimum synchronous period
+      8.2  Set wide size
+      8.3  Set maximum number of concurrent tagged commands
+      8.4  Set order type for tagged command
+      8.5  Set debug mode
+      8.6  Clear profile counters
+      8.7  Set flag (no_disc)
+      8.8  Set verbose level
+      8.9  Reset all logical units of a target
+      8.10 Abort all tasks of all logical units of a target
+9.  Configuration parameters
+10. Boot setup commands
+      10.1 Syntax
+      10.2 Available arguments
+             10.2.1  Master parity checking
+             10.2.2  Scsi parity checking
+             10.2.3  Scsi disconnections
+             10.2.4  Special features
+             10.2.5  Ultra SCSI support
+             10.2.6  Default number of tagged commands
+             10.2.7  Default synchronous period factor
+             10.2.8  Negotiate synchronous with all devices
+             10.2.9  Verbosity level
+             10.2.10 Debug mode
+             10.2.11 Burst max
+             10.2.12 LED support
+             10.2.13 Max wide
+             10.2.14 Differential mode
+             10.2.15 IRQ mode
+             10.2.16 Reverse probe
+             10.2.17 Fix up PCI configuration space
+             10.2.18 Serial NVRAM
+             10.2.19 Check SCSI BUS 
+             10.2.20 Exclude a host from being attached
+             10.2.21 Suggest a default SCSI id for hosts
+             10.2.22 Enable

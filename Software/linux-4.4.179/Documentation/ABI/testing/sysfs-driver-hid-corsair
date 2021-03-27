@@ -1,0 +1,12 @@
+sb1000 is a module network device driver for the General Instrument (also known
+as NextLevel) SURFboard1000 internal cable modem board.  This is an ISA card
+which is used by a number of cable TV companies to provide cable modem access.
+It's a one-way downstream-only cable modem, meaning that your upstream net link
+is provided by your regular phone modem.
+
+This driver was written by Franco Venturi <fventuri@mediaone.net>.  He deserves
+a great deal of thanks for this wonderful piece of code!
+
+-----------------------------------------------------------------------------
+
+Support

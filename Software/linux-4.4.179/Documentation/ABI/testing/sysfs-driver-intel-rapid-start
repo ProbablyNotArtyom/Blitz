@@ -1,0 +1,16 @@
+       Altera Triple-Speed Ethernet MAC driver
+
+Copyright (C) 2008-2014 Altera Corporation
+
+This is the driver for the Altera Triple-Speed Ethernet (TSE) controllers
+using the SGDMA and MSGDMA soft DMA IP components. The driver uses the
+platform bus to obtain component resources. The designs used to test this
+driver were built for a Cyclone(R) V SOC FPGA board, a Cyclone(R) V FPGA board,
+and tested with ARM and NIOS processor hosts separately. The anticipated use
+cases are simple communications between an embedded system and an external peer
+for status and simple configuration of the embedded system.
+
+For more information visit www.altera.com and www.rocketboards.org. Support
+forums for the driver may be found on www.rocketboards.org, and a design used
+to test this driver may be found there as well. Support is also available from
+th

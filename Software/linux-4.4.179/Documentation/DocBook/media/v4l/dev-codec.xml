@@ -1,0 +1,44 @@
+OpenRISC Linux
+==============
+
+This is a port of Linux to the OpenRISC class of microprocessors; the initial
+target architecture, specifically, is the 32-bit OpenRISC 1000 family (or1k).
+
+For information about OpenRISC processors and ongoing development:
+
+	website		http://openrisc.io
+	email		openrisc@lists.librecores.org
+
+---------------------------------------------------------------------
+
+Build instructions for OpenRISC toolchain and Linux
+===================================================
+
+In order to build and run Linux for OpenRISC, you'll need at least a basic
+toolchain and, perhaps, the architectural simulator.  Steps to get these bits
+in place are outlined here.
+
+1) Toolchain
+
+Toolchain binaries can be obtained from openrisc.io or our github releases page.
+Instructions for building the different toolchains can be found on openrisc.io
+or Stafford's toolchain build and release scripts.
+
+	binaries	https://github.com/openrisc/or1k-gcc/releases
+	toolchains	https://openrisc.io/software
+	building	https://github.com/stffrdhrn/or1k-toolchain-build
+
+2) Building
+
+Build the Linux kernel as usual
+
+	make ARCH=openrisc defconfig
+	make ARCH=openrisc
+
+3) Running on FPGA (optional)
+
+The OpenRISC community typically uses FuseSoC to manage building and programming
+an SoC into an FPGA.  The below is an example of programming a De0 Nano
+development board with the OpenRISC SoC.  During the build FPGA RTL is code
+downloaded from the FuseSoC IP cores repository and built using the FPGA vendor
+tools.  Binaries are loaded onto the board wi

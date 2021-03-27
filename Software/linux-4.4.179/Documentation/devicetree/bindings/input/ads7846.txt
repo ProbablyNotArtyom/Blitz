@@ -1,0 +1,120 @@
+# SPDX-License-Identifier: GPL-2.0
+dtb-$(CONFIG_ARCH_ALPINE) += \
+	alpine-db.dtb
+dtb-$(CONFIG_MACH_ARTPEC6) += \
+	artpec6-devboard.dtb
+dtb-$(CONFIG_MACH_ASM9260) += \
+	alphascale-asm9260-devkit.dtb
+# Keep at91 dtb files sorted alphabetically for each SoC
+dtb-$(CONFIG_SOC_AT91RM9200) += \
+	at91rm9200ek.dtb \
+	mpa1600.dtb
+dtb-$(CONFIG_SOC_AT91SAM9) += \
+	animeo_ip.dtb \
+	at91-qil_a9260.dtb \
+	aks-cdu.dtb \
+	ethernut5.dtb \
+	evk-pro3.dtb \
+	tny_a9260.dtb \
+	usb_a9260.dtb \
+	at91sam9260ek.dtb \
+	at91sam9261ek.dtb \
+	at91sam9263ek.dtb \
+	at91-sam9_l9260.dtb \
+	tny_a9263.dtb \
+	usb_a9263.dtb \
+	at91-foxg20.dtb \
+	at91-kizbox.dtb \
+	at91sam9g20ek.dtb \
+	at91sam9g20ek_2mmc.dtb \
+	tny_a9g20.dtb \
+	usb_a9g20.dtb \
+	usb_a9g20_lpw.dtb \
+	at91sam9m10g45ek.dtb \
+	pm9g45.dtb \
+	at91sam9n12ek.dtb \
+	at91sam9rlek.dtb \
+	at91-ariag25.dtb \
+	at91-ariettag25.dtb \
+	at91-cosino_mega2560.dtb \
+	at91-kizboxmini.dtb \
+	at91-wb45n.dtb \
+	at91sam9g15ek.dtb \
+	at91sam9g25ek.dtb \
+	at91sam9g35ek.dtb \
+	at91sam9x25ek.dtb \
+	at91sam9x35ek.dtb
+dtb-$(CONFIG_SOC_SAM_V7) += \
+	at91-kizbox2.dtb \
+	at91-nattis-2-natte-2.dtb \
+	at91-sama5d27_som1_ek.dtb \
+	at91-sama5d2_ptc_ek.dtb \
+	at91-sama5d2_xplained.dtb \
+	at91-sama5d3_xplained.dtb \
+	at91-dvk_som60.dtb \
+	at91-gatwick.dtb \
+	at91-tse850-3.dtb \
+	at91-wb50n.dtb \
+	sama5d31ek.dtb \
+	sama5d33ek.dtb \
+	sama5d34ek.dtb \
+	sama5d35ek.dtb \
+	sama5d36ek.dtb \
+	sama5d36ek_cmp.dtb \
+	at91-sama5d4_ma5d4evk.dtb \
+	at91-sama5d4_xplained.dtb \
+	at91-sama5d4ek.dtb \
+	at91-vinco.dtb
+dtb-$(CONFIG_ARCH_ATLAS6) += \
+	atlas6-evb.dtb
+dtb-$(CONFIG_ARCH_ATLAS7) += \
+	atlas7-evb.dtb
+dtb-$(CONFIG_ARCH_AXXIA) += \
+	axm5516-amarillo.dtb
+dtb-$(CONFIG_ARCH_BCM2835) += \
+	bcm2835-rpi-b.dtb \
+	bcm2835-rpi-a.dtb \
+	bcm2835-rpi-b-rev2.dtb \
+	bcm2835-rpi-b-plus.dtb \
+	bcm2835-rpi-a-plus.dtb \
+	bcm2835-rpi-cm1-io1.dtb \
+	bcm2836-rpi-2-b.dtb \
+	bcm2837-rpi-3-b.dtb \
+	bcm2837-rpi-3-b-plus.dtb \
+	bcm2837-rpi-cm3-io3.dtb \
+	bcm2835-rpi-zero.dtb \
+	bcm2835-rpi-zero-w.dtb
+dtb-$(CONFIG_ARCH_BCM_5301X) += \
+	bcm4708-asus-rt-ac56u.dtb \
+	bcm4708-asus-rt-ac68u.dtb \
+	bcm4708-buffalo-wzr-1750dhp.dtb \
+	bcm4708-linksys-ea6300-v1.dtb \
+	bcm4708-luxul-xap-1510.dtb \
+	bcm4708-luxul-xwc-1000.dtb \
+	bcm4708-netgear-r6250.dtb \
+	bcm4708-netgear-r6300-v2.dtb \
+	bcm4708-smartrg-sr400ac.dtb \
+	bcm47081-asus-rt-n18u.dtb \
+	bcm47081-buffalo-wzr-600dhp2.dtb \
+	bcm47081-buffalo-wzr-900dhp.dtb \
+	bcm47081-luxul-xap-1410.dtb \
+	bcm47081-luxul-xwr-1200.dtb \
+	bcm47081-tplink-archer-c5-v2.dtb \
+	bcm4709-asus-rt-ac87u.dtb \
+	bcm4709-buffalo-wxr-1900dhp.dtb \
+	bcm4709-linksys-ea9200.dtb \
+	bcm4709-netgear-r7000.dtb \
+	bcm4709-netgear-r8000.dtb \
+	bcm4709-tplink-archer-c9-v1.dtb \
+	bcm47094-dlink-dir-885l.dtb \
+	bcm47094-linksys-panamera.dtb \
+	bcm47094-luxul-abr-4500.dtb \
+	bcm47094-luxul-xap-1610.dtb \
+	bcm47094-luxul-xbr-4500.dtb \
+	bcm47094-luxul-xwr-3100.dtb \
+	bcm47094-luxul-xwr-3150-v1.dtb \
+	bcm47094-netgear-r8500.dtb \
+	bcm94708.dtb \
+	bcm94709.dtb \
+	bcm953012er.dtb \
+	bcm95301

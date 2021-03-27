@@ -1,0 +1,847 @@
+PPP Client Support for Microsoft's CHAP-80
+==========================================
+
+Eric Rosenquist          rosenqui@strataware.com
+
+
+INTRODUCTION
+
+Microsoft has introduced an extension to the Challenge/Handshake
+Authentication Protocol (CHAP) which eliminates the need for them to have
+access to cleartext passwords.  The details of the Microsoft extensions can
+be found in the document:
+
+    <ftp://ftp.microsoft.com/developr/rfc/chapexts.txt>
+
+In short, MS-CHAP is identified as <auth chap 80> since the hex value of 80
+is used to designate Microsoft's scheme.  Standard PPP CHAP uses a value of
+5.  If you enable PPP debugging with the "debug" option and see something
+like the following in your logs, the remote server is requesting MS-CHAP:
+
+  rcvd [LCP ConfReq id=0x2 <asyncmap 0x0> <auth chap 80> <magic 0x46a3>]
+                                           ^^^^^^^^^^^^
+
+The standard PPP implementation will indicate its lack of support for
+MS-CHAP by NAKing it:
+
+  lcp_reqci: rcvd AUTHTYPE
+   (c223)
+    (NAK)
+
+Windows NT Server systems are often configured to "Accept only Microsoft
+Authentication" to enhance security.  Up until now, that meant that you
+couldn't use this version of PPPD to connect to such a system.  I've
+managed to get a client-only implementation of MS-CHAP working; it will
+authenticate itself to another system using MS-CHAP, but if you're using
+PPPD as a dial-in server, you won't be able to use MS-CHAP to authenticate
+the clients.  This would not be a lot of extra work given that the
+framework is in place, but I didn't need it myself so I didn't implement
+it.
+
+
+BUILDING THE PPPD
+
+MS-CHAP uses a combination of MD4 hashing and DES encryption for
+authentication.  You'll need to get Eric Young's DES library in order to
+use my MS-CHAP extensions.  You can find it in:
+
+    <ftp://ftp.psy.uq.oz.au/pub/Crypto/DES/>
+
+I used libdes-3.06, but hopefully anything newer than that will work also.
+Get the library, build and test it on your system, and install it somewhere
+(typically /usr/local/lib and /usr/local/include).
+
+You should now be ready to (re)compile the PPPD.  Go to the ppp-X.Y/pppd
+directory and make sure the Makefile contains "-DUSE_MSCHAP" in the
+COMPILE_FLAGS macro, and that the LIBS macro contains "-ldes".  Depending
+on your system and where the DES library was installed, you may also need
+to alter the include and library paths used by your compiler.
+
+Do a "make clean" and then a "make" to rebuild the PPPD.  Assuming all goes
+well, install the new PPPD and move on to the CONFIGURATION section.
+
+
+CONFIGURATION
+
+If you've never used PPPD with CHAP before, read the man page (type "man
+pppd") and read the description in there.  Basically, you need to edit the
+"chap-secrets" file typically named /etc/ppp/chap-secrets.  This should
+contain the following two lines for each system with which you use CHAP
+(with no leading blanks):
+
+    RemoteHost  Account     Secret
+    Account     RemoteHost  Secret
+
+Note that you need both lines and that item 1 and 2 are swapped in the
+second line.  I'm not sure why you need it twice, but it works and I didn't
+have time to look into it further.  The "RemoteHost" is a somewhat
+arbitrary name for the remote Windows NT system you're dialing.  It doesn't
+have to match the NT system's name, but it *does* have to match what you
+use with the "remotename" parameter.  The "Account" is the Windows NT
+account name you have been told to use when dialing, and the "Secret" is
+the password for that account.  For example, if your service provider calls
+their machine "DialupNT" and tells you your account and password are
+"customer47" and "foobar", add the following to your chap-secrets file:
+
+    DialupNT    customer47  foobar
+    customer47  DialupNT    foobar
+
+The only other thing you need to do for MS-CHAP (compared to normal CHAP)
+is to always use the "remotename" option, either on the command line or in
+your "options" file (see the pppd man page for details).  In the case of
+the above example, you would need to use the following command line:
+
+    pppd name customer47 remotename DialupNT <other options>
+
+or add:
+
+    name customer47
+    remotename DialupNT
+
+to your PPPD "options" file.
+
+The "remotename" option is required for MS-CHAP since Microsoft PPP servers
+don't send their system name in the CHAP challenge packet.
+
+
+TROUBLESHOOTING
+
+Assuming that everything else has been configured correctly for PPP and
+CHAP, the MS-CHAP-specific problems you're likely to encounter are mostly
+related to your Windows NT account and its settings.  A Microsoft server
+returns error codes in its CHAP response.  The following are extracted from
+Microsoft's "chapexts.txt" file referenced above:
+
+ 646 ERROR_RESTRICTED_LOGON_HOURS
+ 647 ERROR_ACCT_DISABLED
+ 648 ERROR_PASSWD_EXPIRED
+ 649 ERROR_NO_DIALIN_PERMISSION
+ 691 ERROR_AUTHENTICATION_FAILURE
+ 709 ERROR_CHANGING_PASSWORD
+
+You'll see these in your pppd log as a line similar to:
+
+   Remote message: E=649 R=0
+
+The "E=" is the error number from the table above, and the "R=" flag
+indicates whether the error is transient and the client should retry.  If
+you consistently get error 691, then either you're using the wrong account
+name/password, or the DES library or MD4 hashing (in md4.c) aren't working
+properly.  Verify your account name and password (use a Windows NT or
+Windows 95 system to dial-in if you have one available).  If that checks
+out, test the DES library with the "destest" program included with the DES
+library.  If DES checks out, the md4.c routines are probably failing
+(system byte ordering may be a problem) or my code is screwing up.  I've
+only got access to a Linux system, so you're on your own for anything else.
+I can generate an MD4 test program if necessary in order to verify proper
+MD4 operation.
+
+
+STILL TO DO
+
+A site using only MS-CHAP to authenticate has no need to store cleartext
+passwords in the "chap-secrets" file.  A utility that spits out the ASCII
+hex MD4 hash of a given password would be nice, and would allow that hash
+to be used in chap-secrets in place of the password.  The code to do this
+could quite easily be lifted from chap_ms.c (you have to convert the
+password to Unicode before hashing it).  The chap_ms.c file would also have
+to be changed to recognize a password hash (16 binary bytes == 32 ASCII hex
+characters) and skip the hashing stage.
+
+A server implementation would allow MS-CHAP to be used with Windows NT and
+Windows 95 clients for enhanced security.  Some new command-line options
+would be required, as would code to generate the Challenge packet and
+verify the response.  Most of the helper functions are in place, so this
+shouldn't be too hard for someone to add.
+
+
+These are the differences to the origial 2.2.0f distribution package. You
+must use the patch utility to apply these patches before the code may be
+built.
+
+diff --unified --recursive --new-file ppp-2.2.0f.orig/pppd/Makefile.linux ppp-2.2.0f/pppd/Makefile.linux
+--- ppp-2.2.0f.orig/pppd/Makefile.linux	Fri Apr 12 06:27:12 1996
++++ ppp-2.2.0f/pppd/Makefile.linux	Fri Apr 12 06:25:01 1996
+@@ -4,8 +4,8 @@
+ #
+ 
+ PPPDSRCS = main.c magic.c fsm.c lcp.c ipcp.c upap.c chap.c md5.c ccp.c \
+-	   ipxcp.c auth.c options.c sys-linux.c
+-HEADERS =  callout.h pathnames.h patchlevel.h chap.h md5.h \
++	   ipxcp.c auth.c options.c sys-linux.c md4.c chap_ms.c
++HEADERS =  callout.h pathnames.h patchlevel.h chap.h md5.h chap_ms.h md4.h \
+ 	   ipxcp.h
+ MANPAGES = pppd.8
+ PPPDOBJS = main.o magic.o fsm.o lcp.o ipcp.o upap.o chap.o md5.o ccp.o \
+@@ -29,6 +29,13 @@
+ 
+ CFLAGS= $(COPTS) $(DEBUG_FLAGS) $(COMPILE_FLAGS)
+ SOURCE= RELNOTES Makefile.linux $(PPPDSRCS) $(HEADERS) $(MANPAGES)
++
++ifdef USE_MSCHAP
++PPPDSRCS += md4.c chap_ms.c
++PPPDOBJS += md4.o chap_ms.o
++CFLAGS   += -DUSE_MSCHAP
++LIBS     += -ldes
++endif
+ 
+ ifdef USE_MS_DNS
+ CFLAGS   += -DUSE_MS_DNS=1
+diff --unified --recursive --new-file ppp-2.2.0f.orig/pppd/chap.c ppp-2.2.0f/pppd/chap.c
+--- ppp-2.2.0f.orig/pppd/chap.c	Fri Apr 12 06:10:30 1996
++++ ppp-2.2.0f/pppd/chap.c	Fri Apr 12 06:25:01 1996
+@@ -34,6 +34,9 @@
+ 
+ #include "pppd.h"
+ #include "chap.h"
++#ifdef USE_MSCHAP
++#include "chap_ms.h"
++#endif /* USE_MSCHAP */
+ #include "md5.h"
+ 
+ chap_state chap[NUM_PPP];		/* CHAP state; one for each unit */
+@@ -370,8 +373,17 @@
+     BCOPY(inp, rhostname, len);
+     rhostname[len] = '\000';
+ 
+-    CHAPDEBUG((LOG_INFO, "ChapReceiveChallenge: received name field: %s",
+-	       rhostname));
++    CHAPDEBUG((LOG_INFO, "ChapReceiveChallenge: received name field: '%s'",
++	      rhostname));
++
++#ifdef USE_MSCHAP
++    /* Microsoft doesn't send their name back in the PPP packet */
++    if (!rhostname[0] && cstate->resp_type == CHAP_MICROSOFT) {
++        extern char remote_name[];
++	strcpy(rhostname, remote_name);
++	CHAPDEBUG((LOG_INFO, "ChapReceiveChallenge: using '%s' as remote name", rhostname));
++    }
++#endif /* USE_MSCHAP */
+ 
+     /* get secret for authenticating ourselves with the specified host */
+     if (!get_secret(cstate->unit, cstate->resp_name, rhostname,
+@@ -391,7 +403,7 @@
+     /*  generate MD based on negotiated type */
+     switch (cstate->resp_type) { 
+ 
+-    case CHAP_DIGEST_MD5:		/* only MD5 is defined for now */
++    case CHAP_DIGEST_MD5:
+ 	MD5Init(&mdContext);
+ 	MD5Update(&mdContext, &cstate->resp_id, 1);
+ 	MD5Update(&mdContext, secret, secret_len);
+@@ -400,6 +412,12 @@
+ 	BCOPY(mdContext.digest, cstate->response, MD5_SIGNATURE_SIZE);
+ 	cstate->resp_length = MD5_SIGNATURE_SIZE;
+ 	break;
++
++#ifdef USE_MSCHAP
++    case CHAP_MICROSOFT:
++	ChapMS(cstate, rchallenge, rchallenge_len, secret, secret_len);
++	break;
++#endif /* USE_MSCHAP */
+ 
+     default:
+ 	CHAPDEBUG((LOG_INFO, "unknown digest type %d", cstate->resp_type));
+diff --unified --recursive --new-file ppp-2.2.0f.orig/pppd/chap.h ppp-2.2.0f/pppd/chap.h
+--- ppp-2.2.0f.orig/pppd/chap.h	Fri Apr 12 06:10:30 1996
++++ ppp-2.2.0f/pppd/chap.h	Fri Apr 12 06:25:01 1996
+@@ -39,9 +39,10 @@
+ /*
+  *  Challenge lengths (for challenges we send) and other limits.
+  */
++
+ #define MIN_CHALLENGE_LENGTH	32
+ #define MAX_CHALLENGE_LENGTH	64
+-#define MAX_RESPONSE_LENGTH	16	/* sufficient for MD5 */
++#define MAX_RESPONSE_LENGTH	64	/* sufficient for MD5 and MSCHAP */
+ 
+ /*
+  * Each interface is described by a chap structure.
+diff --unified --recursive --new-file ppp-2.2.0f.orig/pppd/chap_ms.c ppp-2.2.0f/pppd/chap_ms.c
+--- ppp-2.2.0f.orig/pppd/chap_ms.c	Wed Dec 31 16:00:00 1969
++++ ppp-2.2.0f/pppd/chap_ms.c	Fri Apr 12 06:25:02 1996
+@@ -0,0 +1,179 @@
++/*
++ * chap_ms.c - Microsoft MS-CHAP compatible implementation.
++ *
++ * Copyright (c) 1995 Eric Rosenquist, Strata Software Limited.
++ * http://www.strataware.com/
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms are permitted
++ * provided that the above copyright notice and this paragraph are
++ * duplicated in all such forms and that any documentation,
++ * advertising materials, and other materials related to such
++ * distribution and use acknowledge that the software was developed
++ * by Eric Rosenquist.  The name of the author may not be used to
++ * endorse or promote products derived from this software without
++ * specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
++ * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
++ * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
++ */
++
++#ifdef USE_MSCHAP
++#ifndef lint
++static char rcsid[] = "$Id: README.mschap80,v 1.1 1999/12/09 05:42:44 gerg Exp $";
++#endif
++
++#include <stdio.h>
++#include <sys/types.h>
++#include <sys/time.h>
++#include <syslog.h>
++
++#include "pppd.h"
++#include "chap.h"
++#include "chap_ms.h"
++#include "md4.h"
++
++#include <des.h>
++
++typedef struct {
++    u_char LANManResp[24];
++    u_char NTResp[24];
++    u_char UseNT;			/* If 1, ignore the LANMan response field */
++} MS_ChapResponse;
++#define MS_CHAP_RESPONSE_LEN	49	/* Don't rely on sizeof(MS_ChapResponse) in case of struct padding */
++
++
++static void	DesEncrypt __P((u_char *, u_char *, u_char *));
++static void	MakeKey __P((u_char *, u_char *));
++
++static void
++ChallengeResponse(challenge, pwHash, response)
++    u_char *challenge;	/* IN   8 octets */
++    u_char *pwHash;	/* IN  16 octets */
++    u_char *response;	/* OUT 24 octets */
++{
++    char    ZPasswordHash[21];
++
++    BZERO(ZPasswordHash, sizeof(ZPasswordHash));
++    BCOPY(pwHash, ZPasswordHash, 16);
++
++#if 0
++    log_packet(ZPasswordHash, sizeof(ZPasswordHash), "ChallengeResponse - ZPasswordHash");
++#endif
++
++    DesEncrypt(challenge, ZPasswordHash +  0, response + 0);
++    DesEncrypt(challenge, ZPasswordHash +  7, response + 8);
++    DesEncrypt(challenge, ZPasswordHash + 14, response + 16);
++
++#if 0
++    log_packet(response, 24, "ChallengeResponse - response");
++#endif
++}
++
++
++static void
++DesEncrypt(clear, key, cipher)
++    u_char *clear;	/* IN  8 octets */
++    u_char *key;	/* IN  7 octets */
++    u_char *cipher;	/* OUT 8 octets */
++{
++    des_cblock		des_key;
++    des_key_schedule	key_schedule;
++
++    MakeKey(key, des_key);
++
++    des_set_key(&des_key, key_schedule);
++
++#if 0
++    CHAPDEBUG((LOG_INFO, "DesEncrypt: 8 octet input : %02X%02X%02X%02X%02X%02X%02X%02X",
++	       clear[0], clear[1], clear[2], clear[3], clear[4], clear[5], clear[6], clear[7]));
++#endif
++
++    des_ecb_encrypt((des_cblock *)clear, (des_cblock *)cipher, key_schedule, 1);
++
++#if 0
++    CHAPDEBUG((LOG_INFO, "DesEncrypt: 8 octet output: %02X%02X%02X%02X%02X%02X%02X%02X",
++	       cipher[0], cipher[1], cipher[2], cipher[3], cipher[4], cipher[5], cipher[6], cipher[7]));
++#endif
++}
++
++
++static u_char Get7Bits(input, startBit)
++    u_char *input;
++    int startBit;
++{
++    register unsigned int	word;
++
++    word  = (unsigned)input[startBit / 8] << 8;
++    word |= (unsigned)input[startBit / 8 + 1];
++
++    word >>= 15 - (startBit % 8 + 7);
++
++    return word & 0xFE;
++}
++
++
++static void MakeKey(key, des_key)
++    u_char *key;	/* IN  56 bit DES key missing parity bits */
++    u_char *des_key;	/* OUT 64 bit DES key with parity bits added */
++{
++    des_key[0] = Get7Bits(key,  0);
++    des_key[1] = Get7Bits(key,  7);
++    des_key[2] = Get7Bits(key, 14);
++    des_key[3] = Get7Bits(key, 21);
++    des_key[4] = Get7Bits(key, 28);
++    des_key[5] = Get7Bits(key, 35);
++    des_key[6] = Get7Bits(key, 42);
++    des_key[7] = Get7Bits(key, 49);
++
++    des_set_odd_parity((des_cblock *)des_key);
++
++#if 0
++    CHAPDEBUG((LOG_INFO, "MakeKey: 56-bit input : %02X%02X%02X%02X%02X%02X%02X",
++	       key[0], key[1], key[2], key[3], key[4], key[5], key[6]));
++    CHAPDEBUG((LOG_INFO, "MakeKey: 64-bit output: %02X%02X%02X%02X%02X%02X%02X%02X",
++	       des_key[0], des_key[1], des_key[2], des_key[3], des_key[4], des_key[5], des_key[6], des_key[7]));
++#endif
++}
++#endif /* USE_MSCHAP */
++
++void
++ChapMS(cstate, rchallenge, rchallenge_len, secret, secret_len)
++    chap_state *cstate;
++    char *rchallenge;
++    int rchallenge_len;
++    char *secret;
++    int secret_len;
++{
++#ifdef USE_MSCHAP
++    int			i;
++    MDstruct		md4Context;
++    MS_ChapResponse	response;
++    u_char		unicodePassword[MAX_NT_PASSWORD * 2];
++
++#if 0
++    CHAPDEBUG((LOG_INFO, "ChapMS: secret is '%.*s'", secret_len, secret));
++#endif
++
++    BZERO(&response, sizeof(response));
++
++    /* Initialize the Unicode version of the secret (== password). */
++    /* This implicitly supports 8-bit ISO8859/1 characters. */
++    BZERO(unicodePassword, sizeof(unicodePassword));
++    for (i = 0; i < secret_len; i++)
++	unicodePassword[i * 2] = (u_char)secret[i];
++
++    MDbegin(&md4Context);
++    MDupdate(&md4Context, unicodePassword, secret_len * 2 * 8);	/* Unicode is 2 bytes/char, *8 for bit count */
++    MDupdate(&md4Context, NULL, 0);	/* Tell MD4 we're done */
++
++    ChallengeResponse(rchallenge, (char *)md4Context.buffer, response.NTResp);
++
++    response.UseNT = 1;
++
++    BCOPY(&response, cstate->response, MS_CHAP_RESPONSE_LEN);
++    cstate->resp_length = MS_CHAP_RESPONSE_LEN;
++#endif /* USE_MSCHAP */
++}
+diff --unified --recursive --new-file ppp-2.2.0f.orig/pppd/chap_ms.h ppp-2.2.0f/pppd/chap_ms.h
+--- ppp-2.2.0f.orig/pppd/chap_ms.h	Wed Dec 31 16:00:00 1969
++++ ppp-2.2.0f/pppd/chap_ms.h	Fri Apr 12 06:25:02 1996
+@@ -0,0 +1,32 @@
++/*
++ * chap.h - Cryptographic Handshake Authentication Protocol definitions.
++ *
++ * Copyright (c) 1995 Eric Rosenquist, Strata Software Limited.
++ * http://www.strataware.com/
++ *
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms are permitted
++ * provided that the above copyright notice and this paragraph are
++ * duplicated in all such forms and that any documentation,
++ * advertising materials, and other materials related to such
++ * distribution and use acknowledge that the software was developed
++ * by Eric Rosenquist.  The name of the author may not be used to
++ * endorse or promote products derived from this software without
++ * specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
++ * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
++ * WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
++ *
++ * $Id: README.mschap80,v 1.1 1999/12/09 05:42:44 gerg Exp $
++ */
++
++#ifndef __CHAPMS_INCLUDE__
++
++#define MAX_NT_PASSWORD	256	/* Maximum number of (Unicode) chars in an NT password */
++
++void ChapMS __P((chap_state *, char *, int, char *, int));
++
++#define __CHAPMS_INCLUDE__
++#endif /* __CHAPMS_INCLUDE__ */
+diff --unified --recursive --new-file ppp-2.2.0f.orig/pppd/lcp.c ppp-2.2.0f/pppd/lcp.c
+--- ppp-2.2.0f.orig/pppd/lcp.c	Fri Apr 12 06:10:31 1996
++++ ppp-2.2.0f/pppd/lcp.c	Fri Apr 12 06:25:02 1996
+@@ -1263,7 +1263,11 @@
+ 		    break;
+ 		}
+ 		GETCHAR(cichar, p);	/* get digest type*/
++#ifndef USE_MSCHAP
+ 		if (cichar != ao->chap_mdtype) {
++#else
++		if (cichar != ao->chap_mdtype && cichar != CHAP_MICROSOFT) {
++#endif /* USE_MSCHAP */
+ 		    orc = CONFNAK;
+ 		    PUTCHAR(CI_AUTHTYPE, nakp);
+ 		    PUTCHAR(CILEN_CHAP, nakp);
+diff --unified --recursive --new-file ppp-2.2.0f.orig/pppd/md4.c ppp-2.2.0f/pppd/md4.c
+--- ppp-2.2.0f.orig/pppd/md4.c	Wed Dec 31 16:00:00 1969
++++ ppp-2.2.0f/pppd/md4.c	Fri Apr 12 06:10:31 1996
+@@ -0,0 +1,295 @@
++/*
++** ********************************************************************
++** md4.c -- Implementation of MD4 Message Digest Algorithm           **
++** Updated: 2/16/90 by Ronald L. Rivest                              **
++** (C) 1990 RSA Data Security, Inc.                                  **
++** ********************************************************************
++*/
++
++/*
++** To use MD4:
++**   -- Include md4.h in your program
++**   -- Declare an MDstruct MD to hold the state of the digest
++**          computation.
++**   -- Initialize MD using MDbegin(&MD)
++**   -- For each full block (64 bytes) X you wish to process, call
++**          MDupdate(&MD,X,512)
++**      (512 is the number of bits in a full block.)
++**   -- For the last block (less than 64 bytes) you wish to process,
++**          MDupdate(&MD,X,n)
++**      where n is the number of bits in the partial block. A partial
++**      block terminates the computation, so every MD computation
++**      should terminate by processing a partial block, even if it
++**      has n = 0.
++**   -- The message digest is available in MD.buffer[0] ...
++**      MD.buffer[3].  (Least-significant byte of each word
++**      should be output first.)
++**   -- You can print out the digest using MDprint(&MD)
++*/
++
++/* Implementation notes:
++** This implementation assumes that ints are 32-bit quantities.
++** If the machine stores the least-significant byte of an int in the
++** least-addressed byte (e.g., VAX and 8086), then LOWBYTEFIRST
++** should be set to TRUE.  Otherwise (e.g., SUNS), LOWBYTEFIRST
++** should be set to FALSE.  Note that on machines with LOWBYTEFIRST
++** FALSE the routine MDupdate modifies has a side-effect on its input
++** array (the order of bytes in each word are reversed).  If this is
++** undesired a call to MDreverse(X) can reverse the bytes of X back
++** into order after each call to MDupdate.
++**
++** NOTE: LOWBYTEFIRST removed by Eric Rosenquist in favour of run-time
++** detection to simplify build process.
++*/
++
++#define TRUE  1
++#define FALSE 0
++
++/* Compile-time includes
++*/
++#include <stdio.h>
++#include "md4.h"
++#include "pppd.h"
++
++/* Compile-time declarations of MD4 "magic constants".
++*/
++#define I0  0x67452301       /* Initial values for MD buffer */
++#define I1  0xefcdab89
++#define I2  0x98badcfe
++#define I3  0x10325476
++#define C2  013240474631     /* round 2 constant = sqrt(2) in octal */
++#define C3  015666365641     /* round 3 constant = sqrt(3) in octal */
++/* C2 and C3 are from Knuth, The Art of Programming, Volume 2
++** (Seminumerical Algorithms), Second Edition (1981), Addison-Wesley.
++** Table 2, page 660.
++*/
++
++#define fs1  3               /* round 1 shift amounts */
++#define fs2  7
++#define fs3 11
++#define fs4 19
++#define gs1  3               /* round 2 shift amounts */
++#define gs2  5
++#define gs3  9
++#define gs4 13
++#define hs1  3               /* round 3 shift amounts */
++#define hs2  9
++#define hs3 11
++#define hs4 15
++
++/* Compile-time macro declarations for MD4.
++** Note: The "rot" operator uses the variable "tmp".
++** It assumes tmp is declared as unsigned int, so that the >>
++** operator will shift in zeros rather than extending the sign bit.
++*/
++#define f(X,Y,Z)             ((X&Y) | ((~X)&Z))
++#define g(X,Y,Z)             ((X&Y) | (X&Z) | (Y&Z))
++#define h(X,Y,Z)             (X^Y^Z)
++#define rot(X,S)             (tmp=X,(tmp<<S) | (tmp>>(32-S)))
++#define ff(A,B,C,D,i,s)      A = rot((A + f(B,C,D) + X[i]),s)
++#define gg(A,B,C,D,i,s)      A = rot((A + g(B,C,D) + X[i] + C2),s)
++#define hh(A,B,C,D,i,s)      A = rot((A + h(B,C,D) + X[i] + C3),s)
++
++/* MDprint(MDp)
++** Print message digest buffer MDp as 32 hexadecimal digits.
++** Order is from low-order byte of buffer[0] to high-order byte of
++** buffer[3].
++** Each byte is printed with high-order hexadecimal digit first.
++** This is a user-callable routine.
++*/
++void
++MDprint(MDp)
++MDptr MDp;
++{ int i,j;
++for (i=0;i<4;i++)
++ for (j=0;j<32;j=j+8)
++   printf("%02x",(MDp->buffer[i]>>j) & 0xFF);
++}
++
++/* MDbegin(MDp)
++** Initialize message digest buffer MDp.
++** This is a user-callable routine.
++*/
++void
++MDbegin(MDp)
++MDptr MDp;
++{ int i;
++MDp->buffer[0] = I0;
++MDp->buffer[1] = I1;
++MDp->buffer[2] = I2;
++MDp->buffer[3] = I3;
++for (i=0;i<8;i++) MDp->count[i] = 0;
++MDp->done = 0;
++}
++
++/* MDreverse(X)
++** Reverse the byte-ordering of every int in X.
++** Assumes X is an array of 16 ints.
++** The macro revx reverses the byte-ordering of the next word of X.
++*/
++#define revx { t = (*X << 16) | (*X >> 16); \
++  *X++ = ((t & 0xFF00FF00) >> 8) | ((t & 0x00FF00FF) << 8); }
++MDreverse(X)
++unsigned int *X;
++{ register unsigned int t;
++revx; revx; revx; revx; revx; revx; revx; revx;
++revx; revx; revx; revx; revx; revx; revx; revx;
++}
++
++/* MDblock(MDp,X)
++** Update message digest buffer MDp->buffer using 16-word data block X.
++** Assumes all 16 words of X are full of data.
++** Does not update MDp->count.
++** This routine is not user-callable.
++*/
++static void
++MDblock(MDp,X)
++MDptr MDp;
++unsigned int *X;
++{
++register unsigned int tmp, A, B, C, D;
++static int low_byte_first = -1;
++
++if (low_byte_first == -1) {
++    low_byte_first = (htons((unsigned short int)1) != 1);
++}
++
++if (low_byte_first == 0) {
++    MDreverse(X);
++}
++
++A = MDp->buffer[0];
++B = MDp->buffer[1];
++C = MDp->buffer[2];
++D = MDp->buffer[3];
++/* Update the message digest buffer */
++ff(A , B , C , D ,  0 , fs1); /* Round 1 */
++ff(D , A , B , C ,  1 , fs2);
++ff(C , D , A , B ,  2 , fs3);
++ff(B , C , D , A ,  3 , fs4);
++ff(A , B , C , D ,  4 , fs1);
++ff(D , A , B , C ,  5 , fs2);
++ff(C , D , A , B ,  6 , fs3);
++ff(B , C , D , A ,  7 , fs4);
++ff(A , B , C , D ,  8 , fs1);
++ff(D , A , B , C ,  9 , fs2);
++ff(C , D , A , B , 10 , fs3);
++ff(B , C , D , A , 11 , fs4);
++ff(A , B , C , D , 12 , fs1);
++ff(D , A , B , C , 13 , fs2);
++ff(C , D , A , B , 14 , fs3);
++ff(B , C , D , A , 15 , fs4);
++gg(A , B , C , D ,  0 , gs1); /* Round 2 */
++gg(D , A , B , C ,  4 , gs2);
++gg(C , D , A , B ,  8 , gs3);
++gg(B , C , D , A , 12 , gs4);
++gg(A , B , C , D ,  1 , gs1);
++gg(D , A , B , C ,  5 , gs2);
++gg(C , D , A , B ,  9 , gs3);
++gg(B , C , D , A , 13 , gs4);
++gg(A , B , C , D ,  2 , gs1);
++gg(D , A , B , C ,  6 , gs2);
++gg(C , D , A , B , 10 , gs3);
++gg(B , C , D , A , 14 , gs4);
++gg(A , B , C , D ,  3 , gs1);
++gg(D , A , B , C ,  7 , gs2);
++gg(C , D , A , B , 11 , gs3);
++gg(B , C , D , A , 15 , gs4);
++hh(A , B , C , D ,  0 , hs1); /* Round 3 */
++hh(D , A , B , C ,  8 , hs2);
++hh(C , D , A , B ,  4 , hs3);
++hh(B , C , D , A , 12 , hs4);
++hh(A , B , C , D ,  2 , hs1);
++hh(D , A , B , C , 10 , hs2);
++hh(C , D , A , B ,  6 , hs3);
++hh(B , C , D , A , 14 , hs4);
++hh(A , B , C , D ,  1 , hs1);
++hh(D , A , B , C ,  9 , hs2);
++hh(C , D , A , B ,  5 , hs3);
++hh(B , C , D , A , 13 , hs4);
++hh(A , B , C , D ,  3 , hs1);
++hh(D , A , B , C , 11 , hs2);
++hh(C , D , A , B ,  7 , hs3);
++hh(B , C , D , A , 15 , hs4);
++MDp->buffer[0] += A;
++MDp->buffer[1] += B;
++MDp->buffer[2] += C;
++MDp->buffer[3] += D;
++}
++
++/* MDupdate(MDp,X,count)
++** Input: MDp -- an MDptr
++**        X -- a pointer to an array of unsigned characters.
++**        count -- the number of bits of X to use.
++**          (if not a multiple of 8, uses high bits of last byte.)
++** Update MDp using the number of bits of X given by count.
++** This is the basic input routine for an MD4 user.
++** The routine completes the MD computation when count < 512, so
++** every MD computation should end with one call to MDupdate with a
++** count less than 512.  A call with count 0 will be ignored if the
++** MD has already been terminated (done != 0), so an extra call with
++** count 0 can be given as a "courtesy close" to force termination
++** if desired.
++*/
++void
++MDupdate(MDp,X,count)
++MDptr MDp;
++unsigned char *X;
++unsigned int count;
++{ unsigned int i, tmp, bit, byte, mask;
++unsigned char XX[64];
++unsigned char *p;
++/* return with no error if this is a courtesy close with count
++** zero and MDp->done is true.
++*/
++if (count == 0 && MDp->done) return;
++/* check to see if MD is already done and report error */
++if (MDp->done)
++	  { printf("\nError: MDupdate MD already done."); return; }
++/* Add count to MDp->count */
++tmp = count;
++p = MDp->count;
++while (tmp)
++ { tmp += *p;
++   *p++ = tmp;
++   tmp = tmp >> 8;
++ }
++/* Process data */
++if (count == 512)
++ { /* Full block of data to handle */
++   MDblock(MDp,(unsigned int *)X);
++ }
++else if (count > 512) /* Check for count too large */
++ { printf("\nError: MDupdate called with illegal count value %d."
++		  ,count);
++   return;
++ }
++else /* partial block -- must be last block so finish up */
++ { /* Find out how many bytes and residual bits there are */
++   byte = count >> 3;
++   bit =  count & 7;
++   /* Copy X into XX since we need to modify it */
++   for (i=0;i<=byte;i++)   XX[i] = X[i];
++   for (i=byte+1;i<64;i++) XX[i] = 0;
++   /* Add padding '1' bit and low-order zeros in last byte */
++   mask = 1 << (7 - bit);
++   XX[byte] = (XX[byte] | mask) & ~( mask - 1);
++   /* If room for bit count, finish up with this block */
++   if (byte <= 55)
++	 { for (i=0;i<8;i++) XX[56+i] = MDp->count[i];
++	   MDblock(MDp,(unsigned int *)XX);
++	 }
++   else /* need to do two blocks to finish up */
++	 { MDblock(MDp,(unsigned int *)XX);
++	   for (i=0;i<56;i++) XX[i] = 0;
++	   for (i=0;i<8;i++)  XX[56+i] = MDp->count[i];
++	   MDblock(MDp,(unsigned int *)XX);
++	 }
++   /* Set flag saying we're done with MD computation */
++   MDp->done = 1;
++ }
++}
++
++/*
++** End of md4.c
++****************************(cut)***********************************/
+diff --unified --recursive --new-file ppp-2.2.0f.orig/pppd/md4.h ppp-2.2.0f/pppd/md4.h
+--- ppp-2.2.0f.orig/pppd/md4.h	Wed Dec 31 16:00:00 1969
++++ ppp-2.2.0f/pppd/md4.h	Fri Apr 12 06:10:31 1996
+@@ -0,0 +1,51 @@
++/*
++** ********************************************************************
++** md4.h -- Header file for implementation of                        **
++** MD4 Message Digest Algorithm                                      **
++** Updated: 2/13/90 by Ronald L. Rivest                              **
++** (C) 1990 RSA Data Security, Inc.                                  **
++** ********************************************************************
++*/
++
++/* MDstruct is the data structure for a message digest computation.
++*/
++typedef struct {
++unsigned int buffer[4]; /* Holds 4-word result of MD computation */
++unsigned char count[8]; /* Number of bits processed so far */
++unsigned int done;      /* Nonzero means MD computation finished */
++} MDstruct, *MDptr;
++
++/* MDbegin(MD)
++** Input: MD -- an MDptr
++** Initialize the MDstruct prepatory to doing a message digest
++** computation.
++*/
++extern void MDbegin();
++
++/* MDupdate(MD,X,count)
++** Input: MD -- an MDptr
++**        X -- a pointer to an array of unsigned characters.
++**        count -- the number of bits of X to use (an unsigned int).
++** Updates MD using the first "count" bits of X.
++** The array pointed to by X is not modified.
++** If count is not a multiple of 8, MDupdate uses high bits of
++** last byte.
++** This is the basic input routine for a user.
++** The routine terminates the MD computation when count < 512, so
++** every MD computation should end with one call to MDupdate with a
++** count less than 512.  Zero is OK for a count.
++*/
++extern void MDupdate();
++
++/* MDprint(MD)
++** Input: MD -- an MDptr
++** Prints message digest buffer MD as 32 hexadecimal digits.
++** Order is from low-order byte of buffer[0] to high-order byte
++** of buffer[3].
++** Each byte is printed with high-order hexadecimal digit first.
++*/
++extern void MDprint();
++
++/*
++** End of md4.h
++****************************(cut)***********************************/

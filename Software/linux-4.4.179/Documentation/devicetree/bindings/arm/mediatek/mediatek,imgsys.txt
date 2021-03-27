@@ -1,0 +1,16 @@
+.. _transhuge:
+
+============================
+Transparent Hugepage Support
+============================
+
+This document describes design principles Transparent Hugepage (THP)
+Support and its interaction with other parts of the memory management.
+
+Design principles
+=================
+
+- "graceful fallback": mm components which don't have transparent hugepage
+  knowledge fall back to breaking huge pmd mapping into table of ptes and,
+  if necessary, split a transparent hugepage. Therefore these components
+  can continue working on the regular pages or regular pte mappings

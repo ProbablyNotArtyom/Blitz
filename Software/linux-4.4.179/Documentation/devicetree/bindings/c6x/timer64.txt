@@ -1,0 +1,45 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ * arch/alpha/boot/head.S
+ *
+ * initial bootloader stuff..
+ */
+
+#include <asm/pal.h>
+
+	.set noreorder
+	.globl	__start
+	.ent	__start
+__start:
+	br	$29,2f
+2:	ldgp	$29,0($29)
+	jsr	$26,start_kernel
+	call_pal PAL_halt
+	.end __start
+
+	.align 5
+	.globl	wrent
+	.ent	wrent
+wrent:
+	.prologue 0
+	call_pal PAL_wrent
+	ret ($26)
+	.end wrent
+
+	.align 5
+	.globl	wrkgp
+	.ent	wrkgp
+wrkgp:
+	.prologue 0
+	call_pal PAL_wrkgp
+	ret ($26)
+	.end wrkgp
+
+	.align 5
+	.globl	switch_to_osf_pal
+	.ent	switch_to_osf_pal
+switch_to_osf_pal:
+	subq	$30,128,$30
+	.frame	$30,128,$26
+	stq	$26,0($30)
+	stq	$1,8

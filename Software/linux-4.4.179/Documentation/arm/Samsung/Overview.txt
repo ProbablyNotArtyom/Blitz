@@ -1,0 +1,71 @@
+====================
+Credentials in Linux
+====================
+
+By: David Howells <dhowells@redhat.com>
+
+.. contents:: :local:
+
+Overview
+========
+
+There are several parts to the security check performed by Linux when one
+object acts upon another:
+
+ 1. Objects.
+
+     Objects are things in the system that may be acted upon directly by
+     userspace programs.  Linux has a variety of actionable objects, including:
+
+	- Tasks
+	- Files/inodes
+	- Sockets
+	- Message queues
+	- Shared memory segments
+	- Semaphores
+	- Keys
+
+     As a part of the description of all these objects there is a set of
+     credentials.  What's in the set depends on the type of object.
+
+ 2. Object ownership.
+
+     Amongst the credentials of most objects, there will be a subset that
+     indicates the ownership of that object.  This is used for resource
+     accounting and limitation (disk quotas and task rlimits for example).
+
+     In a standard UNIX filesystem, for instance, this will be defined by the
+     UID marked on the inode.
+
+ 3. The objective context.
+
+     Also amongst the credentials of those objects, there will be a subset that
+     indicates the 'objective context' of that object.  This may or may not be
+     the same set as in (2) - in standard UNIX files, for instance, this is the
+     defined by the UID and the GID marked on the inode.
+
+     The objective context is used as part of the security calculation that is
+     carried out when an object is acted upon.
+
+ 4. Subjects.
+
+     A subject is an object that is acting upon another object.
+
+     Most of the objects in the system are inactive: they don't act on other
+     objects within the system.  Processes/tasks are the obvious exception:
+     they do stuff; they access and manipulate things.
+
+     Objects other than tasks may under some circumstances also be subjects.
+     For instance an open file may send SIGIO to a task using the UID and EUID
+     given to it by a task that called ``fcntl(F_SETOWN)`` upon it.  In this case,
+     the file struct will have a subjective context too.
+
+ 5. The subjective context.
+
+     A subject has an additional interpretation of its credentials.  A subset
+     of its credentials forms the 'subjective context'.  The subjective context
+     is used as part of the security calculation that is carried out when a
+     subject acts.
+
+     A Linux task, for example, has the FSUID, FSGID and the supplementary
+     group list for when it is acting upon a file -

@@ -1,0 +1,27 @@
+/*
+ * Header providing constants for i.MX28 pinctrl bindings.
+ *
+ * Copyright (C) 2013 Lothar Waßmann <LW@KARO-electronics.de>
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+#ifndef __DT_BINDINGS_MX28_PINCTRL_H__
+#define __DT_BINDINGS_MX28_PINCTRL_H__
+
+#include "mxs-pinfunc.h"
+
+#define MX28_PAD_GPMI_D00__GPMI_D0			0x0000
+#define MX28_PAD_GPMI_D01__GPMI_D1			0x0010
+#define MX28_PAD_GPMI_D02__GPMI_D2			0x0020
+#define MX28_PAD_GPMI_D03__GPMI_D3			0x0030
+#define MX28_PAD_GPMI_D04__GPMI_D4			0x0040
+#define MX28_PAD_GPMI_D05__GPMI_D5			0x0050
+#define MX28_PAD_GPMI_D06__GPMI_D6			0x0060
+#define MX28_PAD_GPMI_D07__GPMI_D7			0x0070
+#define MX28_PAD_GPMI_CE0N_

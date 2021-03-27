@@ -1,0 +1,10 @@
+* Introduction
+
+The name "usbmon" in lowercase refers to a facility in kernel which is
+used to collect traces of I/O on the USB bus. This function is analogous
+to a packet socket used by network monitoring tools such as tcpdump(1)
+or Ethereal. Similarly, it is expected that a tool such as usbdump or
+USBMon (with uppercase letters) is used to examine raw traces produced
+by usbmon.
+
+The usbmon reports

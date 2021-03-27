@@ -1,0 +1,57 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/err_common.c
+ *
+ *	Copyright (C) 2000 Jeff Wiedemeier (Compaq Computer Corporation)
+ *
+ *	Error handling code supporting Alpha systems
+ */
+
+#include <linux/init.h>
+#include <linux/sched.h>
+
+#include <asm/io.h>
+#include <asm/hwrpb.h>
+#include <asm/smp.h>
+#include <asm/err_common.h>
+
+#include "err_impl.h"
+#include "proto.h"
+
+/*
+ * err_print_prefix -- error handling print routines should prefix
+ * all prints with this
+ */
+char *err_print_prefix = KERN_NOTICE;
+
+
+/*
+ * Generic
+ */
+void
+mchk_dump_mem(void *data, size_t length, char **annotation)
+{
+	unsigned long *ldata = data;
+	size_t i;
+	
+	for (i = 0; (i * sizeof(*ldata)) < length; i++) {
+		if (annotation && !annotation[i]) 
+			annotation = NULL;
+		printk("%s    %08x: %016lx    %s\n",
+		       err_print_prefix,
+		       (unsigned)(i * sizeof(*ldata)), ldata[i],
+		       annotation ? annotation[i] : "");
+	}
+}
+
+void
+mchk_dump_logout_frame(struct el_common *mchk_header)
+{
+	printk("%s  -- Frame Header --\n"
+	         "    Frame Size:   %d (0x%x) bytes\n"
+	         "    Flags:        %s%s\n"
+	         "    MCHK Code:    0x%x\n"
+	         "    Frame Rev:    %d\n"
+	         "    Proc Offset:  0x%08x\n"
+	         "    Sys Offset:   0x%08x\n"
+  	 

@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Device Tree Include file for Marvell Armada 1500-mini (Berlin BG2CD) SoC
+ *
+ * Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+ *
+ * based on GPL'ed 2.6 kernel sources
+ *  (c) Marvell International Ltd.
+ */
+
+#include <dt-bindings/clock/berlin2.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+/ {
+	model = "Marvell Armada 1500-mini (BG2CD) SoC";
+	compatible = "marvell,berlin2cd", "marvell,berlin";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	aliases {
+		serial0 = 

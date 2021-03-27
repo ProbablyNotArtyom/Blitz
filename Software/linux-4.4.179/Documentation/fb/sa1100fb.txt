@@ -1,0 +1,73 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree Source for the Porter board
+ *
+ * Copyright (C) 2015 Cogent Embedded, Inc.
+ */
+
+/*
+ * SSI-AK4642
+ *
+ * JP3: 2-1: AK4642
+ *      2-3: ADV7511
+ *
+ * This command is required before playback/capture:
+ *
+ *	amixer set "LINEOUT Mixer DACL" on
+ */
+
+/dts-v1/;
+#include "r8a7791.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	model = "Porter";
+	compatible = "renesas,porter", "renesas,r8a7791";
+
+	aliases {
+		serial0 = &scif0;
+		i2c9 = &gpioi2c2;
+		i2c10 = &i2chdmi;
+	};
+
+	chosen {
+		bootargs = "ignore_loglevel rw root=/dev/nfs ip=dhcp";
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory@40000000 {
+		device_type = "memory";
+		reg = <0 0x40000000 0 0x40000000>;
+	};
+
+	memory@200000000 {
+		device_type = "memory";
+		reg = <2 0x00000000 0 0x40000000>;
+	};
+
+	vcc_sdhi0: regulator-vcc-sdhi0 {
+		compatible = "regulator-fixed";
+
+		regulator-name = "SDHI0 Vcc";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+	};
+
+	vccq_sdhi0: regulator-vccq-sdhi0 {
+		compatible = "regulator-gpio";
+
+		regulator-name = "SDHI0 VccQ";
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <3300000>;
+
+		gpios = <&gpio2 12 GPIO_ACTIVE_HIGH>;
+		gpios-states = <1>;
+		states = <3300000 1
+			  1800000 0>;
+	};
+
+	vcc_sdhi2: regulator-vcc-sdhi2 {
+		compatible = "regulator-fixed";
+
+		regulato

@@ -1,0 +1,45 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_CIA__H__
+#define __ALPHA_CIA__H__
+
+/* Define to experiment with fitting everything into one 512MB HAE window.  */
+#define CIA_ONE_HAE_WINDOW 1
+
+#include <linux/types.h>
+#include <asm/compiler.h>
+
+/*
+ * CIA is the internal name for the 21171 chipset which provides
+ * memory controller and PCI access for the 21164 chip based systems.
+ * Also supported here is the 21172 (CIA-2) and 21174 (PYXIS).
+ *
+ * The lineage is a bit confused, since the 21174 was reportedly started
+ * from the 21171 Pass 1 mask, and so is missing bug fixes that appear
+ * in 21171 Pass 2 and 21172, but it also contains additional features.
+ *
+ * This file is based on:
+ *
+ * DECchip 21171 Core Logic Chipset
+ * Technical Reference Manual
+ *
+ * EC-QE18B-TE
+ *
+ * david.rusling@reo.mts.dec.com Initial Version.
+ *
+ */
+
+/*
+ * CIA ADDRESS BIT DEFINITIONS
+ *
+ *  3333 3333 3322 2222 2222 1111 1111 11
+ *  9876 5432 1098 7654 3210 9876 5432 1098 7654 3210
+ *  ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+ *  1                                             000
+ *  ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
+ *  |                                             |\|
+ *  |                               Byte Enable --+ |
+ *  |                             Transfer Length --+
+ *  +-- IO space, not cached
+ *
+ *   Byte      Transfer
+ *   Enable    Length    Tran

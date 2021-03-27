@@ -1,0 +1,18 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_ENCODER_CMD:
+
+************************************************
+ioctl VIDIOC_ENCODER_CMD, VIDIOC_TRY_ENCODER_CMD
+************************************************
+
+Name
+====
+
+VIDIOC_ENCODER_CMD - VIDIOC_TRY_ENCODER_CMD - Execute an encoder command
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_ENCODER_CMD, struct

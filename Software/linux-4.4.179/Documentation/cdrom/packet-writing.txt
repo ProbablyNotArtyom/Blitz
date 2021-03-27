@@ -1,0 +1,79 @@
+Application Data Integrity (ADI)
+================================
+
+SPARC M7 processor adds the Application Data Integrity (ADI) feature.
+ADI allows a task to set version tags on any subset of its address
+space. Once ADI is enabled and version tags are set for ranges of
+address space of a task, the processor will compare the tag in pointers
+to memory in these ranges to the version set by the application
+previously. Access to memory is granted only if the tag in given pointer
+matches the tag set by the application. In case of mismatch, processor
+raises an exception.
+
+Following steps must be taken by a task to enable ADI fully:
+
+1. Set the user mode PSTATE.mcde bit. This acts as master switch for
+   the task's entire address space to enable/disable ADI for the task.
+
+2. Set TTE.mcd bit on any TLB entries that correspond to the range of
+   addresses ADI is being enabled on. MMU checks the version tag only
+   on the pages that have TTE.mcd bit set.
+
+3. Set the version tag for virtual addresses using stxa instruction
+   and one of the MCD specific ASIs. Each stxa instruction sets the
+   given tag for one ADI block size number of bytes. This step must
+   be repeated for entire page to set tags for entire page.
+
+ADI block size for the platform is provided by the hypervisor to kernel
+in machine description tables. Hypervisor also provides the number of
+top bits in the virtual address that specify the version tag.  Once
+version tag has been set for a memory location, the tag is stored in the
+physical memory and the same tag must be present in the ADI version tag
+bits of the virtual address being presented to the MMU. For example on
+SPARC M7 processor, MMU uses bits 63-60 for version tags and ADI block
+size is same as cacheline size which is 64 bytes. A task that sets ADI
+version to, say 10, on a range of memory, must access that memory using
+virtual addresses that contain 0xa in bits 63-60.
+
+ADI is enabled on a set of pages using mprotect() with PROT_ADI flag.
+When ADI is enabled on a set of pages by a task for the first time,
+kernel sets the PSTATE.mcde bit fot the task. Version tags for memory
+addresses are set with an stxa instruction on the addresses using
+ASI_MCD_PRIMARY or ASI_MCD_ST_BLKINIT_PRIMARY. ADI block size is
+provided by the hypervisor to the kernel.  Kernel returns the value of
+ADI block size to userspace using auxiliary vector along with other ADI
+info. Following auxiliary vectors are provided by the kernel:
+
+	AT_ADI_BLKSZ	ADI block size. This is the granularity and
+			alignment, in bytes, of ADI versioning.
+	AT_ADI_NBITS	Number of ADI version bits in the VA
+
+
+IMPORTANT NOTES:
+
+- Version tag values of 0x0 and 0xf are reserved. These values match any
+  tag in virtual address and never generate a mismatch exception.
+
+- Version tags are set on virtual addresses from userspace even though
+  tags are stored in physical memory. Tags are set on a physical page
+  after it has been allocated to a task and a pte has been created for
+  it.
+
+- When a task frees a memory page it had set version tags on, the page
+  goes back to free page pool. When this page is re-allocated to a task,
+  kernel clears the page using block initialization ASI which clears the
+  version tags as well for the page. If a page allocated to a task is
+  freed and allocated back to the same task, old version tags set by the
+  task on that page will no longer be present.
+
+- ADI tag mismatches are not detected for non-faulting loads.
+
+- Kernel does not set any tags for user pages and it is entirely a
+  task's responsibility to set any version tags. Kernel does ensure the
+  version tags are preserved if a page is swapped out to the disk and
+  swapped back in. It also preserves that version tags if a page is
+  migrated.
+
+- ADI works for any size pages. A userspace task need not be aware of
+  page size when using ADI. It can simply select a virtual address
+  rang

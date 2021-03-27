@@ -1,0 +1,19 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _V4L2-PIX-FMT-Y8I:
+
+*************************
+V4L2_PIX_FMT_Y8I ('Y8I ')
+*************************
+
+
+Interleaved grey-scale image, e.g. from a stereo-pair
+
+
+Description
+===========
+
+This is a grey-scale image with a depth of 8 bits per pixel, but with
+pixels from 2 sources interleaved. Each pixel is stored in a 16-bit
+word. E.g. the R200 RealSense camera stores pixel from the left sensor
+in lower and from t

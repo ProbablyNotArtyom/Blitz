@@ -1,0 +1,33 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *  linux/arch/alpha/kernel/osf_sys.c
+ *
+ *  Copyright (C) 1995  Linus Torvalds
+ */
+
+/*
+ * This file handles some of the stranger OSF/1 system call interfaces.
+ * Some of the system calls expect a non-C calling standard, others have
+ * special parameter blocks..
+ */
+
+#include <linux/errno.h>
+#include <linux/sched/signal.h>
+#include <linux/sched/mm.h>
+#include <linux/sched/task_stack.h>
+#include <linux/sched/cputime.h>
+#include <linux/kernel.h>
+#include <linux/mm.h>
+#include <linux/smp.h>
+#include <linux/stddef.h>
+#include <linux/syscalls.h>
+#include <linux/unistd.h>
+#include <linux/ptrace.h>
+#include <linux/user.h>
+#include <linux/utsname.h>
+#include <linux/time.h>
+#include <linux/timex.h>
+#include <linux/major.h>
+#include <linux/stat.h>
+#include <linux/mman.h>
+#include <linux/

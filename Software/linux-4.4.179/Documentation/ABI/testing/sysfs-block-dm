@@ -1,0 +1,56 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_EDID:
+
+******************************************************************************
+ioctl VIDIOC_G_EDID, VIDIOC_S_EDID, VIDIOC_SUBDEV_G_EDID, VIDIOC_SUBDEV_S_EDID
+******************************************************************************
+
+Name
+====
+
+VIDIOC_G_EDID - VIDIOC_S_EDID - VIDIOC_SUBDEV_G_EDID - VIDIOC_SUBDEV_S_EDID - Get or set the EDID of a video receiver/transmitter
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_G_EDID, struct v4l2_edid *argp )
+    :name: VIDIOC_G_EDID
+
+.. c:function:: int ioctl( int fd, VIDIOC_S_EDID, struct v4l2_edid *argp )
+    :name: VIDIOC_S_EDID
+
+
+.. c:function:: int ioctl( int fd, VIDIOC_SUBDEV_G_EDID, struct v4l2_edid *argp )
+    :name: VIDIOC_SUBDEV_G_EDID
+
+.. c:function:: int ioctl( int fd, VIDIOC_SUBDEV_S_EDID, struct v4l2_edid *argp )
+    :name: VIDIOC_SUBDEV_S_EDID
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+   Pointer to struct :c:type:`v4l2_edid`.
+
+
+Description
+===========
+
+These ioctls can be used to get or set an EDID associated with an input
+from a receiver or an output of a transmitter device. They can be used
+with subdevice nodes (/dev/v4l-subdevX) or with video nodes
+(/dev/videoX).
+
+When used with video nodes the ``pad`` field represents the input (for
+video capture devices) or output (for video output devices) index as is
+returned by :ref:`VIDIOC_ENUMINPUT` and
+:ref:`VIDIOC_ENUMOUTPUT` respectively. When used
+with subdevice nodes the ``pad`` field represents the input or output
+pad of the subdevice. If there is no EDID support for the given ``pad``
+value, then the

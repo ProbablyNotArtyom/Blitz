@@ -1,0 +1,28 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. include:: <isonum.txt>
+.. _v4l2spec:
+
+############################
+Part I - Video for Linux API
+############################
+
+This part describes the Video for Linux API version 2 (V4L2 API) specification.
+
+**Revision 4.5**
+
+.. only:: html
+
+   .. class:: toc-title
+
+        Table of Contents
+
+.. toctree::
+    :numbered:
+    :maxdepth: 5
+
+    common
+    pixfmt
+    io
+    devices
+  

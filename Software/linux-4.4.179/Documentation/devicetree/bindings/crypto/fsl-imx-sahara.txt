@@ -1,0 +1,16 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ *	linux/arch/alpha/kernel/core_apecs.c
+ *
+ * Rewritten for Apecs from the lca.c from:
+ *
+ * Written by David Mosberger (davidm@cs.arizona.edu) with some code
+ * taken from Dave Rusling's (david.rusling@reo.mts.dec.com) 32-bit
+ * bios code.
+ *
+ * Code common to all APECS core logic chips.
+ */
+
+#define __EXTERN_INLINE inline
+#include <asm/io.h>
+#include <asm/core_apecs.h

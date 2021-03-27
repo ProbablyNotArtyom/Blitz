@@ -1,0 +1,78 @@
+.. _development_process:
+
+How the development process works
+=================================
+
+Linux kernel development in the early 1990's was a pretty loose affair,
+with relatively small numbers of users and developers involved.  With a
+user base in the millions and with some 2,000 developers involved over the
+course of one year, the kernel has since had to evolve a number of
+processes to keep development happening smoothly.  A solid understanding of
+how the process works is required in order to be an effective part of it.
+
+The big picture
+---------------
+
+The kernel developers use a loosely time-based release process, with a new
+major kernel release happening every two or three months.  The recent
+release history looks like this:
+
+	======  =================
+	4.11	April 30, 2017
+	4.12	July 2, 2017
+	4.13	September 3, 2017
+	4.14	November 12, 2017
+	4.15	January 28, 2018
+	4.16	April 1, 2018
+	======  =================
+
+Every 4.x release is a major kernel release with new features, internal
+API changes, and more.  A typical 4.x release contain about 13,000
+changesets with changes to several hundred thousand lines of code.  4.x is
+thus the leading edge of Linux kernel development; the kernel uses a
+rolling development model which is continually integrating major changes.
+
+A relatively straightforward discipline is followed with regard to the
+merging of patches for each release.  At the beginning of each development
+cycle, the "merge window" is said to be open.  At that time, code which is
+deemed to be sufficiently stable (and which is accepted by the development
+community) is merged into the mainline kernel.  The bulk of changes for a
+new development cycle (and all of the major changes) will be merged during
+this time, at a rate approaching 1,000 changes ("patches," or "changesets")
+per day.
+
+(As an aside, it is worth noting that the changes integrated during the
+merge window do not come out of thin air; they have been collected, tested,
+and staged ahead of time.  How that process works will be described in
+detail later on).
+
+The merge window lasts for approximately two weeks.  At the end of this
+time, Linus Torvalds will declare that the window is closed and release the
+first of the "rc" kernels.  For the kernel which is destined to be 2.6.40,
+for example, the release which happens at the end of the merge window will
+be called 2.6.40-rc1.  The -rc1 release is the signal that the time to
+merge new features has passed, and that the time to stabilize the next
+kernel has begun.
+
+Over the next six to ten weeks, only patches which fix problems should be
+submitted to the mainline.  On occasion a more significant change will be
+allowed, but such occasions are rare; developers who try to merge new
+features outside of the merge window tend to get an unfriendly reception.
+As a general rule, if you miss the merge window for a given feature, the
+best thing to do is to wait for the next development cycle.  (An occasional
+exception is made for drivers for previously-unsupported hardware; if they
+touch no in-tree code, they cannot cause regressions and should be safe to
+add at any time).
+
+As fixes make their way into the mainline, the patch rate will slow over
+time.  Linus releases new -rc kernels about once a week; a normal series
+will get up to somewhere between -rc6 and -rc9 before the kernel is
+considered to be sufficiently stable and the final 2.6.x release is made.
+At that point the whole process starts over again.
+
+As an example, here is how the 4.16 development cycle went (all dates in
+2018):
+
+	==============  ===============================
+	January 28	4.15 stable release
+	February 11	4.16-rc1,

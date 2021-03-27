@@ -1,0 +1,23 @@
+======================
+Function Tracer Design
+======================
+
+:Author: Mike Frysinger
+
+.. caution::
+	This document is out of date. Some of the description below doesn't
+	match current implementation now.
+
+Introduction
+------------
+
+Here we will cover the architecture pieces that the common function tracing
+code relies on for proper functioning.  Things are broken down into increasing
+complexity so that you can start simple and at least get basic functionality.
+
+Note that this focuses on architecture implementation details only.  If you
+want more explanation of a feature in terms of common code, review the common
+ftrace.txt file.
+
+Ideally, everyone who wishes to retain performance while supporting tracing in
+the

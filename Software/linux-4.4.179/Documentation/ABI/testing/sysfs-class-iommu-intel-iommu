@@ -1,0 +1,26 @@
+The Radiotrack radio driver
+===========================
+
+Author: Stephen M. Benoit <benoits@servicepro.com>
+
+Date:  Dec 14, 1996
+
+ACKNOWLEDGMENTS
+----------------
+
+This document was made based on 'C' code for Linux from Gideon le Grange
+(legrang@active.co.za or legrang@cs.sun.ac.za) in 1994, and elaborations from
+Frans Brinkman (brinkman@esd.nl) in 1996.  The results reported here are from
+experiments that the author performed on his own setup, so your mileage may
+vary... I make no guarantees, claims or warranties to the suitability or
+validity of this information.  No other documentation on the AIMS
+Lab (http://www.aimslab.com/) RadioTrack card was made available to the
+author.  This document is offered in the hopes that it might help users who
+want to use the RadioTrack card in an environment other than MS Windows.
+
+WHY THIS DOCUMENT?
+------------------
+
+I have a RadioTrack card from back when I ran an MS-Windows platform.  After
+converting to Linux, I found Gideon le Grange's command-line software for
+running the card,

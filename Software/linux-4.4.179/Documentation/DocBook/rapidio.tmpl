@@ -1,0 +1,101 @@
+--------------------------------------------------------------------------------
++ ABSTRACT
+--------------------------------------------------------------------------------
+
+This file documents the mmap() facility available with the PACKET
+socket interface on 2.4/2.6/3.x kernels. This type of sockets is used for
+i) capture network traffic with utilities like tcpdump, ii) transmit network
+traffic, or any other that needs raw access to network interface.
+
+Howto can be found at:
+    https://sites.google.com/site/packetmmap/
+
+Please send your comments to
+    Ulisses Alonso Camaró <uaca@i.hate.spam.alumni.uv.es>
+    Johann Baudy
+
+-------------------------------------------------------------------------------
++ Why use PACKET_MMAP
+--------------------------------------------------------------------------------
+
+In Linux 2.4/2.6/3.x if PACKET_MMAP is not enabled, the capture process is very
+inefficient. It uses very limited buffers and requires one system call to
+capture each packet, it requires two if you want to get packet's timestamp
+(like libpcap always does).
+
+In the other hand PACKET_MMAP is very efficient. PACKET_MMAP provides a size 
+configurable circular buffer mapped in user space that can be used to either
+send or receive packets. This way reading packets just needs to wait for them,
+most of the time there is no need to issue a single system call. Concerning
+transmission, multiple packets can be sent through one system call to get the
+highest bandwidth. By using a shared buffer between the kernel and the user
+also has the benefit of minimizing packet copies.
+
+It's fine to use PACKET_MMAP to improve the performance of the capture and
+transmission process, but it isn't everything. At least, if you are capturing
+at high speeds (this is relative to the cpu speed), you should check if the
+device driver of your network interface card supports some sort of interrupt
+load mitigation or (even better) if it supports NAPI, also make sure it is
+enabled. For transmission, check the MTU (Maximum Transmission Unit) used and
+supported by devices of your network. CPU IRQ pinning of your network interface
+card can also be an advantage.
+
+--------------------------------------------------------------------------------
++ How to use mmap() to improve capture process
+--------------------------------------------------------------------------------
+
+From the user standpoint, you should use the higher level libpcap library, which
+is a de facto standard, portable across nearly all operating systems
+including Win32. 
+
+Packet MMAP support was integrated into libpcap around the time of version 1.3.0;
+TPACKET_V3 support was added in version 1.5.0
+
+--------------------------------------------------------------------------------
++ How to use mmap() directly to improve capture process
+--------------------------------------------------------------------------------
+
+From the system calls stand point, the use of PACKET_MMAP involves
+the following process:
+
+
+[setup]     socket() -------> creation of the capture socket
+            setsockopt() ---> allocation of the circular buffer (ring)
+                              option: PACKET_RX_RING
+            mmap() ---------> mapping of the allocated buffer to the
+                              user process
+
+[capture]   poll() ---------> to wait for incoming packets
+
+[shutdown]  close() --------> destruction of the capture socket and
+                              deallocation of all associated 
+                              resources.
+
+
+socket creation and destruction is straight forward, and is done 
+the same way with or without PACKET_MMAP:
+
+ int fd = socket(PF_PACKET, mode, htons(ETH_P_ALL));
+
+where mode is SOCK_RAW for the raw interface were link level
+information can be captured or SOCK_DGRAM for the cooked
+interface where link level information capture is not 
+supported and a link level pseudo-header is provided 
+by the kernel.
+
+The destruction of the socket and all associated resources
+is done by a simple call to close(fd).
+
+Similarly as without PACKET_MMAP, it is possible to use one socket
+for capture and transmission. This can be done by mapping the
+allocated RX and TX buffer ring with a single mmap() call.
+See "Mapping and use of the circular buffer (ring)".
+
+Next I will describe PACKET_MMAP settings and its constraints,
+also the mapping of the circular buffer in the user process and 
+the use of this buffer.
+
+--------------------------------------------------------------------------------
++ How to use mmap() directly to improve transmission process
+--------------------------------------------------------------------------------
+Transmission process is similar to cap

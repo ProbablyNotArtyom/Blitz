@@ -1,0 +1,89 @@
+AdvanSys (Advanced System Products, Inc.) manufactures the following
+RISC-based, Bus-Mastering, Fast (10 Mhz) and Ultra (20 Mhz) Narrow
+(8-bit transfer) SCSI Host Adapters for the ISA, EISA, VL, and PCI
+buses and RISC-based, Bus-Mastering, Ultra (20 Mhz) Wide (16-bit
+transfer) SCSI Host Adapters for the PCI bus.
+
+The CDB counts below indicate the number of SCSI CDB (Command
+Descriptor Block) requests that can be stored in the RISC chip
+cache and board LRAM. A CDB is a single SCSI command. The driver
+detect routine will display the number of CDBs available for each
+adapter detected. The number of CDBs used by the driver can be
+lowered in the BIOS by changing the 'Host Queue Size' adapter setting.
+
+Laptop Products:
+   ABP-480 - Bus-Master CardBus (16 CDB)
+
+Connectivity Products:
+   ABP510/5150 - Bus-Master ISA (240 CDB)
+   ABP5140 - Bus-Master ISA PnP (16 CDB)
+   ABP5142 - Bus-Master ISA PnP with floppy (16 CDB)
+   ABP902/3902 - Bus-Master PCI (16 CDB)
+   ABP3905 - Bus-Master PCI (16 CDB)
+   ABP915 - Bus-Master PCI (16 CDB)
+   ABP920 - Bus-Master PCI (16 CDB)
+   ABP3922 - Bus-Master PCI (16 CDB)
+   ABP3925 - Bus-Master PCI (16 CDB)
+   ABP930 - Bus-Master PCI (16 CDB)
+   ABP930U - Bus-Master PCI Ultra (16 CDB)
+   ABP930UA - Bus-Master PCI Ultra (16 CDB)
+   ABP960 - Bus-Master PCI MAC/PC (16 CDB)
+   ABP960U - Bus-Master PCI MAC/PC Ultra (16 CDB)
+
+Single Channel Products:
+   ABP542 - Bus-Master ISA with floppy (240 CDB)
+   ABP742 - Bus-Master EISA (240 CDB)
+   ABP842 - Bus-Master VL (240 CDB)
+   ABP940 - Bus-Master PCI (240 CDB)
+   ABP940U - Bus-Master PCI Ultra (240 CDB)
+   ABP940UA/3940UA - Bus-Master PCI Ultra (240 CDB)
+   ABP970 - Bus-Master PCI MAC/PC (240 CDB)
+   ABP970U - Bus-Master PCI MAC/PC Ultra (240 CDB)
+   ABP3960UA - Bus-Master PCI MAC/PC Ultra (240 CDB)
+   ABP940UW/3940UW - Bus-Master PCI Ultra-Wide (253 CDB)
+   ABP970UW - Bus-Master PCI MAC/PC Ultra-Wide (253 CDB)
+   ABP3940U2W - Bus-Master PCI LVD/Ultra2-Wide (253 CDB)
+
+Multi-Channel Products:
+   ABP752 - Dual Channel Bus-Master EISA (240 CDB Per Channel)
+   ABP852 - Dual Channel Bus-Master VL (240 CDB Per Channel)
+   ABP950 - Dual Channel Bus-Master PCI (240 CDB Per Channel)
+   ABP950UW - Dual Channel Bus-Master PCI Ultra-Wide (253 CDB Per Channel)
+   ABP980 - Four Channel Bus-Master PCI (240 CDB Per Channel)
+   ABP980U - Four Channel Bus-Master PCI Ultra (240 CDB Per Channel)
+   ABP980UA/3980UA - Four Channel Bus-Master PCI Ultra (16 CDB Per Chan.)
+   ABP3950U2W - Bus-Master PCI LVD/Ultra2-Wide and Ultra-Wide (253 CDB)
+   ABP3950U3W - Bus-Master PCI Dual LVD2/Ultra3-Wide (253 CDB)
+
+Driver Compile Time Options and Debugging
+
+The following constants can be defined in the source file.
+
+1. ADVANSYS_ASSERT - Enable driver assertions (Def: Enabled)
+
+   Enabling this option adds assertion logic statements to the
+   driver. If an assertion fails a message will be displayed to
+   the console, but the system will continue to operate. Any
+   assertions encountered should be reported to the person
+   responsible for the driver. Assertion statements may proactively
+   detect problems with the driver and facilitate fixing these
+   problems. Enabling assertions will add a small overhead to the
+   execution of the driver.
+
+2. ADVANSYS_DEBUG - Enable driver debugging (Def: Disabled)
+
+   Enabling this option adds tracing functions to the driver and the
+   ability to set a driver tracing level at boot time.  This option is
+   very useful for debugging the driver, but it will add to the size
+   of the driver execution image and add overhead to the execution of
+   the driver.
+
+   The amount of debugging output can be controlled with the global
+   variable 'asc_dbglvl'. The higher the number the more output. By
+   default the debug level is 0.
+
+   If the driver is loaded at boot time and the LILO Driver Option
+   is included in the system, the debug level can be changed by
+   specifying a 5th (ASC_NUM_IOPORT_PROBE + 1) I/O Port. The
+   first three hex digits of the pseudo I/O Port must be set to
+   'deb' and the fourth hex

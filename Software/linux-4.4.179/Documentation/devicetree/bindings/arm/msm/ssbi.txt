@@ -1,0 +1,19 @@
+Kernel driver w1_ds2438
+=======================
+
+Supported chips:
+  * Maxim DS2438 Smart Battery Monitor
+
+supported family codes:
+        W1_FAMILY_DS2438        0x26
+
+Author: Mariusz Bialonczyk <manio@skyboo.net>
+
+Description
+-----------
+
+The DS2438 chip provides several functions that are desirable to carry in
+a battery pack. It also has a 40 bytes of nonvolatile EEPROM.
+Because the ability of temperature, current and voltage measurement, the chip
+is also often used in weather stations and applications such as: rain gauge,
+wind speed/direction measuri

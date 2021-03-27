@@ -1,0 +1,38 @@
+DCCP protocol
+=============
+
+
+Contents
+========
+- Introduction
+- Missing features
+- Socket options
+- Sysctl variables
+- IOCTLs
+- Other tunables
+- Notes
+
+
+Introduction
+============
+Datagram Congestion Control Protocol (DCCP) is an unreliable, connection
+oriented protocol designed to solve issues present in UDP and TCP, particularly
+for real-time and multimedia (streaming) traffic.
+It divides into a base protocol (RFC 4340) and pluggable congestion control
+modules called CCIDs. Like pluggable TCP congestion control, at least one CCID
+needs to be enabled in order for the protocol to function properly. In the Linux
+implementation, this is the TCP-like CCID2 (RFC 4341). Additional CCIDs, such as
+the TCP-friendly CCID3 (RFC 4342), are optional.
+For a brief introduction to CCIDs and suggestions for choosing a CCID to match
+given applications, see section 10 of RFC 4340.
+
+It has a base protocol and pluggable congestion control IDs (CCIDs).
+
+DCCP is a Proposed Standard (RFC 2026), and the homepage for DCCP as a protocol
+is at http://www.ietf.org/html.charters/dccp-charter.html
+
+
+Missing features
+================
+The Linux DCCP implementation does not currently support all the features that are
+specified in RFCs 4340...

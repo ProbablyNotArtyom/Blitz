@@ -1,0 +1,52 @@
+/*
+ * Copyright (C) 2014 Christoph Fritz <chf.fritzc@googlemail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ */
+
+#include "omap36xx.dtsi"
+
+/ {
+	model = "INCOstartec LILLY-A83X module (DM3730)";
+	compatible = "incostartec,omap3-lilly-a83x", "ti,omap36xx", "ti,omap3";
+
+	chosen {
+			bootargs = "console=ttyO0,115200n8 vt.global_cursor_default=0 consoleblank=0";
+	};
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x8000000>;   /* 128 MB */
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		led1 {
+			label = "lilly-a83x::led1";
+			gpios = <&gpio1 29 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "default-on";
+		};
+
+	};
+
+	sound {
+		compatible = "ti,omap-twl4030";
+		ti,model = "lilly-a83x";
+
+		ti,mcbsp = <&mcbsp2>;
+	};
+
+	reg_vcc3: vcc3 {
+		compatible = "regulator-fixed";
+		regulator-name = "VCC3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-always-on;
+	};
+
+	hsusb1_phy: hsusb1_phy {
+		compatible = "usb-nop-xcei

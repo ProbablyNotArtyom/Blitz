@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Copyright (c) 2015 MediaTek Inc.
+ * Author: Erin.Lo <erin.lo@mediatek.com>
+ *
+ */
+
+#include <dt-bindings/clock/mt2701-clk.h>
+#include <dt-bindings/phy/phy.h>
+#include <dt-bindings/power/mt2701-power.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/memory/mt2701-larb-port.h>
+#include <dt-bindings/reset/mt2701-resets.h>
+#include "skeleton64.dtsi"
+#include "mt2701-pinfunc.h"
+
+/ {
+	compatible = "mediatek,mt2701";
+	interrupt-parent = <&cirq>;
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		enable-method = "mediatek,mt81xx-tz-smp";
+
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-

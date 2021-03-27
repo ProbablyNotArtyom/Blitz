@@ -1,0 +1,9 @@
+/*
+ *  linux/arch/arm/kernel/swp_emulate.c
+ *
+ *  Copyright (C) 2009 ARM Limited
+ *  __user_* functions adapted from include/asm/uaccess.h
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * publish

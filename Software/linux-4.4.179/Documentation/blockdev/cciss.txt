@@ -1,0 +1,317 @@
+==============================
+HD-Audio Codec-Specific Models
+==============================
+
+ALC880
+======
+3stack
+    3-jack in back and a headphone out
+3stack-digout
+    3-jack in back, a HP out and a SPDIF out
+5stack
+    5-jack in back, 2-jack in front
+5stack-digout
+    5-jack in back, 2-jack in front, a SPDIF out
+6stack
+    6-jack in back, 2-jack in front
+6stack-digout
+    6-jack with a SPDIF out
+6stack-automute
+    6-jack with headphone jack detection
+
+ALC260
+======
+gpio1
+    Enable GPIO1
+coef
+    Enable EAPD via COEF table
+fujitsu
+    Quirk for FSC S7020
+fujitsu-jwse
+    Quirk for FSC S7020 with jack modes and HP mic support
+
+ALC262
+======
+inv-dmic
+    Inverted internal mic workaround
+fsc-h270
+    Fixups for Fujitsu-Siemens Celsius H270
+fsc-s7110
+    Fixups for Fujitsu-Siemens Lifebook S7110
+hp-z200
+    Fixups for HP Z200
+tyan
+    Fixups for Tyan Thunder n6650W
+lenovo-3000
+    Fixups for Lenovo 3000
+benq
+    Fixups for Benq ED8
+benq-t31
+    Fixups for Benq T31
+bayleybay
+    Fixups for Intel BayleyBay
+
+ALC267/268
+==========
+inv-dmic
+    Inverted internal mic workaround
+hp-eapd
+    Disable HP EAPD on NID 0x15
+spdif
+    Enable SPDIF output on NID 0x1e
+
+ALC22x/23x/25x/269/27x/28x/29x (and vendor-specific ALC3xxx models)
+===================================================================
+laptop-amic
+    Laptops with analog-mic input
+laptop-dmic
+    Laptops with digital-mic input
+alc269-dmic
+    Enable ALC269(VA) digital mic workaround
+alc271-dmic
+    Enable ALC271X digital mic workaround
+inv-dmic
+    Inverted internal mic workaround
+headset-mic
+    Indicates a combined headset (headphone+mic) jack
+headset-mode
+    More comprehensive headset support for ALC269 & co
+headset-mode-no-hp-mic
+    Headset mode support without headphone mic
+lenovo-dock
+    Enables docking station I/O for some Lenovos
+hp-gpio-led
+    GPIO LED support on HP laptops
+hp-dock-gpio-mic1-led
+    HP dock with mic LED support
+dell-headset-multi
+    Headset jack, which can also be used as mic-in
+dell-headset-dock
+    Headset jack (without mic-in), and also dock I/O
+dell-headset3
+    Headset jack (without mic-in), and also dock I/O, variant 3
+dell-headset4
+    Headset jack (without mic-in), and also dock I/O, variant 4
+alc283-dac-wcaps
+    Fixups for Chromebook with ALC283
+alc283-sense-combo
+    Combo jack sensing on ALC283
+tpt440-dock
+    Pin configs for Lenovo Thinkpad Dock support
+tpt440
+    Lenovo Thinkpad T440s setup
+tpt460
+    Lenovo Thinkpad T460/560 setup
+tpt470-dock
+    Lenovo Thinkpad T470 dock setup
+dual-codecs
+    Lenovo laptops with dual codecs
+alc700-ref
+    Intel reference board with ALC700 codec
+vaio
+    Pin fixups for Sony VAIO laptops
+dell-m101z
+    COEF setup for Dell M101z
+asus-g73jw
+    Subwoofer pin fixup for ASUS G73JW
+lenovo-eapd
+    Inversed EAPD setup for Lenovo laptops
+sony-hweq
+    H/W EQ COEF setup for Sony laptops
+pcm44k
+    Fixed PCM 44kHz constraints (for buggy devices)
+lifebook
+    Dock pin fixups for Fujitsu Lifebook
+lifebook-extmic
+    Headset mic fixup for Fujitsu Lifebook
+lifebook-hp-pin
+    Headphone pin fixup for Fujitsu Lifebook
+lifebook-u7x7
+    Lifebook U7x7 fixups
+alc269vb-amic
+    ALC269VB analog mic pin fixups
+alc269vb-dmic
+    ALC269VB digital mic pin fixups
+hp-mute-led-mic1
+    Mute LED via Mic1 pin on HP
+hp-mute-led-mic2
+    Mute LED via Mic2 pin on HP
+hp-mute-led-mic3
+    Mute LED via Mic3 pin on HP
+hp-gpio-mic1
+    GPIO + Mic1 pin LED on HP
+hp-line1-mic1
+    Mute LED via Line1 + Mic1 pins on HP
+noshutup
+    Skip shutup callback
+sony-nomic
+    Headset mic fixup for Sony laptops
+aspire-headset-mic
+    Headset pin fixup for Acer Aspire
+asus-x101
+    ASUS X101 fixups
+acer-ao7xx
+    Acer AO7xx fixups
+acer-aspire-e1
+    Acer Aspire E1 fixups
+acer-ac700
+    Acer AC700 fixups
+limit-mic-boost
+    Limit internal mic boost on Lenovo machines
+asus-zenbook
+    ASUS Zenbook fixups
+asus-zenbook-ux31a
+    ASUS Zenbook UX31A fixups
+ordissimo
+    Ordissimo EVE2 (or Malata PC-B1303) fixups
+asus-tx300
+    ASUS TX300 fixups
+alc283-int-mic
+    ALC283 COEF setup for Lenovo machines
+mono-speakers
+    Subwoofer and headset fixupes for Dell Inspiron
+alc290-subwoofer
+    Subwoofer fixups for Dell Vostro
+thinkpad
+    Binding with thinkpad_acpi driver for Lenovo machines
+dmic-thinkpad
+    thinkpad_acpi binding + digital mic support
+alc255-acer
+    ALC255 fixups on Acer machines
+alc255-asus
+    ALC255 fixups on ASUS machines
+alc255-dell1
+    ALC255 fixups on Dell machines
+alc255-dell2
+    ALC255 fixups on Dell machines, variant 2
+alc293-dell1
+    ALC293 fixups on Dell machines
+alc283-headset
+    Headset pin fixups on ALC283
+aspire-v5
+    Acer Aspire V5 fixups
+hp-gpio4
+    GPIO and Mic1 pin mute LED fixups for HP
+hp-gpio-led
+    GPIO mute LEDs on HP
+hp-gpio2-hotkey
+    GPIO mute LED with hot key handling on HP
+hp-dock-pins
+    GPIO mute LEDs and dock support on HP
+hp-dock-gpio-mic
+    GPIO, Mic mute LED and dock support on HP
+hp-9480m
+    HP 9480m fixups
+alc288-dell1
+    ALC288 fixups on Dell machines
+alc288-dell-xps13
+    ALC288 fixups on Dell XPS13
+dell-e7x
+    Dell E7x fixups
+alc293-dell
+    ALC293 fixups on Dell machines
+alc298-dell1
+    ALC298 fixups on Dell machines
+alc298-dell-aio
+    ALC298 fixups on Dell AIO machines
+alc275-dell-xps
+    ALC275 fixups on Dell XPS models
+alc256-dell-xps13
+    ALC256 fixups on Dell XPS13
+lenovo-spk-noise
+    Workaround for speaker noise on Lenovo machines
+lenovo-hotkey
+    Hot-key support via Mic2 pin on Lenovo machines
+dell-spk-noise
+    Workaround for speaker noise on Dell machines
+alc255-dell1
+    ALC255 fixups on Dell machines
+alc295-disable-dac3
+    Disable DAC3 routing on ALC295
+alc280-hp-headset
+    HP Elitebook fixups
+alc221-hp-mic
+    Front mic pin fixup on HP machines
+alc298-spk-volume
+    Speaker pin routing workaround on ALC298
+dell-inspiron-7559
+    Dell Inspiron 7559 fixups
+ativ-book
+    Samsung Ativ book 8 fixups
+alc221-hp-mic
+    ALC221 headset fixups on HP machines
+alc256-asus-mic
+    ALC256 fixups on ASUS machines
+alc256-asus-aio
+    ALC256 fixups on ASUS AIO machines
+alc233-eapd
+    ALC233 fixups on ASUS machines
+alc294-lenovo-mic
+    ALC294 Mic pin fixup for Lenovo AIO machines
+alc225-wyse
+    Dell Wyse fixups
+alc274-dell-aio
+    ALC274 fixups on Dell AIO machines
+alc255-dummy-lineout
+    Dell Precision 3930 fixups
+alc255-dell-headset"},
+    Dell Precision 3630 fixups
+alc295-hp-x360
+    HP Spectre X360 fixups
+
+ALC66x/67x/892
+==============
+aspire
+    Subwoofer pin fixup for Aspire laptops
+ideapad
+    Subwoofer pin fixup for Ideapad laptops
+mario
+    Chromebook mario model fixup
+hp-rp5800
+    Headphone pin fixup for HP RP5800
+asus-mode1
+    ASUS
+asus-mode2
+    ASUS
+asus-mode3
+    ASUS
+asus-mode4
+    ASUS
+asus-mode5
+    ASUS
+asus-mode6
+    ASUS
+asus-mode7
+    ASUS
+asus-mode8
+    ASUS
+zotac-z68
+    Front HP fixup for Zotac Z68
+inv-dmic
+    Inverted internal mic workaround
+alc662-headset-multi
+    Dell headset jack, which can also be used as mic-in (ALC662)
+dell-headset-multi
+    Headset jack, which can also be used as mic-in
+alc662-headset
+    Headset mode support on ALC662
+alc668-headset
+    Headset mode support on ALC668
+bass16
+    Bass speaker fixup on pin 0x16
+bass1a
+    Bass speaker fixup on pin 0x1a
+automute
+    Auto-mute fixups for ALC668
+dell-xps13
+    Dell XPS13 fixups
+asus-nx50
+    ASUS Nx50 fixups
+asus-nx51
+    ASUS Nx51 fixups
+asus-g751
+    ASUS G751 fixups
+alc891-headset
+    Headset mode support on ALC891
+alc891-headset-multi
+    Dell headset jack, which can also be used as mic-in (ALC

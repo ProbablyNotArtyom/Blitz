@@ -1,0 +1,22 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _V4L2-PIX-FMT-Z16:
+
+*************************
+V4L2_PIX_FMT_Z16 ('Z16 ')
+*************************
+
+
+16-bit depth data with distance values at each pixel
+
+
+Description
+===========
+
+This is a 16-bit format, representing depth data. Each pixel is a
+distance to the respective point in the image coordinates. Distance unit
+can vary and has to be negotiated with the device separately. Each pixel
+is stored in a 16-bit word in the little endian byte order.
+
+**Byte Order.**
+Each cell is on

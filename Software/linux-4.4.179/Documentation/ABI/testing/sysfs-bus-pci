@@ -1,0 +1,514 @@
+The cx2341x driver
+==================
+
+Memory at cx2341x chips
+-----------------------
+
+This section describes the cx2341x memory map and documents some of the
+register space.
+
+.. note:: the memory long words are little-endian ('intel format').
+
+.. warning::
+
+	This information was figured out from searching through the memory
+	and registers, this information may not be correct and is certainly
+	not complete, and was not derived from anything more than searching
+	through the memory space with commands like:
+
+	.. code-block:: none
+
+		ivtvctl -O min=0x02000000,max=0x020000ff
+
+	So take this as is, I'm always searching for more stuff, it's a large
+	register space :-).
+
+Memory Map
+~~~~~~~~~~
+
+The cx2341x exposes its entire 64M memory space to the PCI host via the PCI BAR0
+(Base Address Register 0). The addresses here are offsets relative to the
+address held in BAR0.
+
+.. code-block:: none
+
+	0x00000000-0x00ffffff Encoder memory space
+	0x00000000-0x0003ffff Encode.rom
+	???-???         MPEG buffer(s)
+	???-???         Raw video capture buffer(s)
+	???-???         Raw audio capture buffer(s)
+	???-???         Display buffers (6 or 9)
+
+	0x01000000-0x01ffffff Decoder memory space
+	0x01000000-0x0103ffff Decode.rom
+	???-???         MPEG buffers(s)
+	0x0114b000-0x0115afff Audio.rom (deprecated?)
+
+	0x02000000-0x0200ffff Register Space
+
+Registers
+~~~~~~~~~
+
+The registers occupy the 64k space starting at the 0x02000000 offset from BAR0.
+All of these registers are 32 bits wide.
+
+.. code-block:: none
+
+	DMA Registers 0x000-0xff:
+
+	0x00 - Control:
+		0=reset/cancel, 1=read, 2=write, 4=stop
+	0x04 - DMA status:
+		1=read busy, 2=write busy, 4=read error, 8=write error, 16=link list error
+	0x08 - pci DMA pointer for read link list
+	0x0c - pci DMA pointer for write link list
+	0x10 - read/write DMA enable:
+		1=read enable, 2=write enable
+	0x14 - always 0xffffffff, if set any lower instability occurs, 0x00 crashes
+	0x18 - ??
+	0x1c - always 0x20 or 32, smaller values slow down DMA transactions
+	0x20 - always value of 0x780a010a
+	0x24-0x3c - usually just random values???
+	0x40 - Interrupt status
+	0x44 - Write a bit here and shows up in Interrupt status 0x40
+	0x48 - Interrupt Mask
+	0x4C - always value of 0xfffdffff,
+		if changed to 0xffffffff DMA write interrupts break.
+	0x50 - always 0xffffffff
+	0x54 - always 0xffffffff (0x4c, 0x50, 0x54 seem like interrupt masks, are
+		3 processors on chip, Java ones, VPU, SPU, APU, maybe these are the
+		interrupt masks???).
+	0x60-0x7C - random values
+	0x80 - first write linked list reg, for Encoder Memory addr
+	0x84 - first write linked list reg, for pci memory addr
+	0x88 - first write linked list reg, for length of buffer in memory addr
+		(|0x80000000 or this for last link)
+	0x8c-0xdc - rest of write linked list reg, 8 sets of 3 total, DMA goes here
+		from linked list addr in reg 0x0c, firmware must push through or
+		something.
+	0xe0 - first (and only) read linked list reg, for pci memory addr
+	0xe4 - first (and only) read linked list reg, for Decoder memory addr
+	0xe8 - first (and only) read linked list reg, for length of buffer
+	0xec-0xff - Nothing seems to be in these registers, 0xec-f4 are 0x00000000.
+
+Memory locations for Encoder Buffers 0x700-0x7ff:
+
+These registers show offsets of memory locations pertaining to each
+buffer area used for encoding, have to shift them by <<1 first.
+
+- 0x07F8: Encoder SDRAM refresh
+- 0x07FC: Encoder SDRAM pre-charge
+
+Memory locations for Decoder Buffers 0x800-0x8ff:
+
+These registers show offsets of memory locations pertaining to each
+buffer area used for decoding, have to shift them by <<1 first.
+
+- 0x08F8: Decoder SDRAM refresh
+- 0x08FC: Decoder SDRAM pre-charge
+
+Other memory locations:
+
+- 0x2800: Video Display Module control
+- 0x2D00: AO (audio output?) control
+- 0x2D24: Bytes Flushed
+- 0x7000: LSB I2C write clock bit (inverted)
+- 0x7004: LSB I2C write data bit (inverted)
+- 0x7008: LSB I2C read clock bit
+- 0x700c: LSB I2C read data bit
+- 0x9008: GPIO get input state
+- 0x900c: GPIO set output state
+- 0x9020: GPIO direction (Bit7 (GPIO 0..7) - 0:input, 1:output)
+- 0x9050: SPU control
+- 0x9054: Reset HW blocks
+- 0x9058: VPU control
+- 0xA018: Bit6: interrupt pending?
+- 0xA064: APU command
+
+
+Interrupt Status Register
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The definition of the bits in the interrupt status register 0x0040, and the
+interrupt mask 0x0048. If a bit is cleared in the mask, then we want our ISR to
+execute.
+
+- bit 31 Encoder Start Capture
+- bit 30 Encoder EOS
+- bit 29 Encoder VBI capture
+- bit 28 Encoder Video Input Module reset event
+- bit 27 Encoder DMA complete
+- bit 24 Decoder audio mode change detection event (through event notification)
+- bit 22 Decoder data request
+- bit 20 Decoder DMA complete
+- bit 19 Decoder VBI re-insertion
+- bit 18 Decoder DMA err (linked-list bad)
+
+Missing documentation
+---------------------
+
+- Encoder API post(?)
+- Decoder API post(?)
+- Decoder VTRACE event
+
+
+The cx2341x firmware upload
+---------------------------
+
+This document describes how to upload the cx2341x firmware to the card.
+
+How to find
+~~~~~~~~~~~
+
+See the web pages of the various projects that uses this chip for information
+on how to obtain the firmware.
+
+The firmware stored in a Windows driver can be detected as follows:
+
+- Each firmware image is 256k bytes.
+- The 1st 32-bit word of the Encoder image is 0x0000da7
+- The 1st 32-bit word of the Decoder image is 0x00003a7
+- The 2nd 32-bit word of both images is 0xaa55bb66
+
+How to load
+~~~~~~~~~~~
+
+- Issue the FWapi command to stop the encoder if it is running. Wait for the
+  command to complete.
+- Issue the FWapi command to stop the decoder if it is running. Wait for the
+  command to complete.
+- Issue the I2C command to the digitizer to stop emitting VSYNC events.
+- Issue the FWapi command to halt the encoder's firmware.
+- Sleep for 10ms.
+- Issue the FWapi command to halt the decoder's firmware.
+- Sleep for 10ms.
+- Write 0x00000000 to register 0x2800 to stop the Video Display Module.
+- Write 0x00000005 to register 0x2D00 to stop the AO (audio output?).
+- Write 0x00000000 to register 0xA064 to ping? the APU.
+- Write 0xFFFFFFFE to register 0x9058 to stop the VPU.
+- Write 0xFFFFFFFF to register 0x9054 to reset the HW blocks.
+- Write 0x00000001 to register 0x9050 to stop the SPU.
+- Sleep for 10ms.
+- Write 0x0000001A to register 0x07FC to init the Encoder SDRAM's pre-charge.
+- Write 0x80000640 to register 0x07F8 to init the Encoder SDRAM's refresh to 1us.
+- Write 0x0000001A to register 0x08FC to init the Decoder SDRAM's pre-charge.
+- Write 0x80000640 to register 0x08F8 to init the Decoder SDRAM's refresh to 1us.
+- Sleep for 512ms. (600ms is recommended)
+- Transfer the encoder's firmware image to offset 0 in Encoder memory space.
+- Transfer the decoder's firmware image to offset 0 in Decoder memory space.
+- Use a read-modify-write operation to Clear bit 0 of register 0x9050 to
+  re-enable the SPU.
+- Sleep for 1 second.
+- Use a read-modify-write operation to Clear bits 3 and 0 of register 0x9058
+  to re-enable the VPU.
+- Sleep for 1 second.
+- Issue status API commands to both firmware images to verify.
+
+
+How to call the firmware API
+----------------------------
+
+The preferred calling convention is known as the firmware mailbox. The
+mailboxes are basically a fixed length array that serves as the call-stack.
+
+Firmware mailboxes can be located by searching the encoder and decoder memory
+for a 16 byte signature. That signature will be located on a 256-byte boundary.
+
+Signature:
+
+.. code-block:: none
+
+	0x78, 0x56, 0x34, 0x12, 0x12, 0x78, 0x56, 0x34,
+	0x34, 0x12, 0x78, 0x56, 0x56, 0x34, 0x12, 0x78
+
+The firmware implements 20 mailboxes of 20 32-bit words. The first 10 are
+reserved for API calls. The second 10 are used by the firmware for event
+notification.
+
+  ====== =================
+  Index  Name
+  ====== =================
+  0      Flags
+  1      Command
+  2      Return value
+  3      Timeout
+  4-19   Parameter/Result
+  ====== =================
+
+
+The flags are defined in the following table. The direction is from the
+perspective of the firmware.
+
+  ==== ========== ============================================
+  Bit  Direction  Purpose
+  ==== ========== ============================================
+  2    O          Firmware has processed the command.
+  1    I          Driver has finished setting the parameters.
+  0    I          Driver is using this mailbox.
+  ==== ========== ============================================
+
+The command is a 32-bit enumerator. The API specifics may be found in this
+chapter.
+
+The return value is a 32-bit enumerator. Only two values are currently defined:
+
+- 0=success
+- -1=command undefined.
+
+There are 16 parameters/results 32-bit fields. The driver populates these fields
+with values for all the parameters required by the call. The driver overwrites
+these fields with result values returned by the call.
+
+The timeout value protects the card from a hung driver thread. If the driver
+doesn't handle the completed call within the timeout specified, the firmware
+will reset that mailbox.
+
+To make an API call, the driver iterates over each mailbox looking for the
+first one available (bit 0 has been cleared). The driver sets that bit, fills
+in the command enumerator, the timeout value and any required parameters. The
+driver then sets the parameter ready bit (bit 1). The firmware scans the
+mailboxes for pending commands, processes them, sets the result code, populates
+the result value array with that call's return values and sets the call
+complete bit (bit 2). Once bit 2 is set, the driver should retrieve the results
+and clear all the flags. If the driver does not perform this task within the
+time set in the timeout register, the firmware will reset that mailbox.
+
+Event notifications are sent from the firmware to the host. The host tells the
+firmware which events it is interested in via an API call. That call tells the
+firmware which notification mailbox to use. The firmware signals the host via
+an interrupt. Only the 16 Results fields are used, the Flags, Command, Return
+value and Timeout words are not used.
+
+
+OSD firmware API description
+----------------------------
+
+.. note:: this API is part of the decoder firmware, so it's cx23415 only.
+
+
+
+CX2341X_OSD_GET_FRAMEBUFFER
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enum: 65/0x41
+
+Description
+^^^^^^^^^^^
+
+Return base and length of contiguous OSD memory.
+
+Result[0]
+^^^^^^^^^
+
+OSD base address
+
+Result[1]
+^^^^^^^^^
+
+OSD length
+
+
+
+CX2341X_OSD_GET_PIXEL_FORMAT
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enum: 66/0x42
+
+Description
+^^^^^^^^^^^
+
+Query OSD format
+
+Result[0]
+^^^^^^^^^
+
+0=8bit index
+1=16bit RGB 5:6:5
+2=16bit ARGB 1:5:5:5
+3=16bit ARGB 1:4:4:4
+4=32bit ARGB 8:8:8:8
+
+
+
+CX2341X_OSD_SET_PIXEL_FORMAT
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enum: 67/0x43
+
+Description
+^^^^^^^^^^^
+
+Assign pixel format
+
+Param[0]
+^^^^^^^^
+
+- 0=8bit index
+- 1=16bit RGB 5:6:5
+- 2=16bit ARGB 1:5:5:5
+- 3=16bit ARGB 1:4:4:4
+- 4=32bit ARGB 8:8:8:8
+
+
+
+CX2341X_OSD_GET_STATE
+~~~~~~~~~~~~~~~~~~~~~
+
+Enum: 68/0x44
+
+Description
+^^^^^^^^^^^
+
+Query OSD state
+
+Result[0]
+^^^^^^^^^
+
+- Bit  0   0=off, 1=on
+- Bits 1:2 alpha control
+- Bits 3:5 pixel format
+
+
+
+CX2341X_OSD_SET_STATE
+~~~~~~~~~~~~~~~~~~~~~
+
+Enum: 69/0x45
+
+Description
+^^^^^^^^^^^
+
+OSD switch
+
+Param[0]
+^^^^^^^^
+
+0=off, 1=on
+
+
+
+CX2341X_OSD_GET_OSD_COORDS
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enum: 70/0x46
+
+Description
+^^^^^^^^^^^
+
+Retrieve coordinates of OSD area blended with video
+
+Result[0]
+^^^^^^^^^
+
+OSD buffer address
+
+Result[1]
+^^^^^^^^^
+
+Stride in pixels
+
+Result[2]
+^^^^^^^^^
+
+Lines in OSD buffer
+
+Result[3]
+^^^^^^^^^
+
+Horizontal offset in buffer
+
+Result[4]
+^^^^^^^^^
+
+Vertical offset in buffer
+
+
+
+CX2341X_OSD_SET_OSD_COORDS
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enum: 71/0x47
+
+Description
+^^^^^^^^^^^
+
+Assign the coordinates of the OSD area to blend with video
+
+Param[0]
+^^^^^^^^
+
+buffer address
+
+Param[1]
+^^^^^^^^
+
+buffer stride in pixels
+
+Param[2]
+^^^^^^^^
+
+lines in buffer
+
+Param[3]
+^^^^^^^^
+
+horizontal offset
+
+Param[4]
+^^^^^^^^
+
+vertical offset
+
+
+
+CX2341X_OSD_GET_SCREEN_COORDS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enum: 72/0x48
+
+Description
+^^^^^^^^^^^
+
+Retrieve OSD screen area coordinates
+
+Result[0]
+^^^^^^^^^
+
+top left horizontal offset
+
+Result[1]
+^^^^^^^^^
+
+top left vertical offset
+
+Result[2]
+^^^^^^^^^
+
+bottom right horizontal offset
+
+Result[3]
+^^^^^^^^^
+
+bottom right vertical offset
+
+
+
+CX2341X_OSD_SET_SCREEN_COORDS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enum: 73/0x49
+
+Description
+^^^^^^^^^^^
+
+Assign the coordinates of the screen area to blend with video
+
+Param[0]
+^^^^^^^^
+
+top left horizontal offset
+
+Param[1]
+^^^^^^^^
+
+top l

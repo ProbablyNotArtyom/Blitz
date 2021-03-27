@@ -1,0 +1,51 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Device Tree Include file for Marvell Armada 1500 (Berlin BG2) SoC
+ *
+ * Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+ *
+ * based on GPL'ed 2.6 kernel sources
+ *  (c) Marvell International Ltd.
+ */
+
+#include <dt-bindings/clock/berlin2.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
+/ {
+	model = "Marvell Armada 1500 (BG2) SoC";
+	compatible = "marvell,berlin2", "marvell,berlin";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	aliases {
+		serial0 = &uart0;
+		serial1 = &uart1;
+		serial2 = &uart2;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		enable-method = "marvell,berlin-smp";
+
+		cpu@0 {
+			compatible = "marvell,pj4b";
+			device_type = "cpu";
+			next-level-cache = <&l2>;
+			reg = <0>;
+
+			clocks = <&chip_clk CLKID_CPU>;
+			clock-latency = <100000>;
+			operating-points = <
+				/* kHz    uV */
+				1200000 1200000
+				1000000 1200000
+				800000  1200000
+				600000  1200000
+			>;
+		};
+
+		cpu@1 {
+			compatible = "marvell,pj4b";
+			device_type = "cpu";
+			next-lev

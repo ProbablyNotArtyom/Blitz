@@ -1,0 +1,111 @@
+HOWTO do Linux kernel development
+=================================
+
+This is the be-all, end-all document on this topic.  It contains
+instructions on how to become a Linux kernel developer and how to learn
+to work with the Linux kernel development community.  It tries to not
+contain anything related to the technical aspects of kernel programming,
+but will help point you in the right direction for that.
+
+If anything in this document becomes out of date, please send in patches
+to the maintainer of this file, who is listed at the bottom of the
+document.
+
+
+Introduction
+------------
+
+So, you want to learn how to become a Linux kernel developer?  Or you
+have been told by your manager, "Go write a Linux driver for this
+device."  This document's goal is to teach you everything you need to
+know to achieve this by describing the process you need to go through,
+and hints on how to work with the community.  It will also try to
+explain some of the reasons why the community works like it does.
+
+The kernel is written mostly in C, with some architecture-dependent
+parts written in assembly. A good understanding of C is required for
+kernel development.  Assembly (any architecture) is not required unless
+you plan to do low-level development for that architecture.  Though they
+are not a good substitute for a solid C education and/or years of
+experience, the following books are good for, if anything, reference:
+
+ - "The C Programming Language" by Kernighan and Ritchie [Prentice Hall]
+ - "Practical C Programming" by Steve Oualline [O'Reilly]
+ - "C:  A Reference Manual" by Harbison and Steele [Prentice Hall]
+
+The kernel is written using GNU C and the GNU toolchain.  While it
+adheres to the ISO C89 standard, it uses a number of extensions that are
+not featured in the standard.  The kernel is a freestanding C
+environment, with no reliance on the standard C library, so some
+portions of the C standard are not supported.  Arbitrary long long
+divisions and floating point are not allowed.  It can sometimes be
+difficult to understand the assumptions the kernel has on the toolchain
+and the extensions that it uses, and unfortunately there is no
+definitive reference for them.  Please check the gcc info pages (`info
+gcc`) for some information on them.
+
+Please remember that you are trying to learn how to work with the
+existing development community.  It is a diverse group of people, with
+high standards for coding, style and procedure.  These standards have
+been created over time based on what they have found to work best for
+such a large and geographically dispersed team.  Try to learn as much as
+possible about these standards ahead of time, as they are well
+documented; do not expect people to adapt to you or your company's way
+of doing things.
+
+
+Legal Issues
+------------
+
+The Linux kernel source code is released under the GPL.  Please see the file
+COPYING in the main directory of the source tree. The Linux kernel licensing
+rules and how to use `SPDX <https://spdx.org/>`_ identifiers in source code are
+descibed in :ref:`Documentation/process/license-rules.rst <kernel_licensing>`.
+If you have further questions about the license, please contact a lawyer, and do
+not ask on the Linux kernel mailing list.  The people on the mailing lists are
+not lawyers, and you should not rely on their statements on legal matters.
+
+For common questions and answers about the GPL, please see:
+
+	https://www.gnu.org/licenses/gpl-faq.html
+
+
+Documentation
+-------------
+
+The Linux kernel source tree has a large range of documents that are
+invaluable for learning how to interact with the kernel community.  When
+new features are added to the kernel, it is recommended that new
+documentation files are also added which explain how to use the feature.
+When a kernel change causes the interface that the kernel exposes to
+userspace to change, it is recommended that you send the information or
+a patch to the manual pages explaining the change to the manual pages
+maintainer at mtk.manpages@gmail.com, and CC the list
+linux-api@vger.kernel.org.
+
+Here is a list of files that are in the kernel source tree that are
+required reading:
+
+  :ref:`Documentation/admin-guide/README.rst <readme>`
+    This file gives a short background on the Linux kernel and describes
+    what is necessary to do to configure and build the kernel.  People
+    who are new to the kernel should start here.
+
+  :ref:`Documentation/process/changes.rst <changes>`
+    This file gives a list of the minimum levels of various software
+    packages that are necessary to build and run the kernel
+    successfully.
+
+  :ref:`Documentation/process/coding-style.rst <codingstyle>`
+    This describes the Linux kernel coding style, and some of the
+    rationale behind it. All new code is expected to follow the
+    guidelines in this document. Most maintainers will only accept
+    patches if these rules are followed, and many people will only
+    review code if it is in the proper style.
+
+  :ref:`Documentation/process/submitting-patches.rst <submittingpatches>` and :ref:`Documentation/process/submitting-drivers.rst <submittingdrivers>`
+    These files describe in explicit detail how to successfully create
+    and send a patch, including (but not limited to):
+
+       - Email contents
+       - Email format

@@ -1,0 +1,90 @@
+#include <linux/export.h>
+#include <linux/sched.h>
+#include <linux/sched/debug.h>
+#include <linux/stacktrace.h>
+
+#include <asm/sections.h>
+#include <asm/stacktrace.h>
+#include <asm/traps.h>
+
+#if defined(CONFIG_FRAME_POINTER) && !defined(CONFIG_ARM_UNWIND)
+/*
+ * Unwind the current stack frame and store the new register values in the
+ * structure passed as argument. Unwinding is equivalent to a function return,
+ * hence the new PC value rather than LR should be used for backtrace.
+ *
+ * With framepointer enabled, a simple function prologue looks like this:
+ *	mov	ip, sp
+ *	stmdb	sp!, {fp, ip, lr, pc}
+ *	sub	fp, ip, #4
+ *
+ * A simple function epilogue looks like this:
+ *	ldm	sp, {fp, sp, pc}
+ *
+ * Note that with framepointer enabled, even the leaf functions have the same
+ * prologue and epilogue, therefore we can ignore the LR value in this case.
+ */
+int notrace unwind_frame(struct stackframe *frame)
+{
+	unsigned long high, low;
+	unsigned long fp = frame->fp;
+
+	/* only go to a higher address on the stack */
+	low = frame->sp;
+	high = ALIGN(low, THREAD_SIZE);
+
+	/* check current frame pointer is within bounds */
+	if (fp < low + 12 || fp > high - 4)
+		return -EINVAL;
+
+	/* restore the registers from the stack frame */
+	frame->fp = *(unsigned long *)(fp - 12);
+	frame->sp = *(unsigned long *)(fp - 8);
+	frame->pc = *(unsigned long *)(fp - 4);
+
+	return 0;
+}
+#endif
+
+void notrace walk_stackframe(struct stackframe *frame,
+		     int (*fn)(struct stackframe *, void *), void *data)
+{
+	while (1) {
+		int ret;
+
+		if (fn(frame, data))
+			break;
+		ret = unwind_frame(frame);
+		if (ret < 0)
+			break;
+	}
+}
+EXPORT_SYMBOL(walk_stackframe);
+
+#ifdef CONFIG_STACKTRACE
+struct stack_trace_data {
+	struct stack_trace *trace;
+	unsigned int no_sched_functions;
+	unsigned int skip;
+};
+
+static int save_trace(struct stackframe *frame, void *d)
+{
+	struct stack_trace_data *data = d;
+	struct stack_trace *trace = data->trace;
+	struct pt_regs *regs;
+	unsigned long addr = frame->pc;
+
+	if (data->no_sched_functions && in_sched_functions(addr))
+		return 0;
+	if (data->skip) {
+		data->skip--;
+		return 0;
+	}
+
+	trace->entries[trace->nr_entries++] = addr;
+
+	if (trace->nr_entries >= trace->max_entries)
+		return 1;
+
+	if (!in_entry_text(frame->pc)

@@ -1,0 +1,23 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _V4L2-PIX-FMT-YUV411P:
+
+*****************************
+V4L2_PIX_FMT_YUV411P ('411P')
+*****************************
+
+
+Format with ¼ horizontal chroma resolution, also known as YUV 4:1:1.
+Planar layout as opposed to ``V4L2_PIX_FMT_Y41P``
+
+
+Description
+===========
+
+This format is not commonly used. This is a planar format similar to the
+4:2:2 planar format except with half as many chroma. The three
+components are separated into three sub-images or planes. The Y plane is
+first. The Y plane has one byte per pixel. The Cb plane immediately
+follows the Y plane in memory. The Cb plane is ¼ the width of the Y
+plane (and of the image). Each Cb belongs to 4 pixels all on the same
+row. For example, Cb\ :sub:`0` b

@@ -1,0 +1,11 @@
+Generic networking statistics for netlink users
+======================================================================
+
+Statistic counters are grouped into structs:
+
+Struct               TLV type              Description
+----------------------------------------------------------------------
+gnet_stats_basic     TCA_STATS_BASIC       Basic statistics
+gnet_stats_rate_est  TCA_STATS_RATE_EST    Rate estimator
+gnet_stats_queue     TCA_STATS_QUEUE       Queue statistics
+none                 TCA_STATS_APP         Application specif

@@ -1,0 +1,43 @@
+/*
+ * several functions that help interpret ARC instructions
+ * used for unaligned accesses, kprobes and kgdb
+ *
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#ifndef __ARC_DISASM_H__
+#define __ARC_DISASM_H__
+
+enum {
+	op_Bcc = 0, op_BLcc = 1, op_LD = 2, op_ST = 3, op_MAJOR_4 = 4,
+	op_MAJOR_5 = 5, op_LD_ADD = 12, op_ADD_SUB_SHIFT = 13,
+	op_ADD_MOV_CMP = 14, op_S = 15, op_LD_S = 16, op_LDB_S = 17,
+	op_LDW_S = 18, op_LDWX_S = 19, op_ST_S = 20, op_STB_S = 21,
+	op_STW_S = 22, op_Su5 = 23, op_SP = 24, op_GP = 25,
+	op_Pcl = 26, op_MOV_S = 27, op_ADD_CMP = 28, op_BR_S = 29,
+	op_B_S = 30, op_BL_S = 31
+};
+
+enum flow {
+	noflow,
+	direct_jump,
+	direct_call,
+	indirect_jump,
+	indirect_call,
+	invalid_instr
+};
+
+#define IS_BIT(word, n)		((word) & (1<<n))
+#define BITS(word, s, e)	(((word) >> (s)) & (~((-2) << ((e) - (s)))))
+
+#define MAJOR_OPCODE(word)	(BITS((word), 27, 31))
+#define MINOR_OPCODE(word)	(BITS((word), 16, 21))
+#define FIELD_A(word)		(BITS((word), 0, 5))
+#define FIELD_B(word)		((BITS((word), 12, 14)<<3) | \
+				(BITS((word), 24, 26)))
+#define FIELD_C(word)		(BITS((word), 6, 11))
+#define FIELD_u6(wo

@@ -1,0 +1,12 @@
+Using numa=fake and CPUSets for Resource Management
+Written by David Rientjes <rientjes@cs.washington.edu>
+
+This document describes how the numa=fake x86_64 command-line option can be used
+in conjunction with cpusets for coarse memory management.  Using this feature,
+you can create fake NUMA nodes that represent contiguous chunks of memory and
+assign them to cpusets and their attached tasks.  This is a way of limiting the
+amount of system memory that are available to a certain class of tasks.
+
+For more information on the features of cpusets, see
+Documentation/cgroup-v1/cpusets.txt.
+There are a number of d

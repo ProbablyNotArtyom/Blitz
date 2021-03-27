@@ -1,0 +1,16 @@
+// SPDX-License-Identifier: GPL-2.0
+#include <linux/ioport.h>
+#include <asm/io.h>
+
+#include "pc873xx.h"
+
+static unsigned pc873xx_probelist[] = {0x398, 0x26e, 0};
+
+static char *pc873xx_names[] = {
+	"PC87303", "PC87306", "PC87312", "PC87332", "PC87334"
+};
+
+static unsigned int base, model;
+
+
+unsigned int __init pc

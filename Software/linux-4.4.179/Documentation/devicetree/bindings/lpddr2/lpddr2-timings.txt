@@ -1,0 +1,67 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree Include file for Marvell Armada 398 Development Board
+ *
+ * Copyright (C) 2015 Marvell
+ *
+ * Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+ */
+
+/dts-v1/;
+#include "armada-398.dtsi"
+
+/ {
+	model = "Marvell Armada 398 Development Board";
+	compatible = "marvell,a398-db", "marvell,armada398", "marvell,armada390";
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	memory {
+		device_type = "memory";
+		reg = <0x00000000 0x80000000>; /* 2 GB */
+	};
+
+	soc {
+		ranges = <MBUS_ID(0xf0, 0x01) 0 0xf1000000 0x100000
+			  MBUS_ID(0x01, 0x1d) 0 0xfff00000 0x100000>;
+
+		internal-regs {
+			i2c@11000 {
+				pinctrl-0 = <&i2c0_pins>;
+				pinctrl-names = "default";
+				status = "okay";
+				clock-frequency = <100000>;
+			};
+
+			serial@12000 {
+				pinctrl-0 = <&uart0_pins>;
+				pinctrl-names = "default";
+				status = "okay";
+			};
+
+			serial@12100 {
+				pinctrl-0 = <&uart1_pins>;
+				pinctrl-names = "default";
+				status = "okay";
+			};
+
+			usb@58000 {
+				status = "okay";
+			};
+
+			usb3@f8000 {
+				status = "okay";
+			};
+		};
+
+		pcie {
+			status = "okay";
+
+			pcie@1,0 {
+				status = "okay";
+			};
+
+			pcie@2,0 {
+				status = "okay";

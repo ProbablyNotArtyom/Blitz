@@ -1,0 +1,37 @@
+PPTP Server TODO
+----------------
+
+Type Legend
+-----------
+; comment
++ done and tested
+= done but needs more testing
+- not yet implemented feature/operation
+* bug! kill it! kill it!
+** really big bad ugly bug
+
+REMAINING ITEMS
++-------+-------+------------------------------------------------------------+
+| date	| type&	| comment						     |
+|	| bug#	|							     |
++-------+-------+------------------------------------------------------------+
+|990802	| -	| We don't actually implement any kind of window protocol,   |
+|	|	| congestion control, etc, etc.  Very simple algorithm which |
+|	|	| works well on LANs and good performance links but could be |
+|	|	| improved for slow distant dialups/bad routing and links.   |
++-------+-------+------------------------------------------------------------+
+|990705	| -	| Disconnection generates ugly error messages with most      |
+|	|	| clients - although we follow the draft properly.           |
++-------+-------+------------------------------------------------------------+
+|990705	| -	| PNS mode and all things which go with it aren't supported  |
+|	|	| properly.  We're only an IP tunnelling PAC, and our        |
+|	|	| clients act as a PNS, as per the draft.  We may implement  |
+|	|	| PNS mode and related things like multiple calls from one   |
+|	|	| client IP in the future (post-1.0).			     |
++-------+-------+------------------------------------------------------------+
+|990413	| -	| SET LINK INFO (CTRL Message 15) is not fully implemented.  |
+|	|	| This doesn't cause any problem with Win95/98/NT or Linux   |
+|	|	| clients.  NT clients send a default set of ACCMs which we  |
+|       |       | validate and ignore, the others don't send anything.       |
+|	|	| Probably fine for all IP tunneling clients (post-1.0).     |
++-------+-------+------------------------------------------------------------+

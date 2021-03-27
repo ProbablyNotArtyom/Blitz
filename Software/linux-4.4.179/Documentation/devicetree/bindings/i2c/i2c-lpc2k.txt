@@ -1,0 +1,25 @@
+/*
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <linux/ptrace.h>
+#include <linux/tracehook.h>
+#include <linux/sched/task_stack.h>
+#include <linux/regset.h>
+#include <linux/unistd.h>
+#include <linux/elf.h>
+
+static struct callee_regs *task_callee_regs(struct task_struct *tsk)
+{
+	struct callee_regs *tmp = (struct callee_regs *)tsk->thread.callee_reg;
+	return tmp;
+}
+
+static int genregs_get(struct task_struct *target,
+		       const struct user_regset *regset,
+		       unsigned int pos, unsigned int count,
+		     

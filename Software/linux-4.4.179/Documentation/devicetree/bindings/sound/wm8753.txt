@@ -1,0 +1,24 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Common features on the Zoom debug board
+ */
+
+#include "omap-gpmc-smsc911x.dtsi"
+
+&gpmc {
+	ranges = <3 0 0x10000000 0x1000000>,	/* CS3: 16MB for UART */
+		 <7 0 0x2c000000 0x01000000>;
+
+	/*
+	 * Four port TL16CP754C serial port on GPMC,
+	 * they probably share the same GPIO IRQ
+	 * REVISIT: Add timing support from slls644g.pdf
+	 */
+	uart@3,0 {
+		compatible = "ns16550a";
+		reg = <3 0 8>;	/* CS3, offset 0, IO size 8 */
+		bank-width = <2>;
+		reg-shift = <1>;
+		reg-io-width = <1>;
+		interrupt-parent = <&gpio4>;
+		interru

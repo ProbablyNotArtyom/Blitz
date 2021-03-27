@@ -1,0 +1,252 @@
+S390 Debug Feature
+==================
+
+files: arch/s390/kernel/debug.c
+       arch/s390/include/asm/debug.h
+
+Description:
+------------
+The goal of this feature is to provide a kernel debug logging API 
+where log records can be stored efficiently in memory, where each component 
+(e.g. device drivers) can have one separate debug log.
+One purpose of this is to inspect the debug logs after a production system crash
+in order to analyze the reason for the crash.
+If the system still runs but only a subcomponent which uses dbf fails,
+it is possible to look at the debug logs on a live system via the Linux
+debugfs filesystem.
+The debug feature may also very useful for kernel and driver development.
+
+Design:
+-------
+Kernel components (e.g. device drivers) can register themselves at the debug 
+feature with the function call debug_register(). This function initializes a 
+debug log for the caller. For each debug log exists a number of debug areas 
+where exactly one is active at one time.  Each debug area consists of contiguous
+pages in memory. In the debug areas there are stored debug entries (log records)
+which are written by event- and exception-calls. 
+
+An event-call writes the specified debug entry to the active debug
+area and updates the log pointer for the active area. If the end 
+of the active debug area is reached, a wrap around is done (ring buffer) 
+and the next debug entry will be written at the beginning of the active 
+debug area.
+
+An exception-call writes the specified debug entry to the log and
+switches to the next debug area. This is done in order to be sure
+that the records which describe the origin of the exception are not
+overwritten when a wrap around for the current area occurs.
+
+The debug areas themselves are also ordered in form of a ring buffer.
+When an exception is thrown in the last debug area, the following debug 
+entries are then written again in the very first area.
+
+There are three versions for the event- and exception-calls: One for
+logging raw data, one for text and one for numbers.
+
+Each debug entry contains the following data:
+
+- Timestamp
+- Cpu-Number of calling task
+- Level of debug entry (0...6)
+- Return Address to caller
+- Flag, if entry is an exception or not
+
+The debug logs can be inspected in a live system through entries in
+the debugfs-filesystem. Under the toplevel directory "s390dbf" there is
+a directory for each registered component, which is named like the
+corresponding component. The debugfs normally should be mounted to
+/sys/kernel/debug therefore the debug feature can be accessed under
+/sys/kernel/debug/s390dbf.
+
+The content of the directories are files which represent different views
+to the debug log. Each component can decide which views should be
+used through registering them with the function debug_register_view().
+Predefined views for hex/ascii, sprintf and raw binary data are provided.
+It is also possible to define other views. The content of
+a view can be inspected simply by reading the corresponding debugfs file.
+
+All debug logs have an actual debug level (range from 0 to 6).
+The default level is 3. Event and Exception functions have a 'level'
+parameter. Only debug entries with a level that is lower or equal
+than the actual level are written to the log. This means, when
+writing events, high priority log entries should have a low level
+value whereas low priority entries should have a high one.
+The actual debug level can be changed with the help of the debugfs-filesystem
+through writing a number string "x" to the 'level' debugfs file which is
+provided for every debug log. Debugging can be switched off completely
+by using "-" on the 'level' debugfs file.
+
+Example:
+
+> echo "-" > /sys/kernel/debug/s390dbf/dasd/level
+
+It is also possible to deactivate the debug feature globally for every
+debug log. You can change the behavior using  2 sysctl parameters in
+/proc/sys/s390dbf:
+There are currently 2 possible triggers, which stop the debug feature
+globally. The first possibility is to use the "debug_active" sysctl. If
+set to 1 the debug feature is running. If "debug_active" is set to 0 the
+debug feature is turned off.
+The second trigger which stops the debug feature is a kernel oops.
+That prevents the debug feature from overwriting debug information that
+happened before the oops. After an oops you can reactivate the debug feature
+by piping 1 to /proc/sys/s390dbf/debug_active. Nevertheless, its not
+suggested to use an oopsed kernel in a production environment.
+If you want to disallow the deactivation of the debug feature, you can use
+the "debug_stoppable" sysctl. If you set "debug_stoppable" to 0 the debug
+feature cannot be stopped. If the debug feature is already stopped, it
+will stay deactivated.
+
+Kernel Interfaces:
+------------------
+
+----------------------------------------------------------------------------
+debug_info_t *debug_register(char *name, int pages, int nr_areas,
+                             int buf_size);
+
+Parameter:    name:        Name of debug log (e.g. used for debugfs entry)
+              pages:       number of pages, which will be allocated per area
+              nr_areas:    number of debug areas
+              buf_size:    size of data area in each debug entry
+
+Return Value: Handle for generated debug area   
+              NULL if register failed 
+
+Description:  Allocates memory for a debug log     
+              Must not be called within an interrupt handler 
+
+----------------------------------------------------------------------------
+debug_info_t *debug_register_mode(char *name, int pages, int nr_areas,
+				  int buf_size, mode_t mode, uid_t uid,
+				  gid_t gid);
+
+Parameter:    name:	   Name of debug log (e.g. used for debugfs entry)
+	      pages:	   Number of pages, which will be allocated per area
+	      nr_areas:    Number of debug areas
+	      buf_size:    Size of data area in each debug entry
+	      mode:	   File mode for debugfs files. E.g. S_IRWXUGO
+	      uid:	   User ID for debugfs files. Currently only 0 is
+			   supported.
+	      gid:	   Group ID for debugfs files. Currently only 0 is
+			   supported.
+
+Return Value: Handle for generated debug area
+	      NULL if register failed
+
+Description:  Allocates memory for a debug log
+	      Must not be called within an interrupt handler
+
+---------------------------------------------------------------------------
+void debug_unregister (debug_info_t * id);
+
+Parameter:     id:   handle for debug log  
+
+Return Value:  none 
+
+Description:   frees memory for a debug log and removes all registered debug
+	       views.
+               Must not be called within an interrupt handler 
+
+---------------------------------------------------------------------------
+void debug_set_level (debug_info_t * id, int new_level);
+
+Parameter:     id:        handle for debug log  
+               new_level: new debug level 
+
+Return Value:  none 
+
+Description:   Sets new actual debug level if new_level is valid. 
+
+---------------------------------------------------------------------------
+bool debug_level_enabled (debug_info_t * id, int level);
+
+Parameter:    id:	  handle for debug log
+	      level:	  debug level
+
+Return Value: True if level is less or equal to the current debug level.
+
+Description:  Returns true if debug events for the specified level would be
+	      logged. Otherwise returns false.
+---------------------------------------------------------------------------
+void debug_stop_all(void);
+
+Parameter:     none
+
+Return Value:  none
+
+Description:   stops the debug feature if stopping is allowed. Currently
+               used in case of a kernel oops.
+
+---------------------------------------------------------------------------
+debug_entry_t* debug_event (debug_info_t* id, int level, void* data, 
+                            int length);
+
+Parameter:     id:     handle for debug log  
+               level:  debug level           
+               data:   pointer to data for debug entry  
+               length: length of data in bytes       
+
+Return Value:  Address of written debug entry 
+
+Description:   writes debug entry to active debug area (if level <= actual 
+               debug level)    
+
+---------------------------------------------------------------------------
+debug_entry_t* debug_int_event (debug_info_t * id, int level, 
+                                unsigned int data);
+debug_entry_t* debug_long_event(debug_info_t * id, int level,
+                                unsigned long data);
+
+Parameter:     id:     handle for debug log  
+               level:  debug level           
+               data:   integer value for debug entry           
+
+Return Value:  Address of written debug entry 
+
+Description:   writes debug entry to active debug area (if level <= actual 
+               debug level)    
+
+---------------------------------------------------------------------------
+debug_entry_t* debug_text_event (debug_info_t * id, int level, 
+                                 const char* data);
+
+Parameter:     id:     handle for debug log  
+               level:  debug level           
+               data:   string for debug entry  
+
+Return Value:  Address of written debug entry 
+
+Description:   writes debug entry in ascii format to active debug area 
+               (if level <= actual debug level)     
+
+---------------------------------------------------------------------------
+debug_entry_t* debug_sprintf_event (debug_info_t * id, int level, 
+                                    char* string,...);
+
+Parameter:     id:    handle for debug log 
+               level: debug level
+               string: format string for debug entry 
+               ...: varargs used as in sprintf()
+
+Return Value:  Address of written debug entry
+
+Description:   writes debug entry with format string and varargs (longs) to 
+               active debug area (if level $<=$ actual debug level). 
+               floats and long long datatypes cannot be used as varargs.
+
+---------------------------------------------------------------------------
+
+debug_entry_t* debug_exception (debug_info_t* id, int level, void* data, 
+                                int length);
+
+Parameter:     id:     handle for debug log  
+               level:  debug level           
+               data:   pointer to data for debug entry  
+               length: length of data in bytes       
+
+Return Value:  Address of written debug entry 
+
+Description:   writes debug entry to active debug area (if level <= actual 
+               debug level) and switches to next debug area  
+
+-------------

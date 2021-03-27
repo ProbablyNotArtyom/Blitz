@@ -1,0 +1,29 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef _ALPHA_LOCAL_H
+#define _ALPHA_LOCAL_H
+
+#include <linux/percpu.h>
+#include <linux/atomic.h>
+
+typedef struct
+{
+	atomic_long_t a;
+} local_t;
+
+#define LOCAL_INIT(i)	{ ATOMIC_LONG_INIT(i) }
+#define local_read(l)	atomic_long_read(&(l)->a)
+#define local_set(l,i)	atomic_long_set(&(l)->a, (i))
+#define local_inc(l)	atomic_long_inc(&(l)->a)
+#define local_dec(l)	atomic_long_dec(&(l)->a)
+#define local_add(i,l)	atomic_long_add((i),(&(l)->a))
+#define local_sub(i,l)	atomic_long_sub((i),(&(l)->a))
+
+static __inline__ long local_add_return(long i, local_t * l)
+{
+	long temp, result;
+	__asm__ __volatile__(
+	"1:	ldq_l %0,%1\n"
+	"	addq %0,%3,%2\n"
+	"	addq %0,%3,%0\n"
+	"	stq_c %0,%1\n"
+	"	be

@@ -1,0 +1,19 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _V4L2-PIX-FMT-YUV422M:
+.. _v4l2-pix-fmt-yvu422m:
+
+************************************************************
+V4L2_PIX_FMT_YUV422M ('YM16'), V4L2_PIX_FMT_YVU422M ('YM61')
+************************************************************
+
+
+V4L2_PIX_FMT_YVU422M
+Planar formats with ½ horizontal resolution, also known as YUV and YVU
+4:2:2
+
+
+Description
+===========
+
+This is a multi-planar format, as opposed

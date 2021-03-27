@@ -1,0 +1,309 @@
+======================
+Writing an ALSA Driver
+======================
+
+:Author: Takashi Iwai <tiwai@suse.de>
+
+Preface
+=======
+
+This document describes how to write an `ALSA (Advanced Linux Sound
+Architecture) <http://www.alsa-project.org/>`__ driver. The document
+focuses mainly on PCI soundcards. In the case of other device types, the
+API might be different, too. However, at least the ALSA kernel API is
+consistent, and therefore it would be still a bit help for writing them.
+
+This document targets people who already have enough C language skills
+and have basic linux kernel programming knowledge. This document doesn't
+explain the general topic of linux kernel coding and doesn't cover
+low-level driver implementation details. It only describes the standard
+way to write a PCI sound driver on ALSA.
+
+This document is still a draft version. Any feedback and corrections,
+please!!
+
+File Tree Structure
+===================
+
+General
+-------
+
+The file tree structure of ALSA driver is depicted below.
+
+::
+
+            sound
+                    /core
+                            /oss
+                            /seq
+                                    /oss
+                    /include
+                    /drivers
+                            /mpu401
+                            /opl3
+                    /i2c
+                    /synth
+                            /emux
+                    /pci
+                            /(cards)
+                    /isa
+                            /(cards)
+                    /arm
+                    /ppc
+                    /sparc
+                    /usb
+                    /pcmcia /(cards)
+                    /soc
+                    /oss
+
+
+core directory
+--------------
+
+This directory contains the middle layer which is the heart of ALSA
+drivers. In this directory, the native ALSA modules are stored. The
+sub-directories contain different modules and are dependent upon the
+kernel config.
+
+core/oss
+~~~~~~~~
+
+The codes for PCM and mixer OSS emulation modules are stored in this
+directory. The rawmidi OSS emulation is included in the ALSA rawmidi
+code since it's quite small. The sequencer code is stored in
+``core/seq/oss`` directory (see `below <#core-seq-oss>`__).
+
+core/seq
+~~~~~~~~
+
+This directory and its sub-directories are for the ALSA sequencer. This
+directory contains the sequencer core and primary sequencer modules such
+like snd-seq-midi, snd-seq-virmidi, etc. They are compiled only when
+``CONFIG_SND_SEQUENCER`` is set in the kernel config.
+
+core/seq/oss
+~~~~~~~~~~~~
+
+This contains the OSS sequencer emulation codes.
+
+include directory
+-----------------
+
+This is the place for the public header files of ALSA drivers, which are
+to be exported to user-space, or included by several files at different
+directories. Basically, the private header files should not be placed in
+this directory, but you may still find files there, due to historical
+reasons :)
+
+drivers directory
+-----------------
+
+This directory contains code shared among different drivers on different
+architectures. They are hence supposed not to be architecture-specific.
+For example, the dummy pcm driver and the serial MIDI driver are found
+in this directory. In the sub-directories, there is code for components
+which are independent from bus and cpu architectures.
+
+drivers/mpu401
+~~~~~~~~~~~~~~
+
+The MPU401 and MPU401-UART modules are stored here.
+
+drivers/opl3 and opl4
+~~~~~~~~~~~~~~~~~~~~~
+
+The OPL3 and OPL4 FM-synth stuff is found here.
+
+i2c directory
+-------------
+
+This contains the ALSA i2c components.
+
+Although there is a standard i2c layer on Linux, ALSA has its own i2c
+code for some cards, because the soundcard needs only a simple operation
+and the standard i2c API is too complicated for such a purpose.
+
+synth directory
+---------------
+
+This contains the synth middle-level modules.
+
+So far, there is only Emu8000/Emu10k1 synth driver under the
+``synth/emux`` sub-directory.
+
+pci directory
+-------------
+
+This directory and its sub-directories hold the top-level card modules
+for PCI soundcards and the code specific to the PCI BUS.
+
+The drivers compiled from a single file are stored directly in the pci
+directory, while the drivers with several source files are stored on
+their own sub-directory (e.g. emu10k1, ice1712).
+
+isa directory
+-------------
+
+This directory and its sub-directories hold the top-level card modules
+for ISA soundcards.
+
+arm, ppc, and sparc directories
+-------------------------------
+
+They are used for top-level card modules which are specific to one of
+these architectures.
+
+usb directory
+-------------
+
+This directory contains the USB-audio driver. In the latest version, the
+USB MIDI driver is integrated in the usb-audio driver.
+
+pcmcia directory
+----------------
+
+The PCMCIA, especially PCCard drivers will go here. CardBus drivers will
+be in the pci directory, because their API is identical to that of
+standard PCI cards.
+
+soc directory
+-------------
+
+This directory contains the codes for ASoC (ALSA System on Chip)
+layer including ASoC core, codec and machine drivers.
+
+oss directory
+-------------
+
+Here contains OSS/Lite codes.
+All codes have been deprecated except for dmasound on m68k as of
+writing this.
+
+
+Basic Flow for PCI Drivers
+==========================
+
+Outline
+-------
+
+The minimum flow for PCI soundcards is as follows:
+
+-  define the PCI ID table (see the section `PCI Entries`_).
+
+-  create ``probe`` callback.
+
+-  create ``remove`` callback.
+
+-  create a :c:type:`struct pci_driver <pci_driver>` structure
+   containing the three pointers above.
+
+-  create an ``init`` function just calling the
+   :c:func:`pci_register_driver()` to register the pci_driver
+   table defined above.
+
+-  create an ``exit`` function to call the
+   :c:func:`pci_unregister_driver()` function.
+
+Full Code Example
+-----------------
+
+The code example is shown below. Some parts are kept unimplemented at
+this moment but will be filled in the next sections. The numbers in the
+comment lines of the :c:func:`snd_mychip_probe()` function refer
+to details explained in the following section.
+
+::
+
+      #include <linux/init.h>
+      #include <linux/pci.h>
+      #include <linux/slab.h>
+      #include <sound/core.h>
+      #include <sound/initval.h>
+
+      /* module parameters (see "Module Parameters") */
+      /* SNDRV_CARDS: maximum number of cards supported by this module */
+      static int index[SNDRV_CARDS] = SNDRV_DEFAULT_IDX;
+      static char *id[SNDRV_CARDS] = SNDRV_DEFAULT_STR;
+      static bool enable[SNDRV_CARDS] = SNDRV_DEFAULT_ENABLE_PNP;
+
+      /* definition of the chip-specific record */
+      struct mychip {
+              struct snd_card *card;
+              /* the rest of the implementation will be in section
+               * "PCI Resource Management"
+               */
+      };
+
+      /* chip-specific destructor
+       * (see "PCI Resource Management")
+       */
+      static int snd_mychip_free(struct mychip *chip)
+      {
+              .... /* will be implemented later... */
+      }
+
+      /* component-destructor
+       * (see "Management of Cards and Components")
+       */
+      static int snd_mychip_dev_free(struct snd_device *device)
+      {
+              return snd_mychip_free(device->device_data);
+      }
+
+      /* chip-specific constructor
+       * (see "Management of Cards and Components")
+       */
+      static int snd_mychip_create(struct snd_card *card,
+                                   struct pci_dev *pci,
+                                   struct mychip **rchip)
+      {
+              struct mychip *chip;
+              int err;
+              static struct snd_device_ops ops = {
+                     .dev_free = snd_mychip_dev_free,
+              };
+
+              *rchip = NULL;
+
+              /* check PCI availability here
+               * (see "PCI Resource Management")
+               */
+              ....
+
+              /* allocate a chip-specific data with zero filled */
+              chip = kzalloc(sizeof(*chip), GFP_KERNEL);
+              if (chip == NULL)
+                      return -ENOMEM;
+
+              chip->card = card;
+
+              /* rest of initialization here; will be implemented
+               * later, see "PCI Resource Management"
+               */
+              ....
+
+              err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+              if (err < 0) {
+                      snd_mychip_free(chip);
+                      return err;
+              }
+
+              *rchip = chip;
+              return 0;
+      }
+
+      /* constructor -- see "Driver Constructor" sub-section */
+      static int snd_mychip_probe(struct pci_dev *pci,
+                                  const struct pci_device_id *pci_id)
+      {
+              static int dev;
+              struct snd_card *card;
+              struct mychip *chip;
+              int err;
+
+              /* (1) */
+              if (dev >= SNDRV_CARDS)
+                      return -ENODEV;
+              if (!enable[dev]) {
+                      dev++;
+                   

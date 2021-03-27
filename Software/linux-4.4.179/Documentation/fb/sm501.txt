@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree Source for the Wheat board
+ *
+ * Copyright (C) 2016 Renesas Electronics Corporation
+ * Copyright (C) 2016 Cogent  Embedded, Inc.
+ */
+
+/dts-v1/;
+#include "r8a7792.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input

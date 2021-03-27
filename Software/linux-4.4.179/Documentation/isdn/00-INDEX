@@ -1,0 +1,51 @@
+/*
+ *  arch/arm/common/dmabounce.c
+ *
+ *  Special dma_{map/unmap/dma_sync}_* routines for systems that have
+ *  limited DMA windows. These functions utilize bounce buffers to
+ *  copy data to/from buffers located outside the DMA region. This
+ *  only works for systems in which DMA memory is at the bottom of
+ *  RAM, the remainder of memory is at the top and the DMA memory
+ *  can be marked as ZONE_DMA. Anything beyond that such as discontiguous
+ *  DMA windows will require custom implementations that reserve memory
+ *  areas at early bootup.
+ *
+ *  Original version by Brad Parker (brad@heeltoe.com)
+ *  Re-written by Christopher Hoover <ch@murgatroid.com>
+ *  Made generic by Deepak Saxena <dsaxena@plexity.net>
+ *
+ *  Copyright (C) 2002 Hewlett Packard Company.
+ *  Copyright (C) 2004 MontaVista Software, Inc.
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  version 2 as published by the Free Software Foundation.
+ */
+
+#include <linux/module.h>
+#include <linux/init.h>
+#include <linux/slab.h>
+#include <linux/page-flags.h>
+#include <linux/device.h>
+#include <linux/dma-mapping.h>
+#include <linux/dmapool.h>
+#include <linux/list.h>
+#include <linux/scatterlist.h>
+
+#include <asm/cacheflush.h>
+#include <asm/dma-iommu.h>
+
+#undef STATS
+
+#ifdef STATS
+#define DO_STATS(X) do { X ; } while (0)
+#else
+#define DO_STATS(X) do { } while (0)
+#endif
+
+/* ************************************************** */
+
+struct safe_buffer {
+	struct list_head node;
+
+	/* original reques

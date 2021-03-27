@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# This script is designed to provide a handy summary of the configuration
+# information being used to build perl. This is especially useful if you
+# are requesting help from comp.lang.perl.misc on usenet or via mail.
+
+# Note that the text lines /^Summary of/ .. /^\s*$/ are copied into Config.pm.
+cat <<'!NO!SUBS!'
+Summary of my perl5 (revision 5.0 version 6 subversion 1) configuration:
+  Platform:
+    osname=linux, osvers=2.4.16, archname=i686-linux
+    uname='linux goober 2.4.16 #1 tue nov 27 10:15:27 est 2001 i686 unknown '
+    config_args='-de'
+    hint=recommended, useposix=true, d_sigaction=define
+    usethreads=undef use5005threads=undef useithreads=undef usemultiplicity=undef
+    useperlio=undef d_sfio=undef uselargefiles=define usesocks=undef
+    use64bitint=undef use64bitall=undef uselongdouble=undef
+  Compiler:
+    cc='cc', ccflags ='-fno-strict-aliasing -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64',
+    optimize='-O2',
+    cppflags='-fno-strict-aliasing -I/usr/local/include'
+    ccversion='', gccversion='2.96 20000731 (Red Hat Linux 7.1 2.96-98)', gccosandvers=''
+    intsize=4, longsize=4, ptrsize=4, doublesize=8, byteorder=1234
+    d_longlong=define, longlongsize=8, d_longdbl=define, longdblsize=12
+    ivtype='long', ivsize=4, nvtype='double', nvsize=8, Off_t='off_t', lseeksize=8
+    alignbytes=4, usemymalloc=n, prototype=define
+  Linker and Libraries:
+    ld='cc', ldflags =' -L/usr/local/lib'
+    libpth=/usr/local/lib /lib /usr/lib
+    libs=-lnsl -lndbm -lgdbm -ldl -lm -lc -lcrypt -lutil
+    perllibs=-lnsl -ldl -lm -lc -lcrypt -lutil
+    libc=/lib/libc-2.2.4.so, so=so, useshrplib=false, libperl=libperl.a
+  Dynamic Linking:
+    dlsrc=dl_dlopen.xs, dlext=so, d_dlsymun=undef, ccdlflags='-rdynamic'
+    cccdlflags='-fpic', lddlflags='-shared -L/usr/local/lib'
+
+!NO!SUBS!

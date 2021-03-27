@@ -1,0 +1,64 @@
+// SPDX-License-Identifier: GPL-2.0+
+//
+// Copyright 2012 Freescale Semiconductor, Inc.
+
+#include "imx23-pinfunc.h"
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	interrupt-parent = <&icoll>;
+	/*
+	 * The decompressor and also some bootloaders rely on a
+	 * pre-existing /chosen node to be available to insert the
+	 * command line and merge other ATAGS info.
+	 * Also for U-Boot there must be a pre-existing /memory node.
+	 */
+	chosen {};
+	memory { device_type = "memory"; };
+
+	aliases {
+		gpio0 = &gpio0;
+		gpio1 = &gpio1;
+		gpio2 = &gpio2;
+		serial0 = &auart0;
+		serial1 = &auart1;
+		spi0 = &ssp0;
+		spi1 = &ssp1;
+		usbphy0 = &usbphy0;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			compatible = "arm,arm926ej-s";
+			device_type = "cpu";
+			reg = <0>;
+		};
+	};
+
+	apb@80000000 {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		reg = <0x80000000 0x80000>;
+		ranges;
+
+		apbh@80000000 {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			reg = <0x80000000 0x40000>;
+			ranges;
+
+			icoll: interrupt-controller@80000000 {
+				compatible = "fsl,imx23-icoll", "fsl,icoll";
+				interrupt-controller;
+				#interrupt-cells = <1>;
+				reg = <0x80000000 0x2000>;
+			};
+
+			dma_apbh: dm

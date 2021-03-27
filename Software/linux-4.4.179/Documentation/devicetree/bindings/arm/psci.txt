@@ -1,0 +1,80 @@
+unshare system call
+===================
+
+This document describes the new system call, unshare(). The document
+provides an overview of the feature, why it is needed, how it can
+be used, its interface specification, design, implementation and
+how it can be tested.
+
+Change Log
+----------
+version 0.1  Initial document, Janak Desai (janak@us.ibm.com), Jan 11, 2006
+
+Contents
+--------
+	1) Overview
+	2) Benefits
+	3) Cost
+	4) Requirements
+	5) Functional Specification
+	6) High Level Design
+	7) Low Level Design
+	8) Test Specification
+	9) Future Work
+
+1) Overview
+-----------
+
+Most legacy operating system kernels support an abstraction of threads
+as multiple execution contexts within a process. These kernels provide
+special resources and mechanisms to maintain these "threads". The Linux
+kernel, in a clever and simple manner, does not make distinction
+between processes and "threads". The kernel allows processes to share
+resources and thus they can achieve legacy "threads" behavior without
+requiring additional data structures and mechanisms in the kernel. The
+power of implementing threads in this manner comes not only from
+its simplicity but also from allowing application programmers to work
+outside the confinement of all-or-nothing shared resources of legacy
+threads. On Linux, at the time of thread creation using the clone system
+call, applications can selectively choose which resources to share
+between threads.
+
+unshare() system call adds a primitive to the Linux thread model that
+allows threads to selectively 'unshare' any resources that were being
+shared at the time of their creation. unshare() was conceptualized by
+Al Viro in the August of 2000, on the Linux-Kernel mailing list, as part
+of the discussion on POSIX threads on Linux.  unshare() augments the
+usefulness of Linux threads for applications that would like to control
+shared resources without creating a new process. unshare() is a natural
+addition to the set of available primitives on Linux that implement
+the concept of process/thread as a virtual machine.
+
+2) Benefits
+-----------
+
+unshare() would be useful to large application frameworks such as PAM
+where creating a new process to control sharing/unsharing of process
+resources is not possible. Since namespaces are shared by default
+when creating a new process using fork or clone, unshare() can benefit
+even non-threaded applications if they have a need to disassociate
+from default shared namespace. The following lists two use-cases
+where unshare() can be used.
+
+2.1 Per-security context namespaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+unshare() can be used to implement polyinstantiated directories using
+the kernel's per-process namespace mechanism. Polyinstantiated directories,
+such as per-user and/or per-security context instance of /tmp, /var/tmp or
+per-security context instance of a user's home directory, isolate user
+processes when working with these directories. Using unshare(), a PAM
+module can easily setup a private namespace for a user at login.
+Polyinstantiated directories are required for Common Criteria certification
+with Labeled System Protection Profile, however, with the availability
+of shared-tree feature in the Linux kernel, even regular Linux systems
+can benefit from setting up private namespaces at login and
+polyinstantiating /tmp, /var/tmp and other directories deemed
+appropriate by system administrators.
+
+2.2 unsharing of virtual memory and/or open files
+~~~~~~~~~

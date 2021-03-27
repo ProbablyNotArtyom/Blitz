@@ -1,0 +1,50 @@
+// SPDX-License-Identifier: GPL-2.0
+// Copyright (c) 2014 Samsung Electronics Co., Ltd.
+//		http://www.samsung.com
+//
+// Based on arch/arm/mach-vexpress/dcscb.c
+
+#include <linux/arm-cci.h>
+#include <linux/delay.h>
+#include <linux/io.h>
+#include <linux/of_address.h>
+#include <linux/syscore_ops.h>
+#include <linux/soc/samsung/exynos-regs-pmu.h>
+
+#include <asm/cputype.h>
+#include <asm/cp15.h>
+#include <asm/mcpm.h>
+#include <asm/smp_plat.h>
+
+#include "common.h"
+
+#define EXYNOS5420_CPUS_PER_CLUSTER	4
+#define EXYNOS5420_NR_CLUSTERS		2
+
+#define EXYNOS5420_ENABLE_AUTOMATIC_CORE_DOWN	BIT(9)
+#define EXYNOS5420_USE_ARM_CORE_DOWN_STATE	BIT(29)
+#define EXYNOS5420_USE_L2_COMMON_UP_STATE	BIT(30)
+
+static void __iomem *ns_sram_base_addr __ro_after_init;
+
+/*
+ * The common v7_exit_coherency_flush API could not be used because of the
+ * Erratum 799270 workaround. This macro is the same as the common one (in
+ * arch/arm/include/asm/cacheflush.h) except for the erratum handling.
+ */
+#define exynos_v7_exit_coherency_flush(level) \
+	asm volatile( \
+	"stmfd	sp!, {fp, ip}\n\t"\
+	"mrc	p15, 0, r0, c1, c0, 0	@ get SCTLR\n\t" \
+	"bic	r0, r0, #"__stringify(CR_C)"\n\t" \
+	"mcr	p15, 0, r0, c1, c0, 0	@ set SCTLR\n\t" \
+	"isb\n\t"\
+	"bl	v7_flush_dcache_"__stringify(level)"\n\t" \
+	"mrc	p15, 0, r0, c1, c0, 1	@ get ACTLR\n\t" \
+	"bic	r0, r0, #(1 << 6)	@ disable local coherency\n\t" \
+	/* Dummy Load of a device register to avoid Erratum 799270 */ \
+	"ldr	r4, [%0]\n\t" \
+	"and	r4, r4, #0\n\t" \
+	"orr	r0, r0, r4\n\t" \
+	"mcr	p15, 0, r0, c1, c0, 1	@ set ACTLR\n\t" \
+	"i

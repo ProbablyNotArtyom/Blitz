@@ -1,0 +1,15 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_ENC_INDEX:
+
+************************
+ioctl VIDIOC_G_ENC_INDEX
+************************
+
+Name
+====
+
+VIDIOC_G_ENC_INDEX - Get meta data about a compressed video stream
+
+
+Synop

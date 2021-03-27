@@ -1,0 +1,61 @@
+/*
+ * Author: Anil Kumar <anilk4.v@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <dt-bindings/input/input.h>
+
+#include "omap34xx.dtsi"
+/ {
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x10000000>;	/* 256 MB */
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		heartbeat {
+			label = "devkit8000::led1";
+			gpios = <&gpio6 26 GPIO_ACTIVE_HIGH>;	/* 186 -> LED1 */
+			default-state = "on";
+			linux,default-trigger = "heartbeat";
+		};
+
+		mmc {
+			label = "devkit8000::led2";
+			gpios = <&gpio6 3 GPIO_ACTIVE_HIGH>;	/* 163 -> LED2 */
+			default-state = "on";
+			linux,default-trigger = "none";
+		};
+
+		usr {
+			label = "devkit8000::led3";
+			gpios = <&gpio6 4 GPIO_ACTIVE_HIGH>;	/* 164 -> LED3 */
+			default-state = "on";
+			linux,default-trigger = "usr";
+		};
+
+		pmu_stat {
+			label = "devkit8000::pmu_stat";
+			gpios = <&twl_gpio 19 GPIO_ACTIVE_HIGH>; /* LEDB */
+		};
+	};
+
+	sound {
+		compatible = "ti,omap-twl4030";
+		ti,model = "devkit8000";
+
+		ti,mcbsp = <&mcbsp2>;
+		ti,audio-routing =
+			"Ext Spk", "PREDRIVEL",
+			"Ext Spk", "PREDRIVER",
+			"MAINMIC", "Main Mic",
+			"Main Mic", "Mic Bias 1";
+	};
+
+	gpio_keys {
+		comp

@@ -1,0 +1,21 @@
+NetLabel Linux Security Module Interface
+==============================================================================
+Paul Moore, paul.moore@hp.com
+
+May 17, 2006
+
+ * Overview
+
+NetLabel is a mechanism which can set and retrieve security attributes from
+network packets.  It is intended to be used by LSM developers who want to make
+use of a common code base for several different packet labeling protocols.
+The NetLabel security module API is defined in 'include/net/netlabel.h' but a
+brief overview is given below.
+
+ * NetLabel Security Attributes
+
+Since NetLabel supports multiple different packet labeling protocols and LSMs
+it uses the concept of security attributes to refer to the packet's security
+labels.  The NetLabel security attributes are defined by the
+'netlbl_lsm_secattr' structure in the NetLabel header file.  Internally the
+NetLabel subsystem converts the se

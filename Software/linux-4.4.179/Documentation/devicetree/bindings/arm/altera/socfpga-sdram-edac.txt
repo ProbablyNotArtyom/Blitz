@@ -1,0 +1,15 @@
+XICS interrupt controller
+
+Device type supported: KVM_DEV_TYPE_XICS
+
+Groups:
+  KVM_DEV_XICS_SOURCES
+  Attributes: One per interrupt source, indexed by the source number.
+
+This device emulates the XICS (eXternal Interrupt Controller
+Specification) defined in PAPR.  The XICS has a set of interrupt
+sources, each identified by a 20-bit source number, and a set of
+Interrupt Control Presentation (ICP) entities, also called "servers",
+each associated with a virtual CPU.
+
+The IC

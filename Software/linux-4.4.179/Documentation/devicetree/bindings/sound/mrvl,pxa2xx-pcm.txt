@@ -1,0 +1,14 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * kirkwood-sheevaplug-esata.dts - Device tree file for eSATA Sheevaplug
+ *
+ * Copyright (C) 2013 Simon Baatz <gmbnomis@gmail.com>
+ */
+
+/dts-v1/;
+
+#include "kirkwood-sheevaplug-common.dtsi"
+
+/ {
+	model = "Globalscale Technologies eSATA SheevaPlug";
+	compatible = "globals

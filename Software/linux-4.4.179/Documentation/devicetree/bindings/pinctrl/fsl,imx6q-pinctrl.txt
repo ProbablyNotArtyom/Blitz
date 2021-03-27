@@ -1,0 +1,83 @@
+/*
+ * Copyright 2017 Beckhoff Automation GmbH & Co. KG
+ * based on imx53-qsb.dts
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/dts-v1/;
+#include "imx53.dtsi"
+
+/ {
+	model = "Beckhoff CX9020 Embedded PC";
+	compatible = "bhf,cx9020", "fsl,imx53";
+
+	chosen {
+		stdout-path = &uart2;
+	};
+
+	memory@70000000 {
+		reg = <0x70000000 0x20000000>,
+		      <0xb0000000 0x20000000>;
+	};
+
+	display-0 {
+		#address-cells =<1>;
+		#size-cells = <0>;
+		compatible = "fsl,imx-parallel-display";
+		interface-pix-fmt = "rgb24";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_ipu_disp0>;
+
+		port@0 {
+			reg = <0>;
+
+			display0_in: endpoint {
+				remote-endpoint = <&ipu_di0_disp0>;
+			};
+		};
+
+		port@1 {
+			reg = <1>;
+
+			display0_out: endpoint {
+				remote-endpoint = <&tfp410_in>;
+			};
+		};
+	};
+
+	dvi-connector {
+		compatible = "dvi-connector";
+		ddc-i2c-bus = <&i2c2>;
+		digital;
+
+		port {
+			dvi_connector_in: endpoint {
+				remote-endpoint = <&tfp410_out>;
+			};
+		};
+	};
+
+	dvi-converter {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		compatible = "ti,tfp410";
+
+		port@0 {
+			reg = <0>;
+
+			tfp410_in: endpoint {
+				remote-endpoint = <&display0_out>;
+			};
+		};
+
+		port@1 {
+			reg = <1>;
+
+			tfp410_out: endpoint {
+				remote-endpoint = <&dvi

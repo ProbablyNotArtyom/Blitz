@@ -1,0 +1,14 @@
+.. _page_owner:
+
+==================================================
+page owner: Tracking about who allocated each page
+==================================================
+
+Introduction
+============
+
+page owner is for the tracking about who allocated each page.
+It can be used to debug memory leak or to find a memory hogger.
+When allocation happens, information about allocation such as call stack
+and order of pages is stored into certain storage for each page.
+When w

@@ -1,0 +1,18 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_DV_TIMINGS_CAP:
+
+*********************************************************
+ioctl VIDIOC_DV_TIMINGS_CAP, VIDIOC_SUBDEV_DV_TIMINGS_CAP
+*********************************************************
+
+Name
+====
+
+VIDIOC_DV_TIMINGS_CAP - VIDIOC_SUBDEV_DV_TIMINGS_CAP - The capabilities of the Digital Video receiver/transmitter
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, 

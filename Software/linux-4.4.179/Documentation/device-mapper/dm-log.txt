@@ -1,0 +1,51 @@
+================
+Event Histograms
+================
+
+Documentation written by Tom Zanussi
+
+1. Introduction
+===============
+
+  Histogram triggers are special event triggers that can be used to
+  aggregate trace event data into histograms.  For information on
+  trace events and event triggers, see Documentation/trace/events.rst.
+
+
+2. Histogram Trigger Command
+============================
+
+  A histogram trigger command is an event trigger command that
+  aggregates event hits into a hash table keyed on one or more trace
+  event format fields (or stacktrace) and a set of running totals
+  derived from one or more trace event format fields and/or event
+  counts (hitcount).
+
+  The format of a hist trigger is as follows::
+
+        hist:keys=<field1[,field2,...]>[:values=<field1[,field2,...]>]
+          [:sort=<field1[,field2,...]>][:size=#entries][:pause][:continue]
+          [:clear][:name=histname1] [if <filter>]
+
+  When a matching event is hit, an entry is added to a hash table
+  using the key(s) and value(s) named.  Keys and values correspond to
+  fields in the event's format description.  Values must correspond to
+  numeric fields - on an event hit, the value(s) will be added to a
+  sum kept for that field.  The special string 'hitcount' can be used
+  in place of an explicit value field - this is simply a count of
+  event hits.  If 'values' isn't specified, an implicit 'hitcount'
+  value will be automatically created and used as the only value.
+  Keys can be any field, or the special string 'stacktrace', which
+  will use the event's kernel stacktrace as the key.  The keywords
+  'keys' or 'key' can be used to specify keys, and the keywords
+  'values', 'vals', or 'val' can be used to specify values.  Compound
+  keys consisting of up to two fields can be specified by the 'keys'
+  keyword.  Hashing a compound key produces a unique entry in the
+  table for each unique combination of component keys, and can be
+  useful for providing more fine-grained summaries of event data.
+  Additionally, sort keys consisting of up to two fields can be
+  specified by the 'sort' keyword.  If more than one field is
+  specified, the result will be a 'sort within a sort': the first key
+  is taken to be the primary sort key and the second the secondary
+  key.  If a hist trigger is given a name using the 'name' parameter,
+  its histogram data will be shared with other triggers of the sa

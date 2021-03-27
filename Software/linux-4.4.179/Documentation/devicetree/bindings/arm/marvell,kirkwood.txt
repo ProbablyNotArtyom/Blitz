@@ -1,0 +1,68 @@
+INTRODUCTION
+
+  The USB serial driver currently supports a number of different USB to
+  serial converter products, as well as some devices that use a serial
+  interface from userspace to talk to the device.
+
+  See the individual product section below for specific information about
+  the different devices.
+
+
+CONFIGURATION
+
+  Currently the driver can handle up to 256 different serial interfaces at
+  one time. 
+
+    The major number that the driver uses is 188 so to use the driver,
+    create the following nodes:
+	mknod /dev/ttyUSB0 c 188 0
+	mknod /dev/ttyUSB1 c 188 1
+	mknod /dev/ttyUSB2 c 188 2
+	mknod /dev/ttyUSB3 c 188 3
+		.
+		.
+		.
+	mknod /dev/ttyUSB254 c 188 254
+	mknod /dev/ttyUSB255 c 188 255
+
+  When the device is connected and recognized by the driver, the driver
+  will print to the system log, which node(s) the device has been bound
+  to.
+  
+
+SPECIFIC DEVICES SUPPORTED
+
+
+ConnectTech WhiteHEAT 4 port converter
+
+  ConnectTech has been very forthcoming with information about their
+  device, including providing a unit to test with.
+
+  The driver is officially supported by Connect Tech Inc.
+  http://www.connecttech.com
+
+  For any questions or problems with this driver, please contact
+  Connect Tech's Support Department at support@connecttech.com
+
+
+HandSpring Visor, Palm USB, and Clié USB driver
+
+  This driver works with all HandSpring USB, Palm USB, and Sony Clié USB
+  devices.
+
+  Only when the device tries to connect to the host, will the device show
+  up to the host as a valid USB device. When this happens, the device is
+  properly enumerated, assigned a port, and then communication _should_ be
+  possible. The driver cleans up properly when the device is removed, or
+  the connection is canceled on the device.
+
+  NOTE:
+    This means that in order to talk to the device, the sync button must be
+    pressed BEFORE trying to get any program to communicate to the device.
+    This goes against the current documentation for pilot-xfer and other
+    packages, but is the only way that it will work due to the hardware
+    in the device.
+  
+  When the device is connected, try talking to it on the second port
+  (this is usually /dev/ttyUSB1 if you do not have any other usb-serial
+  devices in the system.

@@ -1,0 +1,160 @@
+/*
+ * at91sam9n12.dtsi - Device Tree include file for AT91SAM9N12 SoC
+ *
+ *  Copyright (C) 2012 Atmel,
+ *                2012 Hong Xu <hong.xu@atmel.com>
+ *
+ * Licensed under GPLv2 or later.
+ */
+
+#include "skeleton.dtsi"
+#include <dt-bindings/dma/at91.h>
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/clock/at91.h>
+
+/ {
+	model = "Atmel AT91SAM9N12 SoC";
+	compatible = "atmel,at91sam9n12";
+	interrupt-parent = <&aic>;
+
+	aliases {
+		serial0 = &dbgu;
+		serial1 = &usart0;
+		serial2 = &usart1;
+		serial3 = &usart2;
+		serial4 = &usart3;
+		gpio0 = &pioA;
+		gpio1 = &pioB;
+		gpio2 = &pioC;
+		gpio3 = &pioD;
+		tcb0 = &tcb0;
+		tcb1 = &tcb1;
+		i2c0 = &i2c0;
+		i2c1 = &i2c1;
+		ssc0 = &ssc0;
+		pwm0 = &pwm0;
+	};
+	cpus {
+		#address-cells = <0>;
+		#size-cells = <0>;
+
+		cpu {
+			compatible = "arm,arm926ej-s";
+			device_type = "cpu";
+		};
+	};
+
+	memory {
+		reg = <0x20000000 0x10000000>;
+	};
+
+	clocks {
+		slow_xtal: slow_xtal {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <0>;
+		};
+
+		main_xtal: main_xtal {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <0>;
+		};
+	};
+
+	sram: sram@300000 {
+		compatible = "mmio-sram";
+		reg = <0x00300000 0x8000>;
+	};
+
+	ahb {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		apb {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+
+			aic: interrupt-controller@fffff000 {
+				#interrupt-cells = <3>;
+				compatible = "atmel,at91rm9200-aic";
+				interrupt-controller;
+				reg = <0xfffff000 0x200>;
+				atmel,external-irqs = <31>;
+			};
+
+			matrix: matrix@ffffde00 {
+				compatible = "atmel,at91sam9n12-matrix", "syscon";
+				reg = <0xffffde00 0x100>;
+			};
+
+			pmecc: ecc-engine@ffffe000 {
+				compatible = "atmel,at91sam9g45-pmecc";
+				reg = <0xffffe000 0x600>,
+				      <0xffffe600 0x200>;
+			};
+
+			ramc0: ramc@ffffe800 {
+				compatible = "atmel,at91sam9g45-ddramc";
+				reg = <0xffffe800 0x200>;
+				clocks = <&ddrck>;
+				clock-names = "ddrck";
+			};
+
+			smc: smc@ffffea00 {
+				compatible = "atmel,at91sam9260-smc", "syscon";
+				reg = <0xffffea00 0x200>;
+			};
+
+			pmc: pmc@fffffc00 {
+				compatible = "atmel,at91sam9n12-pmc", "syscon";
+				reg = <0xfffffc00 0x200>;
+				interrupts = <1 IRQ_TYPE_LEVEL_HIGH 7>;
+				interrupt-controller;
+				#address-cells = <1>;
+				#size-cells = <0>;
+				#interrupt-cells = <1>;
+
+				main_rc_osc: main_rc_osc {
+					compatible = "atmel,at91sam9x5-clk-main-rc-osc";
+					#clock-cells = <0>;
+					interrupts-extended = <&pmc AT91_PMC_MOSCRCS>;
+					clock-frequency = <12000000>;
+					clock-accuracy = <50000000>;
+				};
+
+				main_osc: main_osc {
+					compatible = "atmel,at91rm9200-clk-main-osc";
+					#clock-cells = <0>;
+					interrupts-extended = <&pmc AT91_PMC_MOSCS>;
+					clocks = <&main_xtal>;
+				};
+
+				main: mainck {
+					compatible = "atmel,at91sam9x5-clk-main";
+					#clock-cells = <0>;
+					interrupts-extended = <&pmc AT91_PMC_MOSCSELS>;
+					clocks = <&main_rc_osc>, <&main_osc>;
+				};
+
+				plla: pllack {
+					compatible = "atmel,at91rm9200-clk-pll";
+					#clock-cells = <0>;
+					interrupts-extended = <&pmc AT91_PMC_LOCKA>;
+					clocks = <&main>;
+					reg = <0>;
+					atmel,clk-input-range = <2000000 32000000>;
+					#atmel,pll-clk-output-range-cells = <4>;
+					atmel,pll-clk-output-ranges = <745000000 800000000 0 0>,
+								      <695000000 750000000 1 0>,
+								      <645000000 700000000 2 0>,
+								      <595000000 650000000 3 0>,
+								      <545000000 600000000 0 1>,
+								      <495000000 555000000 1 1>,
+								      

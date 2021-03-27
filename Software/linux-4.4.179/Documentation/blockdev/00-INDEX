@@ -1,0 +1,14 @@
+=======================
+HD-Audio DP-MST Support
+=======================
+
+To support DP MST audio, HD Audio hdmi codec driver introduces virtual pin
+and dynamic pcm assignment.
+
+Virtual pin is an extension of per_pin. The most difference of DP MST
+from legacy is that DP MST introduces device entry. Each pin can contain
+several device entries. Each device entry behaves as a pin.
+
+As each pin may contain several device entries and each codec may contain
+several pins, if we use one pcm per per_pin, there will be many PCMs.
+The new solution is to create a few PCMs and to dynamical

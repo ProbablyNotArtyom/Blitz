@@ -1,0 +1,22 @@
+=================================
+Notes on Maya44 USB Audio Support
+=================================
+
+.. note::
+   The following is the original document of Rainer's patch that the
+   current maya44 code based on.  Some contents might be obsoleted, but I
+   keep here as reference -- tiwai
+
+Feb 14, 2008
+
+Rainer Zimmermann <mail@lightshed.de>
+ 
+STATE OF DEVELOPMENT
+====================
+
+This driver is being developed on the initiative of Piotr Makowski (oponek@gmail.com) and financed by Lars Bergmann.
+Development is carried out by Rainer Zimmermann (mail@lightshed.de).
+
+ESI provided a sample Maya44 card for the development work.
+
+However, unfortunately it has turned out difficult to get detailed programming information, so I (Rainer Zimmermann) had to find out some card-specific information by experiment and conjecture. Some information (in particular, several GPIO bits) i

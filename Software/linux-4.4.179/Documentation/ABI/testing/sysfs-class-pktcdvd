@@ -1,0 +1,124 @@
+The Zoran driver
+================
+
+unified zoran driver (zr360x7, zoran, buz, dc10(+), dc30(+), lml33)
+
+website: http://mjpeg.sourceforge.net/driver-zoran/
+
+
+Frequently Asked Questions
+--------------------------
+
+What cards are supported
+------------------------
+
+Iomega Buz, Linux Media Labs LML33/LML33R10, Pinnacle/Miro
+DC10/DC10+/DC30/DC30+ and related boards (available under various names).
+
+Iomega Buz
+~~~~~~~~~~
+
+* Zoran zr36067 PCI controller
+* Zoran zr36060 MJPEG codec
+* Philips saa7111 TV decoder
+* Philips saa7185 TV encoder
+
+Drivers to use: videodev, i2c-core, i2c-algo-bit,
+videocodec, saa7111, saa7185, zr36060, zr36067
+
+Inputs/outputs: Composite and S-video
+
+Norms: PAL, SECAM (720x576 @ 25 fps), NTSC (720x480 @ 29.97 fps)
+
+Card number: 7
+
+AverMedia 6 Eyes AVS6EYES
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Zoran zr36067 PCI controller
+* Zoran zr36060 MJPEG codec
+* Samsung ks0127 TV decoder
+* Conexant bt866  TV encoder
+
+Drivers to use: videodev, i2c-core, i2c-algo-bit,
+videocodec, ks0127, bt866, zr36060, zr36067
+
+Inputs/outputs:
+	Six physical inputs. 1-6 are composite,
+	1-2, 3-4, 5-6 doubles as S-video,
+	1-3 triples as component.
+	One composite output.
+
+Norms: PAL, SECAM (720x576 @ 25 fps), NTSC (720x480 @ 29.97 fps)
+
+Card number: 8
+
+.. note::
+
+   Not autodetected, card=8 is necessary.
+
+Linux Media Labs LML33
+~~~~~~~~~~~~~~~~~~~~~~
+
+* Zoran zr36067 PCI controller
+* Zoran zr36060 MJPEG codec
+* Brooktree bt819 TV decoder
+* Brooktree bt856 TV encoder
+
+Drivers to use: videodev, i2c-core, i2c-algo-bit,
+videocodec, bt819, bt856, zr36060, zr36067
+
+Inputs/outputs: Composite and S-video
+
+Norms: PAL (720x576 @ 25 fps), NTSC (720x480 @ 29.97 fps)
+
+Card number: 5
+
+Linux Media Labs LML33R10
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Zoran zr36067 PCI controller
+* Zoran zr36060 MJPEG codec
+* Philips saa7114 TV decoder
+* Analog Devices adv7170 TV encoder
+
+Drivers to use: videodev, i2c-core, i2c-algo-bit,
+videocodec, saa7114, adv7170, zr36060, zr36067
+
+Inputs/outputs: Composite and S-video
+
+Norms: PAL (720x576 @ 25 fps), NTSC (720x480 @ 29.97 fps)
+
+Card number: 6
+
+Pinnacle/Miro DC10(new)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Zoran zr36057 PCI controller
+* Zoran zr36060 MJPEG codec
+* Philips saa7110a TV decoder
+* Analog Devices adv7176 TV encoder
+
+Drivers to use: videodev, i2c-core, i2c-algo-bit,
+videocodec, saa7110, adv7175, zr36060, zr36067
+
+Inputs/outputs: Composite, S-video and Internal
+
+Norms: PAL, SECAM (768x576 @ 25 fps), NTSC (640x480 @ 29.97 fps)
+
+Card number: 1
+
+Pinnacle/Miro DC10+
+~~~~~~~~~~~~~~~~~~~
+
+* Zoran zr36067 PCI controller
+* Zoran zr36060 MJPEG codec
+* Philips saa7110a TV decoder
+* Analog Devices adv7176 TV encoder
+
+Drivers to use: videodev, i2c-core, i2c-algo-bit,
+videocodec, sa7110, adv7175, zr36060, zr36067
+
+Inputs/outputs: Composite, S-video and Internal
+
+Norms: PAL, SECAM 

@@ -1,0 +1,48 @@
+There are several files in /proc/sys/vm you can use to tune the
+memory system with.
+
+You inspect them with 'cat', and set them with 'echo'. For example,
+/proc/sys/vm/freepages:
+
+'# cat /proc/sys/vm/freepages' may yield:
+64      96      128
+
+These three numbers are: min_free_pages, free_pages_low and 
+free_pages_high.
+
+You can adjust these with a command such as:
+
+# echo "128 256 512" > /proc/sys/vm/freepages
+
+Free memory never goes down below min_free_pages except for atomic
+allocation.  Background swapping is started if the number of free
+pages falls below free_pages_high, and intensive swapping is started
+below free_pages_low.  A "page" is 4 kB.
+
+The values selected as boot defaults are the following:  For a
+machine with n>=8 Megabytes of memory, set min_free_pages = n*2,
+free_pages_low = n*3 and free_pages_high = n*4.  Machines with
+8 Megabytes or less behave as if they had 8 Megabytes.
+
+If "out of memory" errors sometimes occur, or if your machine does lots
+of networking, increasing min_free_pages to 64 or more may be a good
+idea.
+
+free_pages_low should probably be about double of min_free_pages.
+
+After a period of inactivity, the difference between free_pages_high and
+free_pages low is immediately available for any program you want to
+start up, without any need to swap out anything else.  If your memory
+is large enough (e.g. > 16 Meg), keeping 2 or 3 megabytes of memory
+ready for this purpose is probably a good idea.
+
+I've found that
+
+# echo "128 256 1024" > /proc/sys/vm/freepages
+
+gives good performance for a 32 Meg system used as a small server and
+personal workstation.
+
+The other three files in /proc/sys/vm are undocumented, as yet.
+
+Thomas Koenig, ig25@rz.uni-karlsruhe.de

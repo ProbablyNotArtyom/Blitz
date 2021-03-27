@@ -1,0 +1,45 @@
+.. _development_posting:
+
+Posting patches
+===============
+
+Sooner or later, the time comes when your work is ready to be presented to
+the community for review and, eventually, inclusion into the mainline
+kernel.  Unsurprisingly, the kernel development community has evolved a set
+of conventions and procedures which are used in the posting of patches;
+following them will make life much easier for everybody involved.  This
+document will attempt to cover these expectations in reasonable detail;
+more information can also be found in the files process/submitting-patches.rst,
+process/submitting-drivers.rst, and process/submit-checklist.rst in the kernel
+documentation directory.
+
+
+When to post
+------------
+
+There is a constant temptation to avoid posting patches before they are
+completely "ready."  For simple patches, that is not a problem.  If the
+work being done is complex, though, there is a lot to be gained by getting
+feedback from the community before the work is complete.  So you should
+consider posting in-progress work, or even making a git tree available so
+that interested developers can catch up with your work at any time.
+
+When posting code which is not yet considered ready for inclusion, it is a
+good idea to say so in the posting itself.  Also mention any major work
+which remains to be done and any known problems.  Fewer people will look at
+patches which are known to be half-baked, but those who do will come in
+with the idea that they can help you drive the work in the right direction.
+
+
+Before creating patches
+-----------------------
+
+There are a number of things which should be done before you consider
+sending patches to the development community.  These include:
+
+ - Test the code to the extent that you can.  Make use of the kernel's
+   debugging tools, ensure that the kernel will build with all reasonable
+   combinations of configuration options, use cross-compilers to build for
+   different architectures, etc.
+
+ - Make sure your code is complian

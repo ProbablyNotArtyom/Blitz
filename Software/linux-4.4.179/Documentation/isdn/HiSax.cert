@@ -1,0 +1,135 @@
+/*
+ * linux/arch/arm/common/it8152.c
+ *
+ * Copyright Compulab Ltd, 2002-2007
+ * Mike Rapoport <mike@compulab.co.il>
+ *
+ * The DMA bouncing part is taken from arch/arm/mach-ixp4xx/common-pci.c
+ * (see this file for respective copyrights)
+ *
+ * Thanks to Guennadi Liakhovetski <gl@dsa-ac.de> for IRQ enumberation
+ * and demux code.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <linux/sched.h>
+#include <linux/kernel.h>
+#include <linux/pci.h>
+#include <linux/ptrace.h>
+#include <linux/interrupt.h>
+#include <linux/mm.h>
+#include <linux/init.h>
+#include <linux/ioport.h>
+#include <linux/irq.h>
+#include <linux/io.h>
+#include <linux/export.h>
+
+#include <asm/mach/pci.h>
+#include <asm/hardware/it8152.h>
+
+#define MAX_SLOTS		21
+
+static void it8152_mask_irq(struct irq_data *d)
+{
+	unsigned int irq = d->irq;
+
+       if (irq >= IT8152_LD_IRQ(0)) {
+	       __raw_writel((__raw_readl(IT8152_INTC_LDCNIMR) |
+			    (1 << (irq - IT8152_LD_IRQ(0)))),
+			    IT8152_INTC_LDCNIMR);
+       } else if (irq >= IT8152_LP_IRQ(0)) {
+	       __raw_writel((__raw_readl(IT8152_INTC_LPCNIMR) |
+			    (1 << (irq - IT8152_LP_IRQ(0)))),
+			    IT8152_INTC_LPCNIMR);
+       } else if (irq >= IT8152_PD_IRQ(0)) {
+	       __raw_writel((__raw_readl(IT8152_INTC_PDCNIMR) |
+			    (1 << (irq - IT8152_PD_IRQ(0)))),
+			    IT8152_INTC_PDCNIMR);
+       }
+}
+
+static void it8152_unmask_irq(struct irq_data *d)
+{
+	unsigned int irq = d->irq;
+
+       if (irq >= IT8152_LD_IRQ(0)) {
+	       __raw_writel((__raw_readl(IT8152_INTC_LDCNIMR) &
+			     ~(1 << (irq - IT8152_LD_IRQ(0)))),
+			    IT8152_INTC_LDCNIMR);
+       } else if (irq >= IT8152_LP_IRQ(0)) {
+	       __raw_writel((__raw_readl(IT8152_INTC_LPCNIMR) &
+			     ~(1 << (irq - IT8152_LP_IRQ(0)))),
+			    IT8152_INTC_LPCNIMR);
+       } else if (irq >= IT8152_PD_IRQ(0)) {
+	       __raw_writel((__raw_readl(IT8152_INTC_PDCNIMR) &
+			     ~(1 << (irq - IT8152_PD_IRQ(0)))),
+			    IT8152_INTC_PDCNIMR);
+       }
+}
+
+static struct irq_chip it8152_irq_chip = {
+	.name		= "it8152",
+	.irq_ack	= it8152_mask_irq,
+	.irq_mask	= it8152_mask_irq,
+	.irq_unmask	= it8152_unmask_irq,
+};
+
+void it8152_init_irq(void)
+{
+	int irq;
+
+	__raw_writel((0xffff), IT8152_INTC_PDCNIMR);
+	__raw_writel((0), IT8152_INTC_PDCNIRR);
+	__raw_writel((0xffff), IT8152_INTC_LPCNIMR);
+	__raw_writel((0), IT8152_INTC_LPCNIRR);
+	__raw_writel((0xffff), IT8152_INTC_LDCNIMR);
+	__raw_writel((0), IT8152_INTC_LDCNIRR);
+
+	for (irq = IT8152_IRQ(0); irq <= IT8152_LAST_IRQ; irq++) {
+		irq_set_chip_and_handler(irq, &it8152_irq_chip,
+					 handle_level_irq);
+		irq_clear_status_flags(irq, IRQ_NOREQUEST | IRQ_NOPROBE);
+	}
+}
+
+void it8152_irq_demux(struct irq_desc *desc)
+{
+       int bits_pd, bits_lp, bits_ld;
+       int i;
+
+       while (1) {
+	       /* Read all */
+	       bits_pd = __raw_readl(IT8152_INTC_PDCNIRR);
+	       bits_lp = __raw_readl(IT8152_INTC_LPCNIRR);
+	       bits_ld = __raw_readl(IT8152_INTC_LDCNIRR);
+
+	       /* Ack */
+	       __raw_writel((~bits_pd), IT8152_INTC_PDCNIRR);
+	       __raw_writel((~bits_lp), IT8152_INTC_LPCNIRR);
+	       __raw_writel((~bits_ld), IT8152_INTC_LDCNIRR);
+
+	       if (!(bits_ld | bits_lp | bits_pd)) {
+		       /* Re-read to guarantee, that there was a moment of
+			  time, when they all three were 0. */
+		       bits_pd = __raw_readl(IT8152_INTC_PDCNIRR);
+		       bits_lp = __raw_readl(IT8152_INTC_LPCNIRR);
+		       bits_ld = __raw_readl(IT8152_INTC_LDCNIRR);
+		       if (!(bits_ld | bits_lp | bits_pd))
+			       return;
+	       }
+
+	       bits_pd &= ((1 << IT8152_PD_IRQ_COUNT) - 1);
+	       while (bits_pd) {
+		       i = __ffs(bits_pd);
+		       generic_handle_irq(IT8152_PD_IRQ(i));
+		       bits_pd &= ~(1 << i);
+	       }
+
+	       bits_lp &= ((1 << IT8152_LP_IRQ_COUNT) - 1);
+	       while (bits_lp) {
+		       i = __ffs(bits_lp);
+		       generic_handle_irq(IT8152_LP_IRQ(i));
+		       bits_lp &= ~

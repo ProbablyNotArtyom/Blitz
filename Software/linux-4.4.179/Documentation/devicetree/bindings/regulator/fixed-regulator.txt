@@ -1,0 +1,49 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (C) 2018 PHYTEC Messtechnik GmbH
+ * Author: Christian Hemp <c.hemp@phytec.de>
+ */
+
+
+/ {
+	aliases {
+		rtc0 = &i2c_rtc;
+	};
+
+	backlight: backlight {
+		compatible = "pwm-backlight";
+		brightness-levels = <0 4 8 16 32 64 128 255>;
+		default-brightness-level = <7>;
+		power-supply = <&reg_backlight>;
+		pwms = <&pwm1 0 5000000>;
+		status = "okay";
+	};
+
+	gpio_leds: leds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_gpioleds>;
+		status = "disabled";
+
+		red {
+			label = "phyboard-mira:red";
+			gpios = <&gpio5 22 GPIO_ACTIVE_HIGH>;
+		};
+
+		green {
+			label = "phyboard-mira:green";
+			gpios = <&gpio5 23 GPIO_ACTIVE_HIGH>;
+		};
+
+		blue {
+			label = "phyboard-mira:blue";
+			gpios = <&gpio5 24 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "mmc0";
+		};
+	};
+
+	reg_backlight: regulator-backlight {
+		compatible = "regulator-fixed";
+		regulator-name = "backlight_3v3";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microv

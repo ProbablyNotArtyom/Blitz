@@ -1,0 +1,92 @@
+Linux power supply class
+========================
+
+Synopsis
+~~~~~~~~
+Power supply class used to represent battery, UPS, AC or DC power supply
+properties to user-space.
+
+It defines core set of attributes, which should be applicable to (almost)
+every power supply out there. Attributes are available via sysfs and uevent
+interfaces.
+
+Each attribute has well defined meaning, up to unit of measure used. While
+the attributes provided are believed to be universally applicable to any
+power supply, specific monitoring hardware may not be able to provide them
+all, so any of them may be skipped.
+
+Power supply class is extensible, and allows to define drivers own attributes.
+The core attribute set is subject to the standard Linux evolution (i.e.
+if it will be found that some attribute is applicable to many power supply
+types or their drivers, it can be added to the core set).
+
+It also integrates with LED framework, for the purpose of providing
+typically expected feedback of battery charging/fully charged status and
+AC/USB power supply online status. (Note that specific details of the
+indication (including whether to use it at all) are fully controllable by
+user and/or specific machine defaults, per design principles of LED
+framework).
+
+
+Attributes/properties
+~~~~~~~~~~~~~~~~~~~~~
+Power supply class has predefined set of attributes, this eliminates code
+duplication across drivers. Power supply class insist on reusing its
+predefined attributes *and* their units.
+
+So, userspace gets predictable set of attributes and their units for any
+kind of power supply, and can process/present them to a user in consistent
+manner. Results for different power supplies and machines are also directly
+comparable.
+
+See drivers/power/supply/ds2760_battery.c and drivers/power/supply/pda_power.c
+for the example how to declare and handle attributes.
+
+
+Units
+~~~~~
+Quoting include/linux/power_supply.h:
+
+  All voltages, currents, charges, energies, time and temperatures in µV,
+  µA, µAh, µWh, seconds and tenths of degree Celsius unless otherwise
+  stated. It's driver's job to convert its raw values to units in which
+  this class operates.
+
+
+Attributes/properties detailed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~ ~ ~ ~ ~ ~ ~  Charge/Energy/Capacity - how to not confuse  ~ ~ ~ ~ ~ ~ ~
+~                                                                       ~
+~ Because both "charge" (µAh) and "energy" (µWh) represents "capacity"  ~
+~ of battery, this class distinguish these terms. Don't mix them!       ~
+~                                                                       ~
+~ CHARGE_* attributes represents capacity in µAh only.                  ~
+~ ENERGY_* attributes represents capacity in µWh only.                  ~
+~ CAPACITY attribute represents capacity in *percents*, from 0 to 100.  ~
+~                                                                       ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+Postfixes:
+_AVG - *hardware* averaged value, use it if your hardware is really able to
+report averaged values.
+_NOW - momentary/instantaneous values.
+
+STATUS - this attribute represents operating status (charging, full,
+discharging (i.e. powering a load), etc.). This corresponds to
+BATTERY_STATUS_* values, as defined in battery.h.
+
+CHARGE_TYPE - batteries can typically charge at different rates.
+This defines trickle and fast charges.  For batteries that
+are already charged or discharging, 'n/a' can be displayed (or
+'unknown', if the status is not known).
+
+AUTHENTIC - indicates the power supply (battery or charger) connected
+to the platform is authentic(1) or non authentic(0).
+
+HEALTH - represents health of the battery, values corresponds to
+POWER_SUPPLY_HEALTH_*, defined in battery.h.
+
+VOLTAGE_OCV - open circuit voltage of the battery.
+
+VOLTAGE_MAX_DESIGN, VOLTAGE_MIN_DESIGN - design values for maximal a

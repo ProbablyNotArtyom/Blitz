@@ -1,0 +1,7 @@
+Last reviewed: 10/05/2007
+
+                     Berkshire Products PC Watchdog Card
+                   Support for ISA Cards  Revision A and C
+           Documentation and Driver by Ken Hollis <kenji@bitgate.com>
+
+ The PC Watchdog is a car

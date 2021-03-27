@@ -1,0 +1,4 @@
+Chinese translated version of Documentation/arm64/tagged-pointers.txt
+
+If you have any comment or update to the content, please contact the
+original document maintainer directly.  However, if you have a proble

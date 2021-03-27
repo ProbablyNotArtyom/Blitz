@@ -1,0 +1,185 @@
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *
+ * Copyright (C) 2009, 2010 ARM Limited
+ *
+ * Author: Will Deacon <will.deacon@arm.com>
+ */
+
+/*
+ * HW_breakpoint: a unified kernel/user-space hardware breakpoint facility,
+ * using the CPU's debug registers.
+ */
+#define pr_fmt(fmt) "hw-breakpoint: " fmt
+
+#include <linux/errno.h>
+#include <linux/hardirq.h>
+#include <linux/perf_event.h>
+#include <linux/hw_breakpoint.h>
+#include <linux/smp.h>
+#include <linux/cpu_pm.h>
+#include <linux/coresight.h>
+
+#include <asm/cacheflush.h>
+#include <asm/cputype.h>
+#include <asm/current.h>
+#include <asm/hw_breakpoint.h>
+#include <asm/traps.h>
+
+/* Breakpoint currently in use for each BRP. */
+static DEFINE_PER_CPU(struct perf_event *, bp_on_reg[ARM_MAX_BRP]);
+
+/* Watchpoint currently in use for each WRP. */
+static DEFINE_PER_CPU(struct perf_event *, wp_on_reg[ARM_MAX_WRP]);
+
+/* Number of BRP/WRP registers on this CPU. */
+static int core_num_brps __ro_after_init;
+static int core_num_wrps __ro_after_init;
+
+/* Debug architecture version. */
+static u8 debug_arch __ro_after_init;
+
+/* Does debug architecture support OS Save and Restore? */
+static bool has_ossr __ro_after_init;
+
+/* Maximum supported watchpoint length. */
+static u8 max_watchpoint_len __ro_after_init;
+
+#define READ_WB_REG_CASE(OP2, M, VAL)			\
+	case ((OP2 << 4) + M):				\
+		ARM_DBG_READ(c0, c ## M, OP2, VAL);	\
+		break
+
+#define WRITE_WB_REG_CASE(OP2, M, VAL)			\
+	case ((OP2 << 4) + M):				\
+		ARM_DBG_WRITE(c0, c ## M, OP2, VAL);	\
+		break
+
+#define GEN_READ_WB_REG_CASES(OP2, VAL)		\
+	READ_WB_REG_CASE(OP2, 0, VAL);		\
+	READ_WB_REG_CASE(OP2, 1, VAL);		\
+	READ_WB_REG_CASE(OP2, 2, VAL);		\
+	READ_WB_REG_CASE(OP2, 3, VAL);		\
+	READ_WB_REG_CASE(OP2, 4, VAL);		\
+	READ_WB_REG_CASE(OP2, 5, VAL);		\
+	READ_WB_REG_CASE(OP2, 6, VAL);		\
+	READ_WB_REG_CASE(OP2, 7, VAL);		\
+	READ_WB_REG_CASE(OP2, 8, VAL);		\
+	READ_WB_REG_CASE(OP2, 9, VAL);		\
+	READ_WB_REG_CASE(OP2, 10, VAL);		\
+	READ_WB_REG_CASE(OP2, 11, VAL);		\
+	READ_WB_REG_CASE(OP2, 12, VAL);		\
+	READ_WB_REG_CASE(OP2, 13, VAL);		\
+	READ_WB_REG_CASE(OP2, 14, VAL);		\
+	READ_WB_REG_CASE(OP2, 15, VAL)
+
+#define GEN_WRITE_WB_REG_CASES(OP2, VAL)	\
+	WRITE_WB_REG_CASE(OP2, 0, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 1, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 2, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 3, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 4, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 5, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 6, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 7, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 8, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 9, VAL);		\
+	WRITE_WB_REG_CASE(OP2, 10, VAL);	\
+	WRITE_WB_REG_CASE(OP2, 11, VAL);	\
+	WRITE_WB_REG_CASE(OP2, 12, VAL);	\
+	WRITE_WB_REG_CASE(OP2, 13, VAL);	\
+	WRITE_WB_REG_CASE(OP2, 14, VAL);	\
+	WRITE_WB_REG_CASE(OP2, 15, VAL)
+
+static u32 read_wb_reg(int n)
+{
+	u32 val = 0;
+
+	switch (n) {
+	GEN_READ_WB_REG_CASES(ARM_OP2_BVR, val);
+	GEN_READ_WB_REG_CASES(ARM_OP2_BCR, val);
+	GEN_READ_WB_REG_CASES(ARM_OP2_WVR, val);
+	GEN_READ_WB_REG_CASES(ARM_OP2_WCR, val);
+	default:
+		pr_warn("attempt to read from unknown breakpoint register %d\n",
+			n);
+	}
+
+	return val;
+}
+
+static void write_wb_reg(int n, u32 val)
+{
+	switch (n) {
+	GEN_WRITE_WB_REG_CASES(ARM_OP2_BVR, val);
+	GEN_WRITE_WB_REG_CASES(ARM_OP2_BCR, val);
+	GEN_WRITE_WB_REG_CASES(ARM_OP2_WVR, val);
+	GEN_WRITE_WB_REG_CASES(ARM_OP2_WCR, val);
+	default:
+		pr_warn("attempt to write to unknown breakpoint register %d\n",
+			n);
+	}
+	isb();
+}
+
+/* Determine debug architecture. */
+static u8 get_debug_arch(void)
+{
+	u32 didr;
+
+	/* Do we implement the extended CPUID interface? */
+	if (((read_cpuid_id() >> 16) & 0xf) != 0xf) {
+		pr_warn_once("CPUID feature registers not supported. "
+			     "Assuming v6 debug is present.\n");
+		return ARM_DEBUG_ARCH_V6;
+	}
+
+	ARM_DBG_READ(c0, c0, 0, didr);
+	return (didr >> 16) & 0xf;
+}
+
+u8 arch_get_debug_arch(void)
+{
+	return debug_arch;
+}
+
+static int debug_arch_supported(void)
+{
+	u8 arch = get_debug_arch();
+
+	/* We don't support the memory-mapped interface. */
+	return (arch >= ARM_DEBUG_ARCH_V6 && arch <= ARM_DEBUG_ARCH_V7_ECP14) ||
+		arch >= ARM_DEBUG_ARCH_V7_1;
+}
+
+/* Can we determine the watchpoint access type from the fsr? */
+static int debug_exception_updates_fsr(void)
+{
+	return get_debug_arch() >= ARM_DEBUG_ARCH_V8;
+}
+
+/* Determine number of WRP registers available. */
+static int get_num_wrp_resources(void)
+{
+	u32 didr;
+	ARM_DBG_READ(c0, c0, 0, didr);
+	return ((didr >> 28) & 0xf) + 1;
+}
+
+/* Determine number of BRP registers available. */
+static int get_num_brp_resources(void)
+{
+	u32 didr;
+	ARM_DBG_READ(c0, c0, 0, didr);
+	return ((didr >> 24) & 0xf) 

@@ -1,0 +1,54 @@
+Linux voltage and current regulator framework
+=============================================
+
+About
+=====
+
+This framework is designed to provide a standard kernel interface to control
+voltage and current regulators.
+
+The intention is to allow systems to dynamically control regulator power output
+in order to save power and prolong battery life. This applies to both voltage
+regulators (where voltage output is controllable) and current sinks (where
+current limit is controllable).
+
+(C) 2008  Wolfson Microelectronics PLC.
+Author: Liam Girdwood <lrg@slimlogic.co.uk>
+
+
+Nomenclature
+============
+
+Some terms used in this document:-
+
+  o Regulator    - Electronic device that supplies power to other devices.
+                   Most regulators can enable and disable their output whilst
+                   some can control their output voltage and or current.
+
+                   Input Voltage -> Regulator -> Output Voltage
+
+
+  o PMIC         - Power Management IC. An IC that contains numerous regulators
+                   and often contains other subsystems.
+
+
+  o Consumer     - Electronic device that is supplied power by a regulator.
+                   Consumers can be classified into two types:-
+
+                   Static: consumer does not change its supply voltage or
+                   current limit. It only needs to enable or disable its
+                   power supply. Its supply voltage is set by the hardware,
+                   bootloader, firmware or kernel board initialisation code.
+
+                   Dynamic: consumer needs to change its supply voltage or
+                   current limit to meet operation demands.
+
+
+  o Power Domain - Electronic circuit that is supplied its input power by the
+                   output power of a regulator, switch or by another power
+                   domain.
+
+                   The supply regulator may be behind a switch(s). i.e.
+
+                   Regulator -+-> Switch-1 -+-> Switch-2 --> [Consumer A]
+     

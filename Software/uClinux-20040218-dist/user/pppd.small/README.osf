@@ -1,0 +1,29 @@
+This version of the PPP driver, pppd, is not included in this archive
+for copyright restrictions.
+
+You may find it, along with the remainder of the full package, on most
+of the other archive sites for pppd. This includes, but not limited
+to, the following locations.
+
+dcssoft.anu.edu.au
+merit.edu
+ftp.uu.net
+
+I regret having to produce a package which is not the complete
+item. However, I felt that it was better to produce a package which did
+not have the possibility of copyright violations for the producers of
+Linux CDROMs than to have the full package but not be able to include
+them on CDROM packages.
+
+Besides, this is the Linux port of the code. Even if there was not a
+copyright problem, I doubt that I would have wanted to include the other
+platforms for the reason that I do not support them. This does not mean
+that they are not supported. It only means that __I__ do not support them.
+
+If you wish support for AIX or SUNOS/SOLARIS then get the full package
+and contact the author's for the specific platforms.
+
+Thank you for your understanding.
+
+-- 
+Al Longyear                       longyear@netcom.com

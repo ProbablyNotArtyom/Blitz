@@ -1,0 +1,50 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Device Tree Include file for Marvell Armada XP family SoC
+ *
+ * Copyright (C) 2012 Marvell
+ *
+ * Lior Amsalem <alior@marvell.com>
+ * Gregory CLEMENT <gregory.clement@free-electrons.com>
+ * Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+ * Ben Dooks <ben.dooks@codethink.co.uk>
+ *
+ * Contains definitions specific to the Armada XP SoC that are not
+ * common to all Armada SoCs.
+ */
+
+#include "armada-370-xp.dtsi"
+
+/ {
+	#address-cells = <2>;
+	#size-cells = <2>;
+
+	model = "Marvell Armada XP family SoC";
+	compatible = "marvell,armadaxp", "marvell,armada-370-xp";
+
+	aliases {
+		serial2 = &uart2;
+		serial3 = &uart3;
+	};
+
+	soc {
+		compatible = "marvell,armadaxp-mbus", "simple-bus";
+
+		bootrom {
+			compatible = "marvell,bootrom";
+			reg = <MBUS_ID(0x01, 0x1d) 0 0x100000>;
+		};
+
+		internal-regs {
+			sdramc@1400 {
+				compatible = "marvell,armada-xp-sdram-controller";
+				reg = <0x1400 0x500>;
+			};
+
+			L2: l2-cache@8000 {
+				compatible = "marvell,aurora-system-cache";
+				reg = <0x08000 0x1000>;
+				cache-id-part = <0x100>;
+				cache-level = <2>;
+				cache-unified;
+				wt-overri

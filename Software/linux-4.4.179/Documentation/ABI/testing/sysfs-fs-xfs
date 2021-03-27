@@ -1,0 +1,50 @@
+                 Chelsio N210 10Gb Ethernet Network Controller
+
+                         Driver Release Notes for Linux
+
+                                 Version 2.1.1
+
+                                 June 20, 2005
+
+CONTENTS
+========
+ INTRODUCTION
+ FEATURES
+ PERFORMANCE
+ DRIVER MESSAGES
+ KNOWN ISSUES
+ SUPPORT
+
+
+INTRODUCTION
+============
+
+ This document describes the Linux driver for Chelsio 10Gb Ethernet Network
+ Controller. This driver supports the Chelsio N210 NIC and is backward
+ compatible with the Chelsio N110 model 10Gb NICs.
+
+
+FEATURES
+========
+
+ Adaptive Interrupts (adaptive-rx)
+ ---------------------------------
+
+  This feature provides an adaptive algorithm that adjusts the interrupt
+  coalescing parameters, allowing the driver to dynamically adapt the latency
+  settings to achieve the highest performance during various types of network
+  load.
+
+  The interface used to control this feature is ethtool. Please see the
+  ethtool manpage for additional usage information.
+
+  By default, adaptive-rx is disabled.
+  To enable adaptive-rx:
+
+      ethtool -C <interface> adaptive-rx on
+
+  To disable adaptive-rx, use ethtool:
+
+      ethtool -C <interface> adaptive-rx off
+
+  After dis

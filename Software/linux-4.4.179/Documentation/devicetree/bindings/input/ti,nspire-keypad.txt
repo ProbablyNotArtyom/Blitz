@@ -1,0 +1,83 @@
+/*
+ * pdu001.dts
+ *
+ * EETS GmbH PDU001 board device tree file
+ *
+ * Copyright (C) 2018 EETS GmbH - http://www.eets.ch/
+ *
+ * Copyright (C) 2011, Texas Instruments, Incorporated - http://www.ti.com/
+ *
+ * SPDX-License-Identifier:  GPL-2.0+
+ */
+
+/dts-v1/;
+
+#include "am33xx.dtsi"
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/leds/leds-pca9532.h>
+
+/ {
+	model = "EETS,PDU001";
+	compatible = "ti,am33xx";
+
+	chosen {
+		stdout-path = &uart3;
+	};
+
+	cpus {
+		cpu@0 {
+			cpu0-supply = <&vdd1_reg>;
+		};
+	};
+
+	memory {
+		device_type = "memory";
+		reg = <0x80000000 0x10000000>; /* 256 MB */
+	};
+
+	vbat: fixedregulator@0 {
+		compatible = "regulator-fixed";
+		regulator-name = "vbat";
+		regulator-min-microvolt = <3600000>;
+		regulator-max-microvolt = <3600000>;
+		regulator-boot-on;
+	};
+
+	lis3_reg: fixedregulator@1 {
+		compatible = "regulator-fixed";
+		regulator-name = "lis3_reg";
+		regulator-boot-on;
+	};
+
+	panel {
+		compatible = "ti,tilcdc,panel";
+		status = "okay";
+		pinctrl-names = "default";
+		pinctrl-0 = <&lcd_pins_s0>;
+		panel-info {
+			ac-bias           = <255>;
+			ac-bias-intrpt    = <0>;
+			dma-burst-sz      = <16>;
+			bpp               = <16>;
+			fdd               = <0x80>;
+			sync-edge         = <0>;
+			sync-ctrl         = <1>;
+			raster-order      = <0>;
+			fifo-th           = <0>;
+		};
+
+		display-timings {
+			240x320p16 {
+				clock-frequency = <6500000>;
+				hactive = <240>;
+				vactive = <320>;
+				hfront-porch = <6>;
+				hback-porch = <6>;
+				hsync-len = <1>;
+				vback-porch = <6>;
+				vfront-porch = <6>;
+				vsync-len = <1>;
+				hsync-active = <0>;
+				vsync-active = <0>;
+				pixelclk-active = <1>;
+				de-a

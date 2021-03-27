@@ -1,0 +1,8 @@
+/*
+ * at91-sama5d4ek.dts - Device Tree file for SAMA5D4 Evaluation Kit
+ *
+ *  Copyright (C) 2014 Atmel,
+ *                2014 Nicolas Ferre <nicolas.ferre@atmel.com>
+ *
+ * This file is dual-licensed: you can use it either under the terms
+ * of the GPL or the X11 licens

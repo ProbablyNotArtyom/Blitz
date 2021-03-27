@@ -1,0 +1,43 @@
+/*
+ * Device tree for LEGO MINDSTORMS EV3
+ *
+ * Copyright (C) 2017 David Lechner <david@lechnology.com>
+ *
+ * This program is free software; you can redistribute  it and/or modify it
+ * under  the terms of  the GNU General  Public License as published by the
+ * Free Software Foundation, version 2.
+ */
+
+/dts-v1/;
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/linux-event-codes.h>
+#include <dt-bindings/pwm/pwm.h>
+
+#include "da850.dtsi"
+
+/ {
+	compatible = "lego,ev3", "ti,da850";
+	model = "LEGO MINDSTORMS EV3";
+
+	aliases {
+		serial1 = &serial1;
+	};
+
+	memory@c0000000 {
+		device_type = "memory";
+		reg = <0xc0000000 0x04000000>;
+	};
+
+	/*
+	 * The buttons on the EV3 are mapped to keyboard keys.
+	 */
+	gpio_keys {
+		compatible = "gpio-keys";
+		label = "EV3 Brick Buttons";
+		pinctrl-names = "default";
+		pinctrl-0 = <&button_bias>;
+
+		center {
+			label = "Center";
+			linux,code = <KEY_ENTER>;
+			gpios 

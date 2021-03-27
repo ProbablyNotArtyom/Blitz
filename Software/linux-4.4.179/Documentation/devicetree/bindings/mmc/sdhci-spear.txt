@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Broadcom BCM470X / BCM5301X ARM platform code.
+ * DTS for Netgear R7000
+ *
+ * Copyright (C) 2015 Rafał Miłecki <zajec5@gmail.com>
+ */
+
+/dts-v1/;
+
+#include "bcm4709.dtsi"
+#include "bcm5301x-nand-cs0-bch8.dtsi"
+
+/ {
+	compatible = "netgear,r7000", "brcm,bcm4709", "brcm,bcm4708";
+	model = "Netgear R7000";
+
+	chosen {
+		bootargs = "console=tt

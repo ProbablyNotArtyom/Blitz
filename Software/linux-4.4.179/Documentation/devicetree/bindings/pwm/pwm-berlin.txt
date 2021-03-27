@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: GPL-2.0
+//
+// Copyright 2013 Freescale Semiconductor, Inc.
+
+#include <dt-bindings/interrupt-controller/irq.h>
+#include "imx6q-pinfunc.h"
+#include "imx6qdl.dtsi"
+
+/ {
+	aliases {
+		ipu1 = &ipu2;
+		spi4 = &ecspi5;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu0: cpu@0 {
+			compatible = "arm,cortex-a9";
+			device_type = "cpu";
+			reg = <0>;
+			next-level-cache = <&L2>;
+			operating-points = <
+			

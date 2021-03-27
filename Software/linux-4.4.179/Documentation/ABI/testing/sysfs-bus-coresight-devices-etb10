@@ -1,0 +1,43 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_MODULATOR:
+
+********************************************
+ioctl VIDIOC_G_MODULATOR, VIDIOC_S_MODULATOR
+********************************************
+
+Name
+====
+
+VIDIOC_G_MODULATOR - VIDIOC_S_MODULATOR - Get or set modulator attributes
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_G_MODULATOR, struct v4l2_modulator *argp )
+    :name: VIDIOC_G_MODULATOR
+
+.. c:function:: int ioctl( int fd, VIDIOC_S_MODULATOR, const struct v4l2_modulator *argp )
+    :name: VIDIOC_S_MODULATOR
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_modulator`.
+
+
+Description
+===========
+
+To query the attributes of a modulator applications initialize the
+``index`` field and zero out the ``reserved`` array of a struct
+:c:type:`v4l2_modulator` and call the
+:ref:`VIDIOC_G_MODULATOR <VIDIOC_G_MODULATOR>` ioctl with a pointer to this structure. Drivers
+fill the rest of the structure or return an ``EINVAL`` error code when the
+index is out of bounds. T

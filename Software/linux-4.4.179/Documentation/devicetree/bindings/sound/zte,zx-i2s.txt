@@ -1,0 +1,55 @@
+/*
+ * Device Tree Source for OMAP2430 clock data
+ *
+ * Copyright (C) 2014 Texas Instruments, Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&scm_clocks {
+	mcbsp3_mux_fck: mcbsp3_mux_fck@78 {
+		#clock-cells = <0>;
+		compatible = "ti,composite-mux-clock";
+		clocks = <&func_96m_ck>, <&mcbsp_clks>;
+		reg = <0x78>;
+	};
+
+	mcbsp3_fck: mcbsp3_fck {
+		#clock-cells = <0>;
+		compatible = "ti,composite-clock";
+		clocks = <&mcbsp3_gate_fck>, <&mcbsp3_mux_fck>;
+	};
+
+	mcbsp4_mux_fck: mcbsp4_mux_fck@78 {
+		#clock-cells = <0>;
+		compatible = "ti,composite-mux-clock";
+		clocks = <&func_96m_ck>, <&mcbsp_clks>;
+		ti,bit-shift = <2>;
+		reg = <0x78>;
+	};
+
+	mcbsp4_fck: mcbsp4_fck {
+		#clock-cells = <0>;
+		compatible = "ti,composite-clock";
+		clocks = <&mcbsp4_gate_fck>, <&mcbsp4_mux_fck>;
+	};
+
+	mcbsp5_mux_fck: mcbsp5_mux_fck@78 {
+		#clock-cells = <0>;
+		compatible = "ti,composite-mux-clock";
+		clocks = <&func_96m_ck>, <&mcbsp_clks>;
+		ti,bit-shift = <4>;
+		reg = <0x78>;
+	};
+
+	mcbsp5_fck: mcbsp5_fck {
+		#clock-cells = <0>;
+		compatible = "ti,composite-clock";
+		clocks = <&mcbsp5_gate_fck>, <&mcbsp5_mux_fck>;
+	};
+};
+
+&prcm_clocks {
+	iva2_1_gate_ick: iva2_1_ga

@@ -1,0 +1,25 @@
+=======================
+ASoC Codec Class Driver
+=======================
+
+The codec class driver is generic and hardware independent code that configures
+the codec, FM, MODEM, BT or external DSP to provide audio capture and playback.
+It should contain no code that is specific to the target platform or machine.
+All platform and machine specific code should be added to the platform and
+machine drivers respectively.
+
+Each codec class driver *must* provide the following features:-
+
+1. Codec DAI and PCM configuration
+2. Codec control IO - using RegMap API
+3. Mixers and audio controls
+4. Codec audio operations
+5. DAPM description.
+6. DAPM event handler.
+
+Optionally, codec drivers can also provide:-
+
+7. DAC Digital mute control.
+
+Its probably best to use this guide in conjunction with the existing codec
+driver code in sound/soc/c

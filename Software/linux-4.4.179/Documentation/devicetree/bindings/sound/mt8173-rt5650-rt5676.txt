@@ -1,0 +1,19 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Device Tree file for HP t5325 Thin Client"
+ *
+ * Copyright (C) 2014
+ *
+ * Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+ * Andrew Lunn <andrew@lunn.ch>
+ *
+*/
+
+/dts-v1/;
+
+#include "kirkwood.dtsi"
+#include "kirkwood-6281.dtsi"
+
+/ {
+	model = "HP t5325 Thin Client";
+	compatible = "hp,t5325", "marvell,kirkwood-88f6281", "ma

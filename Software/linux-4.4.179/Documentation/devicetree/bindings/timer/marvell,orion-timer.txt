@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Suppport for CompuLab SBC-T3530 with CM-T3530
+ */
+
+#include "omap3-cm-t3530.dts"
+#include "omap3-sb-t35.dtsi"
+
+/ {
+	model = "CompuLab SBC-T3530 with CM-T3530";
+	compatible = "compulab,omap3-sbc-t3530", "compulab,omap3-cm-t3530", "ti,omap34xx", "ti,omap3";
+
+	aliases {
+		display0 = &dvi0;
+		display1 = &tv0;
+	};
+};
+
+&omap3_pmx_core {
+	pinctrl-names = "default";
+	pinctrl-0 = <&sb_t35_usb_hub_pins>;
+
+	sb_t35_usb_hub_pins: pinmux_sb_t35_usb_hub_pins {
+		pinctrl-single,pins = <
+			OMAP3_COR

@@ -1,0 +1,62 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+
+#include <dt-bindings/input/input.h>
+#include "tegra114.dtsi"
+
+/ {
+	model = "NVIDIA SHIELD";
+	compatible = "nvidia,roth", "nvidia,tegra114";
+
+	chosen {
+		/* SHIELD's bootloader's arguments need to be overridden */
+		bootargs = "console=ttyS0,115200n8 console=tty1 gpt fbcon=rotate:1";
+		/* SHIELD's bootloader will place initrd at this address */
+		linux,initrd-start = <0x82000000>;
+		linux,initrd-end = <0x82800000>;
+	};
+
+	aliases {
+		serial0 = &uartd;
+	};
+
+	firmware {
+		trusted-foundations {
+			compatible = "tlm,trusted-foundations";
+			tlm,version-major = <2>;
+			tlm,version-minor = <8>;
+		};
+	};
+
+	memory@80000000 {
+		/* memory >= 0x79600000 is reserved for firmware usage */
+		reg = <0x80000000 0x79600000>;
+	};
+
+	host1x@50000000 {
+		dsi@54300000 {
+			status = "okay";
+
+			vdd-supply = <&vdd_1v2_ap>;
+
+			panel@0 {
+				compatible = "lg,lh500wx1-sd03";
+				reg = <0>;
+
+				power-supply = <&vdd_lcd>;
+				backlight = <&backlight>;
+			};
+		};
+	};
+
+	pinmux@70000868 {
+		pinctrl-names = "default";
+		pinctrl-0 = <&state_default>;
+
+		state_default: pinmux {
+			clk1_out_pw4 {
+				nvidia,pins = "clk1_out_pw4";
+				nvidia,function = "extperiph1";
+				nvidia,pull = <TEGRA_PIN_PULL_NONE>;
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+				nvidia,e

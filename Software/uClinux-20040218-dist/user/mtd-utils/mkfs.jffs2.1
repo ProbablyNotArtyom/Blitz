@@ -1,0 +1,118 @@
+.TH MKFS.JFFS2 1
+.SH NAME
+mkfs.jffs2 \- Create a JFFS2 filesystem image from directory
+.SH SYNOPSIS
+.B mkfs.jffs
+[
+.B -b,--big-endian
+.B -l,--little-endian
+]
+[
+.B -e,--eraseblock=SIZE
+]
+[
+.B -s,--pagesize=SIZE
+]
+[
+.B -p,--pad[=SIZE]
+]
+[
+.B \-h,\-\-help
+]
+[
+.B -v,--version
+]
+[
+.B -r,--root
+.I directory
+]
+[
+.B -o,--output
+.I image.jffs2
+]
+.SH DESCRIPTION
+The program
+.B mkfs.jffs2
+creates a JFFS2 (Second Journaling Flash Filesystem) filesystem
+image and writes the resulting image to the file specified by
+the option
+.B -o
+or to the standard output by default.  The filesystem image is
+created using the files and directories contained in the directory
+specified by the option
+.B -r
+or the present directory, if the
+.B -r
+option is not specified.
+
+Files to be placed into the filesystem image are compressed
+using the
+.B zlib
+compression library.
+
+Filesystems are created with the same endianness as the host,
+unless the
+.B -b
+or
+.B -l
+options are specified.  As of 2001-04-21, the JFFS2 driver in the
+Linux kernel only supported images having the same endianness as
+the CPU.
+
+It is unlikely that JFFS2 images are useful except in conjuction
+with the MTD (Memory Technology Device) drivers in the Linux
+kernel, since the JFFS2 filesystem driver in the kernel requires
+MTD devices.
+.SH OPTIONS
+Options that take SIZE arguments can be specified as either
+decimal (e.g., 65536), octal (0200000), or hexidecimal (0x1000).
+.TP
+.B -b, --big-endian
+Create a big-endian JFFS2 image.  Default is to make an image
+with the same endianness as the host.
+.TP
+.B -e, --eraseblock=SIZE
+Use erase block size SIZE.  The default is 64 kB.  If you use
+a erase block size different than the erase block size of the
+target MTD device, JFFS2 may not perform optimally.
+.TP
+.B -h, --help
+Display help text.
+.TP
+.B -l, --little-endian
+Create a little-endian JFFS2 image.  Default is to make an image
+with the same endianness as the host.
+.TP
+.B -o, --output=FILE
+Write JFFS2 image to file FILE.  Default is the standard output.
+.TP
+.B -p, --pad[=SIZE]
+Pad output to SIZE bytes with 0xFF.  If SIZE is not specified,
+the output is padded to the end of the final erase block.
+.TP
+.B -r, -d, --root=DIR
+Build filesystem from directory DIR.  The default is the current
+directory.
+.TP
+.B -s, --pagesize=SIZE
+Use page size SIZE.  The default is 4 kB.  This size is the
+maximum size of a data node.
+.TP
+.B -v, --version
+Display version information.
+.SH BUGS
+JFFS2 limits device major and minor numbers to 8 bits each.  Some
+consider this a bug.
+
+.B mkfs.jffs2
+does not properly handle hard links in the input directory structure.
+Currently, hard linked files will be expanded to multiple identical
+files in the output image.
+.SH AUTHORS
+David Woodhouse
+.br
+Manual page written by David Schleef <ds@schleef.org>
+.SH SEE ALSO
+.BR mkfs (8),
+.BR mkfs.jffs (1),
+.BR fakeroot (1)

@@ -1,0 +1,37 @@
+=========================
+ALSA Compress-Offload API
+=========================
+
+Pierre-Louis.Bossart <pierre-louis.bossart@linux.intel.com>
+
+Vinod Koul <vinod.koul@linux.intel.com>
+
+
+Overview
+========
+Since its early days, the ALSA API was defined with PCM support or
+constant bitrates payloads such as IEC61937 in mind. Arguments and
+returned values in frames are the norm, making it a challenge to
+extend the existing API to compressed data streams.
+
+In recent years, audio digital signal processors (DSP) were integrated
+in system-on-chip designs, and DSPs are also integrated in audio
+codecs. Processing compressed data on such DSPs results in a dramatic
+reduction of power consumption compared to host-based
+processing. Support for such hardware has not been very good in Linux,
+mostly because of a lack of a generic API available in the mainline
+kernel.
+
+Rather than requiring a compatibility break with an API change of the
+ALSA PCM interface, a new 'Compressed Data' API is introduced to
+provide a control and data-streaming interface for audio DSPs.
+
+The design of this API was inspired by the 2-year experience with the
+Intel Moorestown SOC, with many corrections required to upstream the
+API in the mainline kernel instead of the staging tree and make it
+usable by others.
+
+
+Requirements
+============
+The main requirements are:

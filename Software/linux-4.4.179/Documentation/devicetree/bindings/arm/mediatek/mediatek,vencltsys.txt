@@ -1,0 +1,23 @@
+Userspace communication protocol over connector [1].
+
+
+Message types.
+=============
+
+There are three types of messages between w1 core and userspace:
+1. Events. They are generated each time a new master or slave device
+	is found either due to automatic or requested search.
+2. Userspace commands.
+3. Replies to userspace commands.
+
+
+Protocol.
+========
+
+[struct cn_msg] - connector header.
+	Its length field is equal to size of the attached data
+[struct w1_netlink_msg] - w1 netlink header.
+	__u8 type 	- message type.
+			W1_LIST_MASTERS
+				list current bus masters
+			W1_SLAVE_ADD/W1_SLAVE

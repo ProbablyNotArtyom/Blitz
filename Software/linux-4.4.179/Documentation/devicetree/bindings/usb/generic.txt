@@ -1,0 +1,68 @@
+/*
+ * Copyright (C) 2011 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#include <dt-bindings/bus/ti-sysc.h>
+#include <dt-bindings/clock/omap4.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/pinctrl/omap.h>
+#include <dt-bindings/clock/omap4.h>
+
+/ {
+	compatible = "ti,omap4430", "ti,omap4";
+	interrupt-parent = <&wakeupgen>;
+	#address-cells = <1>;
+	#size-cells = <1>;
+	chosen { };
+
+	aliases {
+		i2c0 = &i2c1;
+		i2c1 = &i2c2;
+		i2c2 = &i2c3;
+		i2c3 = &i2c4;
+		serial0 = &uart1;
+		serial1 = &uart2;
+		serial2 = &uart3;
+		serial3 = &uart4;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu@0 {
+			compatible = "arm,cortex-a9";
+			device_type = "cpu";
+			next-level-cache = <&L2>;
+			reg = <0x0>;
+
+			clocks = <&dpll_mpu_ck>;
+			clock-names = "cpu";
+
+			clock-latency = <300000>; /* From omap-cpufreq driver */
+		};
+		cpu@1 {
+			compatible = "arm,cortex-a9";
+			device_type = "cpu";
+			next-level-cache = <&L2>;
+			reg = <0x1>;
+		};
+	};
+
+	/*
+	 * Note that 4430 needs cross trigger interface (CTI) supported
+	 * before we can configure the interrupts. This means sampling
+	 * events are not supported for pmu. Note that 4460 does not use
+	 * CTI, see also 4460.dtsi.
+	 */
+	pmu {
+		compatible = "arm,cortex-a9-pmu";
+		ti,hwmods = "debugss";
+	};
+
+	

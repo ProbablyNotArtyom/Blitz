@@ -1,0 +1,24 @@
+.. _numa:
+
+Started Nov 1999 by Kanoj Sarcar <kanoj@sgi.com>
+
+=============
+What is NUMA?
+=============
+
+This question can be answered from a couple of perspectives:  the
+hardware view and the Linux software view.
+
+From the hardware perspective, a NUMA system is a computer platform that
+comprises multiple components or assemblies each of which may contain 0
+or more CPUs, local memory, and/or IO buses.  For brevity and to
+disambiguate the hardware view of these physical components/assemblies
+from the software abstraction thereof, we'll call the components/assemblies
+'cells' in this document.
+
+Each of the 'cells' may be viewed as an SMP [symmetric multi-processor] subset
+of the system--although some components necessary for a stand-alone SMP system
+may not be populated on any given cell.   The cells of the NUMA system are
+connected together with some sort of system interconnect--e.g., a crossbar or
+point-to-point link are common types of NUMA system interconnects.  Both of
+these types of interconnects can be aggregated to create NUMA pla

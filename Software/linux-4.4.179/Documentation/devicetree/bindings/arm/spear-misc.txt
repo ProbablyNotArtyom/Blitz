@@ -1,0 +1,9 @@
+Linux KVM Hypercall:
+===================
+X86:
+ KVM Hypercalls have a three-byte sequence of either the vmcall or the vmmcall
+ instruction. The hypervisor can replace it with instructions that are
+ guaranteed to be supported.
+
+ Up to four arguments may be passed in rbx, rcx, rdx, and rsi respectively.
+ The h

@@ -1,0 +1,30 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_MCE_H
+#define __ALPHA_MCE_H
+
+/*
+ * This is the logout header that should be common to all platforms
+ * (assuming they are running OSF/1 PALcode, I guess).
+ */
+struct el_common {
+	unsigned int	size;		/* size in bytes of logout area */
+	unsigned int	sbz1	: 30;	/* should be zero */
+	unsigned int	err2	:  1;	/* second error */
+	unsigned int	retry	:  1;	/* retry flag */
+	unsigned int	proc_offset;	/* processor-specific offset */
+	unsigned int	sys_offset;	/* system-specific offset */
+	unsigned int	code;		/* machine check code */
+	unsigned int	frame_rev;	/* frame revision */
+};
+
+/* Machine Check Frame for uncorrectable errors (Large format)
+ *      --- This is used to log uncorrectable errors such as
+ *          double bit ECC errors.
+ *      --- These errors are detected by both processor and systems.
+ */
+struct el_common_EV5_uncorrectable_mcheck {
+        unsigned long   shadow[8];        /* Shadow reg. 8-14, 25           */
+        unsigned long   paltemp[24];      /* PAL TEMP REGS.                 */
+        unsigned long   exc_addr;         /* Address of excepting instruction*/
+        unsigned long   exc_sum;          /* Summary of arithmetic traps.   */
+        unsigned

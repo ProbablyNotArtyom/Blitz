@@ -1,0 +1,44 @@
+===================================
+SocketCAN - Controller Area Network
+===================================
+
+Overview / What is SocketCAN
+============================
+
+The socketcan package is an implementation of CAN protocols
+(Controller Area Network) for Linux.  CAN is a networking technology
+which has widespread use in automation, embedded devices, and
+automotive fields.  While there have been other CAN implementations
+for Linux based on character devices, SocketCAN uses the Berkeley
+socket API, the Linux network stack and implements the CAN device
+drivers as network interfaces.  The CAN socket API has been designed
+as similar as possible to the TCP/IP protocols to allow programmers,
+familiar with network programming, to easily learn how to use CAN
+sockets.
+
+
+.. _socketcan-motivation:
+
+Motivation / Why Using the Socket API
+=====================================
+
+There have been CAN implementations for Linux before SocketCAN so the
+question arises, why we have started another project.  Most existing
+implementations come as a device driver for some CAN hardware, they
+are based on character devices and provide comparatively little
+functionality.  Usually, there is only a hardware-specific device
+driver which provides a character device interface to send and
+receive raw CAN frames, directly to/from the controller hardware.
+Queueing of frames and higher-level transport protocols like ISO-TP
+have to be implemented in user space applications.  Also, most
+character-device implementations support only one single process to
+open the device at a time, similar to a serial interface.  Exchanging
+the CAN controller requires employment of another device driver and
+often the need for adaption of large parts of the application to the
+new driver's API.
+
+SocketCAN was designed to overcome all of these limitations.  A new
+protocol family has been implemented which provides a socket interface
+to user space applications and which builds upon the Linux network
+layer, enabling use all of the provided queueing functionality.  A device
+driver for CA

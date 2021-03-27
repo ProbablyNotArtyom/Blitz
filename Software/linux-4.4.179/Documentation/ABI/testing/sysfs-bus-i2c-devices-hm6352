@@ -1,0 +1,37 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_QUERYBUF:
+
+*********************
+ioctl VIDIOC_QUERYBUF
+*********************
+
+Name
+====
+
+VIDIOC_QUERYBUF - Query the status of a buffer
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_QUERYBUF, struct v4l2_buffer *argp )
+    :name: VIDIOC_QUERYBUF
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_buffer`.
+
+
+Description
+===========
+
+This ioctl is part of the :ref:`streaming <mmap>` I/O method. It can
+be used to query the status of a buffer at any time after buffers have
+been allocated wit

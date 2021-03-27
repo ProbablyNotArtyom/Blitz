@@ -1,0 +1,18 @@
+/*
+ * Copyright (C) 2016 Jamie Lentin <jm@lentin.co.uk>
+ *
+ * This file is licensed under the terms of the GNU General Public
+ * License version 2. This program is licensed "as is" without any
+ * warranty of any kind, whether express or implied.
+ */
+
+#include "orion5x.dtsi"
+
+/ {
+	compatible = "marvell,orion5x-88f5181", "marvell,orion5x";
+
+	soc {
+		compatible = "marvell,orion5x-88f5181-mbus", "simple-bus";
+
+		internal-regs {
+			pinctrl: 

@@ -1,0 +1,29 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+
+#include "kirkwood.dtsi"
+#include "kirkwood-6281.dtsi"
+
+/ {
+	model = "LaCie CloudBox";
+	compatible = "lacie,cloudbox", "marvell,kirkwood-88f6702", "marvell,kirkwood";
+
+	memory {
+		device_type = "memory";
+		reg = <0x00000000 0x10000000>;
+	};
+
+	chosen {
+		bootargs = "console=ttyS0,115200n8";
+		stdout-path = &uart0;
+	};
+
+	ocp@f1000000 {
+		pinctrl: pin-controller@10000 {
+			pmx_cloudbox_sata0: pmx-cloudbox-sata0 {
+				marvell,pins = "mpp15";
+				marvell,function = "sata0";
+			};
+		};
+
+		serial@12000 {

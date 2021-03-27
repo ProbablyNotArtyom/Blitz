@@ -1,0 +1,59 @@
+NOTE:
+This is a version of Documentation/memory-barriers.txt translated into Korean.
+This document is maintained by SeongJae Park <sj38.park@gmail.com>.
+If you find any difference between this document and the original file or
+a problem with the translation, please contact the maintainer of this file.
+
+Please also note that the purpose of this file is to be easier to
+read for non English (read: Korean) speakers and is not intended as
+a fork.  So if you have any comments or updates for this file please
+update the original English file first.  The English version is
+definitive, and readers should look there if they have any doubt.
+
+===================================
+이 문서는
+Documentation/memory-barriers.txt
+의 한글 번역입니다.
+
+역자： 박성재 <sj38.park@gmail.com>
+===================================
+
+
+			 =========================
+			 리눅스 커널 메모리 배리어
+			 =========================
+
+저자: David Howells <dhowells@redhat.com>
+      Paul E. McKenney <paulmck@linux.vnet.ibm.com>
+      Will Deacon <will.deacon@arm.com>
+      Peter Zijlstra <peterz@infradead.org>
+
+========
+면책조항
+========
+
+이 문서는 명세서가 아닙니다; 이 문서는 완벽하지 않은데, 간결성을 위해 의도된
+부분도 있고, 의도하진 않았지만 사람에 의해 쓰였다보니 불완전한 부분도 있습니다.
+이 문서는 리눅스에서 제공하는 다양한 메모리 배리어들을 사용하기 위한
+안내서입니다만, 뭔가 이상하다 싶으면 (그런게 많을 겁니다) 질문을 부탁드립니다.
+일부 이상한 점들은 공식적인 메모리 일관성 모델과 tools/memory-model/ 에 있는
+관련 문서를 참고해서 해결될 수 있을 겁니다.  그러나, 이 메모리 모델조차도 그
+관리자들의 의견의 집합으로 봐야지, 절대 옳은 예언자로 신봉해선 안될 겁니다.
+
+다시 말하지만, 이 문서는 리눅스가 하드웨어에 기대하는 사항에 대한 명세서가
+아닙니다.
+
+이 문서의 목적은 두가지입니다:
+
+ (1) 어떤 특정 배리어에 대해 기대할 수 있는 최소한의 기능을 명세하기 위해서,
+     그리고
+
+ (2) 사용 가능한 배리어들에 대해 어떻게 사용해야 하는지에 대한 안내를 제공하기
+     위해서.
+
+어떤 아키텍쳐는 특정한 배리어들에 대해서는 여기서 이야기하는 최소한의
+요구사항들보다 많은 기능을 제공할 수도 있습니다만, 여기서 이야기하는
+요구사항들을 충족하지 않는 아키텍쳐가 있다면 그 아키텍쳐가 잘못된 것이란 점을
+알아두시기 바랍니다.
+
+또한, 특정 아키�

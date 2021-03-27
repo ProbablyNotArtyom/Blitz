@@ -1,0 +1,37 @@
+This directorty holds a variety of utilities for creating filesystems,
+testing flash device integrity and other fun stuff. In order to compile
+these, the contents of this directory must reside in a directory off of
+the root Linux kernel tree. There are two ways to accomplish this:
+
+1) Create a symbolic link in the root of your kernel tree:
+
+       ln -s utils <path-to-mtd-utils-directory>
+
+2) Create a physical copy of the directory:
+
+       cp -a utils <path-of-kernel-tree>
+
+After you have done one of the above, go into the 'utils' directory
+and simply type 'make' all of the utilities should build for you. If
+you wish to cross-compile these utilities, you should only have to
+set the environment variable 'CC' to the path/name of your GCC cross-
+compiler.
+
+Hope this helps.
+
+-Steve (sjhill@cotw.com)
+
+There is now an additional compile-method available. Using automake/autoconf.
+To compile the utilities the following should be sufficient:
+!!! Attention: the old Makefile will be overwritten by configure !!!
+
+automake --foreign                   the parameter is required because some
+                                     files required by the GNU coding
+				     guidelines are missing (i.e. NEWS).
+autoconf
+./configure --with-kernel=<path to kernel or mtd directory>
+make
+make install                         this installs the binaries in
+                                     /usr/local/sbin by default
+
+-Jochen (psionic@psionic.de)

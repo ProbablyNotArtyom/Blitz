@@ -1,0 +1,31 @@
+Name     PS2;
+PartNo   00;
+Date     7/27/2018;
+Revision 01;
+Designer Engineer;
+Company  notartyom;
+Assembly None;
+Location ;
+Device   g16v8a;
+
+/* *************** INPUT PINS ******************** */
+
+PIN 1 = A0;
+PIN 2 = A1;
+PIN 3 = A2;
+PIN 4 = A3;
+PIN 5 = A4;
+PIN 6 = A5;
+PIN 7 = A6;
+PIN 8 = A7;
+PIN 9 = A8;
+PIN 11 = A9;
+
+PIN 13 = CS;
+
+PIN 19 = IOR;
+PIN 18 = IOW;
+
+/*-------- LOGIC EQUATIONS --------*/
+
+!CS = !A4 & A5 & A6 & !A7 & !A8 & !A9 & (!IOW # !IOR);

@@ -1,0 +1,40 @@
+
+===============================================
+XFRM device - offloading the IPsec computations
+===============================================
+Shannon Nelson <shannon.nelson@oracle.com>
+
+
+Overview
+========
+
+IPsec is a useful feature for securing network traffic, but the
+computational cost is high: a 10Gbps link can easily be brought down
+to under 1Gbps, depending on the traffic and link configuration.
+Luckily, there are NICs that offer a hardware based IPsec offload which
+can radically increase throughput and decrease CPU utilization.  The XFRM
+Device interface allows NIC drivers to offer to the stack access to the
+hardware offload.
+
+Userland access to the offload is typically through a system such as
+libreswan or KAME/raccoon, but the iproute2 'ip xfrm' command set can
+be handy when experimenting.  An example command might look something
+like this:
+
+  ip x s add proto esp dst 14.0.0.70 src 14.0.0.52 spi 0x07 mode transport \
+     reqid 0x07 replay-window 32 \
+     aead 'rfc4106(gcm(aes))' 0x44434241343332312423222114131211f4f3f2f1 128 \
+     sel src 14.0.0.52/24 dst 14.0.0.70/24 proto tcp \
+     offload dev eth4 dir in
+
+Yes, that's ugly, but that's what shell scripts and/or libreswan are for.
+
+
+
+Callbacks to implement
+======================
+
+/* from include/linux/netdevice.h */
+struct xfrmdev_ops {
+	int	(*xdo_dev_state_add) (struct xfrm_state *x);
+	void	(*xdo_dev_state_delete) (struct xfrm_state 

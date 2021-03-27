@@ -1,0 +1,18 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_SUBDEV_ENUM_MBUS_CODE:
+
+**********************************
+ioctl VIDIOC_SUBDEV_ENUM_MBUS_CODE
+**********************************
+
+Name
+====
+
+VIDIOC_SUBDEV_ENUM_MBUS_CODE - Enumerate media bus formats
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_SUBDEV_ENUM_MBUS_CODE, struct v4l2

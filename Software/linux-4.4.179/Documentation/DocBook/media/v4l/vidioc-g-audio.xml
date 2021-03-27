@@ -1,0 +1,126 @@
+Completions - "wait for completion" barrier APIs
+================================================
+
+Introduction:
+-------------
+
+If you have one or more threads that must wait for some kernel activity
+to have reached a point or a specific state, completions can provide a
+race-free solution to this problem. Semantically they are somewhat like a
+pthread_barrier() and have similar use-cases.
+
+Completions are a code synchronization mechanism which is preferable to any
+misuse of locks/semaphores and busy-loops. Any time you think of using
+yield() or some quirky msleep(1) loop to allow something else to proceed,
+you probably want to look into using one of the wait_for_completion*()
+calls and complete() instead.
+
+The advantage of using completions is that they have a well defined, focused
+purpose which makes it very easy to see the intent of the code, but they
+also result in more efficient code as all threads can continue execution
+until the result is actually needed, and both the waiting and the signalling
+is highly efficient using low level scheduler sleep/wakeup facilities.
+
+Completions are built on top of the waitqueue and wakeup infrastructure of
+the Linux scheduler. The event the threads on the waitqueue are waiting for
+is reduced to a simple flag in 'struct completion', appropriately called "done".
+
+As completions are scheduling related, the code can be found in
+kernel/sched/completion.c.
+
+
+Usage:
+------
+
+There are three main parts to using completions:
+
+ - the initialization of the 'struct completion' synchronization object
+ - the waiting part through a call to one of the variants of wait_for_completion(),
+ - the signaling side through a call to complete() or complete_all().
+
+There are also some helper functions for checking the state of completions.
+Note that while initialization must happen first, the waiting and signaling
+part can happen in any order. I.e. it's entirely normal for a thread
+to have marked a completion as 'done' before another thread checks whether
+it has to wait for it.
+
+To use completions you need to #include <linux/completion.h> and
+create a static or dynamic variable of type 'struct completion',
+which has only two fields:
+
+	struct completion {
+		unsigned int done;
+		wait_queue_head_t wait;
+	};
+
+This provides the ->wait waitqueue to place tasks on for waiting (if any), and
+the ->done completion flag for indicating whether it's completed or not.
+
+Completions should be named to refer to the event that is being synchronized on.
+A good example is:
+
+	wait_for_completion(&early_console_added);
+
+	complete(&early_console_added);
+
+Good, intuitive naming (as always) helps code readability. Naming a completion
+'complete' is not helpful unless the purpose is super obvious...
+
+
+Initializing completions:
+-------------------------
+
+Dynamically allocated completion objects should preferably be embedded in data
+structures that are assured to be alive for the life-time of the function/driver,
+to prevent races with asynchronous complete() calls from occurring.
+
+Particular care should be taken when using the _timeout() or _killable()/_interruptible()
+variants of wait_for_completion(), as it must be assured that memory de-allocation
+does not happen until all related activities (complete() or reinit_completion())
+have taken place, even if these wait functions return prematurely due to a timeout
+or a signal triggering.
+
+Initializing of dynamically allocated completion objects is done via a call to
+init_completion():
+
+	init_completion(&dynamic_object->done);
+
+In this call we initialize the waitqueue and set ->done to 0, i.e. "not completed"
+or "not done".
+
+The re-initialization function, reinit_completion(), simply resets the
+->done field to 0 ("not done"), without touching the waitqueue.
+Callers of this function must make sure that there are no racy
+wait_for_completion() calls going on in parallel.
+
+Calling init_completion() on the same completion object twice is
+most likely a bug as it re-initializes the queue to an empty queue and
+enqueued tasks could get "lost" - use reinit_completion() in that case,
+but be aware of other races.
+
+For static declaration and initialization, macros are available.
+
+For static (or global) declarations in file scope you can use DECLARE_COMPLETION():
+
+	static DECLARE_COMPLETION(setup_done);
+	DECLARE_COMPLETION(setup_done);
+
+Note that in this case the completion is boot time (or module load time)
+initialized to 'not done' and doesn't require an init_completion() call.
+
+When a completion is declared as a local variable within a function,
+then the initialization should always use DECLARE_COMPLETION_ONSTACK()
+explicitly, not just to make lockdep happy, but also to make it clear
+that limited scope had been considered and is intentional:
+
+	DECLARE_COMPLETION_ONSTACK(setup_done)
+
+Note that when using completion objects as local variables you must be
+acutely aware of the short life time of the function stack: the function
+must not return to a calling context until all activities (such as waiting
+threads) have ceased and the completion object is completely unused.
+
+To emphasise this again: in particular when using some of the waiting API variants
+with more complex outcomes, such as the timeout or signalling (_timeout(),
+_killable() and _interruptible()) variants, the wait might complete
+premature

@@ -1,0 +1,47 @@
+/*
+ *  Copyright (C) 2011 Picochip, Jamie Iles
+ *
+ * This software is licensed under the terms of the GNU General Public
+ * License version 2, as published by the Free Software Foundation, and
+ * may be copied, distributed, and modified under those terms.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/dts-v1/;
+/include/ "picoxcell-pc3x3.dtsi"
+/ {
+	model = "Picochip PC7302 (PC3X3)";
+	compatible = "picochip,pc7302-pc3x3", "picochip,pc3x3";
+
+	memory {
+		device_type = "memory";
+		reg = <0x0 0x08000000>;
+	};
+
+	chosen {
+		stdout-path = &uart0;
+	};
+
+	clocks {
+		ref_clk: clock@10 {
+			compatible = "fixed-clock";
+			clock-outputs = "ref";
+			clock-frequency = <20000000>;
+		};
+
+		clkgate: clkgate@800a0048 {
+			clock@4 {
+				picochip,clk-no-disable;
+			};
+		};
+	};
+
+	rwid-axi {
+		ebi@50000000 {
+			nand: gpio-nand@2,0 {
+				compatible = "gpio-control-nand";
+				#address-ce

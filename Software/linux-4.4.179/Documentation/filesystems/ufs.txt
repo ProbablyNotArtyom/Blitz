@@ -1,0 +1,59 @@
+/*
+ * DTS file for SPEAr300 Evaluation Baord
+ *
+ * Copyright 2012 Viresh Kumar <vireshk@kernel.org>
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/dts-v1/;
+/include/ "spear300.dtsi"
+
+/ {
+	model = "ST SPEAr300 Evaluation Board";
+	compatible = "st,spear300-evb", "st,spear300";
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	memory {
+		reg = <0 0x40000000>;
+	};
+
+	ahb {
+		pinmux@99000000 {
+			st,pinmux-mode = <2>;
+			pinctrl-names = "default";
+			pinctrl-0 = <&state_default>;
+
+			state_default: pinmux {
+				i2c0 {
+					st,pins = "i2c0_grp";
+					st,function = "i2c0";
+				};
+				ssp0 {
+					st,pins = "ssp0_grp";
+					st,function = "ssp0";
+				};
+				mii0 {
+					st,pins = "mii0_grp";
+					st,function = "mii0";
+				};
+				uart0 {
+					st,pins = "uart0_grp";
+					st,function = "uart0";
+				};
+				clcd {
+					st,pins = "clcd_pfmode_grp";
+					st,function = "clcd";
+				};
+				sdhci {
+					st,pins = "sdhci_4bit_grp";
+					st,function = "sdhci";
+				};
+				gpio1 {
+					st,pins = "gpio1_4_to_7_gr

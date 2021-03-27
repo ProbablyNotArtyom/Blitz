@@ -1,0 +1,55 @@
+/*
+ * Copyright 2012 Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix
+ * Copyright 2012 Steffen Trumtrar <s.trumtrar@pengutronix.de>, Pengutronix
+ *
+ * The code contained herein is licensed under the GNU General Public
+ * License. You may obtain a copy of the GNU General Public License
+ * Version 2 or later at the following locations:
+ *
+ * http://www.opensource.org/licenses/gpl-license.html
+ * http://www.gnu.org/copyleft/gpl.html
+ */
+
+/dts-v1/;
+#include "imx53-tqma53.dtsi"
+
+/ {
+	model = "TQ MBa53 starter kit";
+	compatible = "tq,mba53", "tq,tqma53", "fsl,imx53";
+
+	chosen {
+		stdout-path = &uart2;
+	};
+
+	backlight {
+		compatible = "pwm-backlight";
+		pwms = <&pwm2 0 50000>;
+		brightness-levels = <0 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100>;
+		default-brightness-level = <10>;
+		enable-gpios = <&gpio7 7 0>;
+		power-supply = <&reg_backlight>;
+	};
+
+	disp1: disp1 {
+		compatible = "fsl,imx-parallel-display";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_disp1_1>;
+		interface-pix-fmt = "rgb24";
+		status = "disabled";
+
+		port {
+			display1_in: endpoint {
+				remote-endpoint = <&ipu_di1_disp1>;
+			};
+		};
+	};
+
+	regulators {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		reg_backlight: regulator@0 {
+			compatible = "regulator-fixed";
+			reg = <0>;
+			regulator-name = 

@@ -1,0 +1,15 @@
+
+LPFC Driver Release Notes:
+
+=============================================================================
+
+
+                               IMPORTANT:
+
+  Starting in the 8.0.17 release, the driver began to be targeted strictly
+  toward the upstream kernel. As such, we removed #ifdefs for older kernels
+  (pre 2.6.10). The 8.0.16 release should be used if the driver is to be
+  run on one of the older kernels.
+
+  The proposed modifications to the transport layer for FC remote ports
+  and extended attribute support is now part of the upstream

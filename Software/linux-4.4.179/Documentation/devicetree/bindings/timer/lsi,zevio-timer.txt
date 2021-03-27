@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Common support for CompuLab SB-T35 used on SBC-T3530, SBC-T3517 and SBC-T3730
+ */
+
+/ {
+	tfp410: encoder {
+		compatible = "ti,tfp410";
+
+		powerdown-gpios = <&gpio2 22 GPIO_ACTIVE_LOW>;  /* gpio_54 */
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&tfp410_pins>;
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+
+				tfp410_in: endpoint {
+					remote-endpoint = <&dpi_out>;
+				};
+			};
+
+			port@1 {
+				reg = <1>;
+
+				tfp410_out: endpoint {
+					remote-endpoint = <&dvi_connector_in>;
+				};
+			};
+		};
+	};
+
+	dvi0: dvi-connector {
+		compatible = "dvi-connector";
+		label = "dvi";
+
+		port {
+			dvi_connector_in: endpoint {
+				remote-endpoint 

@@ -1,0 +1,14 @@
+The Gianfar Ethernet Driver
+
+Author: Andy Fleming <afleming@freescale.com>
+Updated: 2005-07-28
+
+
+CHECKSUM OFFLOADING
+
+The eTSEC controller (first included in parts from late 2005 like
+the 8548) has the ability to perform TCP, UDP, and IP checksums
+in hardware.  The Linux kernel only offloads the TCP and UDP
+checksums (and always performs the pseudo header checksums), so
+the driver only supports checksumming for TCP/IP and UDP/IP
+packets.  Us

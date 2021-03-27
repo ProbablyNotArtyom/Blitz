@@ -1,0 +1,92 @@
+Transactional Memory support
+============================
+
+POWER kernel support for this feature is currently limited to supporting
+its use by user programs.  It is not currently used by the kernel itself.
+
+This file aims to sum up how it is supported by Linux and what behaviour you
+can expect from your user programs.
+
+
+Basic overview
+==============
+
+Hardware Transactional Memory is supported on POWER8 processors, and is a
+feature that enables a different form of atomic memory access.  Several new
+instructions are presented to delimit transactions; transactions are
+guaranteed to either complete atomically or roll back and undo any partial
+changes.
+
+A simple transaction looks like this:
+
+begin_move_money:
+  tbegin
+  beq   abort_handler
+
+  ld    r4, SAVINGS_ACCT(r3)
+  ld    r5, CURRENT_ACCT(r3)
+  subi  r5, r5, 1
+  addi  r4, r4, 1
+  std   r4, SAVINGS_ACCT(r3)
+  std   r5, CURRENT_ACCT(r3)
+
+  tend
+
+  b     continue
+
+abort_handler:
+  ... test for odd failures ...
+
+  /* Retry the transaction if it failed because it conflicted with
+   * someone else: */
+  b     begin_move_money
+
+
+The 'tbegin' instruction denotes the start point, and 'tend' the end point.
+Between these points the processor is in 'Transactional' state; any memory
+references will complete in one go if there are no conflicts with other
+transactional or non-transactional accesses within the system.  In this
+example, the transaction completes as though it were normal straight-line code
+IF no other processor has touched SAVINGS_ACCT(r3) or CURRENT_ACCT(r3); an
+atomic move of money from the current account to the savings account has been
+performed.  Even though the normal ld/std instructions are used (note no
+lwarx/stwcx), either *both* SAVINGS_ACCT(r3) and CURRENT_ACCT(r3) will be
+updated, or neither will be updated.
+
+If, in the meantime, there is a conflict with the locations accessed by the
+transaction, the transaction will be aborted by the CPU.  Register and memory
+state will roll back to that at the 'tbegin', and control will continue from
+'tbegin+4'.  The branch to abort_handler will be taken this second time; the
+abort handler can check the cause of the failure, and retry.
+
+Checkpointed registers include all GPRs, FPRs, VRs/VSRs, LR, CCR/CR, CTR, FPCSR
+and a few other status/flag regs; see the ISA for details.
+
+Causes of transaction aborts
+============================
+
+- Conflicts with cache lines used by other processors
+- Signals
+- Context switches
+- See the ISA for full documentation of everything that will abort transactions.
+
+
+Syscalls
+========
+
+Syscalls made from within an active transaction will not be performed and the
+transaction will be doomed by the kernel with the failure code TM_CAUSE_SYSCALL
+| TM_CAUSE_PERSISTENT.
+
+Syscalls made from within a suspended transaction are performed as normal and
+the transaction is not explicitly doomed by the kernel.  However, what the
+kernel does to perform the syscall may result in the transaction being doomed
+by the hardware.  The syscall is performed in suspended mode so any side
+effects will be persistent, independent of transaction success or failure.  No
+guarantees are provided by the kernel about which syscalls will affect
+transaction success.
+
+Care must be taken when relying on syscalls to abort during active transactions
+if the calls are made via a library.  Libraries may cache values (which may
+give the appearance of success) or perform operations that cause transaction
+failure before entering the kernel (which may produce diffe

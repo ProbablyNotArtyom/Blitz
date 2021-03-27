@@ -1,0 +1,28 @@
+Configuring:
+
+    Edit Makefile.in to change the configuration options if necessary.
+
+    % ./configure
+
+    Likewise edit config.h, if necessary.
+
+    % make
+
+
+To install:
+
+    % make install
+
+    Edit one of your system rc files to run thttpd at boot time.  Do NOT
+    run it from inetd, that setup is inefficient so thttpd doesn't support it.
+
+
+Solaris:
+
+    If you're running Solaris and you want to use the security-enhancing
+    chroot feature, then you must create the TCP device files in the chroot
+    tree.  There is no way around this, Solaris needs these files to accept
+    network connections.  You need /dev/tcp, which is a symbolic link like so:
+	/dev/tcp -> ../devices/pseudo/clone@0:tcp
+    And you also need the file it points to:
+	crw-rw-rw-  bin  11, 42 May 24 21:32 /devices/pseudo/clone@0:tcp

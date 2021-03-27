@@ -1,0 +1,8 @@
+Linux Kernel Driver for Huawei Intelligent NIC(HiNIC) family
+============================================================
+
+Overview:
+=========
+HiNIC is a network interface card for the Data Center Area.
+
+The driver sup

@@ -1,0 +1,50 @@
+.. _development_coding:
+
+Getting the code right
+======================
+
+While there is much to be said for a solid and community-oriented design
+process, the proof of any kernel development project is in the resulting
+code.  It is the code which will be examined by other developers and merged
+(or not) into the mainline tree.  So it is the quality of this code which
+will determine the ultimate success of the project.
+
+This section will examine the coding process.  We'll start with a look at a
+number of ways in which kernel developers can go wrong.  Then the focus
+will shift toward doing things right and the tools which can help in that
+quest.
+
+
+Pitfalls
+---------
+
+Coding style
+************
+
+The kernel has long had a standard coding style, described in
+:ref:`Documentation/process/coding-style.rst <codingstyle>`.  For much of
+that time, the policies described in that file were taken as being, at most,
+advisory.  As a result, there is a substantial amount of code in the kernel
+which does not meet the coding style guidelines.  The presence of that code
+leads to two independent hazards for kernel developers.
+
+The first of these is to believe that the kernel coding standards do not
+matter and are not enforced.  The truth of the matter is that adding new
+code to the kernel is very difficult if that code is not coded according to
+the standard; many developers will request that the code be reformatted
+before they will even review it.  A code base as large as the kernel
+requires some uniformity of code to make it possible for developers to
+quickly understand any part of it.  So there is no longer room for
+strangely-formatted code.
+
+Occasionally, the kernel's coding style will run into conflict with an
+employer's mandated style.  In such cases, the kernel's style will have to
+win before the code can be merged.  Putting code into the kernel means
+giving up a degree of control in a number of ways - including control over
+how the code is formatted.
+
+The other trap is to assume that code which is already in the kernel is
+urgently in need of coding style fixes.  Developers may start to generate
+reformatting patches as a way of gaining familiarity with the process, or
+as a way of getting their name into the kernel changelogs - or both.  But
+pure coding style fixes 

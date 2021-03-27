@@ -1,0 +1,7 @@
+The OSD Standard
+================
+OSD (Object-Based Storage Device) is a T10 SCSI command set that is designed
+to provide efficient operation of input/output logical units that manage the
+allocation, placement, and accessing of variable-size data-storage containers,
+called objects. Objects are intended to contain operating system and application
+constructs. Each obje

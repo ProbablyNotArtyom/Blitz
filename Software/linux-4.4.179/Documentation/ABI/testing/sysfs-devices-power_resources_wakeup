@@ -1,0 +1,17 @@
+NetLabel Introduction
+==============================================================================
+Paul Moore, paul.moore@hp.com
+
+August 2, 2006
+
+ * Overview
+
+NetLabel is a mechanism which can be used by kernel security modules to attach
+security attributes to outgoing network packets generated from user space
+applications and read security attributes from incoming network packets.  It
+is composed of three main components, the protocol engines, the communication
+layer, and the kernel security module API.
+
+ * Protocol Engines
+
+The protocol engines are responsible for both applying 

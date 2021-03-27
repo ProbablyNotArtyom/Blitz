@@ -1,0 +1,17 @@
+Maxim Integrated MAX2175 RF to bits tuner driver
+================================================
+
+The MAX2175 driver implements the following driver-specific controls:
+
+``V4L2_CID_MAX2175_I2S_ENABLE``
+-------------------------------
+    Enable/Disable I2S output of the tuner. This is a private control
+    that can be accessed only using the subdev interface.
+    Refer to Documentation/media/kapi/v4l2-controls.rst for more details.
+
+.. flat-table::
+    :header-rows:  0
+    :stub-columns: 0
+    :widths:       1 4
+
+    * - ``(0)

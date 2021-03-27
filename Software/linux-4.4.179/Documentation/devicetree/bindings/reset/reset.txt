@@ -1,0 +1,137 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+/*
+ * Copyright 2016 Freescale Semiconductor, Inc.
+ * Copyright 2017-2018 NXP.
+ *
+ */
+
+#include <dt-bindings/clock/imx6sll-clock.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include "imx6sll-pinfunc.h"
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+
+	aliases {
+		gpio0 = &gpio1;
+		gpio1 = &gpio2;
+		gpio2 = &gpio3;
+		gpio3 = &gpio4;
+		gpio4 = &gpio5;
+		gpio5 = &gpio6;
+		i2c0 = &i2c1;
+		i2c1 = &i2c2;
+		i2c2 = &i2c3;
+		mmc0 = &usdhc1;
+		mmc1 = &usdhc2;
+		mmc2 = &usdhc3;
+		serial0 = &uart1;
+		serial1 = &uart2;
+		serial2 = &uart3;
+		serial3 = &uart4;
+		serial4 = &uart5;
+		spi0 = &ecspi1;
+		spi1 = &ecspi2;
+		spi3 = &ecspi3;
+		spi4 = &ecspi4;
+		usbphy0 = &usbphy1;
+		usbphy1 = &usbphy2;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		cpu0: cpu@0 {
+			compatible = "arm,cortex-a9";
+			device_type = "cpu";
+			reg = <0>;
+			next-level-cache = <&L2>;
+			operating-points = <
+				/* kHz    uV */
+				996000  1275000
+				792000  1175000
+				396000  1075000
+				198000	975000
+			>;
+			fsl,soc-operating-points = <
+				/* ARM kHz      SOC-PU uV */
+				996000          1175000
+				792000          1175000
+				396000          1175000
+				198000		1175000
+			>;
+			clock-latency = <61036>; /* two CLK32 periods */
+			clocks = <&clks IMX6SLL_CLK_ARM>,
+				 <&clks IMX6SLL_CLK_PLL2_PFD2>,
+				 <&clks IMX6SLL_CLK_STEP>,
+				 <&clks IMX6SLL_CLK_PLL1_SW>,
+				 <&clks IMX6SLL_CLK_PLL1_SYS>;
+			clock-names = "arm", "pll2_pfd2_396m", "step",
+				      "pll1_sw", "pll1_sys";
+		};
+	};
+
+	intc: interrupt-controller@a01000 {
+		compatible = "arm,cortex-a9-gic";
+		#interrupt-cells = <3>;
+		interrupt-controller;
+		reg = <0x00a01000 0x1000>,
+		      <0x00a00100 0x100>;
+		interrupt-parent = <&intc>;
+	};
+
+	ckil: clock-ckil {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <32768>;
+		clock-output-names = "ckil";
+	};
+
+	osc: clock-osc-24m {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <24000000>;
+		clock-output-names = "osc";
+	};
+
+	ipp_di0: clock-ipp-di0 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <0>;
+		clock-output-names = "ipp_di0";
+	};
+
+	ipp_di1: clock-ipp-di1 {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <0>;
+		clock-output-names = "ipp_di1";
+	};
+
+	tempmon: temperature-sensor {
+		compatible = "fsl,imx6sll-tempmon", "fsl,imx6sx-tempmon";
+		interrupts = <GIC_SPI 49 IRQ_TYPE_LEVEL_HIGH>;
+		interrupt-parent = <&gpc>;
+		fsl,tempmon = <&anatop>;
+		nvmem-cells = <&tempmon_calib>, <&tempmon_temp_grade>;
+		nvmem-cell-names = "calib", "temp_grade";
+		clocks = <&clks IMX6SLL_CLK_PLL3_USB_OTG>;
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		interrupt-parent = <&gpc>;
+		ranges;
+
+		ocram: sram@900000 {
+			compatible = "mmio-sram";
+			reg = <0x00900000 0x20000>;
+		};
+
+		L2: l2-cache@a02000 {
+			compatible = "arm,pl310-cach

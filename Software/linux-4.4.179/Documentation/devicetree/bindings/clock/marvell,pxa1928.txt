@@ -1,0 +1,37 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef __ALPHA_MACHVEC_H
+#define __ALPHA_MACHVEC_H 1
+
+#include <linux/types.h>
+
+/*
+ *	This file gets pulled in by asm/io.h from user space. We don't
+ *	want most of this escaping.
+ */
+ 
+#ifdef __KERNEL__
+
+/* The following structure vectors all of the I/O and IRQ manipulation
+   from the generic kernel to the hardware specific backend.  */
+
+struct task_struct;
+struct mm_struct;
+struct vm_area_struct;
+struct linux_hose_info;
+struct pci_dev;
+struct pci_ops;
+struct pci_controller;
+struct _alpha_agp_info;
+struct rtc_time;
+
+struct alpha_machine_vector
+{
+	/* This "belongs" down below with the rest of the runtime
+	   variables, but it is convenient for entry.S if these 
+	   two slots are at the beginning of the struct.  */
+	unsigned long hae_cache;
+	unsigned long *hae_register;
+
+	int nr_irqs;
+	int rtc_port;
+	int rtc_boot_cpu_o

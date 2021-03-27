@@ -1,0 +1,51 @@
+/*
+ * Copyright (c) 2016 BayLibre, Inc.
+ *
+ * Licensed under GPLv2.
+ */
+/dts-v1/;
+#include "da850.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+/ {
+	model = "DA850/AM1808/OMAP-L138 LCDK";
+	compatible = "ti,da850-lcdk", "ti,da850";
+
+	aliases {
+		serial2 = &serial2;
+		ethernet0 = &eth0;
+	};
+
+	chosen {
+		stdout-path = "serial2:115200n8";
+	};
+
+	memory@c0000000 {
+		/* 128 MB DDR2 SDRAM @ 0xc0000000 */
+		reg = <0xc0000000 0x08000000>;
+	};
+
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		dsp_memory_region: dsp-memory@c3000000 {
+			compatible = "shared-dma-pool";
+			reg = <0xc3000000 0x1000000>;
+			reusable;
+			status = "okay";
+		};
+	};
+
+	sound {
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "DA850/OMAP-L138 LCDK";
+		simple-audio-card,widgets =
+			"Line", "Line In",
+			"Line", "Line Out";
+		simple-audio-card,routing =
+			"LINE1L", "Line In",
+			"LINE1R", "Line In",
+			"Li

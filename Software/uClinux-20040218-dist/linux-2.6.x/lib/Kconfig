@@ -1,0 +1,25 @@
+#
+# Library configuration
+#
+
+menu "Library routines"
+
+config CRC32
+	tristate "CRC32 functions"
+	help
+	  This option is provided for the case where no in-kernel-tree
+	  modules require CRC32 functions, but a module built outside the
+	  kernel tree does. Such modules that use library CRC32 functions
+	  require M here.
+
+#
+# compression support is select'ed if needed
+#
+config ZLIB_INFLATE
+	tristate
+
+config ZLIB_DEFLATE
+	tristate
+
+endmenu
+

@@ -1,0 +1,22 @@
+Nested VMX
+==========
+
+Overview
+---------
+
+On Intel processors, KVM uses Intel's VMX (Virtual-Machine eXtensions)
+to easily and efficiently run guest operating systems. Normally, these guests
+*cannot* themselves be hypervisors running their own guests, because in VMX,
+guests cannot use VMX instructions.
+
+The "Nested VMX" feature adds this missing capability - of running guest
+hypervisors (which use VMX) with their own nested guests. It does so by
+allowing a guest to use VMX instructions, and correctly and efficiently
+emulating them using the single level of VMX available in the hardware.
+
+We describe in much greater detail the theory behind the nested VMX feature,
+its implementation and its performance characteristics, in the OSDI 2010 paper
+"The Turtles Project: Design and Implementation of Nested Virtualization",
+available at:
+
+	

@@ -1,0 +1,122 @@
+/*
+ * Copyright 2013 Eukréa Electromatique <denis@eukrea.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ */
+
+/dts-v1/;
+#include "imx51-eukrea-cpuimx51.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+
+/ {
+	model = "Eukrea CPUIMX51";
+	compatible = "eukrea,mbimxsd51","eukrea,cpuimx51", "fsl,imx51";
+
+	clocks {
+		clk24M: can_clock {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <24000000>;
+		};
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_gpiokeys_1>;
+
+		button-1 {
+			label = "BP1";
+			gpios = <&gpio3 31 GPIO_ACTIVE_LOW>;
+			linux,code = <256>;
+			wakeup-source;
+			linux,input-type = <1>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_gpioled>;
+
+		led1 {
+			label = "led1";
+			gpios = <&gpio3 30 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "heartbeat";
+		};
+	};
+
+	regulators {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		reg_can: regulator@0 {
+			compatible = "regulator-fixed";
+			reg = <0>;
+			regulator-name = "CAN_RST";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			gpio = <&gpio4 15 GPIO_ACTIVE_HIGH>;
+			startup-delay-us = <20000>;
+			enable-active-high;
+		};
+	};
+
+	sound {
+		compatible = "eukrea,asoc-tlv320";
+		eukrea,model = "imx51-eukrea-tlv320aic23";
+		ssi-controller = <&ssi2>;
+		fsl,mux-int-port = <2>;
+		fsl,mux-ext-port = <3>;
+	};
+
+	usbphy1: usbphy1 {
+		compatible = "usb-nop-xceiv";
+		clocks = <&clks IMX5_CLK_USB_PHY_GATE>;
+		clock-names = "main_clk";
+		clock-frequency = <19200000>;
+		#phy-cells = <0>;
+	};
+};
+
+&audmux {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_audmux>;
+	status = "okay";
+};
+
+&esdhc1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_esdhc1 &pinctrl_esdhc1_cd>;
+	cd-gpios = <&gpio1 0 GPIO_ACTIVE_LOW>;
+	status = "okay";
+};
+
+&ecspi1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_ecspi1>;
+	cs-gpios = <&gpio4 24 GPIO_ACTIVE_LOW>;
+	status = "okay";
+
+	can0: can@0 {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_can>;
+		compatible = "microchip,mcp2515";
+		reg = <0>;
+		clocks = <&clk24M>;
+		spi-max-frequency = <10000000>;
+		interrupt-parent = <&gpio1>;
+		interrupts = <1 IRQ_TYPE_EDGE_FALL

@@ -1,0 +1,12 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_DECODER_CMD:
+
+************************************************
+ioctl VIDIOC_DECODER_CMD, VIDIOC_TRY_DECODER_CMD
+************************************************
+
+Name
+====
+
+VIDIOC_DECODER_CMD - VIDIOC_TRY_DECODER_CMD - Execut

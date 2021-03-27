@@ -1,0 +1,38 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_G_TUNER:
+
+************************************
+ioctl VIDIOC_G_TUNER, VIDIOC_S_TUNER
+************************************
+
+Name
+====
+
+VIDIOC_G_TUNER - VIDIOC_S_TUNER - Get or set tuner attributes
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_G_TUNER, struct v4l2_tuner *argp )
+    :name: VIDIOC_G_TUNER
+
+.. c:function:: int ioctl( int fd, VIDIOC_S_TUNER, const struct v4l2_tuner *argp )
+    :name: VIDIOC_S_TUNER
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_tuner`.
+
+
+Description
+===========
+
+To query the attributes of a tuner applications initializ

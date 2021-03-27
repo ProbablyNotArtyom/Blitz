@@ -1,0 +1,42 @@
+/*
+ * Copyright (C) 2014-15 Synopsys, Inc. (www.synopsys.com)
+ * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+#ifndef __ASM_IRQFLAGS_ARCOMPACT_H
+#define __ASM_IRQFLAGS_ARCOMPACT_H
+
+/* vineetg: March 2010 : local_irq_save( ) optimisation
+ *  -Remove explicit mov of current status32 into reg, that is not needed
+ *  -Use BIC  insn instead of INVERTED + AND
+ *  -Conditionally disable interrupts (if they are not enabled, don't disable)
+*/
+
+#include <asm/arcregs.h>
+
+/* status32 Reg bits related to Interrupt Handling */
+#define STATUS_E1_BIT		1	/* Int 1 enable */
+#define STATUS_E2_BIT		2	/* Int 2 enable */
+#define STATUS_A1_BIT		3	/* Int 1 active */
+#define STATUS_A2_BIT		4	/* Int 2 active */
+#define STATUS_AE_BIT		5	/* Exception active */
+
+#define STATUS_E1_MASK		(1<<STATUS_E1_BIT)
+#define STATUS_E2_MASK		(1<<STATUS_E2_BIT)
+#define STATUS_A1_MASK		(1<<STATUS_A1_BIT)
+#define STATUS_A2_MASK		(1<<STATUS_A2_BIT)
+#define STATUS_AE_MASK		(1<<STATUS_AE_BIT)
+#define STATUS_IE_MASK		(STATUS_E1_MASK | STATUS_E2_MASK)
+
+/* Other Interrupt Handling related Aux regs */
+#define AUX_IRQ_LEV		0x200	/* IRQ Priority: L1 or L2 */
+#define AUX_IRQ_HINT		0x201	/* For generating Soft Interrupts */
+#define AUX_IRQ_LV12		0x43	/* interrupt level register */
+
+#define AUX_IENABLE		0x40c
+#define AUX_ITRIGGER		0x40d
+#define AUX_IPULSE		0x415

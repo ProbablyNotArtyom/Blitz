@@ -1,0 +1,9 @@
+// SPDX-License-Identifier: GPL-2.0+
+/*
+ * Device Tree file for Excito Bubba B3
+ *
+ * Copyright (C) 2013, Andrew Lunn <andrew@lunn.ch>
+ *
+ *
+ * Note: This requires a new'ish version of u-boot, which disables the
+ * L2 cache. If yo

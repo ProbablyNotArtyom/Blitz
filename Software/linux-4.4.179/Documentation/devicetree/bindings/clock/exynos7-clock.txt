@@ -1,0 +1,106 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ * Marvel systems use the IO7 I/O chip provides PCI/PCIX/AGP access
+ *
+ * This file is based on:
+ *
+ * Marvel / EV7 System Programmer's Manual
+ * Revision 1.00
+ * 14 May 2001
+ */
+
+#ifndef __ALPHA_MARVEL__H__
+#define __ALPHA_MARVEL__H__
+
+#include <linux/types.h>
+#include <linux/spinlock.h>
+
+#include <asm/compiler.h>
+
+#define MARVEL_MAX_PIDS		 32 /* as long as we rely on 43-bit superpage */
+#define MARVEL_IRQ_VEC_PE_SHIFT	(10)
+#define MARVEL_IRQ_VEC_IRQ_MASK	((1 << MARVEL_IRQ_VEC_PE_SHIFT) - 1)
+#define MARVEL_NR_IRQS		\
+	(16 + (MARVEL_MAX_PIDS * (1 << MARVEL_IRQ_VEC_PE_SHIFT)))
+
+/*
+ * EV7 RBOX Registers
+ */
+typedef struct {
+	volatile unsigned long csr __attribute__((aligned(16)));
+} ev7_csr;
+
+typedef struct {
+	ev7_csr	RBOX_CFG;		/* 0x0000 */
+	ev7_csr	RBOX_NSVC;
+	ev7_csr	RBOX_EWVC;
+	ev7_csr	RBOX_WHAMI;
+	ev7_csr	RBOX_TCTL;		/* 0x0040 */
+	ev7_csr	RBOX_INT;
+	ev7_csr	RBOX_IMASK;
+	ev7_csr	RBOX_IREQ;
+	ev7_csr	RBOX_INTQ;		/* 0x0080 */
+	ev7_csr	RBOX_INTA;
+	ev7_csr	RBOX_IT;
+	ev7_csr	RBOX_SCRATCH1;
+	ev7_csr	RBOX_SCRATCH2;		/* 0x00c0 */
+	ev7_csr	RBOX_L_ERR;
+} ev7_csrs;
+
+/*
+ * EV7 CSR addressing macros
+ */
+#define EV7_MASK40(addr)        ((addr) & ((1UL << 41) - 1))
+#define EV7_KERN_ADDR(addr)	((void *)(IDENT_ADDR | EV7_MASK40(addr)))
+
+#define EV7_PE_MASK		0x1ffUL /* 9 bits ( 256 + mem/io ) */
+#define EV7_IPE(pe)		((~((long)(pe)) & EV7_PE_MASK) << 35)
+
+#define EV7_CSR_PHYS(pe, off)	(EV7_IPE(pe) | (0x7FFCUL << 20) | (off))
+#define EV7_CSRS_PHYS(pe)	(EV7_CSR_PHYS(pe, 0UL))
+
+#define EV7_CSR_KERN(pe, off)	(EV7_KERN_ADDR(EV7_CSR_PHYS(pe, off)))
+#define EV7_CSRS_KERN(pe)	(EV7_KERN_ADDR(EV7_CSRS_PHYS(pe)))
+
+#define EV7_CSR_OFFSET(name)	((unsigned long)&((ev7_csrs *)NULL)->name.csr)
+
+/*
+ * IO7 registers
+ */
+typedef struct {
+	volatile unsigned long csr __attribute__((aligned(64)));
+} io7_csr;
+
+typedef struct {
+	/* I/O Port Control Registers */
+	io7_csr	POx_CTRL;	       	/* 0x0000 */
+	io7_csr	POx_CACHE_CTL;
+	io7_csr POx_TIMER;
+	io7_csr POx_IO_ADR_EXT;
+	io7_csr	POx_MEM_ADR_EXT;	/* 0x0100 */
+	io7_csr POx_XCAL_CTRL;
+	io7_csr rsvd1[2];	/* ?? spec doesn't show 0x180 */
+	io7_csr POx_DM_SOURCE;		/* 0x0200 */
+	io7_csr POx_DM_DEST;
+	io7_csr POx_DM_SIZE;
+	io7_csr POx_DM_CTRL;
+	io7_csr rsvd2[4];		/* 0x0300 */
+
+	/* AGP Control Registers -- port 3 only */
+	io7_csr AGP_CAP_ID;		/* 0x0400 */
+	io7_csr AGP_STAT;
+	io7_csr	AGP_CMD;
+	io7_csr	rsvd3;
+
+	/* I/O Port Monitor Registers */
+	io7_csr	POx_MONCTL;		/* 0x0500 */
+	io7_csr POx_CTRA;
+	io7_csr POx_CTRB;
+	io7_csr POx_CTR56;
+	io7_csr POx_SCRATCH;		/* 0x0600 */
+	io7_csr POx_XTRA_A;
+	io7_csr POx_XTRA_TS;
+	io7_csr POx_XTRA_Z;
+	io7_csr rsvd4;			/* 0x0700 */
+	io7_csr POx_THRESHA;
+	io7_csr POx_

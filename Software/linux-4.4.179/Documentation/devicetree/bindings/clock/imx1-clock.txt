@@ -1,0 +1,33 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ *	linux/include/asm-alpha/err_common.h
+ *
+ *	Copyright (C) 2000 Jeff Wiedemeier (Compaq Computer Corporation)
+ *
+ *	Contains declarations and macros to support Alpha error handling
+ * 	implementations.
+ */
+
+#ifndef __ALPHA_ERR_COMMON_H
+#define __ALPHA_ERR_COMMON_H 1
+
+/*
+ * SCB Vector definitions
+ */
+#define SCB_Q_SYSERR	0x620
+#define SCB_Q_PROCERR	0x630
+#define SCB_Q_SYSMCHK	0x660
+#define SCB_Q_PROCMCHK	0x670
+#define SCB_Q_SYSEVENT	0x680
+
+/*
+ * Disposition definitions for logout frame parser
+ */
+#define MCHK_DISPOSITION_UNKNOWN_ERROR		0x00
+#define MCHK_DISPOSITION_REPORT			0x01
+#define MCHK_DISPOSITION_DISMISS		0x02
+
+/*
+ * Error Log definitions
+ */
+/*

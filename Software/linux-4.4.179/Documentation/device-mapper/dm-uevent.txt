@@ -1,0 +1,63 @@
+=======================
+Intel(R) Trace Hub (TH)
+=======================
+
+Overview
+--------
+
+Intel(R) Trace Hub (TH) is a set of hardware blocks that produce,
+switch and output trace data from multiple hardware and software
+sources over several types of trace output ports encoded in System
+Trace Protocol (MIPI STPv2) and is intended to perform full system
+debugging. For more information on the hardware, see Intel(R) Trace
+Hub developer's manual [1].
+
+It consists of trace sources, trace destinations (outputs) and a
+switch (Global Trace Hub, GTH). These devices are placed on a bus of
+their own ("intel_th"), where they can be discovered and configured
+via sysfs attributes.
+
+Currently, the following Intel TH subdevices (blocks) are supported:
+  - Software Trace Hub (STH), trace source, which is a System Trace
+    Module (STM) device,
+  - Memory Storage Unit (MSU), trace output, which allows storing
+    trace hub output in system memory,
+  - Parallel Trace Interface output (PTI), trace output to an external
+    debug host via a PTI port,
+  - Global Trace Hub (GTH), which is a switch and a central component
+    of Intel(R) Trace Hub architecture.
+
+Common attributes for output devices are described in
+Documentation/ABI/testing/sysfs-bus-intel_th-output-devices, the most
+notable of them is "active", which enables or disables trace output
+into that particular output device.
+
+GTH allows directing different STP masters into different output ports
+via its "masters" attribute group. More detailed GTH interface
+description is at Documentation/ABI/testing/sysfs-bus-intel_th-devices-gth.
+
+STH registers an stm class device, through which it provides interface
+to userspace and kernelspace software trace sources. See
+Documentation/trace/stm.rst for more information on that.
+
+MSU can be configured to collect trace data into a system memory
+buffer, which can later on be read from its device nodes via read() or
+mmap() interface.
+
+On the whole, Intel(R) Trace Hub does not require any special
+userspace software to function; everything can be configured, started
+and collected via sysfs attributes, and device nodes.
+
+[1] https://software.intel.com/sites/default/files/managed/d3/3c/intel-th-developer-manual.pdf
+
+Bus and Subdevices
+------------------
+
+For each Intel TH device in the system a bus of its own is
+created and assigned an id number that reflects the order in which TH
+devices were emumerated. All TH subdevices (devices on intel_th bus)
+begin with this id: 0-gth, 0-msc0, 0-msc1, 0-pti, 0-sth, which is
+followed by device's name and an optional index.
+
+Output devices also get a device node in /dev/intel_thN, where N is
+the I

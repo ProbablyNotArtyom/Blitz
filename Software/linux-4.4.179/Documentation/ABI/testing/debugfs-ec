@@ -1,0 +1,42 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_ENUM_FRAMESIZES:
+
+****************************
+ioctl VIDIOC_ENUM_FRAMESIZES
+****************************
+
+Name
+====
+
+VIDIOC_ENUM_FRAMESIZES - Enumerate frame sizes
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_ENUM_FRAMESIZES, struct v4l2_frmsizeenum *argp )
+    :name: VIDIOC_ENUM_FRAMESIZES
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_frmsizeenum`
+    that contains an index and pixel format and receives a frame width
+    and height.
+
+
+Description
+===========
+
+This ioctl allows applications to enumerate all frame sizes (i. e. width
+and height in pixels) that the device supports for the given pixel
+format.
+
+The supported pixel formats can be obtained by using the
+:ref:`VIDIOC

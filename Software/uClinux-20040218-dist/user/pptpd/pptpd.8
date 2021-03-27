@@ -1,0 +1,132 @@
+.TH PPTPD 8 "16 August 1999"
+.SH NAME
+pptpd - PPTP VPN daemon
+.SH SYNOPSIS
+.PP
+.B pptpd
+.RB [ -c
+.IR conf-file ]
+.RB [ -d ]
+.RB [ -f ]
+.RB [ -h ]
+.RB [ -l
+.IR x.x.x.x ]
+.RB [ -o
+.IR ppp-conf-file ]
+.RB [ -p
+.IR pid-file ]
+.RB [ -s
+.IR baud ]
+.RB [ -v ]
+.PP
+.B pptpd
+.RB [ --conf
+.IR conf-file ]
+.RB [ --debug ]
+.RB [ --fg ]
+.RB [ --help ]
+.RB [ --listen
+.IR x.x.x.x ]
+.RB [ --option
+.IR ppp-conf-file ]
+.RB [ --pidfile
+.IR pid-file ]
+.RB [ --speed
+.IR baud ]
+.RB [ --version ]
+.SH DESCRIPTION
+.B pptpd
+is the PoPToP PPTP daemon, which manages tunneled PPP connections
+encapsulated in GRE using the PPTP VPN protocol.  It may contain
+features like IP address management and support TCP wrappers if
+this support has been compiled in.
+.SH OPTIONS
+.TP
+\fB-c\fR|\fB--conf \fIconf-file
+specifies the configuration file for
+.B pptpd
+(default
+.IR /etc/pptpd.conf )
+.TP
+.BR -d | --debug
+turns on debugging mode, causing more debugging messages to be sent
+to syslog.
+.TP
+.BR -f | --fg
+makes the pptp daemon run in the foreground (instead of the default
+of backgrounding itself)
+.TP
+.BR -h | --help
+displays some simple help.
+.TP
+\fB-l\fR|\fB--listen \fIx.x.x.x
+specifies the local interface IP address to listen on.
+.TP
+\fB-o\fR|\fB--option \fIppp-conf-file
+specifies that pptpd should specify an alternate configuration file
+for the ppp daemon (the default is normally
+.I /etc/ppp/options
+but may vary depending on your ppp daemon).
+.TP
+\fB-p\fR|\fB--pidfile \fIpid-file
+specifies an alternate location to store the process ID file (default
+.IR /var/run/pptpd.pid ).
+.TP
+\fB-s\fR|\fB--speed \fIbaud
+specifies that the speed
+.I baud
+should be passed to the ppp daemon as the tty speed to use (in some
+cases this is ignored by the ppp daemon).
+.TP
+.BR -v | --version
+displays the current version of the pptp daemon.
+.SH EXAMPLES
+.PP
+.B pptpd
+will start the PoPToP PPTP VPN daemon (which will detach from the
+terminal and return immediately), using default options such as
+reading the configuration from
+.I /etc/pptpd.conf
+and noting the process ID in
+.IR /var/run/pptpd.pid .
+.PP
+.B "pptpd --debug -l 192.168.0.1 -fg -c /etc/pptpd.conf.test -p /etc/pptpd.pid"
+will start the PoPToP PPTP VPN daemon, with debugging increased,
+listening on local interface 192.168.0.1, running in the foreground
+and using the config file
+.I /etc/pptpd.conf.test
+and recording the process ID in
+.IR /etc/pptpd.pid .
+.SH FILES
+/etc/pptpd.conf
+.br
+/var/run/pptpd.pid
+.SH AUTHORS
+PoPToP is written by Matthew Ramsay <matthewr@moreton.com.au>, David Luyer
+<luyer@ucs.uwa.edu.au>, Kevin Thayer <tmk@netmagic.net>, Peter Galbavy
+<Peter.Galbavy@knowledge.com> and others.
+.SH COPYRIGHT
+Copyright \(co 1999 Matthew Ramsay and others.
+.LP
+PoPToP is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2, or (at your option) any later
+version.
+.LP
+PoPToP is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+for more details.
+.LP
+You should have received a copy of the GNU General Public License along
+with PoPToP; see the file COPYING.  If not, write to the Free Software
+Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.SH AVAILABILITY
+The most recent version of PoPToP is available for download from
+Moreton Bay at
+.IR http://www.moretonbay.com/vpn/pptp.html .
+.SH "SEE ALSO"
+.BR pppd (8),
+.BR pptpctrl (8),
+.BR pptpd.conf (5),
+.BR tcpd (8).

@@ -1,0 +1,663 @@
+UDMA information for kernels 2.0.35+
+
+Version 0.4 - July 98
+by Andrew D. Balsa <andrebalsa@altern.org>
+
+If you are in a hurry, skip to the "How does one use UDMA support?" section.
+
+If you need troubleshooting advice, check the "Unreliable drive +
+motherboard + driver combination" section.
+
+Support for UDMA is based on previous work by Kim-Hoe Pang and Christian
+Brunner, posted on the Linux Kernel mailing list around September 1997.
+Additional code was provided by Michel Aubry (VIA support) and Andre Hedrick
+(support for various PCI UDMA controller cards). The code base is Mark
+Lord's triton.c driver.
+
+Check the Linux UDMA mini-HOWTO by Brion Vibber first! It is the only Linux
+specific document available on the subject.
+
+Technical references:
+a) The Intel 82371AB data sheet, available in PDF format.
+b) The SiS 5598 and 5591 data sheets, available in Microsoft Word format. :(
+c) The VIA 82C586, 82C586A and 82C586B data sheets, in PDF format.
+d) Small Form Factor document SFF 8038I v1.0. This is the original document
+   that describes the DMA mode 2 protocol. Available in PDF format.
+e) The ATA/ATAPI-4 Working Draft, revision 17. This is document
+   d1153r17.pdf (in PDF format), available from the main IDE technical
+   reference site, ftp://fission.dt.wdc.com/pub/standards. This draft
+   describes the Ultra DMA protocol and timings.
+
+A somewhat less technical, but still very informative document is the
+Enhanced IDE/Fast-ATA/ATA-2 FAQ, by John Wehman and Peter den Haan. Check
+the Web page at http://come.to/eide.  
+
+**************************************************************************
+
+Files changed
+-------------
+
+Here is the set of files from Linux kernels 2.0.32/2.0.34 modified to enable
+UDMA transfers on motherboard chipsets that support it. For each file, there
+is a small explanation of the changes.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The following changes do not affect performance or stability of the IDE
+driver in any way.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+/drivers/block/triton.c
+
+ - removed some Intel specific timing stuff. This should not affect
+driver operation or performance. This is the only file that is heavily
+modified; the Promise and Artop code is by Andre Hedrick, the VIA code
+by Michel Aubry.
+
+/drivers/block/ide.c
+
+ - added UDMA drive reporting during driver initialization, at the end
+of routine do_identify (single line mod).
+
+ - added data for SiS 5513 and VIA VP-1 chipset in routine probe_for_hwifs
+(single line mods). Each new UDMA capable chipset will have to be added to
+this list (a single line is needed each time). Notice that you don't even
+need the motherboard chipset's data sheets to find the needed information.
+You just have to identify the IDE controller. You can do this by checking
+/proc/pci, and then comparing the IDE controller signature with that
+available from the Linux kernel.
+
+As it stands in this patched version, routine probe_for_hwifs supports the
+following chipsets: Intel FX, HX, VX, TX, LX and SiS 5513 (which is
+integrated in the SiS 5571, 5598 and 5591 chips). The VIA-VP1
+chipset is supported for DMA mode 2 transfers, but compatibility has not
+been tested with this driver. The VIA MVP-3 is reported OK with UDMA.
+
+/drivers/block/ide.h
+
+ - added flag using_udma in struct ide_drive_s (single line mod). 
+
+Small changes to the tape and ide-floppy code, and additions to pci.h and
+pci.c for the extra PCI UDMA controller devices.
+
+
+Tested configurations
+---------------------
+
+UDMA support has been thoroughly tested on the following configurations:
+
+Intel TX motherboard, PCI bus at 33 and 37.5MHz. (ASUS TX-97E)
+
+SiS 5598 motherboards, PCI bus at 33 and 37.5MHz. (Chaintech P5-SDA; ASUS
+SP-97V at 33MHz only)
+
+IBM DeskStar 6.4Gb and 8.4Gb drives. Samsung UDMA hard disk proved
+unreliable under Linux _and_ Windows95 (so it was not a driver problem).
+Other UDMA drives not tested.
+
+libc5 and gcc2.7.2. Also tested under libc6 (RedHat 5.0).
+
+6x86MX processor running at 166MHz or 187.5MHz.
+
+DANGER: EIDE drives do not accept a PCI bus at 41.5MHz (83MHz / 2). Trying
+to run DMA Mode 2 or UDMA at these PCI bus clocks will result in crashes and
+loss of data. If your FSB runs at > 75MHz you MUST set the PCI bus for
+asynchronous 33MHz operation. YOU HAVE BEEN WARNED.
+
+Andre Hedrick Tests [IMPORTANT: those are SMP configurations]
+-------------------------------------------------------------
+
+Test I
+------
+
+Tyan Tomcat III bios v4.01 SMP Dual P5 200 w/ Artop AEC6210 w/ DMA2 drives
+
+Intel MultiProcessor Specification v1.4
+    Virtual Wire compatibility mode.
+OEM ID: OEM00000 Product ID: PROD00000000 APIC at: 0xFEE00000
+Processor #0 Pentium(tm) APIC version 17
+Processor #1 Pentium(tm) APIC version 17
+I/O APIC #2 Version 17 at 0xFEC00000.
+Processors: 2
+
+Linux version 2.0.34 (root@Zosma) (gcc version 2.8.1) #1 Mon Jun 8 16:40:25 CDT
+Booting processor 1 stack 00002000: Calibrating delay loop.. ok - 79.67
+BogoMIPSTotal of 2 processors activated (159.33 BogoMIPS).
+Starting kswapd v 1.4.2.2
+
+ide: DMA Bus Mastering IDE controller on PCI bus 0 function 57
+ide: ports are not enabled (BIOS)
+ide: AEC6210 ROM enabled but no address
+ide: UDMA Bus Mastering IDE controller on PCI bus 0 function 160
+ide: timings == 04010401
+    ide0: BM-DMA at 0x6700-0x6707
+    ide1: BM-DMA at 0x6708-0x670f
+hda: Maxtor 72004 AP, 1916MB w/128kB Cache, CHS=973/64/63, DMA
+hdb: Maxtor 71626 A, 1554MB w/64kB Cache, CHS=789/64/63, DMA
+hdc: IOMEGA ZIP 100 ATAPI, ATAPI FLOPPY drive
+hdd: HP COLORADO 5GB, ATAPI TAPE drive
+ide-tape: Sorry, DRQ types other than Accelerated DRQ
+ide-tape: are still not supported by the driver
+ide-tape: the tape is not supported by this version of the driver
+ide2: ports already in use, skipping probe
+ide0 at 0x6300-0x6307,0x6402 on irq 11
+ide1 at 0x6500-0x6507,0x6602 on irq 11 (shared with ide0)
+scsi0 : ncr53c8xx - revision 2.5f.1
+
+Test II
+-------
+
+SuperMicro P6DNF SMP Dual P6 233 w/ Artop AEC6210 and Promise Ultra33
+
+Intel MultiProcessor Specification v1.4
+    Virtual Wire compatibility mode.
+OEM ID: INTEL    Product ID: 440FX        APIC at: 0xFEE00000
+Processor #0 Pentium(tm) Pro APIC version 17
+Processor #1 Pentium(tm) Pro APIC version 17
+I/O APIC #2 Version 17 at 0xFEC00000.
+Processors: 2
+
+Linux version 2.0.34 (root@Orion) (gcc version 2.8.1) #1 Wed Jun 17 01:13:15 CDT 1998
+Booting processor 1 stack 00002000: Calibrating delay loop.. ok - 232.65 BogoMIPS
+Total of 2 processors activated (464.49 BogoMIPS).
+
+ide: Intel 82371 (single FIFO) DMA Bus Mastering IDE
+    Controller on PCI bus 0 function 57
+ide: ports are not enabled (BIOS)
+ide: AEC6210 ROM enabled at 0xfebf8000
+ide: PCI UDMA Bus Mastering IDE
+    Controller on PCI bus 0 function 160
+ide: timings == 04010401
+    ide0: BM-DMA at 0xef90-0xef97
+    ide1: BM-DMA at 0xef98-0xef9f
+hda: QUANTUM FIREBALL ST3.2A, 3079MB w/81kB Cache, CHS=782/128/63, UDMA
+hdb: QUANTUM FIREBALL ST6.4A, 6149MB w/81kB Cache, CHS=784/255/63, UDMA
+hdc: IOMEGA ZIP 100 ATAPI, ATAPI FLOPPY drive
+hdd: CD-ROM CDU611, ATAPI CDROM drive
+ide2: ports already in use, skipping probe
+ide0 at 0xeff0-0xeff7,0xefe6 on irq 10
+ide1 at 0xefa8-0xefaf,0xefe2 on irq 10 (shared with ide0)
+
+Test III
+--------
+
+Same kernel above but with Promise Ultra33
+
+ide: Intel 82371 (single FIFO) DMA Bus Mastering IDE
+    Controller on PCI bus 0 function 57
+ide: ports are not enabled (BIOS)
+ide: PDC20246 ROM enabled at 0xfebd0000
+ide: PCI UDMA Bus Mastering IDE
+    Controller on PCI bus 0 function 160
+ide: timings == 000003ee
+    ide0: BM-DMA at 0xef80-0xef87
+    ide1: BM-DMA at 0xef88-0xef8f
+hda: QUANTUM FIREBALL ST3.2A, 3079MB w/81kB Cache, CHS=782/128/63, UDMA
+hdb: QUANTUM FIREBALL ST6.4A, 6149MB w/81kB Cache, CHS=784/255/63, UDMA
+hdc: IOMEGA ZIP 100 ATAPI, ATAPI FLOPPY drive
+hdd: CD-ROM CDU611, ATAPI CDROM drive
+ide2: ports already in use, skipping probe
+ide0 at 0xeff0-0xeff7,0xefe6 on irq 10
+ide1 at 0xefa8-0xefaf,0xebe6 on irq 10 (shared with ide0)
+
+All tests cases yield this problem, IOMEGA ZIP 100 ATAPI FW 23.D
+I have a patch fix for 2.1.99->106 similar for FW 21.D drives.
+
+ide-floppy: hdc: I/O error, pc = 5a, key =  5, asc = 24, ascq =  0
+ide-floppy: Can't get drive capabilities
+
+Note that both AEC6210 and PDC20246 have onboard bios that auto-config.
+
+
+What UDMA support does
+----------------------
+
+        - It enables UDMA transfers on the Intel TX chipset.
+	- It enables DMA mode2 transfers on the SiS 5571 and VIA VP-1
+	  (82C586) chipsets.
+        - It enables DMA mode2 and UDMA mode2 transfers on the SiS 5598 and
+	  SiS 5591 chipsets, and the VIA VP3 and MVP-3.
+        - With single line mods for each new chipset, it will support any DMA
+	  mode2 and/or UDMA capable chipset compatible with document
+	  SFF 8038I v1.0.
+	- Supports a variety of PCI UDMA controller cards.
+
+
+Support for other chipsets
+--------------------------
+
+It is relatively easy to add support for other chipsets. Some chipsets are
+entirely integrated (e.g. the SiS 5598 chipset has various devices in a
+single chip), others are divided into a Northbridge (CPU to PCI circuitry,
+L2 cache control, etc) and Southbridge (PCI to IDE bus mastering interface,
+USB, etc). We are dealing here with the Southbridge, specifically with the
+IDE bus master PCI device. If the data sheet says the device is SFF 8038I
+v1.0 compatible, then the registers have a more or less standard layout and
+this driver should work with the below changes:
+
+1) Check that the chipset is correctly identified by /proc/pci. Search for
+the line that identifies a bus-mastering IDE controller device.
+
+2) If the chipset is not correctly identified (new chipsets are not in
+kernels up to 2.0.33), you will need to edit /include/linux/pci.h and
+/drivers/pci/pci.c. This is actually quite easy, requiring a single line in
+each of these files.
+
+3) Now add a single line to ide.c, in routine probe_for_hwifs.
+
+4) Test and report results; when troubleshooting, please check first that
+you have the latest BIOS for your motherboard. 
+
+
+HOW does UDMA mode2 work?
+-------------------------
+
+Well, actually, the excellent triton.c driver written by Mark Lord is a
+generic DMA transfer hard disk driver. It does not depend on any chipset
+feature or transfer mode (i.e. it will work with DMA mode 2, UDMA and other
+future DMA modes with little or no changes). BTW in late 2.1.x kernels the
+driver was renamed ide-dma.c, to indicate that it is independent of the
+chipset used.
+
+(Note: triton is the "old" name for the Intel FX chipset, for which Mark
+Lord wrote the driver initially.)
+
+The Intel chipset specific parts were slightly changed in the triton.c
+driver. These are only used to gather information for driver testing, and
+actually do not affect the operation or performance of the driver, so the
+changes are (well, should be) relatively inocuous.
+
+The real work involved in setting up the chips for DMA transfers is done
+mostly by the BIOS of each motherboard. Now of course one hopes that the
+BIOS has been correctly programmed...
+
+For example, the ASUS SP-97V motherboard with its original BIOS (Rev. 1.03)
+would malfunction with the modified Linux driver in both DMA mode 2 and UDMA
+modes; it would work well using PIO mode 4, or under Windows 95 in all
+modes. I downloaded the latest BIOS image (Rev. 1.06) from the ASUS Web site
+and flashed the BIOS EPROM with the latest BIOS revision. It has been
+working perfectly ever since (at 66 MHz bus speeds).
+
+What this tells us is that the BIOS sets up the DMA controller with specific
+timing parameters (active pulse and recovery clock cycles). My initial BIOS
+revision probably had bad timings. Since the Windows 95 driver sets up those
+timings by itself (i.e. it does not depend on the BIOS to setup the hard
+disk controller timing parameters), I initially had problems only with the
+Linux driver, while Windows 95 worked well.
+
+So, let me state this again: this Linux (U)DMA driver depends on the BIOS for
+correct (U)DMA controller setup. If you have problems, first check that you
+have the latest BIOS revision for your specific motherboard.
+
+OTOH Michel Aubry's code for the VIA Apollo chipset has complete support for
+setting up the timing parameters. Check the triton.c source code for
+details.
+
+New BIOS revisions can be downloaded from your motherboard manufacturer's
+Web site. Flashing a new BIOS image is a simple operation but one must
+strictly follow the steps explained on the motherboard manual.
+
+Late Award BIOS revisions seem stable with respect to UDMA. Anything with a
+date of 1998 should be fine.
+
+
+Features missing from the present UDMA support code
+---------------------------------------------------
+
+It does not set UDMA transfer parameters (the driver assumes the BIOS has
+correctly setup all timing parameters) in the various chipsets. This
+requires access to a complete set of data sheets for the various chipsets,
+and testing on a variety of configurations, so it's not exactly within the
+reach of a humble Linux hacker. IMHO this is best left to the guys at Award
+and AMI (the BIOS guys), and to the motherboard engineers.
+
+Basically, UDMA transfers depend on two timing parameters:
+	1) The pulse width of the active strobe signal for data transfers
+(usually described as the active pulse width).
+	2) The delay between the negation of the DMA READY signal to the
+assertion of STOP when the IDE controller wants to stop a read operation
+(usually described as the recovery time).
+
+Both timing parameters can be set individually for each hard disk (up to two
+hard disks per channel).
+
+Knowing which registers must hold this data and the appropriate values, one
+could program the Linux triton.c driver to setup the IDE controller device,
+without relying on BIOS settings. However, some chipsets allow setting other
+timing parameters, and the required code would quickly increase to a
+not-so-easy-to-manage size. Better keep it simple, IMHO.
+
+It seems Mark Lord has devised a neat way to do this in the ide-dma driver
+included in late kernels 2.1.x: each chipset has an entry in a table, with
+safe timing values. The chipset is also identified when the driver is
+loaded.
+
+
+How does one use UDMA support?
+------------------------------
+
+1) Backup your data or you will be sorry. Now do "hdparm -t -T
+/dev/hda". Write a small note with the transfer rates you see.
+
+2) Reboot. Press [Del] to launch the CMOS SETUP routine, go to the
+CHIPSET SPECIFIC or PERIPHERALS SETUP menus, and enable UDMA transfers
+for your hard disk drives which are UDMA capable, or leave the fields in
+the default "AUTO" value. Enable both IDE channels even if you have just
+one IDE drive (default setting).
+
+3) Boot Linux, compile the kernel with the TRITON support enabled. Install
+the new kernel (the lilo thingy). Reboot Linux.
+
+4) Watch for the drive parameters message when the kernel loads (or type
+"dmesg | more" after login). After the Cyl, Heads, Sect parameters you
+should see "DMA" or "UDMA" depending on your hard disk drive and chipset
+capabilities.
+
+Here is what I get with UDMA enabled in the BIOS of my SiS 5598 based
+configuration, with an IBM UDMA capable hard disk as hda:
+
+...
+ide: DMA Bus Mastering IDE controller on PCI bus 0 function 9
+    ide0: BM-DMA at 0x4000-0x4007
+    ide1: BM-DMA at 0x4008-0x400f
+hda: IBM-DHEA-36480, 6197MB w/476kB Cache, LBA, CHS=790/255/63, UDMA
+...
+
+If I disable UDMA in the BIOS, I get:
+
+...
+ide: DMA Bus Mastering IDE controller on PCI bus 0 function 9
+    ide0: BM-DMA at 0x4000-0x4007
+    ide1: BM-DMA at 0x4008-0x400f
+hda: IBM-DHEA-36480, 6197MB w/476kB Cache, LBA, CHS=790/255/63, DMA
+...
+
+5) Again, do "hdparm -t -T /dev/hda". Smile. Test your setup by copying
+a few large files around or doing some large compilation (e.g. the Linux
+kernel itself).
+
+
+Performance issues
+------------------
+
+1) Sustained transfer rates.
+
+Here is some data gathered after extensive testing, using the hdparm utility
+(also written by Mark Lord):
+
+PIO mode 4 transfer rates under Linux:   +/- 5.2MB/s
+
+DMA mode 2 transfer rates under Linux:   +/- 7.2MB/s
+
+UDMA mode 2 transfer rates under Linux:  +/- 9.8MB/s
+
+Data gathered on a Chaintech SiS 5598 motherboard, 6x86MX @ 187.5MHz, Linux
+2.0.32/2.0.33 with patched triton.c driver as explained above, IBM DeskStar
+6.4GB hard disk (IBM-DHEA-36480).
+
+The integrated video hardware in the SiS 5598 chip was disabled (a standard
+PCI video board was used); enabling the integrated SVGA controller will
+cause a 20% performance hit in processing performance, due to limited main
+memory bandwidth.
+
+The TX motherboard under the same test conditions will be slightly
+slower (0.1 - 0.2 MB/s slower).
+
+Burst (instantaneous) transfer rates are supposed to go from 16.6MB/s (PIO
+mode 4) to 16.6MB/s (DMA mode 2) up to 33MB/s (UDMA). In his patch against
+kernel 2.1.55, Kim-Hoe Pang actually checked the UDMA burst transfer rate
+with a logic analiser: 60ns/word, which translates into 33MB/s.
+
+Note that burst transfer rates only affect data transfers to/from the EIDE
+drive cache (476kB for the IBM 6.4GB drive), and IMHO are not particularly
+relevant for most Linux users.
+
+The Linux kernel uses as much RAM as possible to cache hard disk data
+accesses, and so if data is not in the kernel cache there is little chance
+that it will be in the (much smaller) hard disk cache.
+
+2) Processor utilization
+
+Unfortunately, it is very difficult to gather data about processor
+utilization during data transfers, but this is exactly the biggest advantage
+of DMA transfers over PIO transfers. My estimate is that CPU utilization
+during UDMA transfers will be as low as 3-4%, while being somewhere around
+30% for PIO transfers and 6-8% for DMA mode 2.
+
+3) UDMA vs SCSI
+
+The main advantage of DMA mode 2 and UDMA over SCSI is that the controller
+is already on your motherboard, so why not use it?
+
+Mark Lord's triton.c driver has a very small latency and so UDMA drives
+may beat their Ultra-Wide SCSI-2 counterparts in some cases (at equal
+spindle speeds) e.g. lots of small files (loaded news servers) being
+read/written at irregular intervals.
+
+Note however that SCSI drives are available at spindle speeds of 7,200,
+10,000 and even a recently announced 12,030 rpm. IBM is planning some 7,200
+rpm UDMA EIDE drives, but those are not yet available. Seagate has just
+released its EIDE 7,200 rpm drives, but they have special cooling
+requirements just like their SCSI counterparts. Expect this technology to
+become commonplace by the end of 98, though.
+
+The UDMA burst data transfer rates exceed maximum head transfer rates
+(maximum head transfer rates in the industry have reached 160 Mbits/s in
+1998) and so for large files neither Ultra-Wide SCSI-2 nor UDMA will have an
+advantage over the other technology.
+
+It used to be that high-capacity drives were only available with SCSI
+interfaces, but this isn't true anymore. Right now top capacity for an EIDE
+drive is Maxtor's 11.3Gb monster, which is quite affordable in fact. One can
+drive four of these with a standard motherboard: 45Gb for < $2k.
+
+SCSI drives can chain, overlap and re-order commands, EIDE drives cannot.
+However, Linux already has an intelligent "elevator" algorithm for hard disk
+accesses.
+
+At present, EIDE top speed is 33MB/s burst. Ultra-Wide II SCSI is 80MB/s
+burst. The cost of an Ultra-Wide II SCSI controller + 9Gb hard disk is > 4 x
+the cost of an 8GB UDMA drive. IMHO the price/performance ratio of UDMA
+beats SCSI.
+
+A new standard is emerging called ATA-66, which will double the burst
+transfer speed of EIDE drives to 66Mb/s. I don't have any technical info
+about it, unfortunately. The first ATA-66 drives will be shipped by Quantum
+in 1999, but VIA has already announced two ATA-66 capable chipsets (in fact
+based on the same Southbridge chip); as I write this, data sheets are not
+available to the general public. Probably Intel will come out with a chipset
+of its own with ATA-66 capabilities.
+
+4) What is the best UDMA chipset/hard disk?
+
+Intel designed the first DMA mode 2 capable chipset, the FX (Triton I) a few
+years ago. The Linux DMA mode 2 driver was initially written by Mark Lord
+for the original Intel FX chipset and appeared around kernel 1.3.20 if I
+remember well. The later HX and VX chipsets had exactly the same DMA mode 2
+capabilities and the triton.c driver was for a long time Intel-only. Mark
+planned to support the Opti Viper chipset but Opti went out of the
+motherboard chipset business so fast that Mark didn't even have the time to
+get his hands on an Opti motherboard, I guess.
+
+Intel later introduced a UDMA compatible motherboard chipset with its TX
+chipset. Kernel 2.0.31 was the first Linux kernel to support the TX chipset,
+however only DMA mode 2 (16.6MB/s) was supported.
+
+The TX chipset has a proven record of reliability. But DMA mode 2 and UDMA
+transfers on the TX suffer from a flaw common to previous Intel DMA mode 2
+only chipsets: a single data buffer is shared between the two IDE channels.
+This buffer (64 bytes deep) is used to hold data on its way from the PCI bus
+to/from the hard disk's small cache. A hardware arbitration mechanism
+prevents data loss when the OS tries to simultaneously use both IDE
+channels.
+
+VIA chips also have a single FIFO, with the same 64 bytes deep buffer.
+However, VIA chips can have the buffer split 1:1 or 3:1 between both IDE
+channels; an interesting feature, but difficult to use.
+
+How is this FIFO buffer used? Remember that the PCI bus can transfer data at
+a maximum rate of 132MB/s when clocked at 33MHz, 150MB/s when clocked at
+37.5MHz (maximum safe clock speed for PCI is 33MHz, after that well..). So the
+PCI bus mastering IDE controller will be transfering data from main memory
+DRAM to this FIFO buffer in small bursts of < 64 bytes, then from the buffer
+to the IDE disk drive cache (when writing; the other way around for reads).
+
+I recently managed to get hold of the SiS 5598 data sheet and studied the
+IDE controller part of this highly integrated chip, a device identified by
+the number 5513. The 5598 even includes an SVGA controller, which should be
+disabled if one wants to get decent performance from this chipset: it
+severely limits CPU/memory bandwidth. The SiS5597 is the same part with
+a different pinout.
+
+It appears the 5513 has two completely independent IDE channels, each with
+its own 64 bytes deep data buffer. On disk-to-disk or CD-to-disk transfers,
+the 5598 and 5591 chipsets will easily beat the Intel TX and VIA. On
+simultaneous (U)DMA transfers to two disks (for example, when the Linux md
+driver is used to create a RAID-0 array with data striping), the 5513 device
+will be faster than the TX Southbridge device since there will be no
+contention for the data buffer, assuming each drive is connected to a
+different IDE channel.  Other PCI bus related features will also improve its
+performance of the SiS devices. So, compared to the Intel TX and various VIA
+chipsets, the 5598 and 5591 win hands down in terms of UDMA implementation.
+
+Unfortunately, it is very difficult to get data sheets for the ALi Aladdin
+IV+ and Aladdin V chipsets. These newer chipsets support up to 1 MB of L2
+SRAM cache, the AGP bus (2X), 100 MHz CPU bus and of course, UDMA data
+transfers. The newest VIA chipset for Socket 7 motherboards beats them all
+in terms of features, as it sports ATA-66 compatibility.
+
+On the UDMA hard drive front, the present performance leaders are the IBM
+Deskstar drives. These drives have relatively large data caches (476kB
+available), a 5,400 rpm rotational speed and < 10ms random access times.
+They run very cool and although they can't be called silent, their noise
+level is acceptable. They are also reliable.
+
+Seagate has just begun shipping 7,200 rpm EIDE drives which will obviously
+benefit from the lower data latency. They are reported as particularly
+silent due to the use of Fluid Dynamic Bearing motors, but running quite
+hot. IMHO if one has to add a fan to cool them, this defeats any advantage
+these drives will have in terms of noise level. Another advantage of this
+technology is the lower vibration levels compared to ball bearings.
+
+IBM has pre-announced very large capacity (14GB), 7,200 rpm EIDE UDMA drives
+a month ago, but those are not shipping yet. They are based on a new head
+technology called Giant Magneto-Resistive Heads, which is supposed to
+increase the data density on the disks by a factor of 4 or more. More details
+when I get my hands on one. IBM licensed Western Digital to use this
+technology.
+
+Quantum has always shipped among the best and fastest EIDE drives, and they
+worked with Intel to create the UDMA standard. They used to have the fastest
+drives for Linux DMA mode 2 transfers (see the comments in
+/Documentation/ide.txt).
+
+Well, I just got an email from Denny de Jonge <denny@luna.nl> that proves
+Quantum drives will keep their reputation:
+
+"Andre,
+
+ After I applied the UDMA-patch for Linux 2.0.33 hdparm showed up with the
+ following benchmarks:
+
+ /dev/hda:
+
+ Timing buffer-cache reads:   64 MB in  1.02 seconds =62.75 MB/sec
+ Timing buffered disk reads:  32 MB in  3.02 seconds =10.60 MB/sec
+
+ Not bad, don't you think ?
+
+ These results have been obtained using the Intel 82371 Chipset and a
+ Quantum Fireball 4.3SE harddisk."
+
+I later asked what kind of processor Denny was using: it's a 266MHz PII.
+
+BTW I have been collecting hard disk/file subsystem benchmarking information
+based on bonnie, a popular benchmark available for Linux. I have come to the
+conclusion that bonnie is not a reliable benchmark when it comes to
+comparing different systems, basically because it depends so much on how
+much RAM one has installed and how much of it is free, as well as system
+load, CPU speed, etc. For this reason I will not quote bonnie results
+anymore. For comparative benchmarking between two hard disk drives on
+exactly the same hardware it may be acceptable, but otherwise it's too
+unreliable as an indicator of performance.
+
+
+Unreliable drive + motherboard + driver combination
+---------------------------------------------------
+
+Quoting Kim-Hoe Pang:
+
+"The UDMA mode of an UDMA drive would NOT be enabled on a non-UDMA capable
+chipset mobo. On power-up or after a hardware reset, the drive is in normal
+PIO/DMA mode. To enable the UDMA mode in the drive, the host, BIOS or OS,
+needs to send a SET FEATURE ("enable UDMA mode subcommand") AT command to
+the drive. A non-UDMA capable mobo will not send this command to the drive.
+
+UDMA mode is dis/enabled via BIOS setup. The patch does not attempt to
+override user's BIOS setting."
+
+There may be some combinations of drives, motherboards (BIOS) and Linux
+driver which may prove unreliable. Remember we are transfering data at
+33MB/s over unshielded ribbon cable in a very noisy (electromagnetically
+speaking) environment.
+
+In the future it would be nice if hard disk manufacturers would publish the
+timings required by their drives, and chipset manufacturers would follow a
+single standard for registers and controller architecture. Right now UDMA is
+extremely timing sensitive.
+
+A few recommendations for troubleshooting:
+
+1) Make sure you have the latest BIOS for your motherboard. Connect to the
+motherboard manufacturer's Web site and download the latest BIOS image file
+and EEPROM flashing utilities. Check your BIOS version, and only flash your
+EEPROM if needed.
+
+2) Keep the IDE cable going from the motherboard to the drive short, and do
+not loop it around another cable. I recommend < 30 cm (12") total cable
+length.
+
+3) If you have just a single UDMA hard disk drive per channel (which I
+recommend), use the connectors at both ends of the cable to connect
+motherboard and drive, do _not_ use the middle connector. If you have a UDMA
+hard disk drive and a CD-ROM drive on the same cable, plug the hard disk
+drive at the end of the cable (use the middle connector for the CD-ROM
+drive). Also the hard disk must be the master EIDE device, the CD-ROM drive
+the slave EIDE device, never the other way around (this is not determined by
+cable position, but by small jumpers on the drive and at the back of the
+CD-ROM). The same rules apply to CD-RW, ZIP and tape EIDE drives.
+
+4) If you have (shudder) Windows 95 installed in your system, and have been
+able to use UDMA, you should be able to use UDMA with Linux.
+
+5) DON'T OVERCLOCK the PCI bus. 33MHz is the maximum supported speed for
+the PCI bus. Some (supposedly compatible) UDMA drives will not even take
+37.5MHz, but should be OK at 33.3MHz.
+
+In any case, NEVER, NEVER set the PCI bus to 41.5MHz.
+
+The RECOMMENDED safe setting is 33MHz.
+
+Adequate testing is needed in each case. The golden rule here, as always:
+backup, backup, backup.
+
+
+Aknowledgments
+--------------
+
+Mark Lord for his excellent, reliable and very readable triton.c driver code
+and all his (E)IDE Linux programming.
+
+Kim-Hoe Pang for the first UDMA patch against kernel 2.1.55.
+
+Christian Brunner for his patch converting triton.c into a generic DMA mode
+2 EIDE driver. 
+
+Brion Vibber for his neat Linux UDMA mini-HOWTO, for his help and
+contributions to this package, and for bearing with my various documentation
+changes and suggestions.
+
+Michel Aubry for his complete VIA support and neat diagnostics code, as well
+as the patch to hdparm to support UDMA.
+
+Andre Hedrick for his great code for the various PCI UDMA controller cards.
+

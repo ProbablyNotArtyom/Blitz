@@ -1,0 +1,33 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (C) 2016 NXP Semiconductors.
+ * Author: Fabio Estevam <fabio.estevam@nxp.com>
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/input/input.h>
+#include "imx7s.dtsi"
+
+/ {
+	model = "Warp i.MX7 Board";
+	compatible = "warp,imx7s-warp", "fsl,imx7s";
+
+	memory@80000000 {
+		reg = <0x80000000 0x20000000>;
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+		pinctrl-0 = <&pinctrl_gpio>;
+		autorepeat;
+
+		back {
+			label = "Back";
+			gpios = <&gpio7 1 GPIO_ACTIVE_HIGH>;
+			linux,code = <KEY_BACK>;
+			wakeup-source;
+		};
+	};
+
+	reg_brcm: re

@@ -1,0 +1,63 @@
+/*
+ * CNS3xxx common devices
+ *
+ * Copyright 2008 Cavium Networks
+ *		  Scott Shu
+ * Copyright 2010 MontaVista Software, LLC.
+ *		  Anton Vorontsov <avorontsov@mvista.com>
+ *
+ * This file is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, Version 2, as
+ * published by the Free Software Foundation.
+ */
+
+#include <linux/io.h>
+#include <linux/init.h>
+#include <linux/compiler.h>
+#include <linux/dma-mapping.h>
+#include <linux/platform_device.h>
+#include "cns3xxx.h"
+#include "pm.h"
+#include "core.h"
+#include "devices.h"
+
+/*
+ * AHCI
+ */
+static struct resource cns3xxx_ahci_resource[] = {
+	[0] = {
+		.start	= CNS3XXX_SATA2_BASE,
+		.end	= CNS3XXX_SATA2_BASE + CNS3XXX_SATA2_SIZE - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+	[1] = {
+		.start	= IRQ_CNS3XXX_SATA,
+		.end	= IRQ_CNS3XXX_SATA,
+		.flags	= IORESOURCE_IRQ,
+	},
+};
+
+static u64 cns3xxx_ahci_dmamask = DMA_BIT_MASK(32);
+
+static struct platform_device cns3xxx_ahci_pdev = {
+	.name		= "ahci",
+	.id		= 0,
+	.resource	= cns3xxx_ahci_resource,
+	.num_resources	= ARRAY_SIZE(cns3xxx_ahci_resource),
+	.dev		= {
+		.dma_mask		= &cns3xxx_ahci_dmamask,
+		.coherent_dma_mask	= DMA_BIT_MASK(32),
+	},
+};
+
+void __init cns3xxx_ahci_init(void)
+{
+	u32 tmp;
+
+	tmp = __raw_readl(MISC_SATA_POWER_MODE);
+	tmp |= 0x1 << 16; /* Disable SATA PHY 0 from SLUMBER Mode */
+	tmp |= 0x1 << 17; /* Disable SATA PHY 1 from SLUMBER Mode */
+	__raw_writel(tmp, MISC_SATA_POWER_MODE);
+
+	/* Enable SATA PHY */
+	cns3xxx_pwr_power_up(

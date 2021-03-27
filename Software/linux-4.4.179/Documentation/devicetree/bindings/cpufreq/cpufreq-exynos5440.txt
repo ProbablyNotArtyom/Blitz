@@ -1,0 +1,25 @@
+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+#ifndef _UAPI_ALPHA_UNISTD_H
+#define _UAPI_ALPHA_UNISTD_H
+
+#define __NR_osf_syscall	  0	/* not implemented */
+#define __NR_exit		  1
+#define __NR_fork		  2
+#define __NR_read		  3
+#define __NR_write		  4
+#define __NR_osf_old_open	  5	/* not implemented */
+#define __NR_close		  6
+#define __NR_osf_wait4		  7
+#define __NR_osf_old_creat	  8	/* not implemented */
+#define __NR_link		  9
+#define __NR_unlink		 10
+#define __NR_osf_execve		 11	/* not implemented */
+#define __NR_chdir		 12
+#define __NR_fchdir		 13
+#define __NR_mknod		 14
+#define __NR_chmod		 15
+#define __NR_chown		 16
+#define __NR_brk		 17
+#define __NR_osf_getfsstat	 18	/* not implemented */
+#define __NR_lseek		 19
+#define __NR

@@ -1,0 +1,22 @@
+// SPDX-License-Identifier: GPL-2.0
+/* The pxa3xx skeleton simply augments the 2xx version */
+#include "pxa2xx.dtsi"
+
+#define MFP_PIN_PXA300(gpio)				\
+	((gpio <= 2) ? (0x00b4 + 4 * gpio) :		\
+	 (gpio <= 26) ? (0x027c + 4 * (gpio - 3)) :	\
+	 (gpio <= 98) ? (0x0400 + 4 * (gpio - 27)) :	\
+	 (gpio <= 127) ? (0x0600 + 4 * (gpio - 99)) :	\
+	 0)
+#define MFP_PIN_PXA300_2(gpio)				\
+	((gpio <= 1) ? (0x674 + 4 * gpio) :		\
+	 (gpio <= 6) ? (0x2dc + 4 * gpio) :		\
+	 0)
+
+#define MFP_PIN_PXA310(gpio)				\
+	((gpio <= 2) ? (0x00b4 + 4 * gpio) :		\
+	 (gpio <= 26) ? (0x027c + 4 * (gpio - 3)) :	\
+	 (gpio <= 29) ? (0x0400 + 4 * (gpio - 27)) :	\
+	 (gpio <= 98) ? (0x0418 + 4 * (gpio - 30)) :	\
+	 (gpio <= 127) ? (0x0600 + 4 * (gpio - 99)) :	\
+	 (gpio <= 262) ? 0 :			

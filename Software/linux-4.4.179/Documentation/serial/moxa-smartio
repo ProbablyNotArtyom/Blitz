@@ -1,0 +1,489 @@
+/*
+ *  arch/arm/kernel/sys_oabi-compat.c
+ *
+ *  Compatibility wrappers for syscalls that are used from
+ *  old ABI user space binaries with an EABI kernel.
+ *
+ *  Author:	Nicolas Pitre
+ *  Created:	Oct 7, 2005
+ *  Copyright:	MontaVista Software, Inc.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License version 2 as
+ *  published by the Free Software Foundation.
+ */
+
+/*
+ * The legacy ABI and the new ARM EABI have different rules making some
+ * syscalls incompatible especially with structure arguments.
+ * Most notably, Eabi says 64-bit members should be 64-bit aligned instead of
+ * simply word aligned.  EABI also pads structures to the size of the largest
+ * member it contains instead of the invariant 32-bit.
+ *
+ * The following syscalls are affected:
+ *
+ * sys_stat64:
+ * sys_lstat64:
+ * sys_fstat64:
+ * sys_fstatat64:
+ *
+ *   struct stat64 has different sizes and some members are shifted
+ *   Compatibility wrappers are needed for them and provided below.
+ *
+ * sys_fcntl64:
+ *
+ *   struct flock64 has different sizes and some members are shifted
+ *   A compatibility wrapper is needed and provided below.
+ *
+ * sys_statfs64:
+ * sys_fstatfs64:
+ *
+ *   struct statfs64 has extra padding with EABI growing its size from
+ *   84 to 88.  This struct is now __attribute__((packed,aligned(4)))
+ *   with a small assembly wrapper to force the sz argument to 84 if it is 88
+ *   to avoid copying the extra padding over user space unexpecting it.
+ *
+ * sys_newuname:
+ *
+ *   struct new_utsname has no padding with EABI.  No problem there.
+ *
+ * sys_epoll_ctl:
+ * sys_epoll_wait:
+ *
+ *   struct epoll_event has its second member shifted also affecting the
+ *   structure size. Compatibility wrappers are needed and provided below.
+ *
+ * sys_ipc:
+ * sys_semop:
+ * sys_semtimedop:
+ *
+ *   struct sembuf loses its padding with EABI.  Since arrays of them are
+ *   used they have to be copyed to remove the padding. Compatibility wrappers
+ *   provided below.
+ *
+ * sys_bind:
+ * sys_connect:
+ * sys_sendmsg:
+ * sys_sendto:
+ * sys_socketcall:
+ *
+ *   struct sockaddr_un loses its padding with EABI.  Since the size of the
+ *   structure is used as a validation test in unix_mkname(), we need to
+ *   change the length argument to 110 whenever it is 112.  Compatibility
+ *   wrappers provided below.
+ */
+
+#include <linux/syscalls.h>
+#include <linux/errno.h>
+#include <linux/fs.h>
+#include <linux/cred.h>
+#include <linux/fcntl.h>
+#include <linux/eventpoll.h>
+#include <linux/sem.h>
+#include <linux/socket.h>
+#include <linux/net.h>
+#include <linux/ipc.h>
+#include <linux/uaccess.h>
+#include <linux/slab.h>
+
+struct oldabi_stat64 {
+	unsigned long long st_dev;
+	unsigned int	__pad1;
+	unsigned long	__st_ino;
+	unsigned int	st_mode;
+	unsigned int	st_nlink;
+
+	unsigned long	st_uid;
+	unsigned long	st_gid;
+
+	unsigned long long st_rdev;
+	unsigned int	__pad2;
+
+	long long	st_size;
+	unsigned long	st_blksize;
+	unsigned long long st_blocks;
+
+	unsigned long	st_atime;
+	unsigned long	st_atime_nsec;
+
+	unsigned long	st_mtime;
+	unsigned long	st_mtime_nsec;
+
+	unsigned long	st_ctime;
+	unsigned long	st_ctime_nsec;
+
+	unsigned long long st_ino;
+} __attribute__ ((packed,aligned(4)));
+
+static long cp_oldabi_stat64(struct kstat *stat,
+			     struct oldabi_stat64 __user *statbuf)
+{
+	struct oldabi_stat64 tmp;
+
+	tmp.st_dev = huge_encode_dev(stat->dev);
+	tmp.__pad1 = 0;
+	tmp.__st_ino = stat->ino;
+	tmp.st_mode = stat->mode;
+	tmp.st_nlink = stat->nlink;
+	tmp.st_uid = from_kuid_munged(current_user_ns(), stat->uid);
+	tmp.st_gid = from_kgid_munged(current_user_ns(), stat->gid);
+	tmp.st_rdev = huge_encode_dev(stat->rdev);
+	tmp.st_size = stat->size;
+	tmp.st_blocks = stat->blocks;
+	tmp.__pad2 = 0;
+	tmp.st_blksize = stat->blksize;
+	tmp.st_atime = stat->atime.tv_sec;
+	tmp.st_atime_nsec = stat->atime.tv_nsec;
+	tmp.st_mtime = stat->mtime.tv_sec;
+	tmp.st_mtime_nsec = stat->mtime.tv_nsec;
+	tmp.st_ctime = stat->ctime.tv_sec;
+	tmp.st_ctime_nsec = stat->ctime.tv_nsec;
+	tmp.st_ino = stat->ino;
+	return copy_to_user(statbuf,&tmp,sizeof(tmp)) ? -EFAULT : 0;
+}
+
+asmlinkage long sys_oabi_stat64(const char __user * filename,
+				struct oldabi_stat64 __user * statbuf)
+{
+	struct kstat stat;
+	int error = vfs_stat(filename, &stat);
+	if (!error)
+		error = cp_oldabi_stat64(&stat, statbuf);
+	return error;
+}
+
+asmlinkage long sys_oabi_lstat64(const char __user * filename,
+				 struct oldabi_stat64 __user * statbuf)
+{
+	struct kstat stat;
+	int error = vfs_lstat(filename, &stat);
+	if (!error)
+		error = cp_oldabi_stat64(&stat, statbuf);
+	return error;
+}
+
+asmlinkage long sys_oabi_fstat64(unsigned long fd,
+				 struct oldabi_stat64 __user * statbuf)
+{
+	struct kstat stat;
+	int error = vfs_fstat(fd, &stat);
+	if (!error)
+		error = cp_oldabi_stat64(&stat, statbuf);
+	return error;
+}
+
+asmlinkage long sys_oabi_fstatat64(int dfd,
+				   const char __user *filename,
+				   struct oldabi_stat64  __user *statbuf,
+				   int flag)
+{
+	struct kstat stat;
+	int error;
+
+	error = vfs_fstatat(dfd, filename, &stat, flag);
+	if (error)
+		return error;
+	return cp_oldabi_stat64(&stat, statbuf);
+}
+
+struct oabi_flock64 {
+	short	l_type;
+	short	l_whence;
+	loff_t	l_start;
+	loff_t	l_len;
+	pid_t	l_pid;
+} __attribute__ ((packed,aligned(4)));
+
+static long do_locks(unsigned int fd, unsigned int cmd,
+				 unsigned long arg)
+{
+	struct flock64 kernel;
+	struct oabi_flock64 user;
+	mm_segment_t fs;
+	long ret;
+
+	if (copy_from_user(&user, (struct oabi_flock64 __user *)arg,
+			   sizeof(user)))
+		return -EFAULT;
+	kernel.l_type	= user.l_type;
+	kernel.l_whence	= user.l_whence;
+	kernel.l_start	= user.l_start;
+	kernel.l_len	= user.l_len;
+	kernel.l_pid	= user.l_pid;
+
+	fs = get_fs();
+	set_fs(KERNEL_DS);
+	ret = sys_fcntl64(fd, cmd, (unsigned long)&kernel);
+	set_fs(fs);
+
+	if (!ret && (cmd == F_GETLK64 || cmd == F_OFD_GETLK)) {
+		user.l_type	= kernel.l_type;
+		user.l_whence	= kernel.l_whence;
+		user.l_start	= kernel.l_start;
+		user.l_len	= kernel.l_len;
+		user.l_pid	= kernel.l_pid;
+		if (copy_to_user((struct oabi_flock64 __user *)arg,
+				 &user, sizeof(user)))
+			ret = -EFAULT;
+	}
+	return ret;
+}
+
+asmlinkage long sys_oabi_fcntl64(unsigned int fd, unsigned int cmd,
+				 unsigned long arg)
+{
+	switch (cmd) {
+	case F_OFD_GETLK:
+	case F_OFD_SETLK:
+	case F_OFD_SETLKW:
+	case F_GETLK64:
+	case F_SETLK64:
+	case F_SETLKW64:
+		return do_locks(fd, cmd, arg);
+
+	default:
+		return sys_fcntl64(fd, cmd, arg);
+	}
+}
+
+struct oabi_epoll_event {
+	__u32 events;
+	__u64 data;
+} __attribute__ ((packed,aligned(4)));
+
+asmlinkage long sys_oabi_epoll_ctl(int epfd, int op, int fd,
+				   struct oabi_epoll_event __user *event)
+{
+	struct oabi_epoll_event user;
+	struct epoll_event kernel;
+	mm_segment_t fs;
+	long ret;
+
+	if (op == EPOLL_CTL_DEL)
+		return sys_epoll_ctl(epfd, op, fd, NULL);
+	if (copy_from_user(&user, event, sizeof(user)))
+		return -EFAULT;
+	kernel.events = user.events;
+	kernel.data   = user.data;
+	fs = get_fs();
+	set_fs(KERNEL_DS);
+	ret = sys_epoll_ctl(epfd, op, fd, &kernel);
+	set_fs(fs);
+	return ret;
+}
+
+asmlinkage long sys_oabi_epoll_wait(int epfd,
+				    struct oabi_epoll_event __user *events,
+				    int maxevents, int timeout)
+{
+	struct epoll_event *kbuf;
+	struct oabi_epoll_event e;
+	mm_segment_t fs;
+	long ret, err, i;
+
+	if (maxevents <= 0 ||
+			maxevents > (INT_MAX/sizeof(*kbuf)) ||
+			maxevents > (INT_MAX/sizeof(*events)))
+		return -EINVAL;
+	if (!access_ok(VERIFY_WRITE, events, sizeof(*events) * maxevents))
+		return -EFAULT;
+	kbuf = kmalloc_array(maxevents, sizeof(*kbuf), GFP_KERNEL);
+	if (!kbuf)
+		return -ENOMEM;
+	fs = get_fs();
+	set_fs(KERNEL_DS);
+	ret = sys_epoll_wait(epfd, kbuf, maxevents, timeout);
+	set_fs(fs);
+	err = 0;
+	for (i = 0; i < ret; i++) {
+		e.events = kbuf[i].events;
+		e.data = kbuf[i].data;
+		err = __copy_to_user(events, &e, sizeof(e));
+		if (err)
+			break;
+		events++;
+	}
+	kfree(kbuf);
+	return err ? -EFAULT : ret;
+}
+
+struct oabi_sembuf {
+	unsigned short	sem_num;
+	short		sem_op;
+	short		sem_flg;
+	unsigned short	__pad;
+};
+
+asmlinkage long sys_oabi_semtimedop(int semid,
+				    struct oabi_sembuf __user *tsops,
+				    unsigned nsops,
+				    const struct timespec __user *timeout)
+{
+	struct sembuf *sops;
+	struct timespec local_timeout;
+	long err;
+	int i;
+
+	if (nsops < 1 || nsops > SEMOPM)
+		return -EINVAL;
+	if (!access_ok(VERIFY_READ, tsops, sizeof(*tsops) * nsops))
+		return -EFAULT;
+	sops = kmalloc_array(nsops, sizeof(*sops), GFP_KERNEL);
+	if (!sops)
+		return -ENOMEM;
+	err = 0;
+	for (i = 0; i < nsops; i++) {
+		struct oabi_sembuf osb;
+		err |= __copy_from_user(&osb, tsops, sizeof(osb));
+		sops[i].sem_num = osb.sem_num;
+		sops[i].sem_op = osb.sem_op;
+		sops[i].sem_flg = osb.sem_flg;
+		tsops++;
+	}
+	if (timeout) {
+		/* copy this as well before changing domain protection */
+		err |= copy_from_user(&local_timeout, timeout, sizeof(*timeout));
+		timeout = &local_timeout;
+	}
+	if (err) {
+		err = -EFAULT;
+	} else {
+		mm_segment_t fs = get_fs();
+		set_fs(KERNEL_DS);
+		err = sys_semtimedop(semid, sops, nsops, timeout);
+		set_fs(fs);
+	}
+	kfree(sops);
+	return err;
+}
+
+asmlinkage long sys_oabi_semop(int semid, struct oabi_sembuf __user *tsops,
+			       unsigned nsops)
+{
+	return sys_oabi_semtimedop(semid, tsops, nsops, NULL);
+}
+
+asmlinkage int sys_oabi_ipc(uint call, int first, int second, int third,
+			    void __user *ptr, long fifth)
+{
+	switch (call & 0xffff) {
+	case SEMOP:
+		return  sys_oabi_semtimedop(first,
+					    (struct oabi_sembuf __user *)ptr,
+					    second, NULL);
+	case SEMTIMEDOP:
+		return  sys_oabi_semtimedop(first,
+					    (struct oabi_sembuf __user *)ptr,
+					    second,
+					    (const struct timespec __user *)fifth);
+	default:
+		return sys_ipc(call, first, second, third, ptr, fifth);
+	}
+}
+
+asmlinkage long sys_oabi_bind(int fd, struct sockaddr __user *addr, int addrlen)
+{
+	sa_family_t sa_family;
+	if (addrlen == 112 &&
+	    get_user(sa_family, &addr->sa_family) == 0 &&
+	    sa_family == AF_UNIX)
+			addrlen = 110;
+	return sys_bind(fd, addr, addrlen);
+}
+
+asmlinkage long sys_oabi_connect(int fd, struct sockaddr __user *addr, int addrlen)
+{
+	sa_family_t sa_family;
+	if (addrlen == 112 &&
+	    get_user(sa_family, &addr->sa_family) == 0 &&
+	    sa_family == AF_UNIX)
+			addrlen = 110;
+	return sys_connect(fd, addr, addrlen);
+}
+
+asmlinkage long sys_oabi_sendto(int fd, void __user *buff,
+				size_t len, unsigned flags,
+				struct sockaddr __user *addr,
+				int addrlen)
+{
+	sa_family_t sa_family;
+	if (addrlen == 112 &&
+	    get_user(sa_family, &addr->sa_family) == 0 &&
+	    sa_family == AF_UNIX)
+			addrlen = 110;
+	return sys_sendto(fd, buff, len, flags, addr, addrlen);
+}
+
+asmlinkage long sys_oabi_sendmsg(int fd, struct user_msghdr __user *msg, unsigned flags)
+{
+	struct sockaddr __user *addr;
+	int msg_namelen;
+	sa_family_t sa_family;
+	if (msg &&
+	    get_user(msg_namelen, &msg->msg_namelen) == 0 &&
+	    msg_namelen == 112 &&
+	    get_user(addr, &msg->msg_name) == 0 &&
+	    get_user(sa_family, &addr->sa_family) == 0 &&
+	    sa_family == AF_UNIX)
+	{
+		/*
+		 * HACK ALERT: there is a limit to how much backward bending
+		 * we should do for what is actually a transitional
+		 * compatibility layer.  This already has known flaws with
+		 * a few ioctls that we don't intend to fix.  Therefore
+		 * consider this blatent hack as another one... and take care
+		 * to run for cover.  In most cases it will "just work fine".
+		 * If it doesn't, well, tough.
+		 */
+		put_user(110, &msg->msg_namelen);
+	}
+	return sys_sendmsg(fd, msg, flags);
+}
+
+asmlinkage long sys_oabi_socketcall(int call, unsigned long __user *args)
+{
+	unsigned long r = -EFAULT, a[6];
+
+	switch (call) {
+	case SYS_BIND:
+		if (copy_from_user(a, args, 3 * sizeof(long)) == 0)
+			r = sys_oabi_bind(a[0], (struct sockaddr __user *)a[1], a[2]);
+		break;
+	case SYS_CONNECT:
+		if (copy_from_user(a, args, 3 * sizeof(long)) == 0)
+			r = sys_oabi_connect(a[0], (struct sockaddr __user *)a[1], a[2]);
+		break;
+	case SYS_SENDTO:
+		if (copy_from_user(a, args, 6 * sizeof(long)) == 0)
+			r = sys_oabi_sendto(a[0], (void __user *)a[1], a[2], a[3],
+					    (struct sockaddr __user *)a[4], a[5]);
+		break;
+	case SYS_SENDMSG:
+		if (copy_from_user(a, args, 3 * sizeof(long)) == 0)
+			r = sys_oabi_sendmsg(a[0], (struct user_msghdr __user *)a[1], a[2]);
+		break;
+	default:
+		r = sys_socketcall(call, args);
+	}
+
+	return r;
+}
+‹8:nƒ¥<c5æßÉùÏµp51*SŞ¥³³â"î?à< jŒF×UñxÕ¸ŒÃÖ­½üoĞÿïÏvï×¿´<õ‹“Ÿşd,e‹õ—¹ãş4JSûúâ£ÃÃ‡/<!·–wGiêğÇ‹œóiÖ—vãâ’wİªÓ.ÿ5ÛKxqİØáS°#U×§æ^§_˜_8~ië¿UÇd\˜w™w9~a\˜_˜_8~a~á¸ù…ã—–ùÑxäî·ññc_qQ_}åê§G£èë¯ã27ŸsG~ûwùİ;Éß>µ;ÓOş\şöùŸÏ5Õ±É$ˆĞóãù¹şÇßÓ?ıÑîLşúyïc~QL½Õ¸ˆ_‹Œq ¢y3Šua9Ï2ãøe ›£ûx{§…¸˜?€	Åœ÷ÊG7[Ê£‡ç½Ò.°±É=xí¦ùsXó ^ùàµ›ööÙ˜ÌHÇß¼õv¬æÑÃoŞz{¤c{º”Ùj=ÒñÉo½óîı›¯Ÿ¾ôÊéw¿·ÔùÒ+~øúÑ;ï¼ñ¦P.åŠ m¸(>ÿâ·/¿úí÷°Ôùò«g/¼x^nò#Å{Ì+u|«u© _~„ ›L¥şÂS­cj¶—J{¨¨hv¥Êz€ŒJÕ¹[A2ËTÖ˜}«ëZ°'U™¯J3ëjZ0.ÀS_Æ ‚@ óKÕˆûSL}\&«RwıhÎŸ;ìJs×İi\æ’rW¼ë^;&æ¨Î•íez`Gë'5Ş9†½j>Î¸(ÄîÙK¶ê˜Ø8WªKD&CAŸß1“©¶u—šC DÄ~ÔuWZMİÉ	Á…°;½CRF"˜_fäÙºË¾Mqéº.UQrÃ.ˆ›Ş0İëªÈ ÛË´¸‰æ—ÛKÅvÁ»m2¸ÈPób†ûšqD"—J=<Øã5%P“1–lã0ûÆö(ûÚˆÍRÉüRû¨<XzŸT‡‹Ã{ÒVÕqı¥’}Ã*Øã…T2¿T!õûZ-Å´`[]_³ÑÍvÜ
+ËØÆ%”tÉv«"$’ù%XWr€K¶›|/c\ªlá»¾é¬ÅÒs–q¦›$Âë3Õİ=;zm2ä!'¸xºÿhO¡«_GkØ´£Q¸kòñÖ•H"î+g¸H_[¡	 ¶5:|öLzš%Â»_”—D4¡È-…œİ:“I/ıh’ëík§1z‰ l)ŒYfJql2Ò/“¡Ë0m*Tèæøã]1Bè»3¯Ø÷Yá9…©#ƒ'ô¨VKSY0ôcgDE^òËd–ömJ“èKsU5›bg*¤',C3Ò`Üt”LFŠ|8ÿeÆ‡İÉUÀáƒÉĞ,{\éZ´¿oŞómiÒ®L&òB$n
+)±0¹Ômõõéµ×µ´äÒK~¹˜ƒA"Û¼uÿzcV„»h&¼ä—‹±»!àD´öThª	líÂT—:Ê×#g&ã#ï^ÌƒxrëªU›Á–†¿,5Jà	"m£Ä¹kli²¯ZaUqZô†`¬7‘·üòô`Ü±~"/¶.cjò†Û1ÅÖ½)“­ÚÁÔB¤L&¼ïkÎ%n*
+xajÅîÅ¨-×ŞZ“1Qã· ÄA¬É½XásvµÎÖ˜ŒéßOÈ2ÏLLÆ÷ı$qh· ß“!sló¶ízSºz)¬Ô¡vŠÉjëÙªM†lÙş0µú‰Wm2Ö83°k÷ú…•†¿6ßd3ÆÌâGNä
+wÛÄ)‘ÅŸ+¢p -àÀbËUU²ÉzÄºÂ­-L+2'_c?!kí‹Z€"¿y÷²@3ÌìåOLÆÇsq*–mÜ³E4J,¿+Ï!«}GcÏÖB»t–qËöı”ìì9ˆhÉ+’S7ƒÔk .‘wÿƒLâNlcÓÀeVl—5mÅÔ³âNy´4•sIÑd?Êü•hyúÃ’p¶"šlIúÃò²Dà~bãøÖ¥¬Ù´Ì(r]Óºù%m‰I^æóR§”bsGèEáøÑ?@fdŠŒ®jZAªªûæçÒ:6™Õ¨>E„;†b°ãÌ`emJ›1­{“	ƒw¯r°HLbîÂ<Za9I“ä)@„åGOYû&9(”Ozİ‘}„»&qpê¤fĞŠöĞ˜6L*ÿ=BüR9wS‘7=µ€X†³=CıÌ ºÒ‹ìûÛ¢6k8ÌEC–d·3º]íçŠp0)ı7€í©y­ÛÇœIÜO›Ş*iOš¡–íã€1@©h³Yö”E¶Î>ké¾÷­¤©T^*[¸´tk÷AFiƒ•[+w´¶wÓ;²FÍÁ=¨]$ÌÃ\,l4’Ìóì¶Ÿ«¡¹Xø)óÈ°œâÁÉ•‰€ƒlÁÍƒˆ†ìÇ‰Eƒœ;–`°sÁ›“N×5n.ºKyM×Íš›	m,tN„¤Æ;=;w'¡r¡£*Õì};1a/¥¬şÒM“¸éÛ	ÓĞÏÅ¢p*œ1îåĞÏ…®¯*¬)X0öõ®ŒI(ÕÜ+iÑã¬<¾CD!kZM¡R­ü¾ïVrªu/”:Øuº"¬8ÈëY™,ĞÂıÈ‰Ä~.jA³¦kòo ÷Fgêì•“uKıáÜ§G¸_šBÕÑ€É·°nn¥DáîµÖÒ€C»½Ô¸{m“Z,®íµ"É`Æ c(î¦×(W*˜»º‡f/Oã~Ú™¯cB©B_fëX´3¿n™Îô‚ÅeÍö|hf‡3!ã š¶ç8T4³¢8. °ÏµšBUv>.«™É5X-w—khX‹éû»‚ËšİYĞ”Ïª3Â Ö4íUKÏÖ'»… ”šö*w¦bqé~’î¢ıÊ.¾R_xS€ùQ­r[T%e	¼h‘î¢½\HYĞdÑDëì.. JSÃë; $‡…¸"à	‚RQ'éåÊT‡…¸’ZgQ×íåişˆÃB\.¢0.ŞƒÃB$—é 9å2.SÙ5âA.J…ŒKÅØÍã2Ã§Æ…q±€¼3êjC+÷Û3¿0.ŒãÂ¸ğ`\Æ…qa\Æ…qa\Æ¥›¸°8×©ıìGŒãÂ¸0.ŒãÂ¸0.<ÆeÁñõ±¤Jî?    IEND®B`‚   ‰PNG
+
+   IHDR   º  \   Áî)   gAMA  ±üa    cHRM  z&  €„  ú   €è  u0  ê`  :˜  pœºQ<   	pHYs    Òİ~ü   bKGD      ùC»  IDATxÚíİÙsÇ}Àñ]ÄÁK ‘’(ŠoR­ÃNœªP_œªØ¯IUªòàüqRQlÉ²,’(’¸o,°‹ûâ%)ùb—óæ8.ÿ‰%‘¸÷˜Ù¼ç7³.ƒ@Ïbgº{æ[õ}ÔÃ¢û£éÙe*µX$R! ¸\.‚C@p!¸\."†€àBp!¸\.DÁ…àBp)©Æ\.‚Á…ˆ! ¸PH\
+Dª1‚Á…àBp!b.‚YÅe¾@¤C@p!¸\."†€àBp!¸U\æ
+Dª1‚Á…àBp!b.ÒÏe¶``u#Ÿ6¿ş‹;ÿø_¶~§³íÏoÅ¾Öïv·ü`TşdùÃë†?1s^RBÙ÷Ãûm—Ú“@ä‘]j—A¡€ËV5¼÷;ùŸ,ÑP¾ºŞ4^ù\6¯éÿHú¢²YM?ù\¾^ãÕß ãQÉàÀå+û®A[_•LÙÇ˜ğ!öıı‡˜Ø:ÙùÂÅ_Z†?aË¢r¯dÄİµöOĞüú/Ñ ’”\f
+z“SPPIJûdéç"Ïm¡ ’\
+	yÆ_ƒ^ë€KêÁ.p\àá’×‚pÑ<YpK .Óy½  İ“e7—–ïg®ş6[Ñ?
+Éç”O+Ÿ.¸´ü “Î.[å+h²ËòÉá5ù?Õ:+•ä“Ã%j.éìŠ¥\Ò¹U¸DÍÅR+;ù«á¸À.pK*5•×[õ\tòèÿjıŸ.p\à¸À.p\à¸á2™×[õ\tòèÿjıŸ.p\à¸À.p\à¸á2‘×[õ\tòèÿjıŸ.p\à¸À.p\à¸á2×[õ\tòèÿjıŸ.p\à¸À.p\à¸á’ÛĞ[õ\tòèÿjıŸ.p\Bâ"p‹*—¹"\à¢Ìå®¸(sù×2\à¢ÌåßÊ©é\à¢Ìe±”Ênèªz.ú>³®¿Zÿ'÷¸|äÂ.j\dï"É÷áU.óE¸ÀE™Ë=.pQæâİNçáe.3E¸ÀE™Ë'5¶}ÕsÑñiõşÕú?ù\>.{|à%.ÒT.pQæ²P‚\¶äòqù‹î»qI-[jE>y,¸Hòú®%\Şş/K¹È'y[Ê.-ßM.Ù·´.É'—{®-\<1•‘ÿSm¹*Éç”O+ŸÙâíÚ×¹|ì?Şİˆ¬pIZQÎËæmÂEïÂ.ª\äñ.\à¢Êå£²w•‚\”¸|ì?Ş…\6áòQy“¸ÀE™Ë‡åÈ>Aëw:q Ôk¦r‘&©ÌF=ş½(¨$ÍŒlÕ#¹Èqc$ŸàÀßÌAA%(ƒ¹Èqc$Ÿ ùG¿€‚J2Ps‘äÇÂÿuÿÓv©Ût©]Êl.s]öıİ=@l‘~+Ûp¹Ñõ¨®ë÷­Ñ‰G%ƒ#Cd—Ë[•ËGó9úŸ°xT28FXÙKT×#©éŸ~Å&f“î?şÒ+Ûs¹ë¦FÖ#«áíß¶~—«Ò× Æ7åøoß6\*×£?P]çï½oÂ—™Kí22fYQâ2[ŒşcÉH5ÿÃ¿øë9ï™ïk	yÆ/¬üÉò‡ïêøoã ¨r‰özDF·=)›g¤H™ËL‘‘"e.w¸Q…Ëı²RcùÔğ:%=U.ÓE‹”¹Üv,Rærßÿz ã®G®G€Ë}ÿë\\†Ö)¹¥î•tÛeÈà$¹1jpQë\¸Q8\îùçG\¸Q\*×£AJ^Õp©\»$r¹[®&¹1vpQM®GŒ\Äõ(‘\Ü*›)1|pQî×#¸J®Gë” vÄE®GŒ \‚]D¸¨–+0ˆIârÇİQs\à¨!Æ.ês=‚‹zóNj`Q¸HÃ©ş5Šµá2Qd(á¢Ü‚ÃPÂ%H#\’ÀEŞ\©I“\à¢Ş¢ËhÂ%H£y.ÊM—R}kçjÉE®Gòà1…‹jòƒÍŒ)\T›åz—@r=Š1—E·ÆÉ5Ã
+Õä€ša…K€ä€ºwbX(\ä@€‘…‹j®·p1¸pQM\¸¨&.\\ú×ßØqYpÃ*[`|á¢Ü¬“êY£X"ihƒ!†‹rãE†.ÊÉ@/£õ2yF.ÊM•e¸IÀ0Ğp	ğ ¦{âPjŞ½ÊÆ.ªÉÆ.ªÉO40Öp	<€é^%»‹‹<€a¸á¢š¼ÃpÃ%@ò ¦k•,.R.ò †·›Ëœ]ò Fv×:\TÎ3èpQn²Ä Ã%H}lxá¢Ş^¸¨7ã¤ºØğÂE=9qì\%ûÒÃe¢ÄĞÛÉE…h©wÑ‡‹r£F.Êy^& .ê²á…‹zòG& .’W¾;VÉš4sÉ˜¸(7íxKÓ — ^¦Á.3ædÃË4À%@lxá Q6¼pQ¯²ám'ã3‚ËŒ¿áe2à¢š¼ÒÀdÀ%@òJó— ^æÃt.ÓA±á…K€†òL	\”«lxo­¡™ÅeÚßğ2+pQm¬È¬À%Hò¥5&.ªÉ¯401pQm’/\Õ¿ÁÜÉeÊ1±^¸J~–ìæ
+™•¹\äKL\$¯o1CpQm0ÏÁE99Bb†à 9Bb’à¢š!1Ip	P'wÔæp™tLo¤º±BFdI˜*¸¨6°ÁTÁE¹qÿšÙ‚‹jrGÍlÁE5¹£f¶à ¹£fÂààúƒÒ™M\&œÔ­UæL+—	Ç¦òÌ\”“;êL\Ô“;j¦.ªÉ5Ó— É×™9¸¨Æ5\‚Tòî¨¯¯PÔyCocòÖ÷õeŠºæIÇJ.•3jæ/âN/ºŞĞÛ˜|šù‹¸?»ÿ¿Í•J¬+[ò6_LaÄ\N/X»Àô¬3…Qsùöı²­Ìh‘)Œš‹tÊŞF^‚a#æ"L“¥Œ<²{™"ªÂÅîFÙ1‘sùö½rÓ„Œ<²c"£âRş¼Sóv.09ÿš¹Œ˜ËŸŞ+7Ë“+ÙWßsErúrŞ3¹È#»ë,0‘s‘öXºÀÈ#;¦3z.g-]`ä‘Ó=iÿ¤Œ¼e÷Ş2…Ø¦\Î/Ú¹ÀŒ™Q\¤Ç,]`ÚY`tp¹°X¶’ËPI1yÖò¨Z§ì\`n®2¯¸¼XY`²¶%_Œe^£ç"”&k¡9`j£çòòírÚÆFÎ˜ÚP¸Ü-oİá˜±’÷Lé]ªuÛryõN¹ŞÆFÎ˜İè¹HÇf]û¸Œúì˜àè¹|ën¹ÑÆ¦‹¦ÖıÉİ²J'ç,\`2E&Xiï¸…{Ş5æX—só.0ÃæXéqïçK–%ß`šµp¹¸XN[ÇE¯-Sm
+ÄEzzÊÂF¯-Q
+Êå•Ûåú¬m\äĞ‘™®—;å ›qí[`äĞ‘ÉŞyßºSÚ7ï”›s¶qécÑÄE:3gÛ3*‡,0š¸H-¶íy{7˜om\^\pÓÖ-0rèÈ”ká"y7Õ£%›êaÑÇEnªwg­âR9t¼ºDU¶.Òq¹©¶ké^gÖµq‘›ê}9¸(÷Â¼mL'Lµ}Ó_!vØÁI«ö¼òUêk,0Õq¹]Şy/-–ëÇ¬Z`äµ)æ^éØ´UÌp‘¹×ÉåÕÛå½vİT·³Àèã"›³jÏ+¯MÉß…‚TC.ÒA9HÊ”¬éÖtrùÃ×.,0z¹HÏËs^‹y/¹È÷@Î.ƒèU‚k›<çMgüÇíVÄ£—‹ôŒ<çµ…Œv.//–ÇìY`n°Àhå"òö¼–p`Qä²X¯Öq{˜VS——h›BårqÁİeËW¾º†½\$ïèÑšfš¹¼²XŞŸõ_11¿~İ\$ÿ1LÑ1×Y`¶ì»Ãò†.ŠÉc˜æ±\T;+¿¶jÍó6/2.Ò¡	Çº¹¼´Pn-Y³À¼CT”\¤Ó3®58´s‘wìX`À±	—…rÄ}cŞmÈØpIº¾Šı\¤“rI’oúŒ!\¤'r%Ä|ÀóÕ^^(kéâ¼»;cşS€ˆ\¤rXÍõÚÌ¿$±À˜Ãå¢w—ÄåNN—4à/0?'¸HOšI’+†p‘w;¸¸&tÚüw7X`Œá"/±ÀÏeŞ5$¹$5eX`Ìî¥y×œÎÌ¸i™•!Sc1Š‹ô´¼Ş0d°˜„/0¦q‘KÒ^ï‡ãX`à¢ÖùY·nØìæí‡	Í@.Òs“é\ŒªeÌàKÒÍ5¸˜Õ…9w÷0\”;1eğ%éÖ\ŒëÉ¬©—$ùE;ù(\ŒêâœÛ4bêÓ¾ãòõºÀ·À|Ã2fxÏÊ£ŞÁ¢‰u¬ÃÅ¼æÜÇäQ¯™b®$i‘™°¢³ş}µ\ä_vüÙÃ¤dÉ»¯6s¹º;˜5ò’Ôµ“ûê=#F.0òOÇşìAü³‹‹tnÆ­2K÷\íè„‘›˜wWàbhmcæmbzóş.æõâ¬Ûdà}õû+p1´3Óni\úòŞ³,¸˜Ùäë±1ærÑ¿;µ·V9(”üÀGŒÛ¹\¨lbŒsc-õÖƒxf;éô”“4l‘ïXÀÅØ¼MŒ¼?kN·bºÀ\œuã‘¿‰1IÌ;Kp1·ÿßÄÃEŞœ‚‹É™v¼'1æˆ¹²£;jÔ&F^l€‹á=aÔ&æÚ2\ŒN“ö˜³‰éÉÃÅôÎN»»ÌÙÄÈ¹#\ïù	c61½ïÅ¸ŞSYc61rîøÓqèEÿb×ŒøäMHÎábxçgÜ†A3ÄÈOÂÀÅüNM:uf,0r, ó;’sŒà"Çp±¢6yvg‚9°›ËŒ›„.ÌøÏî´s‘c¸XÑ¹i§~À 1òu$¸XÑ‰I'­KåX .Vt8gÀ&æıU¸XS[F·ïX .öl{÷éŞÄ|°–zó}%‹tvÊÙ­÷Ù]Ÿ, k¶½º·½·ÖábSÏÊ‘u_Agr, ‹z"£ULç†e\.ø[¿$·Oöj#/ó¾ù™5ÁåÜ”Ó8¨OLwŞ»A…‹EÉK»úõ-0òÔ.vuL¾ ¤‹Kåe^¸ØÕScú¶½òp±¬i·eDß&æçK6p™véóÎO»{†4‰éØ€‹}«œhse.öujBÓRWŞ{öÆgæM;–sÒZ˜÷VàbeÏh¹Qª¼kkÓr£$¯ÂÀÅÆ^˜v÷G£Ôë¿
+Ko”šäû½…H“r.–vfÒ©ï/D-æò2\líÄ¸S×-—.ÿ©i\^ğ¯Ğ´mGäÕ»ˆ˜wWàbq‡F£Óã¿
+{kvÛ{}.w~ÊÙ3­£nª´³“Nc”7Jòı’Ÿ|fJLÉd}_´7ÕÆpq¨ŠGyk-7ÕoÂeÊ¡ê:å­µœTÃÅöŠìÖºrSÛk‰êFI^ÿ†‹íÉ­õ¡¨ÄÈëßp±=9µŞ3	yı.1HN­¼ß¿«Ëp‰Cx6—nÿõo¸Ä “ãÎ®ŞğÅÈA\âÑ±\)º˜¼÷j¸Ä£gå+a/0º’˜İ0:”	_Ì•e¸Ä§6y3&T.ò•G9Húq´÷4Qµ…,F~G.ñiÒÙ/ïRÉÎ4¼ä+p‰Mç&ı¾áq¹¹—X%oß5õ‡)æò\bÕé	§¡/41şËS?ş4Š˜Ëh:5îÔ÷†&æ½U¸Ä­ã¹ÊA\º+{Ş¸L:YÇ²¥tO!´=/\b×sc"&¤=ï2\bØ3ò†¯¥{^&OK‡äßî|í{ÏËÌéê‰ápÄ¼õ.ñìñ¡ÄÜZ‡K<“#‚ÇCse.±³ Pc.ş»ÿòiícÂL³·æbäİ¸Äµ³ÎşZ‹‘÷yá×ÎL8M}…Úïyá×äàº±¶bdÏ—'×½s÷¼ÌiÉwÛv×PÌõU¸Ä]LÎ©ï)˜¸çenÌìx®´«§F\Ú7j¶çebŒíùl©®Vb®­À%ş+ÕÕ„KåŸíÛ9—sşSE26“®‰ù­2¸$¡çj%æ¥s™pÈüŒÖBL§ÿ[epIBÏVÄtí¬=2‰óÖC¸$¥g2;#G2ñ¯W`¡˜âNùùL¸ &@ò.ˆQMşqs¸$ª§Gv&F~2.ˆQM~2^~².ˆQM¾õÄyó .ÉÛùV-&Ğc:N÷Jé*Ã¬À1Êu*?†aˆcÖa9%¨BÌu¸$õ$²:1——á‚õK’ÿ6\£Úõ5¸$û¼Ú0¦ˆù£“¸$¸çFKuO>Ù<F3	yßW
+ú‚&\’Ü±±Ò®Êo2¨T9øçO¾ã˜œ+Õ«‹‘ïÉnÂeÜ¡ät<DŒœÀ%áÈ–v÷¨q¹éŸÀ%áÌ–ÅÈÏ•Á…NåJŠbŞx rNçJMò«fÛr¹ñ¥K£–p1{TÄ\^†ywöõm'¦Ãÿ—’àBÒÙqç@ÿvbäklp¡ÏÅ´l'F~Mè¬ÿŸImò¯ål}IbŒèËÚRD_ë©á"\(@‡GŠi¸zG2ş+2p!Å–vuÁ…”ó^‘é‚)'/<4tÃ…”;•-5õÀ…”“ÃÈ½rÉ@bgr\(@p!¸\.‚\.—œC¤\(—‘bp!¸\.‚\.‚Á…àB‚Á…àBp!¸Á…àBp!¸\.Dp!¸\.‚\.‚Á…bË%["R.‚Á…àBp!‚Á…àBp!¸\ˆàBp!¸\."¸\.‚Á…. ÿf™çÙ¹l×    IEND®B`‚       (                                 $4› '5š ):š 7'Ê :)Ò ;)Ö <*Ú >+Ş -A› 3J· 3K¸ 2Mº 3N» 3Q¿ 3S¿ :U¹ 3XÅ 6eÏ <nÍ 6fĞ 6fÑ 5jÔ 6kÔ 5oØ 5oÚ 3tŞ 4rÜ 4wß 5xß ?uÙ 3wá 3xá 7xà 7zà 7|ä 9~å I5º T<à V=å Y@ë @vÛ YrÌ iLÇ yWæ {Yé A* J±0 K´1 [¦; S³* V¹+ W¼, R½6 i½D YÀ- ]Å0 VÒ7

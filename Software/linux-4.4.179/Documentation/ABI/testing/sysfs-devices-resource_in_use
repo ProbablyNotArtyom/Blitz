@@ -1,0 +1,16 @@
+
+Netdev private dataroom for 6lowpan interfaces:
+
+All 6lowpan able net devices, means all interfaces with ARPHRD_6LOWPAN,
+must have "struct lowpan_priv" placed at beginning of netdev_priv.
+
+The priv_size of each interface should be calculate by:
+
+ dev->priv_size = LOWPAN_PRIV_SIZE(LL_6LOWPAN_PRIV_DATA);
+
+Where LL_PRIV_6LOWPAN_DATA is sizeof linklayer 6lowpan private data struct.
+To access the LL_PRIV_6LOWPAN_DATA structure you can cast:
+
+ lowpan_priv(dev)-priv;
+
+to y

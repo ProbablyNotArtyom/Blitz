@@ -1,0 +1,68 @@
+			     ===================
+			     DNS Resolver Module
+			     ===================
+
+Contents:
+
+ - Overview.
+ - Compilation.
+ - Setting up.
+ - Usage.
+ - Mechanism.
+ - Debugging.
+
+
+========
+OVERVIEW
+========
+
+The DNS resolver module provides a way for kernel services to make DNS queries
+by way of requesting a key of key type dns_resolver.  These queries are
+upcalled to userspace through /sbin/request-key.
+
+These routines must be supported by userspace tools dns.upcall, cifs.upcall and
+request-key.  It is under development and does not yet provide the full feature
+set.  The features it does support include:
+
+ (*) Implements the dns_resolver key_type to contact userspace.
+
+It does not yet support the following AFS features:
+
+ (*) Dns query support for AFSDB resource record.
+
+This code is extracted from the CIFS filesystem.
+
+
+===========
+COMPILATION
+===========
+
+The module should be enabled by turning on the kernel configuration options:
+
+	CONFIG_DNS_RESOLVER	- tristate "DNS Resolver support"
+
+
+==========
+SETTING UP
+==========
+
+To set up this facility, the /etc/request-key.conf file must be altered so that
+/sbin/request-key can appropriately direct the upcalls.  For example, to handle
+basic dname to IPv4/IPv6 address resolution, the following line should be
+added:
+
+	#OP	TYPE		DESC	CO-INFO	PROGRAM ARG1 ARG2 ARG3 ...
+	#======	============	=======	=======	==========================
+	create	dns_resolver  	*	*	/usr/sbin/cifs.upcall %k
+
+To direct a query for query type 'foo', a line of the following should be added
+before the more general line given above as the first match is the one taken.
+
+	create	dns_resolver  	foo:*	*	/usr/sbin/dns.foo %k
+
+
+=====
+USAGE
+=====
+
+To make use of this facility, one of the following func

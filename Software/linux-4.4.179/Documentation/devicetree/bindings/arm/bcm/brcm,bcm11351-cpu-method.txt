@@ -1,0 +1,33 @@
+.. _active_mm:
+
+=========
+Active MM
+=========
+
+::
+
+ List:       linux-kernel
+ Subject:    Re: active_mm
+ From:       Linus Torvalds <torvalds () transmeta ! com>
+ Date:       1999-07-30 21:36:24
+
+ Cc'd to linux-kernel, because I don't write explanations all that often,
+ and when I do I feel better about more people reading them.
+
+ On Fri, 30 Jul 1999, David Mosberger wrote:
+ >
+ > Is there a brief description someplace on how "mm" vs. "active_mm" in
+ > the task_struct are supposed to be used?  (My apologies if this was
+ > discussed on the mailing lists---I just returned from vacation and
+ > wasn't able to follow linux-kernel for a while).
+
+ Basically, the new setup is:
+
+  - we have "real address spaces" and "anonymous address spaces". The
+    difference is that an anonymous address space doesn't care about the
+    user-level page tables at all, so when we do a context switch into an
+    anonymous address space we just leave the previous address space
+    active.
+
+    The obvious use for a "anonymous address space" is any thread that
+    doesn't need any user map

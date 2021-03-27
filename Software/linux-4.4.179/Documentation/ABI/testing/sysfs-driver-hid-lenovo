@@ -1,0 +1,59 @@
+.. SPDX-License-Identifier: GPL-2.0
+
+======
+AF_XDP
+======
+
+Overview
+========
+
+AF_XDP is an address family that is optimized for high performance
+packet processing.
+
+This document assumes that the reader is familiar with BPF and XDP. If
+not, the Cilium project has an excellent reference guide at
+http://cilium.readthedocs.io/en/latest/bpf/.
+
+Using the XDP_REDIRECT action from an XDP program, the program can
+redirect ingress frames to other XDP enabled netdevs, using the
+bpf_redirect_map() function. AF_XDP sockets enable the possibility for
+XDP programs to redirect frames to a memory buffer in a user-space
+application.
+
+An AF_XDP socket (XSK) is created with the normal socket()
+syscall. Associated with each XSK are two rings: the RX ring and the
+TX ring. A socket can receive packets on the RX ring and it can send
+packets on the TX ring. These rings are registered and sized with the
+setsockopts XDP_RX_RING and XDP_TX_RING, respectively. It is mandatory
+to have at least one of these rings for each socket. An RX or TX
+descriptor ring points to a data buffer in a memory area called a
+UMEM. RX and TX can share the same UMEM so that a packet does not have
+to be copied between RX and TX. Moreover, if a packet needs to be kept
+for a while due to a possible retransmit, the descriptor that points
+to that packet can be changed to point to another and reused right
+away. This again avoids copying data.
+
+The UMEM consists of a number of equally sized chunks. A descriptor in
+one of the rings references a frame by referencing its addr. The addr
+is simply an offset within the entire UMEM region. The user space
+allocates memory for this UMEM using whatever means it feels is most
+appropriate (malloc, mmap, huge pages, etc). This memory area is then
+registered with the kernel using the new setsockopt XDP_UMEM_REG. The
+UMEM also has two rings: the FILL ring and the COMPLETION ring. The
+fill ring is used by the application to send down addr for the kernel
+to fill in with RX packet data. References to these frames will then
+appear in the RX ring once each packet has been received. The
+completion ring, on the other hand, contains frame addr that the
+kernel has transmitted completely and can now be used again by user
+space, for either TX or RX. Thus, the frame addrs appearing in the
+completion ring are addrs that were previously transmitted using the
+TX ring. In summary, the RX and FILL rings are used for the RX path
+and the TX and COMPLETION rings are used for the TX path.
+
+The socket is then finally bound with a bind() call to a device and a
+specific queue id on that device, and it is not until bind is
+completed that traffic starts to flow.
+
+The UMEM can be shared between processes, if desired. If a process
+wants to do this, it simply skips the registration of the UMEM and its
+corresponding two rings, sets the

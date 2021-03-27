@@ -1,0 +1,137 @@
+/*
+ * TI DA850/OMAP-L138 chip specific setup
+ *
+ * Copyright (C) 2009 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * Derived from: arch/arm/mach-davinci/da830.c
+ * Original Copyrights follow:
+ *
+ * 2009 (c) MontaVista Software, Inc. This file is licensed under
+ * the terms of the GNU General Public License version 2. This program
+ * is licensed "as is" without any warranty of any kind, whether express
+ * or implied.
+ */
+
+#include <linux/clk-provider.h>
+#include <linux/clk/davinci.h>
+#include <linux/clkdev.h>
+#include <linux/cpufreq.h>
+#include <linux/gpio.h>
+#include <linux/init.h>
+#include <linux/mfd/da8xx-cfgchip.h>
+#include <linux/platform_data/clk-da8xx-cfgchip.h>
+#include <linux/platform_data/clk-davinci-pll.h>
+#include <linux/platform_data/gpio-davinci.h>
+#include <linux/platform_device.h>
+#include <linux/regmap.h>
+#include <linux/regulator/consumer.h>
+
+#include <asm/mach/map.h>
+
+#include <mach/common.h>
+#include <mach/cpufreq.h>
+#include <mach/cputype.h>
+#include <mach/da8xx.h>
+#include <mach/irqs.h>
+#include <mach/pm.h>
+#include <mach/time.h>
+
+#include "mux.h"
+
+#define DA850_PLL1_BASE		0x01e1a000
+#define DA850_TIMER64P2_BASE	0x01f0c000
+#define DA850_TIMER64P3_BASE	0x01f0d000
+
+#define DA850_REF_FREQ		24000000
+
+/*
+ * Device specific mux setup
+ *
+ *		soc	description	mux	mode	mode	mux	dbg
+ *					reg	offset	mask	mode
+ */
+static const struct mux_config da850_pins[] = {
+#ifdef CONFIG_DAVINCI_MUX
+	/* UART0 function */
+	MUX_CFG(DA850, NUART0_CTS,	3,	24,	15,	2,	false)
+	MUX_CFG(DA850, NUART0_RTS,	3,	28,	15,	2,	false)
+	MUX_CFG(DA850, UART0_RXD,	3,	16,	15,	2,	false)
+	MUX_CFG(DA850, UART0_TXD,	3,	20,	15,	2,	false)
+	/* UART1 function */
+	MUX_CFG(DA850, UART1_RXD,	4,	24,	15,	2,	false)
+	MUX_CFG(DA850, UART1_TXD,	4,	28,	15,	2,	false)
+	/* UART2 function */
+	MUX_CFG(DA850, UART2_RXD,	4,	16,	15,	2,	false)
+	MUX_CFG(DA850, UART2_TXD,	4,	20,	15,	2,	false)
+	/* I2C1 function */
+	MUX_CFG(DA850, I2C1_SCL,	4,	16,	15,	4,	false)
+	MUX_CFG(DA850, I2C1_SDA,	4,	20,	15,	4,	false)
+	/* I2C0 function */
+	MUX_CFG(DA850, I2C0_SDA,	4,	12,	15,	2,	false)
+	MUX_CFG(DA850, I2C0_SCL,	4,	8,	15,	2,	false)
+	/* EMAC function */
+	MUX_CFG(DA850, MII_TXEN,	2,	4,	15,	8,	false)
+	MUX_CFG(DA850, MII_TXCLK,	2,	8,	15,	8,	false)
+	MUX_CFG(DA850, MII_COL,		2,	12,	15,	8,	false)
+	MUX_CFG(DA850, MII_TXD_3,	2,	16,	15,	8,	false)
+	MUX_CFG(DA850, MII_TXD_2,	2,	20,	15,	8,	false)
+	MUX_CFG(DA850, MII_TXD_1,	2,	24,	15,	8,	false)
+	MUX_CFG(DA850, MII_TXD_0,	2,	28,	15,	8,	false)
+	MUX_CFG(DA850, MII_RXCLK,	3,	0,	15,	8,	false)
+	MUX_CFG(DA850, MII_RXDV,	3,	4,	15,	8,	false)
+	MUX_CFG(DA850, MII_RXER,	3,	8,	15,	8,	false)
+	MUX_CFG(DA850, MII_CRS,		3,	12,	15,	8,	false)
+	MUX_CFG(DA850, MII_RXD_3,	3,	16,	15,	8,	false)
+	MUX_CFG(DA850, MII_RXD_2,	3,	20,	15,	8,	false)
+	MUX_CFG(DA850, MII_RXD_1,	3,	24,	15,	8,	false)
+	MUX_CFG(DA850, MII_RXD_0,	3,	28,	15,	8,	false)
+	MUX_CFG(DA850, MDIO_CLK,	4,	0,	15,	8,	false)
+	MUX_CFG(DA850, MDIO_D,		4,	4,	15,	8,	false)
+	MUX_CFG(DA850, RMII_TXD_0,	14,	12,	15,	8,	false)
+	MUX_CFG(DA850, RMII_TXD_1,	14,	8,	15,	8,	false)
+	MUX_CFG(DA850, RMII_TXEN,	14,	16,	15,	8,	false)
+	MUX_CFG(DA850, RMII_CRS_DV,	15,	4,	15,	8,	false)
+	MUX_CFG(DA850, RMII_RXD_0,	14,	24,	15,	8,	false)
+	MUX_CFG(DA850, RMII_RXD_1,	14,	20,	15,	8,	false)
+	MUX_CFG(DA850, RMII_RXER,	14,	28,	15,	8,	false)
+	MUX_CFG(DA850, RMII_MHZ_50_CLK,	15,	0,	15,	0,	false)
+	/* McASP function */
+	MUX_CFG(DA850,	ACLKR,		0,	0,	15,	1,	false)
+	MUX_CFG(DA850,	ACLKX,		0,	4,	15,	1,	false)
+	MUX_CFG(DA850,	AFSR,		0,	8,	15,	1,	false)
+	MUX_CFG(DA850,	AFSX,		0,	12,	15,	1,	false)
+	MUX_CFG(DA850,	AHCLKR,		0,	16,	15,	1,	false)
+	MUX_CFG(DA850,	AHCLKX,		0,	20,	15,	1,	false)
+	MUX_CFG(DA850,	AMUTE,		0,	24,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_15,		1,	0,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_14,		1,	4,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_13,		1,	8,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_12,		1,	12,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_11,		1,	16,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_10,		1,	20,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_9,		1,	24,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_8,		1,	28,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_7,		2,	0,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_6,		2,	4,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_5,		2,	8,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_4,		2,	12,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_3,		2,	16,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_2,		2,	20,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_1,		2,	24,	15,	1,	false)
+	MUX_CFG(DA850,	AXR_0,		2,	28,	15,	1,	false)
+	/* LCD function */
+	MUX_CFG(DA850, LCD_D_7,		16,	8,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_6,		16,	12,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_5,		16,	16,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_4,		16,	20,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_3,		16,	24,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_2,		16,	28,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_1,		17,	0,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_0,		17,	4,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_15,	17,	8,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_14,	17,	12,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_13,	17,	16,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_12,	17,	20,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_11,	17,	24,	15,	2,	false)
+	MUX_CFG(DA850, LCD_D_10,	17,	28,	15,	2,	false)
+	MUX_CFG(DA850,

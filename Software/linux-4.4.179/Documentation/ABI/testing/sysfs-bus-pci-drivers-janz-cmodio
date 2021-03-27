@@ -1,0 +1,19 @@
+The cx88 driver
+===============
+
+Author:  Gerd Hoffmann
+
+This is a v4l2 device driver for the cx2388x chip.
+
+
+Current status
+--------------
+
+video
+	- Works.
+	- Overlay isn't supported.
+
+audio
+	- Works. The TV standard detection is made by the driver, as the
+	  hardware has bugs to auto-detect.
+	- 

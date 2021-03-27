@@ -1,0 +1,68 @@
+Runtime Power Management Framework for I/O Devices
+
+(C) 2009-2011 Rafael J. Wysocki <rjw@sisk.pl>, Novell Inc.
+(C) 2010 Alan Stern <stern@rowland.harvard.edu>
+(C) 2014 Intel Corp., Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+
+1. Introduction
+
+Support for runtime power management (runtime PM) of I/O devices is provided
+at the power management core (PM core) level by means of:
+
+* The power management workqueue pm_wq in which bus types and device drivers can
+  put their PM-related work items.  It is strongly recommended that pm_wq be
+  used for queuing all work items related to runtime PM, because this allows
+  them to be synchronized with system-wide power transitions (suspend to RAM,
+  hibernation and resume from system sleep states).  pm_wq is declared in
+  include/linux/pm_runtime.h and defined in kernel/power/main.c.
+
+* A number of runtime PM fields in the 'power' member of 'struct device' (which
+  is of the type 'struct dev_pm_info', defined in include/linux/pm.h) that can
+  be used for synchronizing runtime PM operations with one another.
+
+* Three device runtime PM callbacks in 'struct dev_pm_ops' (defined in
+  include/linux/pm.h).
+
+* A set of helper functions defined in drivers/base/power/runtime.c that can be
+  used for carrying out runtime PM operations in such a way that the
+  synchronization between them is taken care of by the PM core.  Bus types and
+  device drivers are encouraged to use these functions.
+
+The runtime PM callbacks present in 'struct dev_pm_ops', the device runtime PM
+fields of 'struct dev_pm_info' and the core helper functions provided for
+runtime PM are described below.
+
+2. Device Runtime PM Callbacks
+
+There are three device runtime PM callbacks defined in 'struct dev_pm_ops':
+
+struct dev_pm_ops {
+	...
+	int (*runtime_suspend)(struct device *dev);
+	int (*runtime_resume)(struct device *dev);
+	int (*runtime_idle)(struct device *dev);
+	...
+};
+
+The ->runtime_suspend(), ->runtime_resume() and ->runtime_idle() callbacks
+are executed by the PM core for the device's subsystem that may be either of
+the following:
+
+  1. PM domain of the device, if the device's PM domain object, dev->pm_domain,
+     is present.
+
+  2. Device type of the device, if both dev->type and dev->type->pm are present.
+
+  3. Device class of the device, if both dev->class and dev->class->pm are
+     present.
+
+  4. Bus type of the device, if both dev->bus and dev->bus->pm are present.
+
+If the subsystem chosen by applying the above rules doesn't provide the relevant
+callback, the PM core will invoke the corresponding driver callback stored in
+dev->driver->pm directly (if present).
+
+The PM core always checks which callback to use in the order given above, so the
+priority order of callbacks from high to low is: PM domain, device type, class
+and bus type.  Moreover, the high-priority one will always take precedence over
+a low-priority one.  The PM do

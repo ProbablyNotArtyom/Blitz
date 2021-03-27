@@ -1,0 +1,18 @@
+.. SPDX-License-Identifier: GPL-2.0+
+======================================================
+IBM Virtual Management Channel Kernel Driver (IBMVMC)
+======================================================
+
+:Authors:
+	Dave Engebretsen <engebret@us.ibm.com>,
+	Adam Reznechek <adreznec@linux.vnet.ibm.com>,
+	Steven Royer <seroyer@linux.vnet.ibm.com>,
+	Bryant G. Ly <bryantly@linux.vnet.ibm.com>,
+
+Introduction
+============
+
+Note: Knowledge of virtualization technology is required to understand
+this document.
+
+A good reference document 

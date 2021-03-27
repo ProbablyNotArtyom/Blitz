@@ -1,0 +1,96 @@
+.. include:: ../disclaimer-ita.rst
+
+.. note:: Per leggere la documentazione originale in inglese:
+	  :ref:`Documentation/kernel-hacking/hacking.rst <kernel_hacking_hack>`
+
+:Original: :ref:`Documentation/kernel-hacking/hacking.rst <kernel_hacking_hack>`
+:Translator: Federico Vaga <federico.vaga@vaga.pv.it>
+
+.. _it_kernel_hacking_hack:
+
+=================================================
+L'inaffidabile guida all'hacking del kernel Linux
+=================================================
+
+:Author: Rusty Russell
+
+Introduzione
+============
+
+Benvenuto, gentile lettore, alla notevole ed inaffidabile guida all'hacking
+del kernel Linux ad opera di Rusty. Questo documento descrive le procedure
+più usate ed i concetti necessari per scrivere codice per il kernel: lo scopo
+è di fornire ai programmatori C più esperti un manuale di base per sviluppo.
+Eviterò dettagli implementativi: per questo abbiamo il codice,
+ed ignorerò intere parti di alcune procedure.
+
+Prima di leggere questa guida, sappiate che non ho mai voluto scriverla,
+essendo esageratamente sotto qualificato, ma ho sempre voluto leggere
+qualcosa di simile, e quindi questa era l'unica via. Spero che possa
+crescere e diventare un compendio di buone pratiche, punti di partenza
+e generiche informazioni.
+
+Gli attori
+==========
+
+In qualsiasi momento ognuna delle CPU di un sistema può essere:
+
+-  non associata ad alcun processo, servendo un'interruzione hardware;
+
+-  non associata ad alcun processo, servendo un softirq o tasklet;
+
+-  in esecuzione nello spazio kernel, associata ad un processo
+   (contesto utente);
+
+-  in esecuzione di un processo nello spazio utente;
+
+Esiste un ordine fra questi casi. Gli ultimi due possono avvicendarsi (preempt)
+l'un l'altro, ma a parte questo esiste una gerarchia rigida: ognuno di questi
+può avvicendarsi solo ad uno di quelli sottostanti. Per esempio, mentre un
+softirq è in esecuzione su d'una CPU, nessun altro softirq può avvicendarsi
+nell'esecuzione, ma un'interruzione hardware può. Ciò nonostante, le altre CPU
+del sistema operano indipendentemente.
+
+Più avanti vedremo alcuni modi in cui dal contesto utente è possibile bloccare
+le interruzioni, così da impedirne davvero il diritto di prelazione.
+
+Contesto utente
+---------------
+
+Ci si trova nel contesto utente quando si arriva da una chiamata di sistema
+od altre eccezioni: come nello spazio utente, altre procedure più importanti,
+o le interruzioni, possono far valere il proprio diritto di prelazione sul
+vostro processo. Potete sospendere l'esecuzione chiamando :c:func:`schedule()`.
+
+.. note::
+
+    Si è sempre in contesto utente quando un modulo viene caricato o rimosso,
+    e durante le operazioni nello strato dei dispositivi a blocchi
+    (*block layer*).
+
+Nel contesto utente, il puntatore ``current`` (il quale indica il processo al
+momento in esecuzione) è valido, e :c:func:`in_interrupt()`
+(``include/linux/preempt.h``) è falsa.
+
+.. warning::
+
+    Attenzione che se avete la prelazione o i softirq disabilitati (vedere
+    di seguito), :c:func:`in_interrupt()` ritornerà un falso positivo.
+
+Interruzioni hardware (Hard IRQs)
+---------------------------------
+
+Temporizzatori, schede di rete e tastiere sono esempi di vero hardware
+che possono produrre interruzioni in un qualsiasi momento. Il kernel esegue
+i gestori d'interruzione che prestano un servizio all'hardware. Il kernel
+garantisce che questi gestori non vengano mai interrotti: se una stessa
+interruzione arriva, questa verrà accodata (o scartata).
+Dato che durante la loro esecuzione le interruzioni vengono disabilitate,
+i gestori d'interruzioni devono essere veloci: spesso si limitano
+esclusivamente a notificare la presa in carico dell'interruzione,
+programmare una 'interruzione software' per l'esecuzione e quindi terminare.
+
+Potete dire d'essere in una interruzione hardware perché :c:func:`in_irq()`
+ritorna vero.
+
+.. warning::

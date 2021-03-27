@@ -1,0 +1,37 @@
+===================
+Tracepoints in ALSA
+===================
+
+2017/07/02
+Takasahi Sakamoto
+
+Tracepoints in ALSA PCM core
+============================
+
+ALSA PCM core registers ``snd_pcm`` subsystem to kernel tracepoint system.
+This subsystem includes two categories of tracepoints; for state of PCM buffer
+and for processing of PCM hardware parameters. These tracepoints are available
+when corresponding kernel configurations are enabled. When ``CONFIG_SND_DEBUG``
+is enabled, the latter tracepoints are available. When additional
+``SND_PCM_XRUN_DEBUG`` is enabled too, the former trace points are enabled.
+
+Tracepoints for state of PCM buffer
+------------------------------------
+
+This category includes four tracepoints; ``hwptr``, ``applptr``, ``xrun`` and
+``hw_ptr_error``.
+
+Tracepoints for processing of PCM hardware parameters
+-----------------------------------------------------
+
+This category includes two tracepoints; ``hw_mask_param`` and
+``hw_interval_param``.
+
+In a design of ALSA PCM core, data transmission is abstracted as PCM substream.
+Applications manage PCM substream to maintain data transmission for PCM frames.
+Before starting the data transmission, applications need to configure PCM
+substream. In this procedure, PCM hardware parameters are decided by
+interaction between applications and ALSA PCM core. Once decided, runtime of
+the PCM substream keeps the parameters.
+
+The parameters are de

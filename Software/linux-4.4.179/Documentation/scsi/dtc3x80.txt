@@ -1,0 +1,68 @@
+/*
+ *  linux/arch/arm/kernel/head.S
+ *
+ *  Copyright (C) 1994-2002 Russell King
+ *  Copyright (c) 2003 ARM Limited
+ *  All Rights Reserved
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ *  Kernel startup code for all 32-bit CPUs
+ */
+#include <linux/linkage.h>
+#include <linux/init.h>
+
+#include <asm/assembler.h>
+#include <asm/cp15.h>
+#include <asm/domain.h>
+#include <asm/ptrace.h>
+#include <asm/asm-offsets.h>
+#include <asm/memory.h>
+#include <asm/thread_info.h>
+#include <asm/pgtable.h>
+
+#if defined(CONFIG_DEBUG_LL) && !defined(CONFIG_DEBUG_SEMIHOSTING)
+#include CONFIG_DEBUG_LL_INCLUDE
+#endif
+
+/*
+ * swapper_pg_dir is the virtual address of the initial page table.
+ * We place the page tables 16K below KERNEL_RAM_VADDR.  Therefore, we must
+ * make sure that KERNEL_RAM_VADDR is correctly set.  Currently, we expect
+ * the least significant 16 bits to be 0x8000, but we could probably
+ * relax this restriction to KERNEL_RAM_VADDR >= PAGE_OFFSET + 0x4000.
+ */
+#define KERNEL_RAM_VADDR	(PAGE_OFFSET + TEXT_OFFSET)
+#if (KERNEL_RAM_VADDR & 0xffff) != 0x8000
+#error KERNEL_RAM_VADDR must start at 0xXXXX8000
+#endif
+
+#ifdef CONFIG_ARM_LPAE
+	/* LPAE requires an additional page for the PGD */
+#define PG_DIR_SIZE	0x5000
+#define PMD_ORDER	3
+#else
+#define PG_DIR_SIZE	0x4000
+#define PMD_ORDER	2
+#endif
+
+	.globl	swapper_pg_dir
+	.equ	swapper_pg_dir, KERNEL_RAM_VADDR - PG_DIR_SIZE
+
+	.macro	pgtbl, rd, phys
+	add	\rd, \phys, #TEXT_OFFSET
+	sub	\rd, \rd, #PG_DIR_SIZE
+	.endm
+
+/*
+ * Kernel startup entry point.
+ * ---------------------------
+ *
+ * This is normally called from the decompressor code.  The requirements
+ * are: MMU = off, D-cache = off, I-cache = dont care, r0 = 0,
+ * r1 = machine nr, r2 = atags or dtb pointer.
+ *
+ * This code is mostly position independent, so if you link the kernel at
+ * 0xc0008

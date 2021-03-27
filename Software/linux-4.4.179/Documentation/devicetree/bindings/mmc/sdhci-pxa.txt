@@ -1,0 +1,80 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Broadcom BCM470X / BCM5301X ARM platform code.
+ * DTS for Buffalo WXR-1900DHP
+ *
+ * Copyright (C) 2015 Felix Fietkau <nbd@openwrt.org>
+ */
+
+/dts-v1/;
+
+#include "bcm4709.dtsi"
+#include "bcm5301x-nand-cs0-bch8.dtsi"
+
+/ {
+	compatible = "buffalo,wxr-1900dhp", "brcm,bcm4709", "brcm,bcm4708";
+	model = "Buffalo WXR-1900DHP";
+
+	chosen {
+		bootargs = "console=ttyS0,115200";
+	};
+
+	memory {
+		reg = <0x00000000 0x08000000
+		       0x88000000 0x18000000>;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+
+		usb {
+			label = "bcm53xx:green:usb";
+			gpios = <&chipcommon 4 GPIO_ACTIVE_HIGH>;
+		};
+
+		power-amber {
+			label = "bcm53xx:amber:power";
+			gpios = <&chipcommon 5 GPIO_ACTIVE_HIGH>;
+		};
+
+		power-white {
+			label = "bcm53xx:white:power";
+			gpios = <&chipcommon 6 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "default-on";
+		};
+
+		router-amber {
+			label = "bcm53xx:amber:router";
+			gpios = <&chipcommon 7 GPIO_ACTIVE_HIGH>;
+		};
+
+		router-white {
+			label = "bcm53xx:white:router";
+			gpios = <&chipcommon 8 GPIO_ACTIVE_HIGH>;
+		};
+
+		wan-amber {
+			label = "bcm53xx:amber:wan";
+			gpios = <&chipcommon 9 GPIO_ACTIVE_HIGH>;
+		};
+
+		wan-white {
+			label = "bcm53xx:white:wan";
+			gpios = <&chipcommon 10 GPIO_ACTIVE_HIGH>;
+		};
+
+		wireless-amber {
+			label = "bcm53xx:amber:wireless";
+			gpios = <&chipcommon 11 GPIO_ACTIVE_HIGH>;
+		};
+
+		wireless-white {
+			label = "bcm53xx:white:wireless";
+			gpios = <&chipcommon 12 GPIO_ACTIVE_HIGH>;
+		};
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+		#address-cells = <1>;
+		#size-ce

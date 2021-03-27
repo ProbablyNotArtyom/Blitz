@@ -1,0 +1,28 @@
+/*
+ * Copyright (C) 2014 Synopsys, Inc. (www.synopsys.com)
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ */
+
+#include <linux/interrupt.h>
+#include <linux/module.h>
+#include <linux/of.h>
+#include <linux/irqdomain.h>
+#include <linux/irqchip.h>
+#include <asm/irq.h>
+
+#define NR_EXCEPTIONS	16
+
+struct bcr_irq_arcv2 {
+#ifdef CONFIG_CPU_BIG_ENDIAN
+	unsigned int pad:3, firq:1, prio:4, exts:8, irqs:8, ver:8;
+#else
+	unsigned int ver:8, irqs:8, exts:8, prio:4, firq:1, pad:3;
+#endif
+};
+
+/*
+ * Early Hardware specific Interrupt

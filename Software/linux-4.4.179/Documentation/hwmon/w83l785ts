@@ -1,0 +1,69 @@
+// SPDX-License-Identifier: GPL-2.0
+#include "tegra30.dtsi"
+
+/*
+ * Toradex Apalis T30 Module Device Tree
+ * Compatible for Revisions 1GB: V1.0A; 2GB: V1.0B, V1.0C, V1.0E
+ */
+/ {
+	memory@80000000 {
+		reg = <0x80000000 0x40000000>;
+	};
+
+	pcie@3000 {
+		status = "okay";
+		avdd-pexa-supply = <&vdd2_reg>;
+		avdd-pexb-supply = <&vdd2_reg>;
+		avdd-pex-pll-supply = <&vdd2_reg>;
+		avdd-plle-supply = <&ldo6_reg>;
+		hvdd-pex-supply = <&reg_module_3v3>;
+		vddio-pex-ctl-supply = <&reg_module_3v3>;
+		vdd-pexa-supply = <&vdd2_reg>;
+		vdd-pexb-supply = <&vdd2_reg>;
+
+		/* Apalis type specific */
+		pci@1,0 {
+			nvidia,num-lanes = <4>;
+		};
+
+		/* Apalis PCIe */
+		pci@2,0 {
+			nvidia,num-lanes = <1>;
+		};
+
+		/* I210/I211 Gigabit Ethernet Controller (on-module) */
+		pci@3,0 {
+			status = "okay";
+			nvidia,num-lanes = <1>;
+
+			pcie@0 {
+				reg = <0 0 0 0 0>;
+				local-mac-address = [00 00 00 00 00 00];
+			};
+		};
+	};
+
+	host1x@50000000 {
+		hdmi@54280000 {
+			nvidia,ddc-i2c-bus = <&hdmi_ddc>;
+			nvidia,hpd-gpio =
+				<&gpio TEGRA_GPIO(N, 7) GPIO_ACTIVE_HIGH>;
+			pll-supply = <&reg_1v8_avdd_hdmi_pll>;
+			vdd-supply = <&reg_3v3_avdd_hdmi>;
+		};
+	};
+
+	pinmux@70000868 {
+		pinctrl-names = "default";
+		pinctrl-0 = <&state_default>;
+
+		state_default: pinmux {
+			/* Analogue Audio (On-module) */
+			clk1-out-pw4 {
+				nvidia,pins = "clk1_out_pw4";
+				nvidia,function = "extperiph1";
+				nvidia,pull = <TEGRA_PIN_PULL_NONE>;
+				nvidia,tristate = <TEGRA_PIN_DISABLE>;
+				nvidia,enable-input = <TEGRA_PIN_DISABLE>;
+			};
+			dap3-fs-pp0 {

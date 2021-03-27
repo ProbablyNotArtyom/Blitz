@@ -1,0 +1,39 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+/*
+ * arch/alpha/kernel/head.S
+ *
+ * initial boot stuff.. At this point, the bootloader has already
+ * switched into OSF/1 PAL-code, and loaded us at the correct address
+ * (START_ADDR).  So there isn't much left for us to do: just set up
+ * the kernel global pointer and jump to the kernel entry-point.
+ */
+
+#include <linux/init.h>
+#include <asm/asm-offsets.h>
+#include <asm/pal.h>
+#include <asm/setup.h>
+
+__HEAD
+.globl _stext
+	.set noreorder
+	.globl	__start
+	.ent	__start
+_stext:
+__start:
+	.prologue 0
+	br	$27,1f
+1:	ldgp	$29,0($27)
+	/* We need to get current_task_info loaded up...  */
+	lda	$8,init_thread_union
+	/* ... and find our stack ... */
+	lda	$30,0x4000 - SIZEOF_PT_REGS($8)
+	/* ... and then we can start the kernel.  */
+	jsr	$26,start_kernel
+	call_pal PAL_halt
+	.end __start
+
+#ifdef CONFIG_SMP
+	.align 3
+	.globl	__smp_callin
+	.ent	__smp_callin
+	/* On

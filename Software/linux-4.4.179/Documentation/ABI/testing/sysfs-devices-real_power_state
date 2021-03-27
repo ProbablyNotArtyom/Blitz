@@ -1,0 +1,25 @@
+Linux and the 3Com EtherLink III Series Ethercards (driver v1.18c and higher)
+----------------------------------------------------------------------------
+
+This file contains the instructions and caveats for v1.18c and higher versions
+of the 3c509 driver. You should not use the driver without reading this file.
+
+release 1.0
+28 February 2002
+Current maintainer (corrections to):
+  David Ruggiero <jdr@farfalle.com>
+
+----------------------------------------------------------------------------
+
+(0) Introduction
+
+The following are notes and information on using the 3Com EtherLink III series
+ethercards in Linux. These cards are commonly known by the most widely-used
+card's 3Com model number, 3c509. They are all 10mb/s ISA-bus cards and shouldn't
+be (but sometimes are) confused with the similarly-numbered PCI-bus "3c905"
+(aka "Vortex" or "Boomerang") series.  Kernel support for the 3c509 family is
+provided by the module 3c509.c, which has code to support all of the following
+models:
+
+  3c509 (original ISA card)
+  3c509

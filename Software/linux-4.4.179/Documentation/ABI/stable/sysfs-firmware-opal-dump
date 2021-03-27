@@ -1,0 +1,49 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _v4l2-mbus-format:
+
+Media Bus Formats
+=================
+
+.. tabularcolumns:: |p{4.4cm}|p{4.4cm}|p{8.7cm}|
+
+.. c:type:: v4l2_mbus_framefmt
+
+.. flat-table:: struct v4l2_mbus_framefmt
+    :header-rows:  0
+    :stub-columns: 0
+    :widths:       1 1 2
+
+    * - __u32
+      - ``width``
+      - Image width in pixels.
+    * - __u32
+      - ``height``
+      - Image height in pixels. If ``field`` is one of ``V4L2_FIELD_TOP``,
+	``V4L2_FIELD_BOTTOM`` or ``V4L2_FIELD_ALTERNATE`` then height
+	refers to the number of lines in the field, otherwise it refers to
+	the number of lines in the frame (which is twice the field height
+	for interlaced formats).
+    * - __u32
+      - ``code``
+      - Format code, from enum
+	:ref:`v4l2_mbus_pixelcode <v4l2-mbus-pixelcode>`.
+    * - __u32
+      - ``field``
+      - Field order, from enum :c:type:`v4l2_field`. See
+	:ref:`field-order` for details.
+    * - __u32
+      - ``colorspace``
+      - Image colorspace, from enum
+	:c:type:`v4l2_colorspace`. See
+	:ref:`colorspaces` for details.
+    * - __u16
+      - ``ycbcr_enc``
+      - Y'CbCr encoding, from enum :c:type:`v4l2_ycbcr_encoding`.
+        This information supplements the ``colorspace`` and must be set by
+	the driver for capture streams and by the application for output
+	streams, see :ref:`colorspaces`.
+    * - __u16
+      - ``quantization``
+      - Quantization range, from enum :c:type:`v4l2_quantization`.
+        This information supplements the ``colorsp

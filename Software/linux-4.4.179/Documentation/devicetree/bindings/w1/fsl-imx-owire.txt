@@ -1,0 +1,16 @@
+/*
+ * Copyright (C) 2014 Thomas Petazzoni <thomas.petazzoni@free-electrons.com>
+ *
+ * This file is licensed under the terms of the GNU General Public
+ * License version 2. This program is licensed "as is" without any
+ * warranty of any kind, whether express or implied.
+ */
+
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include "orion5x-mv88f5182.dtsi"
+
+/ {
+	model = "Marvell Reference Design 88F5182 NAS";
+	compatible = "marvell,rd-88f5182-nas", "marvell,orion5x-88f5182", "marvell,ori

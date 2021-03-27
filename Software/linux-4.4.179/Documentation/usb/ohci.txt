@@ -1,0 +1,57 @@
+/*
+ * PCI-E support for CNS3xxx
+ *
+ * Copyright 2008 Cavium Networks
+ *		  Richard Liu <richard.liu@caviumnetworks.com>
+ * Copyright 2010 MontaVista Software, LLC.
+ *		  Anton Vorontsov <avorontsov@mvista.com>
+ *
+ * This file is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, Version 2, as
+ * published by the Free Software Foundation.
+ */
+
+#include <linux/init.h>
+#include <linux/kernel.h>
+#include <linux/bug.h>
+#include <linux/pci.h>
+#include <linux/io.h>
+#include <linux/ioport.h>
+#include <linux/interrupt.h>
+#include <linux/ptrace.h>
+#include <asm/mach/map.h>
+#include "cns3xxx.h"
+#include "core.h"
+
+struct cns3xxx_pcie {
+	void __iomem *host_regs; /* PCI config registers for host bridge */
+	void __iomem *cfg0_regs; /* PCI Type 0 config registers */
+	void __iomem *cfg1_regs; /* PCI Type 1 config registers */
+	unsigned int irqs[2];
+	struct resource res_io;
+	struct resource res_mem;
+	int port;
+	bool linked;
+};
+
+static struct cns3xxx_pcie *sysdata_to_cnspci(void *sysdata)
+{
+	struct pci_sys_data *root = sysdata;
+
+	return root->private_data;
+}
+
+static struct cns3xxx_pcie *pdev_to_cnspci(const struct pci_dev *dev)
+{
+	return sysdata_to_cnspci(dev->sysdata);
+}
+
+static struct cns3xxx_pcie *pbus_to_cnspci(struct pci_bus *bus)
+{
+	return sysdata_to_cnspci(bus->sysdata);
+}
+
+static void __iomem *cns3xxx_pci_map_bus(struct pci_bus *bus,
+					 unsigned int devfn, int where)
+{
+	struct cns3xxx_pcie *cnspci = pbus_to_cnsp

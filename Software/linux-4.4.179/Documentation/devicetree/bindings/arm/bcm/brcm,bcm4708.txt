@@ -1,0 +1,9 @@
+.. _frontswap:
+
+=========
+Frontswap
+=========
+
+Frontswap provides a "transcendent memory" interface for swap pages.
+In some environments, dramatic performance savings may be obtained because
+swapped pages are

@@ -1,0 +1,15 @@
+/*
+ * Copyright (C) 2015-2016 Paul Kocialkowski <contact@paulk.fr>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include "omap36xx.dtsi"
+#include <dt-bindings/input/input.h>
+
+/ {
+	model = "LG Optimus Black";
+	compatible = "lg,omap3-sniper", "ti,omap36x

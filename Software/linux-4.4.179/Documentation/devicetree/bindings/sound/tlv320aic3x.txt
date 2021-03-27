@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) 2014 MediaTek Inc.
+ * Author: Hongzhou.Yang <hongzhou.yang@mediatek.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#ifndef __DTS_MT8135_PINFUNC_H
+#define __DTS_MT8135_PINFUNC_H
+
+#include <dt-bindings/pinctrl/mt65xx.h>
+
+#define MT8135_PIN_0_MSDC0_DAT7__FUNC_GPIO0 (MTK_PIN_NO(0) | 0)
+#define MT8135_PIN_0_MSDC0_DAT7__FUNC_MSDC0_DAT7 (MTK_PIN_NO(0) | 1)
+#define MT8135_PIN_0_MSDC0_DAT7__FUNC_EINT49 (MTK_PIN_NO(0) | 2)
+#define MT8135_PIN_0_MSDC0_DAT7__FUNC_I2SOUT_DAT (MTK_PIN_NO(0) | 3)
+#define MT8135_PIN_0_MSDC0_DAT7__FUNC_DAC_DAT_OUT (MTK_PIN_NO(0) | 4)
+#define MT8135_PIN_0_MSDC0_DAT7__FUNC_PCM1_DO (MTK_PIN_NO(0) | 5)
+#define MT8135_PIN_0_MSDC0_DAT7__FUNC_SPI1_MO (MTK_PIN_NO(0) | 6)
+#define MT8135_PIN_0_MSDC0_DAT7__FUNC_NALE (MTK_PIN_NO(0) | 7)
+
+#define MT8135_PIN_1_MSDC0_DAT6__FUNC_GPIO1 (MTK_PIN_NO(1) | 0)
+#define MT8135_PIN_1_MSDC0_DAT6__FUNC_MSDC0_DAT6 (MTK_PIN_NO(1) | 1)
+#define MT8135_PIN_1_MSDC0_DAT6__FUNC_EINT48 (MTK_PIN_NO(1) | 2)
+#define MT8135_PIN_1_MSDC0_DAT6__FUNC_I2SIN_WS (MTK_PIN_NO(1) | 3)
+#define MT8135_PIN_1_MSDC0_DAT6__FUNC_DAC_WS (MTK_PIN_NO(1) | 4)
+#define MT8135_PIN_1_MSDC0_DAT6__FUNC_PCM1_WS (MTK_PIN_NO(1) | 5)
+#define MT8135_PIN_1_MSDC0_D

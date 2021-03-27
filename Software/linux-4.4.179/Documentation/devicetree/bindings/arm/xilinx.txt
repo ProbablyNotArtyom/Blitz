@@ -1,0 +1,5 @@
+FLIC (floating interrupt controller)
+====================================
+
+FLIC handles floating (non per-cpu) interrupts, i.e. I/O, service and some
+machine check interruptions. All interrupts are stored in a pe

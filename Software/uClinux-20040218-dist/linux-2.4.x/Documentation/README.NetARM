@@ -1,0 +1,90 @@
+
+  Release Notes for the NetARM Version 
+ ======================================
+
+
+This is a port of uClinux to the NetSilicon's NET+ARM processor. It
+has been tested on a NET+40 development kit and on our own board
+named "emlin".
+
+It is not yet finished (by far) and should be seen as something like
+an alpha version.
+
+The kernel can boot from a built-in ramdisk image (download separately,
+or ask me). This image file named "ramdisk.inc" is included by
+arch/armnommu/kernel/head-arm-netarm.S. You can place a symbolic link
+to your actual image file there.
+
+Serial and ethernet drivers are working so far. Ethernet is much more
+stable when the kernel is compiled with the arm-elf toolchain (instead
+of arm-uclinux).
+MTD flash erase and write functions work.
+/proc file system is available.
+Various ethernet functions work (ifconfig, route, nfs).
+
+Most other features are not yet tested.
+
+
+Differences to the CVS repository of uClinux 2.4.17, as of Apr 02, 2002:
+------------------------------------------------------------------------
+new files:
+
+Documentation/README.NetARM (this file)
+include/asm-armnommu/arch-netarm/*
+arch/armnommu/mach-netarm/*
+arch/armnommu/def-configs/netarm
+arch/armnommu/kernel/head-arm-netarm.S	(startup code)
+arch/armnommu/kernel/ramdisk.inc	(symbolic link to a ramdisk image)
+drivers/char/serial_netarm.c	(driver for the NetARM's built-in serial interfaces)
+drivers/net/netarmeth.c		(driver for the NetARM's built-in ethernet controller)
+drivers/net/netarmeth.h
+
+modified files:
+
+Documentation/Configure.help 	(a few new entries)
+Makefile 			(architecture armnommu, cross-compiler arm-elf-)
+arch/armnommu/Makefile 		(new case #if CONFIG_ARCH_NETARM...)
+arch/armnommu/config.in 	(new system type)
+arch/armnommu/kernel/Makefile 
+arch/armnommu/kernel/arch.c 	(NetARM fixup)
+arch/armnommu/kernel/entry-armv.S (NetARM macros)
+arch/armnommu/kernel/setup.c 
+arch/armnommu/mm/fault-common.c 
+arch/armnommu/mm/init.c 	(special treatment for NetARM in free_initmem)
+arch/armnommu/mm/proc-arm6,7.S 
+arch/armnommu/tools/mach-types 	(replace with recent list from Russel King)
+arch/armnommu/vmlinux-armv.lds.in 
+drivers/block/Config.in 
+drivers/block/rd.c 
+drivers/char/Config.in 
+drivers/char/Makefile 		(added serial_netarm.o)
+drivers/char/tty_io.c 		(added #ifdef CONFIG_SERIAL_NETARM_CONSOLE...)
+drivers/ieee1394/Config.in 	(preparations for a new 1394 driver, not essential)
+drivers/ieee1394/Makefile 	(dto.)
+drivers/mtd/mtdblock.c 		(some more debug output, not essential)
+drivers/mtd/mtdblock_ro.c 	(dto.)
+drivers/mtd/mtdchar.c 		(dto.)
+drivers/net/Config.in 
+drivers/net/Makefile 
+fs/binfmt_flat.c 
+include/asm-armnommu/io.h 
+include/asm-armnommu/mach/dma.h 
+include/asm-armnommu/uaccess.h 
+include/linux/compiler.h 
+mmnommu/bootmem.c 	(invalid address warning in function reserve_bootmem_core)
+------------------------------------------------------------------------
+
+
+To do:
+------
+Rework memory management parameters, so that all RAM is controlled by the
+memory manager (and the ramdisk data can be freed after unpacking).
+Currently the lowest 2 MB are "off limits" for the memory manager.
+
+Implement a "real" boot loader, separate boot loader, kernel, ramdisk image.
+
+
+
+Rolf Peukert
+IMMS gGmbH
+rolf.peukert@imms.de

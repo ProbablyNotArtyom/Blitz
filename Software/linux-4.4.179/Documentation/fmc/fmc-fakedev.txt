@@ -1,0 +1,91 @@
+/*
+ * Copyright (C) 2014 STMicroelectronics (R&D) Limited.
+ * Author: Giuseppe Cavallaro <peppe.cavallaro@st.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+#include <dt-bindings/clock/stih407-clks.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/media/c8sectpfe.h>
+/ {
+	leds {
+		compatible = "gpio-leds";
+		red {
+			label = "Front Panel LED";
+			gpios = <&pio4 1 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "heartbeat";
+		};
+		green {
+			gpios = <&pio1 3 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+	};
+
+	sound: sound {
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "STI-B2120";
+		status = "okay";
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		simple-audio-card,dai-link@0 {
+			reg = <0>;
+			/* HDMI */
+			format = "i2s";
+			mclk-fs = <128>;
+			cpu {
+				sound-dai = <&sti_uni_player0>;
+			};
+
+			codec {
+				sound-dai = <&sti_hdmi>;
+			};
+		};
+
+		simple-audio-card,dai-link@1 {
+			reg = <1>;
+			/* DAC */
+			format = "i2s";
+			mclk-fs = <256>;
+			frame-inversion = <1>;
+			cpu {
+				sound-dai = <&sti_uni_player2>;
+			};
+
+			codec {
+				sound-dai = <&sti_sasg_codec 1>;
+			};
+		};
+
+		simple-audio-card,dai-link@2 {
+			reg = <2>;
+			/* SPDIF */
+			format = "left_j";
+			mclk-fs = <128>;
+			cpu {
+				sound-dai = <&sti_uni_player3>;
+			};
+
+			codec {
+				sound-dai = <&sti_sasg_codec 0>;
+			};
+		};
+	};
+
+	soc {
+		sbc_serial0: serial@9530000 {
+			status = "okay";
+		};
+
+		pwm0: pwm@9810000 {
+			status = "okay";
+		};
+
+		pwm1: pwm@9510000 {
+			status = "okay";
+		};
+
+		ssc2: i2c@9842000 {
+			status = "

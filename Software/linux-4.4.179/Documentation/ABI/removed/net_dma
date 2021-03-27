@@ -1,0 +1,17 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _V4L2-PIX-FMT-Y41P:
+
+**************************
+V4L2_PIX_FMT_Y41P ('Y41P')
+**************************
+
+
+Format with ¼ horizontal chroma resolution, also known as YUV 4:1:1
+
+
+Description
+===========
+
+In this format each 12 bytes is eight pixels. In the twelve bytes are
+two CbCr pairs and eight Y's.

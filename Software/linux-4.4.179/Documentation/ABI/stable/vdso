@@ -1,0 +1,38 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _tuner:
+
+*********************
+Tuners and Modulators
+*********************
+
+
+Tuners
+======
+
+Video input devices can have one or more tuners demodulating a RF
+signal. Each tuner is associated with one or more video inputs,
+depending on the number of RF connectors on the tuner. The ``type``
+field of the respective struct :c:type:`v4l2_input`
+returned by the :ref:`VIDIOC_ENUMINPUT` ioctl is
+set to ``V4L2_INPUT_TYPE_TUNER`` and its ``tuner`` field contains the
+index number of the tuner.
+
+Radio input devices have exactly one tuner with index zero, no video
+inputs.
+
+To query and change tuner properties applications use the
+:ref:`VIDIOC_G_TUNER <VIDIOC_G_TUNER>` and
+:ref:`VIDIOC_S_TUNER <VIDIOC_G_TUNER>` ioctls, respectively. The
+struct :c:type:`v4l2_tuner` returned by :ref:`VIDIOC_G_TUNER <VIDIOC_G_TUNER>`
+also contains signal status information applicable when the tuner of the
+current video or radio input is queried.
+
+.. note::
+
+   :ref:`VIDIOC_S_TUNER <VIDIOC_G_TUNER>` does not switch the
+   current tuner, when there is more than one at all. The tuner is solely
+   determined by the current video input. Drivers must support both ioctls
+   and set the ``V4L2_CAP_TUNER`` flag in the struct :c:type:`v4l2_capability`
+   returned by the :ref:`VIDIOC_QUERYCAP` ioctl when the
+   d

@@ -1,0 +1,30 @@
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef _ALPHA_RWSEM_H
+#define _ALPHA_RWSEM_H
+
+/*
+ * Written by Ivan Kokshaysky <ink@jurassic.park.msu.ru>, 2001.
+ * Based on asm-alpha/semaphore.h and asm-i386/rwsem.h
+ */
+
+#ifndef _LINUX_RWSEM_H
+#error "please don't include asm/rwsem.h directly, use linux/rwsem.h instead"
+#endif
+
+#ifdef __KERNEL__
+
+#include <linux/compiler.h>
+
+#define RWSEM_UNLOCKED_VALUE		0x0000000000000000L
+#define RWSEM_ACTIVE_BIAS		0x0000000000000001L
+#define RWSEM_ACTIVE_MASK		0x00000000ffffffffL
+#define RWSEM_WAITING_BIAS		(-0x0000000100000000L)
+#define RWSEM_ACTIVE_READ_BIAS		RWSEM_ACTIVE_BIAS
+#define RWSEM_ACTIVE_WRITE_BIAS		(RWSEM_WAITING_BIAS + RWSEM_ACTIVE_BIAS)
+
+static inline int ___down_read(struct rw_semaphore *sem)
+{
+	long oldcount;
+#ifndef	CONFIG_SMP
+	oldcount = sem->count.counter;
+	sem->count.counter += RWSEM_ACTIVE_READ_BIAS;

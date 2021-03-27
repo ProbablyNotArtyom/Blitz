@@ -1,0 +1,33 @@
+Adding a New System Call
+========================
+
+This document describes what's involved in adding a new system call to the
+Linux kernel, over and above the normal submission advice in
+:ref:`Documentation/process/submitting-patches.rst <submittingpatches>`.
+
+
+System Call Alternatives
+------------------------
+
+The first thing to consider when adding a new system call is whether one of
+the alternatives might be suitable instead.  Although system calls are the
+most traditional and most obvious interaction points between userspace and the
+kernel, there are other possibilities -- choose what fits best for your
+interface.
+
+ - If the operations involved can be made to look like a filesystem-like
+   object, it may make more sense to create a new filesystem or device.  This
+   also makes it easier to encapsulate the new functionality in a kernel module
+   rather than requiring it to be built into the main kernel.
+
+     - If the new functionality involves operations where the kernel notifies
+       userspace that something has happened, then returning a new file
+       descriptor for the relevant object allows userspace to use
+       ``poll``/``select``/``epoll`` to receive that notification.
+     - However, operations that don't map to
+       :manpage:`read(2)`/:manpage:`write(2)`-like operations
+       have to be implemented as :manpage:`ioctl(2)` requests, which can lead
+       to a somewhat opaque API.
+
+ - If you're just exposing runtime system information, a new node in sysfs
+   (see ``Documentation/filesy

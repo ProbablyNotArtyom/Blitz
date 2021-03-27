@@ -1,0 +1,100 @@
+	   BusLogic MultiMaster and FlashPoint SCSI Driver for Linux
+
+			 Version 2.0.15 for Linux 2.0
+			 Version 2.1.15 for Linux 2.1
+
+			      PRODUCTION RELEASE
+
+				17 August 1998
+
+			       Leonard N. Zubkoff
+			       Dandelion Digital
+			       lnz@dandelion.com
+
+	 Copyright 1995-1998 by Leonard N. Zubkoff <lnz@dandelion.com>
+
+
+				 INTRODUCTION
+
+BusLogic, Inc. designed and manufactured a variety of high performance SCSI
+host adapters which share a common programming interface across a diverse
+collection of bus architectures by virtue of their MultiMaster ASIC technology.
+BusLogic was acquired by Mylex Corporation in February 1996, but the products
+supported by this driver originated under the BusLogic name and so that name is
+retained in the source code and documentation.
+
+This driver supports all present BusLogic MultiMaster Host Adapters, and should
+support any future MultiMaster designs with little or no modification.  More
+recently, BusLogic introduced the FlashPoint Host Adapters, which are less
+costly and rely on the host CPU, rather than including an onboard processor.
+Despite not having an onboard CPU, the FlashPoint Host Adapters perform very
+well and have very low command latency.  BusLogic has recently provided me with
+the FlashPoint Driver Developer's Kit, which comprises documentation and freely
+redistributable source code for the FlashPoint SCCB Manager.  The SCCB Manager
+is the library of code that runs on the host CPU and performs functions
+analogous to the firmware on the MultiMaster Host Adapters.  Thanks to their
+having provided the SCCB Manager, this driver now supports the FlashPoint Host
+Adapters as well.
+
+My primary goals in writing this completely new BusLogic driver for Linux are
+to achieve the full performance that BusLogic SCSI Host Adapters and modern
+SCSI peripherals are capable of, and to provide a highly robust driver that can
+be depended upon for high performance mission critical applications.  All of
+the major performance features can be configured from the Linux kernel command
+line or at module initialization time, allowing individual installations to
+tune driver performance and error recovery to their particular needs.
+
+The latest information on Linux support for BusLogic SCSI Host Adapters, as
+well as the most recent release of this driver and the latest firmware for the
+BT-948/958/958D, will always be available from my Linux Home Page at URL
+"http://sourceforge.net/projects/dandelion/".
+
+Bug reports should be sent via electronic mail to "lnz@dandelion.com".  Please
+include with the bug report the complete configuration messages reported by the
+driver and SCSI subsystem at startup, along with any subsequent system messages
+relevant to SCSI operations, and a detailed description of your system's
+hardware configuration.
+
+Mylex has been an excellent company to work with and I highly recommend their
+products to the Linux community.  In November 1995, I was offered the
+opportunity to become a beta test site for their latest MultiMaster product,
+the BT-948 PCI Ultra SCSI Host Adapter, and then again for the BT-958 PCI Wide
+Ultra SCSI Host Adapter in January 1996.  This was mutually beneficial since
+Mylex received a degree and kind of testing that their own testing group cannot
+readily achieve, and the Linux community has available high performance host
+adapters that have been well tested with Linux even before being brought to
+market.  This relationship has also given me the opportunity to interact
+directly with their technical staff, to understand more about the internal
+workings of their products, and in turn to educate them about the needs and
+potential of the Linux community.
+
+More recently, Mylex has reaffirmed the company's interest in supporting the
+Linux community, and I am now working on a Linux driver for the DAC960 PCI RAID
+Controllers.  Mylex's interest and support is greatly appreciated.
+
+Unlike some other vendors, if you contact Mylex Technical Support with a
+problem and are running Linux, they will not tell you that your use of their
+products is unsupported.  Their latest product marketing literature even states
+"Mylex SCSI host adapters are compatible with all major operating systems
+including: ... Linux ...".
+
+Mylex Corporation is located at 34551 Ardenwood Blvd., Fremont, California
+94555, USA and can be reached at 510/796-6100 or on the World Wide Web at
+http://www.mylex.com.  Mylex HBA Technical Support can be reached by electronic
+mail at techsup@mylex.com, by Voice at 510/608-2400, or by FAX at 510/745-7715.
+Contact information for offices in Europe and Japan is available on the Web
+site.
+
+
+				DRIVER FEATURES
+
+o Configuration Reporting and Testing
+
+  During system initialization, the driver reports extensively on the host
+  adapter hardware configuration, including the synchronous transfer parameters
+  requested and negotiated with each target device.  AutoSCSI settings for
+  Synchronous Negotiation, Wide Negotiation, and Disconnect/Reconnect are
+  reported for each target device, as well as the status of Tagged Queuing.
+  If the same setting is in effect for all target devices, then a single word
+  or phrase is used; otherwise, a letter is provided for each target device to
+  indic

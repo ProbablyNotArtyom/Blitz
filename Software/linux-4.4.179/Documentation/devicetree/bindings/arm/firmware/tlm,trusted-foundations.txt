@@ -1,0 +1,16 @@
+.. _page_migration:
+
+==============
+Page migration
+==============
+
+Page migration allows the moving of the physical location of pages between
+nodes in a numa system while the process is running. This means that the
+virtual addresses that the process sees do not change. However, the
+system rearranges the physical location of those pages.
+
+The main intend of page migration is to reduce the latency of memory access
+by moving pages near to the processor where the process accessing that memory
+is running.
+
+Page migration allows a process to manually relocate the node on 

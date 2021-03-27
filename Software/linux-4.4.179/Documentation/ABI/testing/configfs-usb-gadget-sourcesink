@@ -1,0 +1,26 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_DQEVENT:
+
+********************
+ioctl VIDIOC_DQEVENT
+********************
+
+Name
+====
+
+VIDIOC_DQEVENT - Dequeue event
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_DQEVENT, struct v4l2_event *argp )
+    :name: VIDIOC_DQEVENT
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor retu

@@ -1,0 +1,56 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _VIDIOC_REQBUFS:
+
+********************
+ioctl VIDIOC_REQBUFS
+********************
+
+Name
+====
+
+VIDIOC_REQBUFS - Initiate Memory Mapping, User Pointer I/O or DMA buffer I/O
+
+
+Synopsis
+========
+
+.. c:function:: int ioctl( int fd, VIDIOC_REQBUFS, struct v4l2_requestbuffers *argp )
+    :name: VIDIOC_REQBUFS
+
+
+Arguments
+=========
+
+``fd``
+    File descriptor returned by :ref:`open() <func-open>`.
+
+``argp``
+    Pointer to struct :c:type:`v4l2_requestbuffers`.
+
+Description
+===========
+
+This ioctl is used to initiate :ref:`memory mapped <mmap>`,
+:ref:`user pointer <userp>` or :ref:`DMABUF <dmabuf>` based I/O.
+Memory mapped buffers are located in device memory and must be allocated
+with this ioctl before they can be mapped into the application's address
+space. User buffers are allocated by applications themselves, and this
+ioctl is merely used to switch the driver into user pointer I/O mode and
+to setup some internal structures. Similarly, DMABUF buffers are
+allocated by applications through a device driver, and this ioctl only
+configures the driver into DMABUF I/O mode without performing any direct
+allocation.
+
+To allocate device buffers applications initialize all fields of the
+struct :c:type:`v4l2_requestbuffers` structure. They set the ``type``
+field to the respective stream or buffer type, the ``count`` field to
+the desired number of buffers, ``memory`` must be set to the requested
+I/O method and the ``reserved`` array must be zeroed. When the ioctl is
+called with a pointer to this structure the driver will attempt to
+allocate the requested number of buffers and it stores the actual number
+allocated in the ``count`` field. It can be smaller than the number
+requested, even zero, when the driver runs out of free memory. A larger
+number is also possible when the driver requires more buffers to
+function correctly. For example video output requires at least two
+buffe

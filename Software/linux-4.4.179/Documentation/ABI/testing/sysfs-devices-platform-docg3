@@ -1,0 +1,28 @@
+Upgrading BIOS using intel-spi
+------------------------------
+
+Many Intel CPUs like Baytrail and Braswell include SPI serial flash host
+controller which is used to hold BIOS and other platform specific data.
+Since contents of the SPI serial flash is crucial for machine to function,
+it is typically protected by different hardware protection mechanisms to
+avoid accidental (or on purpose) overwrite of the content.
+
+Not all manufacturers protect the SPI serial flash, mainly because it
+allows upgrading the BIOS image directly from an OS.
+
+The intel-spi driver makes it possible to read and write the SPI serial
+flash, if certain protection bits are not set and locked. If it finds
+any of them set, the whole MTD device is made read-only to prevent
+partial overwrites. By default the driver exposes SPI serial flash
+contents as read-only but it can be changed from kernel command line,
+passing "intel-spi.writeable=1".
+
+Please keep in mind that overwriting the BIOS image on SPI serial flash
+might render the machine unbootable and requires special equipment like
+Dediprog to revive. You have been warned!
+
+Below are the steps how to upgrade MinnowBoard MAX BIOS directly from
+Linux.
+
+ 1) Download and extract the latest Minnowboard MAX BIOS SPI image
+    [1]. At the time writ

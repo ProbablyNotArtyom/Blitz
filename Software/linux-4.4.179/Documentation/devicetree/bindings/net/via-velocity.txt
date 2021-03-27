@@ -1,0 +1,15 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * SAMSUNG EXYNOS5422 SoC cpu device tree source
+ *
+ * Copyright (c) 2015 Samsung Electronics Co., Ltd.
+ *		http://www.samsung.com
+ *
+ * This file provides desired ordering for Exynos5422: CPU[0123] being the A7.
+ *
+ * The Exynos5420, 5422 and 5800 actually share the same CPU configuration
+ * but particular boards choose different booting order.
+ *
+ * Exynos5420 and Exynos5800 always boot from Cortex-A15. On Exynos5422
+ * booting cluster (big or LITTLE) is chosen by IROM code by reading
+ * the gpg2-1 GPIO. By default all Exynos5

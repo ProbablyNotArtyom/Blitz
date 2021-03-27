@@ -1,0 +1,140 @@
+Chinese translated version of Documentation/media/v4l-drivers/omap3isp.rst
+
+If you have any comment or update to the content, please contact the
+original document maintainer directly.  However, if you have a problem
+communicating in English you can also ask the Chinese maintainer for
+help.  Contact the Chinese maintainer if this translation is outdated
+or if there is a problem with the translation.
+
+Maintainer: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+	  Sakari Ailus <sakari.ailus@iki.fi>
+	  David Cohen <dacohen@gmail.com>
+Chinese maintainer: Fu Wei <tekkamanninja@gmail.com>
+---------------------------------------------------------------------
+Documentation/media/v4l-drivers/omap3isp.rst 的中文翻译
+
+如果想评论或更新本文的内容，请直接联系原文档的维护者。如果你使用英文
+交流有困难的话，也可以向中文版维护者求助。如果本翻译更新不及时或者翻
+译存在问题，请联系中文版维护者。
+英文版维护者： Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+	  Sakari Ailus <sakari.ailus@iki.fi>
+	  David Cohen <dacohen@gmail.com>
+中文版维护者： 傅炜 Fu Wei <tekkamanninja@gmail.com>
+中文版翻译者： 傅炜 Fu Wei <tekkamanninja@gmail.com>
+中文版校译者： 傅炜 Fu Wei <tekkamanninja@gmail.com>
+
+
+以下为正文
+---------------------------------------------------------------------
+OMAP 3 图像信号处理器 (ISP) 驱动
+
+Copyright (C) 2010 Nokia Corporation
+Copyright (C) 2009 Texas Instruments, Inc.
+
+联系人: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+	  Sakari Ailus <sakari.ailus@iki.fi>
+	  David Cohen <dacohen@gmail.com>
+
+
+介绍
+===
+
+本文档介绍了由 drivers/media/video/omap3isp 加载的德州仪器
+（TI）OMAP 3 图像信号处理器 (ISP) 驱动。原始驱动由德州仪器（TI）
+编写，但此后由诺基亚重写了两次。
+
+驱动已在以下 OMAP 3 系列的芯片中成功使用：
+
+	3430
+	3530
+	3630
+
+驱动实现了 V4L2、媒体控制器和 v4l2_subdev 接口。支持内核中使用
+v4l2_subdev 接口的传感器、镜头和闪光灯驱动。
+
+
+拆分为子设备
+==========
+
+OMAP 3 ISP 被拆分为 V4L2 子设备，ISP中的每个模块都由一个子设备
+来表示。每个子设备向用户空间提供一个 V4L2 子设备接口。
+
+	OMAP3 ISP CCP2
+	OMAP3 ISP CSI2a
+	OMAP3 ISP CCDC
+	OMAP3 ISP preview
+	OMAP3 ISP resizer
+	OMAP3 ISP AEWB
+	OMAP3 ISP AF
+	OMAP3 ISP histogram
+
+ISP 中每个可能的连接都通过一个链接嵌入到媒体控制器接口中。详见例程 [2]。
+
+
+控制 OMAP 3 ISP
+==============
+
+通常，对 OMAP 3 ISP 的配置会在下一帧起始时生效。在传感器垂直消隐期间，
+模块变为空闲时完成配置。在内存到内存的操作中，视频管道一次处理一帧。
+应用配置应在帧间完成。
+
+ISP 中的所有模块，除 CSI-2 和 （可能存在的）CCP2 接收器外，都必须
+接收完整的帧数据。因此，传感器必须保证从不发送部分帧数据给ISP。
+
+Autoidle（自动空闲）功能至少在 3430 的 ISP 模块中确实存在一些问题。
+当 omap3isp 模块参数 autoidle 非零时，autoidle（自动空闲）功能
+仅在 3630 中启用了。
+
+
+事件机制
+======
+
+OMAP 3 ISP 驱动在 CCDC 和统计（AEWB、AF 和 直方图）子设备中支持
+V4L2 事件机制接口。
+
+CCDC 子设备通过 HS_VS 中断，处理 V4L2_EVENT_FRAME_SYNC 类型
+事件，用于告知帧起始。早期版本的驱动则使用 V4L2_EVENT_OMAP3ISP_HS_VS。
+当在 CCDC 模块中接收到起始帧的第一行时，会准确地触发事件。这个事件
+可以在 CCDC 子设备中“订阅”。
+
+（当使用并行接口时，必须注意正确地配置 VS 信号极性。而当使用串行接收时
+这个会自动校正。）
+
+每个统计子设备都可以产生事件。每当一个统计缓冲区可由用户空间应用程序
+通过 VIDIOC_OMAP3ISP_STAT_REQ IOCTL 操作获取时，就会产生一个
+事件。当前存在以下事件：
+
+	V4L2_EVENT_OMAP3ISP_AEWB
+	V4L2_EVENT_OMAP3ISP_AF
+	V4L2_EVENT_OMAP3ISP_HIST
+
+这些 ioctl 的事件数据类型为 struct omap3isp_stat_event_status
+结构体。如果出现计算错误的统计，也同样会产生一个事件，但没有相关的统计
+数据缓冲区。这种情况下 omap3isp_stat_event_status.buf_err 会被
+设置为非零值。
+
+
+私有 IOCTL
+==========
+
+OMAP 3 ISP 驱动支持标准的 V4L2 IOCTL 以及可能存在且实用的控制。但
+ISP 提供的许多功能都不在标准 IOCTL 之列，例如 gamma（伽马）表和统计
+数据采集配置等。
+
+通常，会有一个私有 ioctl 用于配置每个包含硬件依赖功能的模块。
+
+支持以下私有 IOCTL：
+
+	VIDIOC_OMAP3ISP_CCDC_CFG
+	VIDIOC_OMAP3ISP_PRV_CFG
+	VIDIOC_OMAP3ISP_AEWB_CFG
+	VIDIOC_OMAP3ISP_HIST_CFG
+	VIDIOC_OMAP3ISP_AF_CFG
+	VIDIOC_OMAP3ISP_STAT_REQ
+	VIDIOC_OMAP3ISP_STAT_EN
+
+在 include/linux/omap3isp.h 中描述了这些 ioctl 使用的参数结构体。
+与特定 ISP 模块相关的 ISP 自身的详细功能在技术参考手册 (TRMs)中有
+描述，详见文档结尾。
+
+虽然�

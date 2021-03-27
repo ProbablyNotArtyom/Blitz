@@ -1,0 +1,64 @@
+Documentation for /proc/sys/kernel/*	kernel version 2.2.10
+	(c) 1998, 1999,  Rik van Riel <riel@nl.linux.org>
+	(c) 2009,        Shen Feng<shen@cn.fujitsu.com>
+
+For general info and legal blurb, please look in README.
+
+==============================================================
+
+This file contains documentation for the sysctl files in
+/proc/sys/kernel/ and is valid for Linux kernel version 2.2.
+
+The files in this directory can be used to tune and monitor
+miscellaneous and general things in the operation of the Linux
+kernel. Since some of the files _can_ be used to screw up your
+system, it is advisable to read both documentation and source
+before actually making adjustments.
+
+Currently, these files might (depending on your configuration)
+show up in /proc/sys/kernel:
+
+- acct
+- acpi_video_flags
+- auto_msgmni
+- bootloader_type	     [ X86 only ]
+- bootloader_version	     [ X86 only ]
+- callhome		     [ S390 only ]
+- cap_last_cap
+- core_pattern
+- core_pipe_limit
+- core_uses_pid
+- ctrl-alt-del
+- dmesg_restrict
+- domainname
+- hostname
+- hotplug
+- hardlockup_all_cpu_backtrace
+- hardlockup_panic
+- hung_task_panic
+- hung_task_check_count
+- hung_task_timeout_secs
+- hung_task_check_interval_secs
+- hung_task_warnings
+- hyperv_record_panic_msg
+- kexec_load_disabled
+- kptr_restrict
+- l2cr                        [ PPC only ]
+- modprobe                    ==> Documentation/debugging-modules.txt
+- modules_disabled
+- msg_next_id		      [ sysv ipc ]
+- msgmax
+- msgmnb
+- msgmni
+- nmi_watchdog
+- osrelease
+- ostype
+- overflowgid
+- overflowuid
+- panic
+- panic_on_oops
+- panic_on_stackoverflow
+- panic_on_unrecovered_nmi
+- panic_on_warn
+- panic_on_rcu_stall
+- perf_cpu_tim

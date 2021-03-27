@@ -1,0 +1,75 @@
+// SPDX-License-Identifier: GPL-2.0
+#include "qcom-apq8064-v2.0.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+
+/ {
+	model = "Qualcomm APQ8064/IFC6410";
+	compatible = "qcom,apq8064-ifc6410", "qcom,apq8064";
+
+	aliases {
+		serial0 = &gsbi7_serial;
+		serial1 = &gsbi6_serial;
+		i2c0 = &gsbi1_i2c;
+		i2c1 = &gsbi2_i2c;
+		i2c2 = &gsbi3_i2c;
+		i2c3 = &gsbi4_i2c;
+		spi0 = &gsbi5_spi;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	pwrseq {
+		compatible = "simple-bus";
+
+		sdcc4_pwrseq: sdcc4_pwrseq {
+			pinctrl-names = "default";
+			pinctrl-0 = <&wlan_default_gpios>;
+			compatible = "mmc-pwrseq-simple";
+			reset-gpios = <&pm8921_gpio 43 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		pinctrl-names = "default";
+		pinctrl-0 = <&notify_led>;
+
+		led@1 {
+			label = "apq8064:green:user1";
+			gpios = <&pm8921_gpio 18 GPIO_ACTIVE_HIGH>;
+			default-state = "on";
+		};
+	};
+
+	hdmi-out {
+		compatible = "hdmi-connector";
+		type = "d";
+
+		port {
+			hdmi_con: endpoint {
+				remote-endpoint = <&hdmi_out>;
+			};
+		};
+	};
+
+	soc {
+		pinctrl@800000 {
+			card_detect: card_detect {
+				mux {
+					pins = "gpio26";
+					function = "gpio";
+					bias-disable;
+				};
+			};
+
+			pcie_pins: pcie_pinmux {
+				mux {
+					pins = "gpio27";
+					function = "gpio";
+				};
+				conf {
+					pins = "gpio27";
+					drive-strength 

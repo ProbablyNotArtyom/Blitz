@@ -1,0 +1,26 @@
+.. SPDX-License-Identifier: GPL-2.0+
+
+Linux* Base Driver for the Intel(R) PRO/100 Family of Adapters
+==============================================================
+
+June 1, 2018
+
+Contents
+========
+
+- In This Release
+- Identifying Your Adapter
+- Building and Installation
+- Driver Configuration Parameters
+- Additional Configurations
+- Known Issues
+- Support
+
+
+In This Release
+===============
+
+This file describes the Linux* Base Driver for the Intel(R) PRO/100 Family of
+Adapters. This driver includes support for Itanium(R)2-based systems.
+
+For questions related to hardware requirements, refer t

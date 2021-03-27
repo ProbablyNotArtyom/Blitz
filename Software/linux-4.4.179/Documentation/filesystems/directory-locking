@@ -1,0 +1,236 @@
+/*
+ * sama5d3.dtsi - Device Tree Include file for SAMA5D3 family SoC
+ *                applies to SAMA5D31, SAMA5D33, SAMA5D34, SAMA5D35, SAMA5D36 SoC
+ *
+ *  Copyright (C) 2013 Atmel,
+ *                2013 Ludovic Desroches <ludovic.desroches@atmel.com>
+ *
+ * Licensed under GPLv2 or later.
+ */
+
+#include "skeleton.dtsi"
+#include <dt-bindings/dma/at91.h>
+#include <dt-bindings/pinctrl/at91.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/clock/at91.h>
+
+/ {
+	model = "Atmel SAMA5D3 family SoC";
+	compatible = "atmel,sama5d3", "atmel,sama5";
+	interrupt-parent = <&aic>;
+
+	aliases {
+		serial0 = &dbgu;
+		serial1 = &usart0;
+		serial2 = &usart1;
+		serial3 = &usart2;
+		serial4 = &usart3;
+		serial5 = &uart0;
+		gpio0 = &pioA;
+		gpio1 = &pioB;
+		gpio2 = &pioC;
+		gpio3 = &pioD;
+		gpio4 = &pioE;
+		tcb0 = &tcb0;
+		i2c0 = &i2c0;
+		i2c1 = &i2c1;
+		i2c2 = &i2c2;
+		ssc0 = &ssc0;
+		ssc1 = &ssc1;
+		pwm0 = &pwm0;
+	};
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		cpu@0 {
+			device_type = "cpu";
+			compatible = "arm,cortex-a5";
+			reg = <0x0>;
+		};
+	};
+
+	pmu {
+		compatible = "arm,cortex-a5-pmu";
+		interrupts = <46 IRQ_TYPE_LEVEL_HIGH 0>;
+	};
+
+	memory {
+		reg = <0x20000000 0x8000000>;
+	};
+
+	clocks {
+		slow_xtal: slow_xtal {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <0>;
+		};
+
+		main_xtal: main_xtal {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <0>;
+		};
+
+		adc_op_clk: adc_op_clk{
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <1000000>;
+		};
+	};
+
+	sram: sram@300000 {
+		compatible = "mmio-sram";
+		reg = <0x00300000 0x20000>;
+	};
+
+	ahb {
+		compatible = "simple-bus";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		apb {
+			compatible = "simple-bus";
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges;
+
+			mmc0: mmc@f0000000 {
+				compatible = "atmel,hsmci";
+				reg = <0xf0000000 0x600>;
+				interrupts = <21 IRQ_TYPE_LEVEL_HIGH 0>;
+				dmas = <&dma0 2 AT91_DMA_CFG_PER_ID(0)>;
+				dma-names = "rxtx";
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_mmc0_clk_cmd_dat0 &pinctrl_mmc0_dat1_3 &pinctrl_mmc0_dat4_7>;
+				status = "disabled";
+				#address-cells = <1>;
+				#size-cells = <0>;
+				clocks = <&mci0_clk>;
+				clock-names = "mci_clk";
+			};
+
+			spi0: spi@f0004000 {
+				#address-cells = <1>;
+				#size-cells = <0>;
+				compatible = "atmel,at91rm9200-spi";
+				reg = <0xf0004000 0x100>;
+				interrupts = <24 IRQ_TYPE_LEVEL_HIGH 3>;
+				dmas = <&dma0 2 AT91_DMA_CFG_PER_ID(1)>,
+				       <&dma0 2 AT91_DMA_CFG_PER_ID(2)>;
+				dma-names = "tx", "rx";
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_spi0>;
+				clocks = <&spi0_clk>;
+				clock-names = "spi_clk";
+				status = "disabled";
+			};
+
+			ssc0: ssc@f0008000 {
+				compatible = "atmel,at91sam9g45-ssc";
+				reg = <0xf0008000 0x4000>;
+				interrupts = <38 IRQ_TYPE_LEVEL_HIGH 4>;
+				dmas = <&dma0 2 AT91_DMA_CFG_PER_ID(13)>,
+				       <&dma0 2 AT91_DMA_CFG_PER_ID(14)>;
+				dma-names = "tx", "rx";
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_ssc0_tx &pinctrl_ssc0_rx>;
+				clocks = <&ssc0_clk>;
+				clock-names = "pclk";
+				status = "disabled";
+			};
+
+			tcb0: timer@f0010000 {
+				compatible = "atmel,at91sam9x5-tcb", "simple-mfd", "syscon";
+				#address-cells = <1>;
+				#size-cells = <0>;
+				reg = <0xf0010000 0x100>;
+				interrupts = <26 IRQ_TYPE_LEVEL_HIGH 0>;
+				clocks = <&tcb0_clk>, <&clk32k>;
+				clock-names = "t0_clk", "slow_clk";
+			};
+
+			i2c0: i2c@f0014000 {
+				compatible = "atmel,at91sam9x5-i2c";
+				reg = <0xf0014000 0x4000>;
+				interrupts = <18 IRQ_TYPE_LEVEL_HIGH 6>;
+				dmas = <&dma0 2 AT91_DMA_CFG_PER_ID(7)>,
+				       <&dma0 2 AT91_DMA_CFG_PER_ID(8)>;
+				dma-names = "tx", "rx";
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_i2c0>;
+				#address-cells = <1>;
+				#size-cells = <0>;
+				clocks = <&twi0_clk>;
+				status = "disabled";
+			};
+
+			i2c1: i2c@f0018000 {
+				compatible = "atmel,at91sam9x5-i2c";
+				reg = <0xf0018000 0x4000>;
+				interrupts = <19 IRQ_TYPE_LEVEL_HIGH 6>;
+				dmas = <&dma0 2 AT91_DMA_CFG_PER_ID(9)>,
+				       <&dma0 2 AT91_DMA_CFG_PER_ID(10)>;
+				dma-names = "tx", "rx";
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_i2c1>;
+				#address-cells = <1>;
+				#size-cells = <0>;
+				clocks = <&twi1_clk>;
+				status = "disabled";
+			};
+
+			usart0: serial@f001c000 {
+				compatible = "atmel,at91sam9260-usart";
+				reg = <0xf001c000 0x100>;
+				interrupts = <12 IRQ_TYPE_LEVEL_HIGH 5>;
+				dmas = <&dma0 2 AT91_DMA_CFG_PER_ID(3)>,
+				       <&dma0 2 (AT91_DMA_CFG_PER_ID(4) | AT91_DMA_CFG_FIFOCFG_ASAP)>;
+				dma-names = "tx", "rx";
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart0>;
+				clocks = <&usart0_clk>;
+				clock-names = "usart";
+				status = "disabled";
+			};
+
+			usart1: serial@f0020000 {
+				compatible = "atmel,at91sam9260-usart";
+				reg = <0xf0020000 0x100>;
+				interrupts = <13 IRQ_TYPE_LEVEL_HIGH 5>;
+				dmas = <&dma0 2 AT91_DMA_CFG_PER_ID(5)>,
+				       <&dma0 2 (AT91_DMA_CFG_PER_ID(6) | AT91_DMA_CFG_FIFOCFG_ASAP)>;
+				dma-names = "tx", "rx";
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_usart1>;
+				clocks = <&usart1_clk>;
+				clock-names = "usart";
+				status = "disabled";
+			};
+
+			uart0: serial@f0024000 {
+				compatible = "atmel,at91sam9260-usart";
+				reg = <0xf0024000 0x100>;
+				interrupts = <16 IRQ_TYPE_LEVEL_HIGH 5>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&pinctrl_uart0>;
+				clocks = <&uart0_clk>;
+				clock-names = "usart";
+				status = "disabled";
+			};
+
+			pwm0: pwm@f002c000 {
+				compatible = "atmel,sama5d3-pwm";
+				reg = <0xf002c000 0x300>;
+				interrupts = <28 IRQ_TYPE_LEVEL_HIGH 4>;
+				#pwm-cells = <3>;
+				clocks = <&pwm_clk>;
+				status = "disabled";
+			};
+
+			isi: isi@f0034000 {
+				compatible = "atmel,at91sam9g45-isi";
+				reg = <0xf0034000 0x4000>;
+				interrupts = <37 IRQ_TYPE_LEVEL_HIGH 5>;
+				pinctrl-names = "de

@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Digi International's ConnectCore6UL SBC Express board device tree source
+ *
+ * Copyright 2018 Digi International, Inc.
+ *
+ */
+
+/dts-v1/;
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include "imx6ul.dtsi"
+#include "imx6ul-ccimx6ulsom.dtsi"
+
+/ {
+	model = "Digi International ConnectCore 6UL SBC Express.";
+	compatible = "digi,ccimx6ulsbcexpress", "digi,ccimx6ulsom",
+		     "fsl,imx6ul";
+};
+
+&adc1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_adc1>;
+	status = "okay";
+};
+
+&can1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_flexcan1>;
+	xceiver-supply = <&ext_3v3>;
+	status = "okay";
+};
+
+&ecspi3 {
+	cs-gpios = <&gpio1 20 GPIO_ACTIVE_LOW>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_ecspi3_master>;
+	status = "okay";
+};
+
+&fec1 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_enet1>;
+	phy-mode = "rmii";
+	phy-handle = <&ethphy0>;
+	status = "okay";
+
+	mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		ethphy0: ethernet-phy@0 {

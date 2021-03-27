@@ -1,0 +1,120 @@
+autoconf.h:#define CONFIG_DEFAULTS_WEISS_SM2010 1
+config/autoconf.h:#define CONFIG_PRODUCT "SM2010"
+config.in:choice 'Weiss Products' "SM2010 CONFIG_DEFAULTS_WEISS_SM2010 \
+config.in:" SM2010
+lib/libc/include/asm/param.h:#ifdef CONFIG_SM2010
+lib/libc/include/linux/autoconf.h:#define CONFIG_SM2010 1
+linux-2.0.x/.hdepend:   $(wildcard /home/ubuntu/uClinux-20040218-dist/linux-2.0.x/include/config/sm2010.h)
+linux-2.0.x/drivers/char/pd72001_serial.c:#ifdef CONFIG_SM2010
+linux-2.0.x/drivers/char/pd72001_serial.c:#include "../../arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h"
+linux-2.0.x/drivers/char/pd72001_serial.c:/* this function is called by the initialization of the SM2010 */
+linux-2.0.x/drivers/char/.depend:   $(wildcard /home/ubuntu/uClinux-20040218-dist/linux-2.0.x/include/config/sm2010.h) \
+linux-2.0.x/drivers/char/.depend:   ../../arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h
+linux-2.0.x/drivers/block/blkmem.c:#if defined( CONFIG_SM2010 ) 
+linux-2.0.x/drivers/block/.depend:   $(wildcard /home/ubuntu/uClinux-20040218-dist/linux-2.0.x/include/config/sm2010.h) \
+linux-2.0.x/.config.old:CONFIG_SM2010=y
+linux-2.0.x/arch/m68knommu/config.in:	bool 'Weiss-Electronic SM2010 support' CONFIG_SM2010
+linux-2.0.x/arch/m68knommu/Boards.mk:ifdef CONFIG_SM2010
+linux-2.0.x/arch/m68knommu/Boards.mk:BOARD := SM2010
+linux-2.0.x/arch/m68knommu/platform/68000/config.c: *  uClinux version 2.0.x MC68000 SM2010 board initalization
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:#include "SM2010/sm2010_hw.h"
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:static void sm2010_init_timer_hw(void)
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_TIMER.control    = 0x30;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_TIMER.counter0   = 0;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_TIMER.counter0   = 0;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_TIMER.control    = 0xb4;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_TIMER.counter2   = ((SM2010_SIO_CLOCK_SYS / 500)) & 0xff;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_TIMER.counter2   = ((SM2010_SIO_CLOCK_SYS / 500)) >> 8;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_RESET_TIMER_INT2 = 0;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_TIMER.control    = 0x74;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_TIMER.counter1   = (SM2010_SIO_CLOCK_SYS / 1000) & 0xff;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_TIMER.counter1   = (SM2010_SIO_CLOCK_SYS / 1000) >> 8;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_RESET_TIMER_INT1 = 0;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        sm2010_init_timer_hw();
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        request_irq(SM2010_INT_NUM_TIMER2-VEC_SPUR, 
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        request_irq(SM2010_INT_NUM_TIMER1-VEC_SPUR, 
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        printk("\nMC68000 SM2010 support (C) 2002 Weiss-Electronic GmbH, "
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_RESET_TIMER_INT2 = 0;
+linux-2.0.x/arch/m68knommu/platform/68000/config.c:        SM2010_BOARD_CONTROL = 0x1f;  
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/crt0_rom.S: *  linux/arch/m68knommu/platform/68000/SM2010/crt0_rom.S
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/crt0_rom.S: *  boot code for SM2010 board
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/crt0_rom.S:#define SM2010_LED 0xff8008
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/crt0_rom.S:#        movew %d0, SM2010_LED
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h: *  sm2010_ser_conf.h, v1.0 <2003-07-30 11:57:30 gc>
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h: *  linux/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h: *  hardware configuration for pd72001 serial driver for our SM2010 board
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:#ifndef __SM2010_SER_CONF_H
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:#define __SM2010_SER_CONF_H
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:#include "sm2010_hw.h"
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:#define MPSC_SIO_CLOCK_SYS      SM2010_SIO_CLOCK_SYS
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:#define MPSC_SIO_CLOCK_XTAL     SM2010_SIO_CLOCK_XTAL
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:        {{ &SM2010_SIO1_A_CONTROL, &SM2010_SIO1_A_DATA }, 
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:         { &SM2010_SIO1_B_CONTROL, &SM2010_SIO1_B_DATA }, 
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:         SM2010_INT_NUM_SIO1 },
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:        {{ &SM2010_SIO2_A_CONTROL, &SM2010_SIO2_A_DATA }, 
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:         { &SM2010_SIO2_B_CONTROL, &SM2010_SIO2_B_DATA }, 
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:         SM2010_INT_NUM_SIO2 },
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:        {{ &SM2010_SIO3_A_CONTROL, &SM2010_SIO3_A_DATA }, 
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:         { &SM2010_SIO3_B_CONTROL, &SM2010_SIO3_B_DATA }, 
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:         SM2010_INT_NUM_SIO3 },
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:  SM2010_LED_PORT = panel_led_state;
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:  SM2010_LED_PORT = panel_led_state;  
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_ser_conf.h:#endif /* __SM2010_SER_CONF_H */
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h: *  sm2010_hw.h, v1.0 <2003-07-30 11:56:37 gc>
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h: *  linux/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h: *  hardware defines for our SM2010 board
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#ifndef __SM2010_HW_H
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define __SM2010_HW_H
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_INT_NUM_SIO1     VEC_INT3
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_INT_NUM_SIO2     VEC_INT4
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_INT_NUM_SIO3     VEC_INT5
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_INT_NUM_TIMER1   VEC_INT2
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_INT_NUM_TIMER2   VEC_INT1
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO1_A_CONTROL   (*(volatile u8 *)  0xff8023)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO1_A_DATA      (*(volatile u8 *)  0xff8021)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO1_B_CONTROL   (*(volatile u8 *)  0xff8027)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO1_B_DATA      (*(volatile u8 *)  0xff8025)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO2_A_CONTROL   (*(volatile u8 *)  0xff802b)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO2_A_DATA      (*(volatile u8 *)  0xff8029)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO2_B_CONTROL   (*(volatile u8 *)  0xff802f)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO2_B_DATA      (*(volatile u8 *)  0xff802d)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO3_A_CONTROL   (*(volatile u8 *)  0xff8033)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO3_A_DATA      (*(volatile u8 *)  0xff8031)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO3_B_CONTROL   (*(volatile u8 *)  0xff8037)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO3_B_DATA      (*(volatile u8 *)  0xff8035)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO_CLOCK_SYS    6144000UL
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO_CLOCK_XTAL   6000000UL       
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_IO_PORT          (*(volatile u8 *)  0xff8001)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_SIO_STATUS       (*(volatile u8 *)  0xff8002)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_LED_PORT         (*(volatile u16 *) 0xff8008)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_BOARD_CONTROL    (*(volatile u8 *)  0xff8011)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_RESET_TIMER_INT1 (*(volatile u8 *)  0xff801b)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_RESET_TIMER_INT2 (*(volatile u8 *)  0xff801d)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:struct _sm2010_Hw_Timer { 
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#define SM2010_TIMER  (*(volatile struct _sm2010_Hw_Timer *) 0xff8039)
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/sm2010_hw.h:#endif  /* __SM2010_HW_H */
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/rom.ld: *  linux/arch/m68knommu/platform/68000/SM2010/rom.ld
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/rom.ld:*   SM2010 GNU ld command file for running kernel directly from ROM
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/rom.ld:          /* SM2010 ID String (never overwritten bei downloading program) */
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/rom.ld:          /* SM2010 flash memory (512k) */
+linux-2.0.x/arch/m68knommu/platform/68000/SM2010/rom.ld:	  /* SM2010 flash memory end */
+linux-2.0.x/arch/m68knommu/platform/68000/.depend:   SM2010/sm2010_hw.h
+linux-2.0.x/arch/m68knommu/mm/memory.c:#ifdef CONFIG_SM2010
+linux-2.0.x/arch/m68knommu/mm/.depend:   $(wildcard /home/ubuntu/uClinux-20040218-dist/linux-2.0.x/include/config/sm2010.h)
+linux-2.0.x/include/asm/param.h:#ifdef CONFIG_SM2010
+linux-2.0.x/include/linux/autoconf.h:#define CONFIG_SM2010 1
+linux-2.0.x/include/asm-m68knommu/param.h:#ifdef CONFIG_SM2010
+linux-2.0.x/.config:CONFIG_SM2010=y
+linux-2.0.x/System.map:00e02ccc t sm2010_init_timer_hw
+romfs/home/httpd/index.html:    <title>SM2010 Homepage</title>
+romfs/home/httpd/index.html:      ><img src="sm2010.jpeg" />    
+romfs/etc/rc:hostname SM2010
+vendors/Weiss/SM2010/index.html:    <title>SM2010 Homepage</title>
+vendors/Weiss/SM2010/index.html:      ><img src="sm2010.jpeg" />    
+vendors/Weiss/SM2010/Makefile:# Makefile -- Build instructions for SM2010, Weiss-Electronic
+vendors/Weiss/SM2010/Makefile:IMAGE    = $(IMAGEDIR)/sm2010.rom
+vendors/Weiss/SM2010/Makefile:#	$(ROMFSINST) /home/httpd/sm2010.jpeg
+vendors/Weiss/SM2010/Makefile:	perl $(ROOTDIR)/vendors/Weiss/SM2010/srec.pl $(IMAGE) > $(IMAGEDIR)/linux.srec
+vendors/Weiss/SM2010/srec.pl:#*                 which will hopefully work on the SM2010
+vendors/Weiss/SM2010/rc:hostname SM2010
+vendors/Weiss/SM2010/config.linux-2.0.x:CONFIG_SM2010=y

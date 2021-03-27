@@ -1,0 +1,65 @@
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+#include <inttypes.h>
+#include <unistd.h>
+
+#include <linux/usbdevice_fs.h>
+
+/* For building without an updated set of headers */
+#ifndef USBDEVFS_DROP_PRIVILEGES
+#define USBDEVFS_DROP_PRIVILEGES		_IOW('U', 30, __u32)
+#define USBDEVFS_CAP_DROP_PRIVILEGES		0x40
+#endif
+
+void drop_privileges(int fd, uint32_t mask)
+{
+	int res;
+
+	res = ioctl(fd, USBDEVFS_DROP_PRIVILEGES, &mask);
+	if (res)
+		printf("ERROR: USBDEVFS_DROP_PRIVILEGES returned %d\n", res);
+	else
+		printf("OK: privileges dropped!\n");
+}
+
+void reset_device(int fd)
+{
+	int res;
+
+	res = ioctl(fd, USBDEVFS_RESET);
+	if (!res)
+		printf("OK: USBDEVFS_RESET succeeded\n");
+	else
+		printf("ERROR: reset failed! (%d - %s)\n",
+		       -res, strerror(-res));
+}
+
+void claim_some_intf(int fd)
+{
+	int i, res;
+
+	for (i = 0; i < 4; i++) {
+		res = ioctl(fd, USBDEVFS_CLAIMINTERFACE, &i);
+		if (!res)
+			printf("OK: claimed if %d\n", i);
+		else
+			printf("ERROR claiming if %d (%d - %s)\n",
+			       i, -res, strerror(-res));
+	}
+}
+
+int main(int argc, char *argv[])
+{
+	uint32_t mask, caps;
+	int c, fd;
+
+	fd = open(argv[1], O_RDWR);
+	if (fd < 0) {
+		printf("Failed to open file\n");
+		goto err_fd;
+	}

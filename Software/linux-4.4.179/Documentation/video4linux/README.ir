@@ -1,0 +1,95 @@
+/*
+ * mach-davinci/devices.c
+ *
+ * DaVinci platform device setup/initialization
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ */
+
+#include <linux/init.h>
+#include <linux/platform_device.h>
+#include <linux/dma-mapping.h>
+#include <linux/io.h>
+#include <linux/reboot.h>
+
+#include <mach/hardware.h>
+#include <linux/platform_data/i2c-davinci.h>
+#include <mach/irqs.h>
+#include <mach/cputype.h>
+#include <mach/mux.h>
+#include <linux/platform_data/mmc-davinci.h>
+#include <mach/time.h>
+#include <linux/platform_data/edma.h>
+
+
+#include "davinci.h"
+
+#define DAVINCI_I2C_BASE	     0x01C21000
+#define DAVINCI_ATA_BASE	     0x01C66000
+#define DAVINCI_MMCSD0_BASE	     0x01E10000
+#define DM355_MMCSD0_BASE	     0x01E11000
+#define DM355_MMCSD1_BASE	     0x01E00000
+#define DM365_MMCSD0_BASE	     0x01D11000
+#define DM365_MMCSD1_BASE	     0x01D00000
+
+void __iomem  *davinci_sysmod_base;
+
+void davinci_map_sysmod(void)
+{
+	davinci_sysmod_base = ioremap_nocache(DAVINCI_SYSTEM_MODULE_BASE,
+					      0x800);
+	/*
+	 * Throw a bug since a lot of board initialization code depends
+	 * on system module availability. ioremap() failing this early
+	 * need careful looking into anyway.
+	 */
+	BUG_ON(!davinci_sysmod_base);
+}
+
+static struct resource i2c_resources[] = {
+	{
+		.start		= DAVINCI_I2C_BASE,
+		.end		= DAVINCI_I2C_BASE + 0x40,
+		.flags		= IORESOURCE_MEM,
+	},
+	{
+		.start		= IRQ_I2C,
+		.flags		= IORESOURCE_IRQ,
+	},
+};
+
+static struct platform_device davinci_i2c_device = {
+	.name           = "i2c_davinci",
+	.id             = 1,
+	.num_resources	= ARRAY_SIZE(i2c_resources),
+	.resource	= i2c_resources,
+};
+
+void __init davinci_init_i2c(struct davinci_i2c_platform_data *pdata)
+{
+	if (cpu_is_davinci_dm644x())
+		davinci_cfg_reg(DM644X_I2C);
+
+	davinci_i2c_device.dev.platform_data = pdata;
+	(void) platform_device_register(&davinci_i2c_device);
+}
+
+static struct resource ide_resources[] = {
+	{
+		.start		= DAVINCI_ATA_BASE,
+		.end		= DAVINCI_ATA_BASE + 0x7ff,
+		.flags		= IORESOURCE_MEM,
+	},
+	{
+		.start		= IRQ_IDE,
+		.end		= IRQ_IDE,
+		.flags		= IORESOURCE_IRQ,
+	},
+};
+
+static u64 ide_dma_mask = DMA_BIT_MASK(32);
+
+stat

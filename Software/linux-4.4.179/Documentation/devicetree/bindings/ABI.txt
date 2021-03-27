@@ -1,0 +1,37 @@
+NOTE:
+This is a version of Documentation/process/submit-checklist.rst into Japanese.
+This document is maintained by Takenori Nagano <t-nagano@ah.jp.nec.com>
+and the JF Project team <http://www.linux.or.jp/JF/>.
+If you find any difference between this document and the original file
+or a problem with the translation,
+please contact the maintainer of this file or JF project.
+
+Please also note that the purpose of this file is to be easier to read
+for non English (read: Japanese) speakers and is not intended as a
+fork. So if you have any comments or updates of this file, please try
+to update the original English file first.
+
+Last Updated: 2008/07/14
+==================================
+これは、
+linux-2.6.26/Documentation/process/submit-checklist.rst の和訳です。
+
+翻訳団体： JF プロジェクト < http://www.linux.or.jp/JF/ >
+翻訳日： 2008/07/14
+翻訳者： Takenori Nagano <t-nagano at ah dot jp dot nec dot com>
+校正者： Masanori Kobayashi さん <zap03216 at nifty dot ne dot jp>
+==================================
+
+
+Linux カーネルパッチ投稿者向けチェックリスト
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+本書では、パッチをより素早く取り込んでもらいたい開発者が実践すべき基本的な事柄
+をいくつか紹介します。ここにある全ての事柄は、Documentation/process/submitting-patches.rst
+などのLinuxカーネルパッチ投稿に際しての心得を補足するものです。
+
+ 1: 妥当なCONFIGオプションや変更されたCONFIGオプション、つまり =y, =m, =n
+    全てで正しくビルドできることを確認してください。その際、gcc及びリンカが
+    warningやerrorを出していないことも確認してください。
+
+ 2: allnoconfig, allmodconfig オプション�

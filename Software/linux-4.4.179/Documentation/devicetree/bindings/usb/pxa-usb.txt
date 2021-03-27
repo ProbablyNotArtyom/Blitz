@@ -1,0 +1,74 @@
+/*
+ * Copyright (C) 2013 Texas Instruments Incorporated - http://www.ti.com/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+/dts-v1/;
+
+#include "omap5-board-common.dtsi"
+
+/ {
+	model = "TI OMAP5 uEVM board";
+	compatible = "ti,omap5-uevm", "ti,omap5";
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0 0x80000000 0 0x7f000000>; /* 2032 MB */
+	};
+
+	aliases {
+		ethernet = &ethernet;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led1 {
+			label = "omap5:blue:usr1";
+			gpios = <&gpio5 25 GPIO_ACTIVE_HIGH>; /* gpio5_153 D1 LED */
+			linux,default-trigger = "heartbeat";
+			default-state = "off";
+		};
+	};
+
+	evm_keys {
+		compatible = "gpio-keys";
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&evm_keys_pins>;
+
+		#address-cells = <7>;
+		#size-cells = <0>;
+
+		btn1 {
+			label = "BTN1";
+			linux,code = <169>;
+			gpios = <&gpio3 19 GPIO_ACTIVE_LOW>;	/* gpio3_83 */
+			wakeup-source;
+			autorepeat;
+			debounce-interval = <50>;
+		};
+	};
+
+	evm_leds {
+		compatible = "gpio-leds";
+
+		led1 {
+			label = "omap5:red:led";
+			gpios = <&gpio9 17 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "mmc0";
+			default-state = "off";
+		};
+
+		led2 {
+			label = "omap5:green:led";
+			gpios = <&gpio9 18 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "mmc1";
+			default-state = "off";
+		};
+
+		led3 {
+			label = "omap5:blue:led";
+			gpios = <&gpio9 19 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "mmc2";

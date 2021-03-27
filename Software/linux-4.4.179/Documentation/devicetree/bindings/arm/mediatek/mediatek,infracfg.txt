@@ -1,0 +1,29 @@
+.. _unevictable_lru:
+
+==============================
+Unevictable LRU Infrastructure
+==============================
+
+.. contents:: :local:
+
+
+Introduction
+============
+
+This document describes the Linux memory manager's "Unevictable LRU"
+infrastructure and the use of this to manage several types of "unevictable"
+pages.
+
+The document attempts to provide the overall rationale behind this mechanism
+and the rationale for some of the design decisions that drove the
+implementation.  The latter design rationale is discussed in the context of an
+implementation description.  Admittedly, one can obtain the implementation
+details - the "what does it do?" - by reading the code.  One hopes that the
+descriptions below add value by provide the answer to "why does it do that?".
+
+
+
+The Unevictable LRU
+===================
+
+The Unevictable LRU facility adds an additional LRU list to trac

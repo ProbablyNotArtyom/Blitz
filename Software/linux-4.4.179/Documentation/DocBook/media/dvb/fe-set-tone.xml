@@ -1,0 +1,63 @@
+- CAIF SPI porting -
+
+- CAIF SPI basics:
+
+Running CAIF over SPI needs some extra setup, owing to the nature of SPI.
+Two extra GPIOs have been added in order to negotiate the transfers
+ between the master and the slave. The minimum requirement for running
+CAIF over SPI is a SPI slave chip and two GPIOs (more details below).
+Please note that running as a slave implies that you need to keep up
+with the master clock. An overrun or underrun event is fatal.
+
+- CAIF SPI framework:
+
+To make porting as easy as possible, the CAIF SPI has been divided in
+two parts. The first part (called the interface part) deals with all
+generic functionality such as length framing, SPI frame negotiation
+and SPI frame delivery and transmission. The other part is the CAIF
+SPI slave device part, which is the module that you have to write if
+you want to run SPI CAIF on a new hardware. This part takes care of
+the physical hardware, both with regard to SPI and to GPIOs.
+
+- Implementing a CAIF SPI device:
+
+	- Functionality provided by the CAIF SPI slave device:
+
+	In order to implement a SPI device you will, as a minimum,
+	need to implement the following
+	functions:
+
+	int (*init_xfer) (struct cfspi_xfer * xfer, struct cfspi_dev *dev):
+
+	This function is called by the CAIF SPI interface to give
+	you a chance to set up your hardware to be ready to receive
+	a stream of data from the master. The xfer structure contains
+	both physical and logical addresses, as well as the total length
+	of the transfer in both directions.The dev parameter can be used
+	to map to different CAIF SPI slave devices.
+
+	void (*sig_xfer) (bool xfer, struct cfspi_dev *dev):
+
+	This function is called by the CAIF SPI interface when the output
+	(SPI_INT) GPIO needs to change state. The boolean value of the xfer
+	variable indicates whether the GPIO should be asserted (HIGH) or
+	deasserted (LOW). The dev parameter can be used to map to different CAIF
+	SPI slave devices.
+
+	- Functionality provided by the CAIF SPI interface:
+
+	void (*ss_cb) (bool assert, struct cfspi_ifc *ifc);
+
+	This function is called by the CAIF SPI slave device in order to
+	signal a change of state of the input GPIO (SS) to the interface.
+	Only active edges are mandatory to be reported.
+	This function can be called from IRQ context (recommended in order
+	not to introduce latency). The ifc parameter should be the pointer
+	returned from the platform probe function in the SPI device structure.
+
+	void (*xfer_done_cb) (struct cfspi_ifc *ifc);
+
+	This function is called by the CAIF SPI slave device in order to
+	report that a transfer is completed. This function should only be
+	called once both the transmission and the reception are completed.
+	This function can
