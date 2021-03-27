@@ -84,4 +84,4 @@ Although I dont expect contributions I'd appreciate if you shared any improvemen
 
 ### Authors
 
-* **NotArtyom** - *Everything* - [Website](http://notartyoms-box.com)
+* **NotArtyom** - *Everything* - [Website](http://blog.notartyoms-box.net)
