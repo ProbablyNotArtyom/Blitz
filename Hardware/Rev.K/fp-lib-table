@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name Blitz-static)(type KiCad)(uri ${KIPRJMOD}/Blitz-static.pretty)(options "")(descr ""))
+)

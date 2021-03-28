@@ -1,0 +1,603 @@
+135601555283210
+Blitz-static
+AT_PSU
+
+
+0
+6
+6
+Blitz-static
+BUS_AT_VERT
+Connecteur Bus AT ISA 16 bits
+CONN BUS ISA
+0
+98
+98
+Blitz-static
+Blitz_logo
+
+
+0
+0
+0
+Blitz-static
+CP_EIA-3216-10_Kemet-I_Pad1.58x1.35mm_HandSolder
+Tantalum Capacitor SMD Kemet-I (3216-10 Metric), IPC_7351 nominal, (Body size from: http://www.kemet.com/Lists/ProductCatalog/Attachments/253/KEM_TC101_STD.pdf), generated with kicad-footprint-generator
+capacitor tantalum
+0
+2
+2
+Blitz-static
+CP_EIA-6032-20_AVX-F_Pad2.25x2.35mm_HandSolder
+Tantalum Capacitor SMD AVX-F (6032-20 Metric), IPC_7351 nominal, (Body size from: http://www.kemet.com/Lists/ProductCatalog/Attachments/253/KEM_TC101_STD.pdf), generated with kicad-footprint-generator
+capacitor tantalum
+0
+2
+2
+Blitz-static
+CP_Radial_D5.0mm_P2.00mm
+CP, Radial series, Radial, pin pitch=2.00mm, , diameter=5mm, Electrolytic Capacitor
+CP Radial series Radial pin pitch 2.00mm  diameter 5mm Electrolytic Capacitor
+0
+2
+2
+Blitz-static
+CQFP-132
+
+
+0
+132
+132
+Blitz-static
+C_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+capacitor handsolder
+0
+2
+2
+Blitz-static
+C_1206_3216Metric_Pad1.42x1.75mm_HandSolder
+Capacitor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+capacitor handsolder
+0
+2
+2
+Blitz-static
+Crystal_SMD_HC49-SD
+SMD Crystal HC-49-SD http://cdn-reichelt.de/documents/datenblatt/B400/xxx-HC49-SMD.pdf, 11.4x4.7mm^2 package
+SMD SMT crystal
+0
+2
+2
+Blitz-static
+DIP-40_W15.24mm_LongPads
+40-lead though-hole mounted DIP package, row spacing 15.24 mm (600 mils), LongPads
+THT DIP DIL PDIP 2.54mm 15.24mm 600mil LongPads
+0
+40
+40
+Blitz-static
+DSUB-9
+
+
+0
+11
+10
+Blitz-static
+Dsub-VGA
+
+
+0
+17
+16
+Blitz-static
+Eurocard-96
+
+
+0
+96
+96
+Blitz-static
+FPC_50
+
+
+0
+52
+51
+Blitz-static
+IDC-Header_2x17_P2.54mm_Vertical
+Through hole straight IDC box header, 2x17, 2.54mm pitch, double rows
+Through hole IDC box header THT 2x17 2.54mm double row
+0
+34
+34
+Blitz-static
+IDC-Header_2x20_P2.54mm_Vertical
+Through hole straight IDC box header, 2x20, 2.54mm pitch, double rows
+Through hole IDC box header THT 2x20 2.54mm double row
+0
+40
+40
+Blitz-static
+ISA_x8_VERT
+
+
+0
+62
+62
+Blitz-static
+ISAx8
+64 pins through hole IDC header
+IDC header socket VASCH
+0
+62
+62
+Blitz-static
+ISAx8_(special)
+Connecteur Bus AT ISA 16 bits
+CONN BUS ISA
+0
+62
+62
+Blitz-static
+ISAx16
+Connecteur Bus AT ISA 16 bits
+CONN BUS ISA
+0
+98
+98
+Blitz-static
+ISAx16_(special)
+Connecteur Bus AT ISA 16 bits
+CONN BUS ISA
+0
+98
+98
+Blitz-static
+JDT-1800
+
+
+0
+14
+14
+Blitz-static
+LCD
+Through hole pin header
+pin header
+0
+40
+40
+Blitz-static
+LED_D5.0mm
+LED, diameter 5.0mm, 2 pins, http://cdn-reichelt.de/documents/datenblatt/A500/LL-504BC2E-009.pdf
+LED diameter 5.0mm 2 pins
+0
+2
+2
+Blitz-static
+LQFP-80_10x10mm_P0.4mm
+LQFP80: plastic low profile quad flat package; 80 leads; body 10 x 10  mm (see Intersil q80.10x10.pdf and wiznet W5100_Datasheet_v1.2.7.pdf)
+QFP 0.4
+0
+80
+80
+Blitz-static
+L_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+inductor handsolder
+0
+2
+2
+Blitz-static
+Molex_Mini-Fit_Jr_5566-24A_2x12_P4.20mm_Vertical
+Molex Mini-Fit Jr. Power Connectors, old mpn/engineering number: 5566-24A, example for new mpn: 39-28-x24x, 12 Pins per row, Mounting:  (http://www.molex.com/pdm_docs/sd/039281043_sd.pdf), generated with kicad-footprint-generator
+connector Molex Mini-Fit_Jr side entry
+0
+24
+24
+Blitz-static
+OSHW-Logo_11.4x12mm_SilkScreen
+Open Source Hardware Logo
+Logo OSHW
+0
+0
+0
+Blitz-static
+Oscillator_DIP-8
+Oscillator, DIP8,http://cdn-reichelt.de/documents/datenblatt/B400/OSZI.pdf
+oscillator
+0
+4
+4
+Blitz-static
+Oscillator_SMD_EuroQuartz_XO91-4Pin_7.0x5.0mm_HandSoldering
+Miniature Crystal Clock Oscillator EuroQuartz XO91 series, http://cdn-reichelt.de/documents/datenblatt/B400/XO91.pdf, hand-soldering, 7.0x5.0mm^2 package
+SMD SMT crystal oscillator hand-soldering
+0
+4
+4
+Blitz-static
+PGA120
+Support PGA 120 pins
+PGA
+0
+128
+128
+Blitz-static
+PLCC-32_TH
+PLCC, 32 pins, through hole
+plcc leaded
+0
+33
+32
+Blitz-static
+PLCC-44
+PLCC, 44 pins, surface mount
+plcc smt
+0
+44
+44
+Blitz-static
+PLCC-68
+Support CMS Plcc 68 Pins
+CMS PLCC
+0
+68
+68
+Blitz-static
+PLCC-68_THT-Socket
+PLCC, 68 pins, through hole
+plcc leaded
+0
+68
+68
+Blitz-static
+PLCC-84
+PLCC, 84 pins, surface mount
+plcc smt
+0
+84
+84
+Blitz-static
+PQFP-132_24x24mm_P0.635mm
+PQFP, 132 pins, 24mm sq body, 0.635mm pitch (https://www.intel.com/content/dam/www/public/us/en/documents/packaging-databooks/packaging-chapter-02-databook.pdf, http://www.nxp.com/docs/en/application-note/AN4388.pdf)
+PQFP 132
+0
+132
+132
+Blitz-static
+PS2
+
+
+0
+6
+6
+Blitz-static
+PinHeader_1x05_P2.54mm_Vertical
+Through hole straight pin header, 1x05, 2.54mm pitch, single row
+Through hole pin header THT 1x05 2.54mm single row
+0
+5
+5
+Blitz-static
+PinHeader_1x06_P2.54mm_Vertical
+Through hole straight pin header, 1x06, 2.54mm pitch, single row
+Through hole pin header THT 1x06 2.54mm single row
+0
+6
+6
+Blitz-static
+PinHeader_2x03_P2.54mm_Vertical
+Through hole straight pin header, 2x03, 2.54mm pitch, double rows
+Through hole pin header THT 2x03 2.54mm double row
+0
+6
+6
+Blitz-static
+Potentiometer_Bourns_3296P
+3296, 3/8, Square, Trimpot, Trimming, Potentiometer, Bourns
+3296, 3/8, Square, Trimpot, Trimming, Potentiometer, Bourns
+0
+3
+3
+Blitz-static
+QFP_144
+
+
+0
+144
+144
+Blitz-static
+RJ45_Amphenol_RJHSE538X
+Shielded, 2 LED, https://www.amphenolcanada.com/ProductSearch/drawings/AC/RJHSE538X.pdf
+RJ45 8p8c ethernet cat5
+0
+14
+13
+Blitz-static
+R_0603_1608Metric_Pad1.05x0.95mm_HandSolder
+Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+resistor handsolder
+0
+2
+2
+Blitz-static
+R_0805_2012Metric_Pad1.15x1.40mm_HandSolder
+Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator
+resistor handsolder
+0
+2
+2
+Blitz-static
+R_1206_3216Metric_Pad1.42x1.75mm_HandSolder
+Resistor SMD 1206 (3216 Metric), square (rectangular) end terminal, IPC_7351 nominal with elongated pad for handsoldering. (Body size source: http://www.tortai-tech.com/upload/download/2011102023233369053.pdf), generated with kicad-footprint-generator
+resistor handsolder
+0
+2
+2
+Blitz-static
+SD_Card_Receptacle
+
+
+0
+13
+13
+Blitz-static
+SIMM_72
+16
+
+0
+72
+72
+Blitz-static
+SOIC-14_3.9x8.7mm_P1.27mm
+14-Lead Plastic Small Outline (SL) - Narrow, 3.90 mm Body [SOIC] (see Microchip Packaging Specification 00000049BS.pdf)
+SOIC 1.27
+0
+14
+14
+Blitz-static
+SOIC-16W_5.3x10.2mm_P1.27mm
+16-Lead Plastic Small Outline (SO) - Wide, 5.3 mm Body (http://www.ti.com/lit/ml/msop002a/msop002a.pdf)
+SOIC 1.27
+0
+16
+16
+Blitz-static
+SOIC-16_3.9x9.9mm_P1.27mm
+16-Lead Plastic Small Outline (SL) - Narrow, 3.90 mm Body [SOIC] (see Microchip Packaging Specification 00000049BS.pdf)
+SOIC 1.27
+0
+16
+16
+Blitz-static
+SOIC-20W_7.5x12.8mm_P1.27mm
+20-Lead Plastic Small Outline (SO) - Wide, 7.50 mm Body [SOIC] (see Microchip Packaging Specification 00000049BS.pdf)
+SOIC 1.27
+0
+20
+20
+Blitz-static
+SOIC-32
+
+
+0
+32
+32
+Blitz-static
+SOJ-32
+Module CMS SOJ 32 pins
+CMS SOJ
+0
+36
+36
+Blitz-static
+SOJ-42
+
+
+0
+42
+42
+Blitz-static
+SW_Lever_1P2T_NKK_GW12LxH
+Switch, single pole double throw, right angle, http://www.nkkswitches.com/pdf/GW.pdf
+switch single-pole double-throw spdt ON-ON horizontal
+0
+5
+3
+Blitz-static
+SW_PUSH_6mm
+https://www.omron.com/ecb/products/pdf/en-b3f.pdf
+tact sw push 6mm
+0
+4
+2
+Blitz-static
+SW_TH_Tactile
+SW_TH_Tactile_Omron_B3F-10xx
+Omron B3F-10xx
+0
+4
+4
+Blitz-static
+TFBGA-48
+
+
+0
+48
+48
+Blitz-static
+TFBGA_48
+
+
+0
+48
+48
+Blitz-static
+TQFP-64_10x10mm_P0.5mm
+TQFP, 64 Pin (http://www.microsemi.com/index.php?option=com_docman&task=doc_download&gid=131095), generated with kicad-footprint-generator ipc_qfp_generator.py
+TQFP QFP
+0
+64
+64
+Blitz-static
+TQFP-100_12x12mm_P0.4mm
+100-Lead Plastic Thin Quad Flatpack (PT) - 12x12x1 mm Body, 2.00 mm [TQFP] (see Microchip Packaging Specification 00000049BS.pdf)
+QFP 0.4
+0
+100
+100
+Blitz-static
+TSSOP-20_4.4x6.5mm_P0.65mm
+20-Lead Plastic Thin Shrink Small Outline (ST)-4.4 mm Body [TSSOP] (see Microchip Packaging Specification 00000049BS.pdf)
+SSOP 0.65
+0
+20
+20
+Blitz-static
+TSSOP-54_6.1x14mm_Pitch0.5mm
+TSSOP56: plastic thin shrink small outline package; 56 leads; body width 6.1 mm (see NXP SSOP-TSSOP-VSO-REFLOW.pdf and sot364-1_po.pdf)
+SSOP 0.5
+0
+54
+54
+Blitz-static
+TSSOP-II-44
+
+
+0
+44
+44
+Blitz-static
+USB3_A_Molex_48393-001
+USB 3.0, type A, right angle (http://www.molex.com/pdm_docs/sd/483930003_sd.pdf)
+USB 3.0 type A right angle
+0
+13
+10
+Blitz-static
+USB_A
+
+
+0
+6
+5
+Blitz-static
+USB_C_Plug_Molex_105444
+Universal Serial Bus (USB) Shielded I/O Plug, Type C, Right Angle, Surface Mount, http://www.molex.com/pdm_docs/sd/1054440001_sd.pdf
+USB Type-C Plug Edge Mount
+0
+24
+23
+Blitz-static
+USB_C_Receptacle_Amphenol_12401548E4-2A
+USB TYPE C, RA RCPT PCB, Hybrid, https://www.amphenolcanada.com/StockAvailabilityPrice.aspx?From=&PartNum=12401548E4%7e2A
+USB C Type-C Receptacle Hybrid
+0
+28
+25
+Blitz-static
+USB_C_Receptacle_Amphenol_12401548E4-2A_CircularHoles
+USB TYPE C, RA RCPT PCB, Hybrid, https://www.amphenolcanada.com/StockAvailabilityPrice.aspx?From=&PartNum=12401548E4%7e2A
+USB C Type-C Receptacle Hybrid
+0
+28
+25
+Blitz-static
+USB_C_Receptacle_Amphenol_12401610E4-2A
+USB TYPE C, RA RCPT PCB, SMT, https://www.amphenolcanada.com/StockAvailabilityPrice.aspx?From=&PartNum=12401610E4%7e2A
+USB C Type-C Receptacle SMD
+0
+28
+25
+Blitz-static
+USB_C_Receptacle_Amphenol_12401610E4-2A_CircularHoles
+USB TYPE C, RA RCPT PCB, SMT, https://www.amphenolcanada.com/StockAvailabilityPrice.aspx?From=&PartNum=12401610E4%7e2A
+USB C Type-C Receptacle SMD
+0
+28
+25
+Blitz-static
+USB_Micro-B_Molex-105017-0001
+http://www.molex.com/pdm_docs/sd/1050170001_sd.pdf
+Micro-USB SMD Typ-B
+0
+13
+6
+Blitz-static
+USB_Micro-B_Molex_47346-0001
+Micro USB B receptable with flange, bottom-mount, SMD, right-angle (http://www.molex.com/pdm_docs/sd/473460001_sd.pdf)
+Micro B USB SMD
+0
+11
+6
+Blitz-static
+USB_Micro-B_Vertical_Molex-105133-0001
+Molex Vertical Micro USB Typ-B (http://www.molex.com/pdm_docs/sd/1051330001_sd.pdf)
+Micro-USB SMD Typ-B Vertical
+0
+8
+6
+Blitz-static
+USB_Micro-B_Wuerth-614105150721_Vertical
+USB Micro-B receptacle, through-hole, vertical, http://katalog.we-online.de/em/datasheet/614105150721.pdf
+usb micro receptacle vertical
+0
+7
+6
+Blitz-static
+USB_Micro-B_Wuerth-614105150721_Vertical_CircularHoles
+USB Micro-B receptacle, through-hole, vertical, http://katalog.we-online.de/em/datasheet/614105150721.pdf
+usb micro receptacle vertical
+0
+7
+6
+Blitz-static
+USB_Micro-B_Wuerth-629105150521
+USB Micro-B receptacle, http://www.mouser.com/ds/2/445/629105150521-469306.pdf
+usb micro receptacle
+0
+9
+6
+Blitz-static
+USB_Micro-B_Wuerth-629105150521_CircularHoles
+USB Micro-B receptacle, http://www.mouser.com/ds/2/445/629105150521-469306.pdf
+usb micro receptacle
+0
+9
+6
+Blitz-static
+atx_mounting_hole
+
+
+0
+1
+1
+Blitz-static
+conn_usb_A
+USB A-type receptacle, Tyco P/N 292303-3
+
+0
+6
+4
+Blitz-static
+conn_usb_A-vert
+USB A-type vertical receptacle, Tyco P/N 440260-2
+
+0
+8
+4
+Blitz-static
+conn_usb_Ax2
+USB A-type receptacle, 2x stacked, Tyco P/N 5787617-3
+
+0
+12
+8
+Blitz-static
+dither
+
+
+0
+0
+0

@@ -1,3 +1,11 @@
+
+
+# NOTICE ON KICAD VERSIONS 
+
+### the `Rev-L.zip` archive requires KiCad 5.99 or later (nightly release)
+
+### use `Rev-K.zip` if you are on KiCad 5.1.9 or earlier
+
 # Blitz : m68k/68030 Homebrew
 
 <p align="center">
