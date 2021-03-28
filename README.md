@@ -12,6 +12,12 @@
     <img src="https://i.imgur.com/4tw3nfW.jpg"></img>
 </p>
 
+<p align="center">
+    <a href="https://hackaday.io/project/166534-blitz-32bit-68030-homebrew-with-an-isa-bus">(Link to this project's Hackaday.io page)</a>
+    <br>
+    <a href="https://blog.notartyoms-box.net/blitz">(Link this project's homepage on my website)</a>
+</p>
+
 -------------------------
 
 #### Feature highlights
@@ -86,4 +92,4 @@ Although I dont expect contributions I'd appreciate if you shared any improvemen
 
 ### Authors
 
-* **NotArtyom** - *Everything* - [Website](http://notartyoms-box.com)
+* **NotArtyom** - *Everything* - [Website](http://blog.notartyoms-box.net)
